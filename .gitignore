@@ -1,3 +1,7 @@
 /DiagnosticLabs/DiagnosticLabs/bin
 /DiagnosticLabs/DiagnosticLabs/obj
 /DiagnosticLabs/.vs
+/DiagnosticLabs/DiagnosticLabsBLL/obj
+/DiagnosticLabs/DiagnosticLabsBLL/bin
+/DiagnosticLabs/DiagnosticLabsDAL/obj
+/DiagnosticLabs/DiagnosticLabsDAL/bin
