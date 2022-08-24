@@ -1,0 +1,21 @@
+﻿CREATE TABLE [dbo].[UserPermissions]
+(
+	[Id] BIGINT NOT NULL IDENTITY,
+	[UserId] BIGINT NOT NULL,
+	[ModuleId] INT NOT NULL,
+    [ViewOnly] BIT NOT NULL DEFAULT 0,
+    [AllowCreate] BIT NOT NULL DEFAULT 0,
+    [AllowEdit] BIT NOT NULL DEFAULT 0,
+    [AllowDelete] BIT NOT NULL DEFAULT 0,
+    [AllowPrint] BIT NOT NULL DEFAULT 0,
+    [CreatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [UpdatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [UpdatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [UserPermission_Id] PRIMARY KEY CLUSTERED 
+    (
+	    [Id] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+    CONSTRAINT [FK_UserPermissions_Users] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]),
+    CONSTRAINT [FK_UserPermissions_Modules] FOREIGN KEY ([ModuleId]) REFERENCES [Modules]([Id])
+)

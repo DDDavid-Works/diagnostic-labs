@@ -1,0 +1,119 @@
+﻿<Window x:Class="DiagnosticLabs.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiagnosticLabs"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="500" Width="800" 
+        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Background="#aee571">
+            <Border BorderThickness="1" BorderBrush="Black" Margin="20" Height="200" Width="200" Padding="2" HorizontalAlignment="Left">
+                <Image Name="CompanyLogoImage" Source="{Binding LogoImageSource}"></Image>
+            </Border>
+            <Grid Margin="20">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="CompanyNameLabel" Content="{Binding CompanySetup.CompanyName}" Grid.Row="0" Grid.Column="0" FontSize="22" HorizontalAlignment="Right"></Label>
+                <Label Name="SubcompanyNameLabel" Content="{Binding CompanySetup.SubCompanyName}" Grid.Row="1" Grid.Column="0" FontSize="18" HorizontalAlignment="Right"></Label>
+                <Label Name="TaglineLabel" Content="{Binding CompanySetup.Tagline}" Grid.Row="2" Grid.Column="0" FontSize="18" HorizontalAlignment="Right"></Label>
+                <Label Name="AddressLabel" Content="{Binding CompanySetup.Address}" Grid.Row="3" Grid.Column="0" FontSize="18" HorizontalAlignment="Right"></Label>
+                <Label Name="ContactNumbersLabel" Content="{Binding CompanySetup.ContactNumbers}" Grid.Row="4" Grid.Column="0" FontSize="18" HorizontalAlignment="Right"></Label>
+                <Label Name="EmailLabel" Content="{Binding CompanySetup.Email}" Grid.Row="5" Grid.Column="0" FontSize="18" HorizontalAlignment="Right"></Label>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            <Grid Margin="30,120,30,10" VerticalAlignment="Top" Width="300">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="26" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="26" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="UserameLabel" Content="Userame:" Grid.Row="0" Grid.Column="0"></Label>
+                <TextBox Name="UsernameTextBox" Grid.Row="1" Grid.Column="0" KeyDown="Button_OnKeyDown"></TextBox>
+                <Label Name="PasswordLabel" Content="Password:" Grid.Row="2" Grid.Column="0"></Label>
+                <PasswordBox Name="PasswordPasswordBox" Grid.Row="3" Grid.Column="0" KeyDown="Button_OnKeyDown"></PasswordBox>
+            </Grid>
+            <Grid Width="300" Margin="20,0,20,0">
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="26" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="Margin" Value="0,5,0,5" />
+                        <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="Height" Value="52" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="Margin" Value="0,5,0,5" />
+                        <Setter Property="Foreground" Value="Red" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Name="LoginButton" Content="LOGIN" Grid.Row="0" Grid.Column="0" Click="LoginButton_Click"></Button>
+                <Button Name="CancelButton" Content="CANCEL" Grid.Row="1" Grid.Column="0" Click="CancelButton_Click"></Button>
+                <Label Name="LoginErrorLabel" Content="{Binding LoginErrorMessage}" Grid.Row="2" Grid.Column="0"></Label>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

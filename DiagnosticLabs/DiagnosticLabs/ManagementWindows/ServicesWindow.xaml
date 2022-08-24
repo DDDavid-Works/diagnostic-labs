@@ -1,0 +1,47 @@
+﻿<Window x:Class="DiagnosticLabs.ManagementWindows.ServicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiagnosticLabs.ManagementWindows"
+        xmlns:menu="clr-namespace:DiagnosticLabs.UserControls"
+        mc:Ignorable="d"
+        Title="Services Management" Width="400" ShowInTaskbar="False"
+        SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel Orientation="Vertical">
+        <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
+                                       SearchCommand="ActionToolbar_SearchCommand"></menu:ActionToolbarUserControl>
+        <Grid Margin="10" VerticalAlignment="Top">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="ServiceNameLabel" Content="Service Name:" Grid.Row="0" Grid.Column="0"></Label>
+            <TextBox Name="ServiceNameTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Service.ServiceName, ValidatesOnDataErrors=True}"></TextBox>
+            <Label Name="ServiceDescriptionLabel" Content="Description:" Grid.Row="1" Grid.Column="0"></Label>
+            <TextBox Name="ServiceDescriptionTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Service.ServiceDescription, ValidatesOnDataErrors=True}"></TextBox>
+            <Label Name="PriceLabel" Content="Price:" Grid.Row="2" Grid.Column="0"></Label>
+            <TextBox Name="PriceTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Service.ServicePrice, ValidatesOnDataErrors=True}"></TextBox>
+        </Grid>
+    </StackPanel>
+</Window>
