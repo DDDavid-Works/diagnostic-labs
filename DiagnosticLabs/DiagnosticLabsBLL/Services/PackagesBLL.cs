@@ -125,8 +125,8 @@ namespace DiagnosticLabsBLL.Services
         #region
         private decimal PackagePrice(decimal packagePrice, string packagePriceString)
         {
-            long newPackagePrice = 0;
-            bool isDecimal = Int64.TryParse(packagePriceString, out newPackagePrice);
+            decimal newPackagePrice = 0;
+            bool isDecimal = decimal.TryParse(packagePriceString, out newPackagePrice);
             if (isDecimal && newPackagePrice != packagePrice)
                 return newPackagePrice;
             else

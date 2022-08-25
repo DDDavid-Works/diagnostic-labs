@@ -54,7 +54,6 @@ namespace DiagnosticLabs.UserControls
             ((Border)PrintButton.Parent).Visibility = PrintButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)SearchButton.Parent).Visibility = SearchButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)ShowListButton.Parent).Visibility = ShowListButtonVisible ? Visibility.Visible : Visibility.Collapsed;
-            DividerRectangle1.Visibility = ShowListButtonVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)

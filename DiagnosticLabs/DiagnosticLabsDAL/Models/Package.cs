@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.RegularExpressions;
 
 namespace DiagnosticLabsDAL.Models
 {
@@ -88,7 +89,7 @@ namespace DiagnosticLabsDAL.Models
         public string PackagePrice { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PackageName", "PackageDescription", "PackagePrice" };
+        private static readonly string[] PropertiesToValidate = { "PackageName", "PackageDescription", "PackagePrice", "CompanyId" };
 
         public string Error
         {
@@ -129,8 +130,11 @@ namespace DiagnosticLabsDAL.Models
                 if (!isDecimal)
                     result = "\r\nPackage Price is invalid.";
             }
+            else if (columnName == "CompanyId" && this.CompanyId == null)
+                result = "\r\nSelect a company.";
 
             ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
         }

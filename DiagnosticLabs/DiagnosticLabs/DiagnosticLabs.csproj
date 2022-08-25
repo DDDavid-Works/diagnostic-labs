@@ -246,6 +246,9 @@
     <Compile Include="UserControls\CompanyDetailsUserControl.xaml.cs">
       <DependentUpon>CompanyDetailsUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MessagesUserControl.xaml.cs">
+      <DependentUpon>MessagesUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\OkCancelUserControl.xaml.cs">
       <DependentUpon>OkCancelUserControl.xaml</DependentUpon>
     </Compile>
@@ -352,6 +355,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CompanyDetailsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MessagesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -668,16 +675,13 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\48x48\calculator.png">
+    <Resource Include="Images\48x48\payment.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\48x48\cancel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\48x48\carton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\48x48\cogs.png">
+    <Resource Include="Images\48x48\departments.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\48x48\company.png">
@@ -774,6 +778,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\labs.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

@@ -57,7 +57,7 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.Package = packagesBLL.GetPackage(id);
                 this.Package.PackagePrice = this.Package.Price.ToString("0.00");
-                this.SelectedCompany = companiesBLL.GetCompany((long)this.Package.CompanyId);
+                this.SelectedCompany = this.Companies.Where(c => c.Id == (long)this.Package.CompanyId).FirstOrDefault();
                 this.PackageServices = this.PackageServiceViewModelList(packageServicesBLL.GetPackageServicesByPackageId(id));
             }
 
@@ -84,23 +84,23 @@ namespace DiagnosticLabs.ViewModels
 
         private void SavePackage()
         {
+            this.Package.CompanyId =  this.SelectedCompany.Id;
             if (!this.Package.IsValid || this.PackageServices.Where(p => !p.PackageService.IsValid).Any())
             {
                 string errorMessages = this.Package.ErrorMessages;
                 errorMessages += string.Join("", this.PackageServices.Where(p => !p.PackageService.IsValid).Select(p => p.PackageService.ErrorMessages).ToList());
-                MessageBox.Show(errorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = errorMessages;
                 return;
             }
 
             long id = this.Package.Id;
-            this.Package.CompanyId = this.SelectedCompany.Id;
             if (packagesBLL.SaveWithPackageServices(this.Package, this.PackageServices.Select(p => p.PackageService).ToList(), ref id))
             {
                 this.Package.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeletePackage()
@@ -113,10 +113,10 @@ namespace DiagnosticLabs.ViewModels
             if (packagesBLL.SavePackage(this.Package, ref id))
             {
                 this.Package = packagesBLL.GetLatestPackage();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
         #endregion
 

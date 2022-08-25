@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DiagnosticLabs.UserControls"
-             mc:Ignorable="d" Loaded="UserControl_Loaded" Background="White">
+             mc:Ignorable="d" Loaded="UserControl_Loaded" Background="#d0e2d0">
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Height" Value="50" />
@@ -23,12 +23,12 @@
         </Style>
         <Style TargetType="Border">
             <Setter Property="BorderThickness" Value="0,1,0,1" />
-            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderBrush" Value="#99b299" />
         </Style>
     </UserControl.Resources>
     <Border>
         <StackPanel Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="NewButton" Command="{Binding NewCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/add.png"></Image>
@@ -36,7 +36,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="SaveButton" Command="{Binding SaveCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/save.png"></Image>
@@ -44,7 +44,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="DeleteButton" Command="{Binding DeleteCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/delete.png"></Image>
@@ -52,7 +52,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="PrintButton">
                     <StackPanel>
                         <Image Source="../Images/48x48/print.png"></Image>
@@ -60,7 +60,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="SearchButton" Click="SearchButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/search.png"></Image>
@@ -68,8 +68,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Rectangle Name="DividerRectangle1" Height="41" Width="2" Margin="2,0,2,0" Fill="DarkGray"></Rectangle>
-            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
                 <Button Name="ShowListButton" Click="ShowListButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/list2.png"></Image>

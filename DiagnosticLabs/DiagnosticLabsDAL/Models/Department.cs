@@ -96,7 +96,7 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "Departmentame" && this.DepartmentName.Trim() == string.Empty)
+            if (columnName == "DepartmentName" && this.DepartmentName.Trim() == string.Empty)
                 result = "Department Name can not be empty.";
 
             ErrorMessages += result;

@@ -6,50 +6,59 @@
         xmlns:local="clr-namespace:DiagnosticLabs"
         xmlns:bll="clr-namespace:DiagnosticLabsBLL.Globals;assembly=DiagnosticLabsBLL"
         mc:Ignorable="d"
-        Title="MainWindow" WindowState="Maximized" Icon="Images\labs.ico" Closed="Window_Closed">
+        Title="MainWindow" WindowState="Maximized" Icon="Images\labs.ico" Closed="Window_Closed" Background="#efffef">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="{Binding CompanySetup.CompanyName}"></Label>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
-            <Label Content="Current User:"></Label>
-            <Label Content="{Binding User.Username}"></Label>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <ItemsControl x:Name="ModulesMenu2">
-                <ItemsControl.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type bll:MenuItem}" ItemsSource="{Binding Items}">
-                        <Button>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Icon}"></Image>
-                                <TextBlock FontSize="15" Margin="2,2,0,0" Text="{Binding Title}" />
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding CompanySetup.CompanyName}" FontSize="24" 
+               BorderBrush="#99b299" BorderThickness="0,0,0,2"></Label>
+        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="#99b299" BorderThickness="0,0,0,2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Content="Current User:"></Label>
+                <Label Content="{Binding User.Username}"></Label>
+            </StackPanel>
+        </Border>
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Hidden" Background="#d0e2d0">
+            <StackPanel>
+                <ItemsControl Name="MainMenu" ItemsSource="{Binding MenuItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Name="ModuleTypeButton" Click="ModuleTypeButton_Click" CommandParameter="{Binding}"
+                                            HorizontalContentAlignment="Left" Height="50"
+                                            BorderThickness="0,0,0,2" BorderBrush="#99b299" Background="#d0e2d0">
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Image Source="{Binding Icon}" Height="28"></Image>
+                                        <TextBlock Text="{Binding Title}" FontSize="18" Margin="5" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel Visibility="Collapsed">
+                                    <ItemsControl ItemsSource="{Binding Items}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Name="ModuleButton" Click="ModuleButton_Click" CommandParameter="{Binding}"
+                                                            HorizontalContentAlignment="Left" BorderBrush="#99b299" BorderThickness="0,0,0,1"
+                                                            Background="#dfecdf">
+                                                    <StackPanel Margin="25,5,5,5" Orientation="Horizontal">
+                                                        <Image Source="{Binding Icon}" Height="20"></Image>
+                                                        <TextBlock FontSize="14" Text="{Binding Title}" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
                             </StackPanel>
-                        </Button>
-                    </HierarchicalDataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-        <TreeView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="ModulesMenu">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <EventSetter Event="MouseDoubleClick" Handler="TreeViewItem_MouseDoubleClick"></EventSetter>
-                    <EventSetter Event="KeyDown" Handler="TreeViewItem_KeyDown"></EventSetter>
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type bll:MenuItem}" ItemsSource="{Binding Items}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Icon}"></Image>
-                        <TextBlock FontSize="15" Margin="2,2,0,0" Text="{Binding Title}" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

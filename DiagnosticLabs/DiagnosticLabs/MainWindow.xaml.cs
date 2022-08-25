@@ -1,19 +1,14 @@
 ﻿using DiagnosticLabs.ManagementWindows;
-using DiagnosticLabsBLL.Globals;
+using DiagnosticLabs.SettingsWindows;
+using DiagnosticLabs.UserControls;
+using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Constants;
-using DiagnosticLabsBLL.Services;
-using DiagnosticLabsDAL.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using Button = System.Windows.Controls.Button;
 using MenuItem = DiagnosticLabsBLL.Globals.MenuItem;
-using DiagnosticLabs.UserControls;
-using DiagnosticLabs.SettingsWindows;
-using DiagnosticLabs.ViewModels;
-using System.Windows.Forms;
 
 namespace DiagnosticLabs
 {
@@ -22,11 +17,6 @@ namespace DiagnosticLabs
     /// </summary>
     public partial class MainWindow : Window
     {
-        UsersBLL usersBLL = new UsersBLL();
-        ModulesBLL modulesBLL = new ModulesBLL();
-        ModuleTypesBLL moduleTypesBLL = new ModuleTypesBLL();
-        UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
-
         CompanySetupWindow companySetupWindow = null;
         UsersWindow usersWindow = null;
         ChangePasswordWindow changePasswordWindow = null;
@@ -41,62 +31,12 @@ namespace DiagnosticLabs
         {
             InitializeComponent();
             this.DataContext = new MainViewModel(userId);
-
-            Globals.LOGGEDINUSERID = userId;
-            Globals.USERPERMISSIONS = userPermissionsBLL.GetUserPermissionsByUserId(Globals.LOGGEDINUSERID);
-            Globals.MODULES = modulesBLL.GetModules();
-            Globals.MODULETYPES = moduleTypesBLL.GetModuleTypes();
-
-            LoadModules();
         }
 
         #region Data to/from UI
         #endregion
 
         #region Private Methods
-        private void LoadModules()
-        {
-            string imagesPath = "Images/24x24/", imageExt = ".png";
-            List<int> permittedModuleIds = Globals.USERPERMISSIONS.Where(u => u.AllowCreate || u.AllowEdit || u.AllowDelete || u.AllowPrint).Select(u => u.ModuleId).ToList();
-            List<Module> permittedModules = Globals.MODULES.Where(m => permittedModuleIds.Any(i => i == m.Id)).ToList();
-            List<int> permittedModuleTypeIds = permittedModules.Select(m => m.ModuleTypeId).Distinct().ToList();
-            List<ModuleType> permittedModuleTypes = Globals.MODULETYPES.Where(m => permittedModuleTypeIds.Any(i => i == m.Id)).ToList();
-
-            foreach (var moduleType in permittedModuleTypes)
-            {
-                MenuItem type = new MenuItem() { Title = moduleType.ModuleTypeName, Icon = imagesPath + moduleType.Icon + imageExt };
-                List<Module> modulesPermitted = Globals.MODULES.Where(m => m.ModuleTypeId == moduleType.Id).ToList();
-                foreach (var module in modulesPermitted)
-                {
-                    UserPermission userPermission = Globals.USERPERMISSIONS.Where(u => u.ModuleId == module.Id).FirstOrDefault();
-                    MenuItem item = new MenuItem() { 
-                        Id = module.Id,
-                        Title = module.ModuleName,
-                        Icon = imagesPath + module.Icon + imageExt,
-                        Module = module,
-                        UserPermission = userPermission
-                    };
-                    type.Items.Add(item);
-                }
-                ModulesMenu.Items.Add(type);
-                ModulesMenu2.Items.Add(type);
-            }
-        }
-
-        private void LaunchModule(object sender)
-        {
-            if (sender is TreeViewItem && (!((TreeViewItem)sender).IsSelected))
-                return;
-
-            var menuItem = ModulesMenu.SelectedItem as MenuItem;
-            if (menuItem != null)
-            {
-                Action action = WindowAction(menuItem);
-                if (action != null)
-                    this.Dispatcher.BeginInvoke(action);
-            }
-        }
-
         private Action WindowAction(MenuItem menuItem)
         {
             switch (menuItem.Id)
@@ -106,6 +46,7 @@ namespace DiagnosticLabs
                     {
                         companySetupWindow = LoadWindow<CompanySetupWindow>();
                         SetActionToolbarUserControl(companySetupWindow.ActionToolbar, menuItem);
+                        companySetupWindow.Closed += new EventHandler(ClearWindow);
                         return () => companySetupWindow.Show();
                     }
                     else
@@ -115,6 +56,7 @@ namespace DiagnosticLabs
                     {
                         usersWindow = LoadWindow<UsersWindow>();
                         SetActionToolbarUserControl(usersWindow.ActionToolbar, menuItem);
+                        usersWindow.Closed += new EventHandler(ClearWindow);
                         return () => usersWindow.Show();
                     }
                     else
@@ -124,6 +66,7 @@ namespace DiagnosticLabs
                     {
                         changePasswordWindow = LoadWindow<ChangePasswordWindow>();
                         SetActionToolbarUserControl(changePasswordWindow.ActionToolbar, menuItem);
+                        changePasswordWindow.Closed += new EventHandler(ClearWindow);
                         return () => changePasswordWindow.Show();
                     }
                     else
@@ -133,6 +76,7 @@ namespace DiagnosticLabs
                     {
                         departmentsWindow = LoadWindow<DepartmentsWindow>();
                         SetActionToolbarUserControl(departmentsWindow.ActionToolbar, menuItem);
+                        departmentsWindow.Closed += new EventHandler(ClearWindow);
                         return () => departmentsWindow.Show();
                     }
                     else
@@ -142,6 +86,7 @@ namespace DiagnosticLabs
                     {
                         servicesWindow = LoadWindow<ServicesWindow>();
                         SetActionToolbarUserControl(servicesWindow.ActionToolbar, menuItem);
+                        servicesWindow.Closed += new EventHandler(ClearWindow);
                         return () => servicesWindow.Show();
                     }
                     else
@@ -151,6 +96,7 @@ namespace DiagnosticLabs
                     {
                         itemsWindow = new ItemsWindow();
                         SetActionToolbarUserControl(itemsWindow.ActionToolbar, menuItem);
+                        itemsWindow.Closed += new EventHandler(ClearWindow);
                         return () => itemsWindow.Show();
                     }
                     else
@@ -160,6 +106,7 @@ namespace DiagnosticLabs
                     {
                         itemLocationsWindow = LoadWindow<ItemLocationsWindow>();
                         SetActionToolbarUserControl(itemLocationsWindow.ActionToolbar, menuItem);
+                        itemLocationsWindow.Closed += new EventHandler(ClearWindow);
                         return () => itemLocationsWindow.Show();
                     }
                     else
@@ -169,6 +116,7 @@ namespace DiagnosticLabs
                     {
                         companiesWindow = LoadWindow<CompaniesWindow>();
                         SetActionToolbarUserControl(companiesWindow.ActionToolbar, menuItem);
+                        companiesWindow.Closed += new EventHandler(ClearWindow);
                         return () => companiesWindow.Show();
                     }
                     else
@@ -178,6 +126,7 @@ namespace DiagnosticLabs
                     {
                         packagesWindow = LoadWindow<PackagesWindow>();
                         SetActionToolbarUserControl(packagesWindow.ActionToolbar, menuItem);
+                        packagesWindow.Closed += new EventHandler(ClearWindow);
                         return () => packagesWindow.Show();
                     }
                     else
@@ -201,24 +150,53 @@ namespace DiagnosticLabs
             actionToolbarUserControl.SearchButtonVisible = menuItem.Module.HasSearch;
             actionToolbarUserControl.ShowListButtonVisible = menuItem.Module.HasShowList;
         }
+
+        private void ClearWindow(object sender, EventArgs e)
+        {
+            if (sender.GetType() == typeof(CompanySetupWindow))
+                companySetupWindow = null;
+            else if (sender.GetType() == typeof(UsersWindow))
+                usersWindow = null;
+            else if (sender.GetType() == typeof(ChangePasswordWindow))
+                changePasswordWindow = null;
+            else if (sender.GetType() == typeof(DepartmentsWindow))
+                departmentsWindow = null;
+            else if (sender.GetType() == typeof(ServicesWindow))
+                servicesWindow = null;
+            else if (sender.GetType() == typeof(ItemsWindow))
+                itemsWindow = null;
+            else if (sender.GetType() == typeof(ItemLocationsWindow))
+                itemLocationsWindow = null;
+            else if (sender.GetType() == typeof(CompaniesWindow))
+                companiesWindow = null;
+            else if (sender.GetType() == typeof(PackagesWindow))
+                packagesWindow = null;
+        }
         #endregion Private Methods
 
         #region UI Events
-        private void TreeViewItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            LaunchModule(sender);
-        }
-
-        private void TreeViewItem_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                LaunchModule(sender);
-        }
-        #endregion UI Events
-
         private void Window_Closed(object sender, EventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void ModuleTypeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button menuButton = (Button)sender;
+            StackPanel itemStackPanel = (((StackPanel)menuButton.Parent).Children.OfType<StackPanel>()).First();
+
+            itemStackPanel.Visibility = itemStackPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void ModuleButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)((Button)sender).CommandParameter;
+
+            Action action = WindowAction(menuItem);
+            if (action != null)
+                this.Dispatcher.BeginInvoke(action);
+
+        }
+        #endregion UI Events
     }
 }

@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Background="#aee571">
+        <StackPanel Grid.Row="0" Grid.Column="0" Background="#dfffdf">
             <Border BorderThickness="1" BorderBrush="Black" Margin="20" Height="200" Width="200" Padding="2" HorizontalAlignment="Left">
                 <Image Name="CompanyLogoImage" Source="{Binding LogoImageSource}"></Image>
             </Border>
