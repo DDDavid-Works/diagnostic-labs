@@ -75,13 +75,14 @@ namespace DiagnosticLabs.ViewModels
             this.User.IsAdmin = false;
             this.UserPermissionModuleTypes = UserPermissionModuleTypeViewModelList(null);
             this.SelectedUserPermissionModuleType = this.UserPermissionModuleTypes.First();
+            this.ClearNotificationMessages();
         }
 
         private void SaveUser()
         {
             if (!this.User.IsValid)
             {
-                MessageBox.Show(this.User.ErrorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.User.ErrorMessages;
                 return;
             }
 
@@ -89,10 +90,10 @@ namespace DiagnosticLabs.ViewModels
             if (usersBLL.SaveUserWithUserPermissions(this.User, UserPermissionsFromUserPermissionModuleTypes(), ref id))
             {
                 this.User.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeleteUser()
@@ -105,10 +106,10 @@ namespace DiagnosticLabs.ViewModels
             if (usersBLL.SaveUser(this.User, ref id))
             {
                 this.User = usersBLL.GetLatestUser();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
         #endregion
 

@@ -3,20 +3,17 @@ using DiagnosticLabsBLL.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.POCOs;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class ItemViewModel
+    public class ItemViewModel : BaseViewModel
     {
         private const string EntityName = "Item";
 
@@ -69,6 +66,7 @@ namespace DiagnosticLabs.ViewModels
             this.Item.Cost = 0;
             this.Item.IsActive = true;
             this.ItemQuantities.Clear();
+            this.ClearNotificationMessages();
         }
 
         private void SaveItem()
@@ -79,10 +77,10 @@ namespace DiagnosticLabs.ViewModels
             if (itemsBLL.SaveWithQuantities(this.Item, new List<ItemQuantity>(this.ItemQuantities), ref id))
             {
                 this.Item.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeleteItem()
@@ -95,10 +93,10 @@ namespace DiagnosticLabs.ViewModels
             if (itemsBLL.SaveItem(this.Item, ref id))
             {
                 this.Item = itemsBLL.GetLatestItem();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
 
         private void AddItemQuantity()

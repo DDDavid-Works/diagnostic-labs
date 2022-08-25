@@ -28,5 +28,11 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        public void ClearNotificationMessages()
+        {
+            this.NotificationMessages = string.Empty;
+            this.NotificationMessagesVisibility = Visibility.Hidden;
+        }
     }
 }

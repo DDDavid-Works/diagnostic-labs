@@ -47,14 +47,14 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.CompanySetup.IsValid)
             {
-                MessageBox.Show(this.CompanySetup.ErrorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.CompanySetup.ErrorMessages;
                 return;
             }
 
             if (companySetupBLL.SaveCompanySetup(this.CompanySetup))
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
         #endregion
 

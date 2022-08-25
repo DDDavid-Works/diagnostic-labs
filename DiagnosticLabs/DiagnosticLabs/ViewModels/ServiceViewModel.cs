@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class ServiceViewModel
+    public class ServiceViewModel : BaseViewModel
     {
         private const string EntityName = "Service";
 
@@ -44,13 +44,14 @@ namespace DiagnosticLabs.ViewModels
             this.Service.Price = 0;
             this.Service.IsActive = true;
             this.Service.ServicePrice = "0.00";
+            this.ClearNotificationMessages();
         }
 
         private void SaveService()
         {
             if (!this.Service.IsValid)
             {
-                MessageBox.Show(this.Service.ErrorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.Service.ErrorMessages;
                 return;
             }
 
@@ -58,10 +59,10 @@ namespace DiagnosticLabs.ViewModels
             if (servicesBLL.SaveService(this.Service, ref id))
             {
                 this.Service.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeleteService()
@@ -74,10 +75,10 @@ namespace DiagnosticLabs.ViewModels
             if (servicesBLL.SaveService(this.Service, ref id))
             {
                 this.Service = servicesBLL.GetLatestService();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
         #endregion
 

@@ -9,6 +9,7 @@
         Title="Companies Management" Width="400" ShowInTaskbar="False"
         SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
+        <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
                                        SearchCommand="ActionToolbar_SearchCommand"></menu:ActionToolbarUserControl>
         <Grid Margin="10" VerticalAlignment="Top">

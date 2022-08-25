@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="Company Setup" Width="770" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
+        <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}"></menu:ActionToolbarUserControl>
         <Grid Margin="10" VerticalAlignment="Top">
             <Grid.Resources>

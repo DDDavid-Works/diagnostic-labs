@@ -47,8 +47,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.User.IsValid)
             {
-                string errorMessages = this.User.ErrorMessages;
-                MessageBox.Show(errorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.User.ErrorMessages;
                 return;
             }
 
@@ -56,10 +55,10 @@ namespace DiagnosticLabs.ViewModels
             if (usersBLL.SaveUser(this.User, ref id))
             {
                 this.User.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
         #endregion
 

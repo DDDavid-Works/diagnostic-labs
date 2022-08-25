@@ -109,6 +109,7 @@ namespace DiagnosticLabsDAL.Models
             //    result = "\r\nPassword can not be empty.";
 
             ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
         }

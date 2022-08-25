@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class DepartmentViewModel
+    public class DepartmentViewModel : BaseViewModel
     {
         private const string EntityName = "Department";
 
@@ -39,13 +39,14 @@ namespace DiagnosticLabs.ViewModels
             this.Department.DepartmentName = string.Empty;
             this.Department.DepartmentDescription = string.Empty;
             this.Department.IsActive = true;
+            this.ClearNotificationMessages();
         }
 
         private void SaveDepartment()
         {
             if (!this.Department.IsValid)
             {
-                MessageBox.Show(this.Department.ErrorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.Department.ErrorMessages;
                 return;
             }
             
@@ -53,10 +54,10 @@ namespace DiagnosticLabs.ViewModels
             if (departmentsBLL.SaveDepartment(this.Department, ref id))
             {
                 this.Department.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeleteDepartment()
@@ -68,11 +69,11 @@ namespace DiagnosticLabs.ViewModels
             this.Department.IsActive = false;
             if (departmentsBLL.SaveDepartment(this.Department, ref id))
             {
-                NewDepartment();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Department = departmentsBLL.GetLatestDepartment();
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
         #endregion
     }

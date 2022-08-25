@@ -81,44 +81,42 @@ namespace DiagnosticLabsDAL.Models
         }
 
         #region Validation
-        private static readonly string[] ValidatedProperties = { "CompanyName" };
+        private static readonly string[] PropertiesToValidate = { "CompanyName" };
 
         public string Error
         {
-            get { return null; }
+            get { return ErrorMessages.Trim(); }
         }
 
         public string this[string columnName]
         {
-            get
-            {
-                return GetValidationError(columnName);
-            }
+            get { return !ValidateOnChange ? string.Empty : GetValidationError(columnName); }
         }
 
         public bool IsValid
         {
             get
             {
-                foreach (string property in ValidatedProperties)
-                {
+                ErrorMessages = string.Empty;
+
+                bool errorFound = false;
+                foreach (string property in PropertiesToValidate)
                     if (GetValidationError(property) != string.Empty)
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                        errorFound = true;
+
+                return !errorFound;
             }
         }
 
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "CompanyName")
-            {
-                if (this.CompanyName == "")
-                    result = "Name can not be empty";
-            }
+            if (columnName == "CompanyName" && this.CompanyName == "")
+                result = "Name can not be empty";
+
+            ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
+
             return result;
         }
         #endregion

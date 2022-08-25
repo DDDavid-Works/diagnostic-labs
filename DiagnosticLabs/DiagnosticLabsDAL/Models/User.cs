@@ -146,6 +146,7 @@ namespace DiagnosticLabsDAL.Models
             }
 
             ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
         }

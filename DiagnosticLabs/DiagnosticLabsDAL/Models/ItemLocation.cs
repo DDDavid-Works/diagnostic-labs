@@ -93,6 +93,7 @@ namespace DiagnosticLabsDAL.Models
                 result = "Name can not be empty";
 
             ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
         }

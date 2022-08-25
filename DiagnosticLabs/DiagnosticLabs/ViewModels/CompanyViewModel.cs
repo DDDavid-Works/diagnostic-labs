@@ -2,17 +2,12 @@
 using DiagnosticLabsBLL.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class CompanyViewModel
+    public class CompanyViewModel : BaseViewModel
     {
         private const string EntityName = "Company";
 
@@ -46,13 +41,14 @@ namespace DiagnosticLabs.ViewModels
             this.Company.ContactNumbers = string.Empty;
             this.Company.ContactPerson = string.Empty;
             this.Company.IsActive = true;
+            this.ClearNotificationMessages();
         }
 
         private void SaveCompany()
         {
             if (!this.Company.IsValid)
             {
-                MessageBox.Show(this.Company.ErrorMessages, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = this.Company.ErrorMessages;
                 return;
             }
 
@@ -60,10 +56,10 @@ namespace DiagnosticLabs.ViewModels
             if (companiesBLL.SaveCompany(this.Company, ref id))
             {
                 this.Company.Id = id;
-                MessageBox.Show(Messages.SavedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.SavedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.SaveFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.SaveFailed;
         }
 
         private void DeleteCompany()
@@ -76,10 +72,10 @@ namespace DiagnosticLabs.ViewModels
             if (companiesBLL.SaveCompany(this.Company, ref id))
             {
                 this.Company = companiesBLL.GetLatestCompany();
-                MessageBox.Show(Messages.DeletedSuccessfully, EntityName, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NotificationMessages = Messages.DeletedSuccessfully;
             }
             else
-                MessageBox.Show(Messages.DeleteFailed, EntityName, MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NotificationMessages = Messages.DeleteFailed;
         }
         #endregion
     }

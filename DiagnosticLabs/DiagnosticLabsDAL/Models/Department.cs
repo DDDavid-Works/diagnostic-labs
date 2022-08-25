@@ -100,6 +100,7 @@ namespace DiagnosticLabsDAL.Models
                 result = "Department Name can not be empty.";
 
             ErrorMessages += result;
+            ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
         }

@@ -80,6 +80,7 @@ namespace DiagnosticLabs.ViewModels
             this.SelectedCompany = this.Companies.First();
             this.Package.PackagePrice = "0.00";
             this.PackageServices = new ObservableCollection<PackageServiceViewModel>();
+            this.ClearNotificationMessages();
         }
 
         private void SavePackage()
