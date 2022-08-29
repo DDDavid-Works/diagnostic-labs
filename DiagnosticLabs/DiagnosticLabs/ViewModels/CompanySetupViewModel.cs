@@ -1,5 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabsBLL.Constants;
+using DiagnosticLabs.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System;

@@ -1,5 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabsBLL.Constants;
+using DiagnosticLabs.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Windows;
@@ -11,6 +11,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "Department";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         DepartmentsBLL departmentsBLL = new DepartmentsBLL();
 
         #region Public Properties
@@ -65,7 +66,7 @@ namespace DiagnosticLabs.ViewModels
 
         private void DeleteDepartment()
         {
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to delete this department?", EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Department.Id;

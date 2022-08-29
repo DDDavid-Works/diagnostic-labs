@@ -1,11 +1,7 @@
-﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabsBLL.Constants;
+﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using System.Security.Cryptography;
-using System.Text;
-using System;
-using System.Windows;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels

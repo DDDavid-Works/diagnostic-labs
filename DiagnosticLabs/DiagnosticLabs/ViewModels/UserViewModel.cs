@@ -1,5 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabsBLL.Constants;
+using DiagnosticLabs.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "User";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         UsersBLL usersBLL = new UsersBLL();
         UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
         ModulesBLL modulesBLL = new ModulesBLL();
@@ -98,7 +99,7 @@ namespace DiagnosticLabs.ViewModels
 
         private void DeleteUser()
         {
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to delete this user?", EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.User.Id;

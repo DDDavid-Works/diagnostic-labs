@@ -24,14 +24,27 @@
             <RowDefinition Height="2"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CompanySetup.CompanyName}" 
-               BorderBrush="#99b299" BorderThickness="0,0,0,2"></Label>
-        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Label Content="Current User:" FontSize="20"></Label>
-            <Label Content="{Binding User.Username}" FontSize="18"></Label>
-        </StackPanel>
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="#ea9a62" BorderThickness="0,2,0,2" />
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="#99b299" BorderThickness="0,2,0,0" />
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="CompanyNameLabel" Grid.Row="0" Grid.Column="0" Content="{Binding CompanySetup.CompanyName}" HorizontalContentAlignment="Left"></Label>
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+                <Label Content="Current User:" FontSize="18"></Label>
+                <Label Name="UsernameLabel" Content="{Binding User.FullName}" FontSize="20" FontWeight="Bold"></Label>
+                <Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Padding="0,5,0,0">
+                    <StackPanel>
+                        <Image Height="28" Source="../Images/32x32/permission.png"></Image>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="#ea9a62" BorderThickness="0,5,0,0" />
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="#99b299" BorderThickness="0,5,0,0" />
         <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Hidden" Background="#d0e2d0">
             <StackPanel>
                 <ItemsControl Name="MainMenu" ItemsSource="{Binding MenuItems}">

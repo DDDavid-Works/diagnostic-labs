@@ -194,7 +194,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommonFunctions.cs" />
+    <Compile Include="Constants\Messages.cs" />
+    <Compile Include="Constants\SingleLineEntries.cs" />
+    <Compile Include="Constants\Texts.cs" />
     <Compile Include="Converters\ItemNameConverter.cs" />
+    <Compile Include="EntryBuilderWindows\SingleLineEntryWindow.xaml.cs">
+      <DependentUpon>SingleLineEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -264,7 +271,6 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
-    <Compile Include="ViewModels\CommonFunctions.cs" />
     <Compile Include="ViewModels\CompanySetupViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
@@ -278,10 +284,15 @@
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
+    <Compile Include="ViewModels\SingleEntryViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="WindowsBaseClass.cs" />
+    <Page Include="EntryBuilderWindows\SingleLineEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

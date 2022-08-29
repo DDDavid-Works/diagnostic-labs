@@ -48,7 +48,8 @@
             <TextBox Name="PriceTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Package.PackagePrice, ValidatesOnDataErrors=True}" HorizontalContentAlignment="Right"></TextBox>
             <Border BorderThickness="0,0,0,1" BorderBrush="Black" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
             <Label Name="ServicesLabel" Content="Included Services:" Grid.Row="4" Grid.Column="0" Margin="0,5,0,0"></Label>
-            <Button Name="AddServiceButton" Grid.Row="5" Grid.Column="1" Click="AddServiceButton_Click" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button Name="AddServiceButton" Grid.Row="5" Grid.Column="1" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Click="AddServiceButton_Click" >
                 <StackPanel>
                     <Image Source="/Images/16x16/add.png" />
                 </StackPanel>
