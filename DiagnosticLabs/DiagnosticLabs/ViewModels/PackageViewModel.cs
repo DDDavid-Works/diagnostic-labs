@@ -48,11 +48,7 @@ namespace DiagnosticLabs.ViewModels
             this.Companies = new ObservableCollection<Company>(companies);
 
             if (id == 0)
-            {
-                this.Package = new Package() { Id = 0, PackageName = string.Empty, PackageDescription = string.Empty, Price = 0, IsActive = true, PackagePrice = "0.00" };
-                this.SelectedCompany = this.Companies.First();
-                this.PackageServices = new ObservableCollection<PackageServiceViewModel>();
-            }
+                NewPackage();
             else
             {
                 this.Package = packagesBLL.GetPackage(id);
@@ -72,6 +68,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPackage()
         {
+            if (this.Package == null)
+                this.Package = new Package();
+
             this.Package.Id = 0;
             this.Package.PackageName = string.Empty;
             this.Package.PackageDescription = string.Empty;

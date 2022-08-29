@@ -43,10 +43,7 @@ namespace DiagnosticLabs.ViewModels
             this.UserPermissions = new List<UserPermission>();
 
             if (id == 0)
-            {
-                this.User = new User() { Id = 0, Username = string.Empty, Password = string.Empty, IsActive = true, IsAdmin = false };
-                this.UserPermissionModuleTypes = UserPermissionModuleTypeViewModelList(null);
-            }
+                NewUser();
             else
             {
                 this.User = usersBLL.GetUser(id);
@@ -68,6 +65,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewUser()
         {
+            if (this.User == null)
+                this.User = new User();
+
             this.User.Id = 0;
             this.User.Username = string.Empty;
             this.User.Password = string.Empty;

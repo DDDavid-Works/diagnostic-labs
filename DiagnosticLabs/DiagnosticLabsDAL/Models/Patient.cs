@@ -3,19 +3,21 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class User : BaseModel, IDataErrorInfo
+    public class Patient : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private string il_Username;
-        private string il_FullName;
-        private string il_Password;
+        private string il_PatientName;
+        private DateTime? il_DateOfBirth;
+        private string il_Age;
+        private string il_Gender;
+        private string il_CivilStatus;
+        private string il_ContactNumbers;
+        private string il_Address;
+        private long? il_CompanyId;
         private bool il_IsActive;
-        private bool il_IsAdmin;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
         private long il_UpdatedByUserId;
@@ -25,37 +27,61 @@ namespace DiagnosticLabsDAL.Models
         public long Id
         {
             get { return il_Id; }
-            set { il_Id = value; OnPropertyChanged("Id");}
+            set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public string Username
+        public string PatientName
         {
-            get { return il_Username; }
-            set { il_Username = value; OnPropertyChanged("Username"); }
+            get { return il_PatientName; }
+            set { il_PatientName = value; OnPropertyChanged("PatientName"); }
         }
 
-        public string FullName
+        public DateTime? DateOfBirth
         {
-            get { return il_FullName; }
-            set { il_FullName = value; OnPropertyChanged("FullName"); }
+            get { return il_DateOfBirth; }
+            set { il_DateOfBirth = value; OnPropertyChanged("DateOfBirth"); }
         }
 
-        public string Password
+        public string Age
         {
-            get { return il_Password; }
-            set { il_Password = value; OnPropertyChanged("Password"); }
+            get { return il_Age; }
+            set { il_Age = value; OnPropertyChanged("Age"); }
+        }
+
+        public string Gender
+        {
+            get { return il_Gender; }
+            set { il_Gender = value; OnPropertyChanged("Gender"); }
+        }
+
+        public string CivilStatus
+        {
+            get { return il_CivilStatus; }
+            set { il_CivilStatus = value; OnPropertyChanged("CivilStatus"); }
+        }
+
+        public string Address
+        {
+            get { return il_Address; }
+            set { il_Address = value; OnPropertyChanged("Address"); }
+        }
+
+        public string ContactNumbers
+        {
+            get { return il_ContactNumbers; }
+            set { il_ContactNumbers = value; OnPropertyChanged("ContactNumbers"); }
+        }
+
+        public long? CompanyId
+        {
+            get { return il_CompanyId; }
+            set { il_CompanyId = value; OnPropertyChanged("CompanyId"); }
         }
 
         public bool IsActive
         {
             get { return il_IsActive; }
             set { il_IsActive = value; OnPropertyChanged("IsActive"); }
-        }
-
-        public bool IsAdmin
-        {
-            get { return il_IsAdmin; }
-            set { il_IsAdmin = value; OnPropertyChanged("IsAdmin"); }
         }
 
         public long CreatedByUserId
@@ -83,19 +109,10 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public string OriginalPassword { get; set; }
-
-        [NotMapped]
-        public string OldPassword { get; set; }
-
-        [NotMapped]
-        public string NewPassword { get; set; }
-        
-        [NotMapped]
-        public string ConfirmPassword { get; set; }
+        public bool IsAgeEdited { get; set; } = false;
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "Username" };
+        private static readonly string[] PropertiesToValidate = { "PatientName" };
 
         public string Error
         {
@@ -125,8 +142,8 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "Username" && this.Username.Trim() == string.Empty && this.Id != 0)
-                result = "User Name can not be empty.";
+            if (columnName == "PatientName" && this.PatientName.Trim() == string.Empty)
+                result = "Name can not be empty.";
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

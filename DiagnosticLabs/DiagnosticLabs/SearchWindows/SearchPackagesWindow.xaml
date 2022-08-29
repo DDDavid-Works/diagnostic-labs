@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DiagnosticLabs.SearchWindows"
         xmlns:uc="clr-namespace:DiagnosticLabs.UserControls"
         mc:Ignorable="d"
-        Title="Search Packages" Width="400" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Search Packages" Width="400" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf">
     <Grid Margin="5">
         <Grid.Resources>
             <Style TargetType="Label">
@@ -32,7 +32,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="30*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -47,7 +47,7 @@
         <Label Name="NameLabel" Content="Name:" Grid.Row="1" Grid.Column="0"></Label>
         <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1"></TextBox>
         <Button Name="SearchButton" Content="Search" Grid.Row="2" Grid.Column="1" Click="SearchButton_Click"></Button>
-        <DataGrid Name="PackagesDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+        <DataGrid Name="PackagesDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
             AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"
             ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="PackagesDataGrid_MouseDoubleClick">
             <DataGrid.Columns>

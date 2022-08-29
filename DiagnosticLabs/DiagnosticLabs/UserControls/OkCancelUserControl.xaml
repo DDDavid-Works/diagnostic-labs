@@ -10,6 +10,8 @@
             <Setter Property="Height" Value="50" />
             <Setter Property="Width" Value="50" />
             <Setter Property="Margin" Value="2" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
         <Style TargetType="Image">
             <Setter Property="Width" Value="30" />
@@ -25,17 +27,21 @@
         </Style>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-        <Button Name="OkButton" Click="OkButton_Click">
-            <StackPanel>
-                <Image Source="../Images/32x32/ok.png"></Image>
-                <TextBlock>Ok</TextBlock>
-            </StackPanel>
-        </Button>
-        <Button Name="CancelButton" Click="CancelButton_Click">
-            <StackPanel>
-                <Image Source="../Images/32x32/cancel.png"></Image>
-                <TextBlock>Cancel</TextBlock>
-            </StackPanel>
-        </Button>
+        <Border BorderBrush="#99b299" BorderThickness="1,0,1,0" Margin="0,3,0,3">
+            <Button Name="OkButton" Click="OkButton_Click">
+                <StackPanel>
+                    <Image Source="../Images/32x32/ok.png"></Image>
+                    <TextBlock>Ok</TextBlock>
+                </StackPanel>
+            </Button>
+        </Border>
+        <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Button Name="CancelButton" Click="CancelButton_Click">
+                <StackPanel>
+                    <Image Source="../Images/32x32/cancel.png"></Image>
+                    <TextBlock>Cancel</TextBlock>
+                </StackPanel>
+            </Button>
+        </Border>
     </StackPanel>
 </UserControl>

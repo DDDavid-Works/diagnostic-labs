@@ -85,6 +85,7 @@
     <None Include="Scripts\Data\Services.sql" />
     <None Include="Scripts\Data\Departments.sql" />
     <None Include="Scripts\Data\CompanySetups.sql" />
+    <Build Include="Tables\Patients.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagnosticLabsDatabase.publish.xml" />

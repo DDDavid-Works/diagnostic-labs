@@ -23,7 +23,7 @@ namespace DiagnosticLabs.ViewModels
         public ServiceViewModel(long id)
         {
             if (id == 0)
-                this.Service = new Service() { Id = 0, ServiceName = string.Empty, ServiceDescription = string.Empty, Price = 0, IsActive = true };
+                NewService();
             else
             {
                 this.Service = servicesBLL.GetService(id);
@@ -38,6 +38,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewService()
         {
+            if (this.Service == null)
+                this.Service = new Service();
+
             this.Service.Id = 0;
             this.Service.ServiceName = string.Empty;
             this.Service.ServiceDescription = string.Empty;

@@ -23,7 +23,7 @@ namespace DiagnosticLabs.ViewModels
         public CompanyViewModel(long id)
         {
             if (id == 0)
-                this.Company = new Company() { Id = 0, CompanyName = string.Empty, Address = string.Empty, ContactNumbers = string.Empty, ContactPerson = string.Empty, IsActive = true };
+                NewCompany();
             else
                 this.Company = companiesBLL.GetCompany(id);
 
@@ -35,6 +35,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewCompany()
         {
+            if (this.Company == null)
+                this.Company = new Company();
+            
             this.Company.Id = 0;
             this.Company.CompanyName = string.Empty;
             this.Company.Address = string.Empty;

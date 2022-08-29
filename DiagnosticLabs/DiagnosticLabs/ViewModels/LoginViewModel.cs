@@ -17,6 +17,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "Login";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         UsersBLL usersBLL = new UsersBLL();
         CompanySetupBLL companySetupBLL = new CompanySetupBLL();
 
@@ -53,7 +54,7 @@ namespace DiagnosticLabs.ViewModels
         private void Login()
         {
             //long userId = 0;
-            //this.IsLoginSuccess = usersBLL.IsLoginSuccess(this.Username, this.Password, ref userId);
+            //this.IsLoginSuccess = usersBLL.IsLoginSuccess(this.Username, commonFunctions.HashPassword(this.Password), ref userId);
             //this.LoggedUserId = userId;
 
             //AUTO LOGIN

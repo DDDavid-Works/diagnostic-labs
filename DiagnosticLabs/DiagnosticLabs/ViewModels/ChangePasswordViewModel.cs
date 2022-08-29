@@ -2,6 +2,9 @@
 using DiagnosticLabsBLL.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using System.Security.Cryptography;
+using System.Text;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,6 +14,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "ChangePassword";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         UsersBLL usersBLL = new UsersBLL();
 
         #region Public Properties
@@ -32,9 +36,7 @@ namespace DiagnosticLabs.ViewModels
                 this.User.OldPassword = string.Empty;
             }
             else
-                this.User = new User() { Id = 0 };
-
-            this.User.IsChangePassword = true;
+                this.User = new User() { Id = 0, Username = string.Empty, Password = string.Empty };
 
             this.SaveCommand = new RelayCommand(param => SavePassword());
             this.UpdateOldPasswordCommand = new RelayCommand(param => UpdateOldPassword((string)param));
@@ -45,13 +47,14 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void SavePassword()
         {
-            if (!this.User.IsValid)
+            if (!this.User.IsValid || !this.IsValid())
             {
                 this.NotificationMessages = this.User.ErrorMessages;
                 return;
             }
 
             long id = this.User.Id;
+            this.User.Password = commonFunctions.HashPassword(this.User.NewPassword);
             if (usersBLL.SaveUser(this.User, ref id))
             {
                 this.User.Id = id;
@@ -70,12 +73,36 @@ namespace DiagnosticLabs.ViewModels
 
         private void UpdateNewPassword(string password)
         {
-            this.User.Password = password;
+            this.User.NewPassword = password;
         }
 
         private void UpdateConfirmPassword(string confirmPassword)
         {
             this.User.ConfirmPassword = confirmPassword;
+        }
+        #endregion
+
+        #region Validation
+        private bool IsValid()
+        {
+            string result = string.Empty;
+
+            if (this.User.Id == 0)
+                result = "Please select a user first.";
+            else
+            {
+                if (this.User.NewPassword != this.User.ConfirmPassword)
+                    result = "\r\nPassword does not match.";
+
+                if (this.User.OriginalPassword != string.Empty && this.User.OldPassword != string.Empty)
+                    if (this.User.OriginalPassword != commonFunctions.HashPassword(this.User.OldPassword))
+                        result += "\r\nOld password is incorrect.";
+            }
+
+            this.User.ErrorMessages += result;
+            this.User.ErrorMessages = this.User.ErrorMessages.Trim('\r', '\n');
+
+            return result.Trim() == string.Empty;
         }
         #endregion
     }

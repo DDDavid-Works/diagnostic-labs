@@ -23,7 +23,7 @@ namespace DiagnosticLabs.ViewModels
         public DepartmentViewModel(long id)
         {
             if (id == 0)
-                this.Department = new Department() { Id = 0, DepartmentName = string.Empty, IsActive = true };
+                NewDepartment();
             else
                 this.Department = departmentsBLL.GetDepartment(id);
 
@@ -35,6 +35,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewDepartment()
         {
+            if (this.Department == null)
+                this.Department = new Department();
+            
             this.Department.Id = 0;
             this.Department.DepartmentName = string.Empty;
             this.Department.DepartmentDescription = string.Empty;

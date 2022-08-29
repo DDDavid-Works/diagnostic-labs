@@ -1,6 +1,5 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
-using DiagnosticLabsDAL.Models;
 using System.Windows;
 
 namespace DiagnosticLabs.SettingsWindows

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiagnosticLabs"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="500" Width="800" 
+        Title="LoginWindow" Height="500" Width="800" Icon="Images\labs.ico"
         ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>

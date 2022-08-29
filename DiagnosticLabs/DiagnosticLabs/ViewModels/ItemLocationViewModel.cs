@@ -23,7 +23,7 @@ namespace DiagnosticLabs.ViewModels
         public ItemLocationViewModel(long id)
         {
             if (id == 0)
-                this.ItemLocation = new ItemLocation() { Id = 0, ItemLocationName = string.Empty, IsActive = true };
+                NewItemLocation();
             else
                 this.ItemLocation = itemLocationsBLL.GetItemLocation(id);
 
@@ -35,6 +35,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewItemLocation()
         {
+            if (this.ItemLocation == null)
+                this.ItemLocation = new ItemLocation();
+
             this.ItemLocation.Id = 0;
             this.ItemLocation.ItemLocationName = string.Empty;
             this.ItemLocation.IsActive = true;

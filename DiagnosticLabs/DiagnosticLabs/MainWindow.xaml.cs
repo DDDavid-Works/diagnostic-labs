@@ -1,8 +1,9 @@
 ﻿using DiagnosticLabs.ManagementWindows;
+using DiagnosticLabs.RegistrationWindows;
 using DiagnosticLabs.SettingsWindows;
 using DiagnosticLabs.UserControls;
 using DiagnosticLabs.ViewModels;
-using DiagnosticLabsBLL.Constants;
+using DiagnosticLabsBLL.Globals;
 using System;
 using System.Linq;
 using System.Windows;
@@ -17,6 +18,7 @@ namespace DiagnosticLabs
     /// </summary>
     public partial class MainWindow : Window
     {
+        PatientsWindow patientsWindow = null;
         CompanySetupWindow companySetupWindow = null;
         UsersWindow usersWindow = null;
         ChangePasswordWindow changePasswordWindow = null;
@@ -39,8 +41,18 @@ namespace DiagnosticLabs
         #region Private Methods
         private Action WindowAction(MenuItem menuItem)
         {
-            switch (menuItem.Id)
+            switch (menuItem.Module.ModuleName)
             {
+                case Modules.Patients:
+                    if (patientsWindow == null)
+                    {
+                        patientsWindow = LoadWindow<PatientsWindow>();
+                        SetActionToolbarUserControl(patientsWindow.ActionToolbar, menuItem);
+                        patientsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => patientsWindow.Show();
+                    }
+                    else
+                        return () => patientsWindow.Activate();
                 case Modules.CompanySetup:
                     if (companySetupWindow == null)
                     {
@@ -153,6 +165,8 @@ namespace DiagnosticLabs
 
         private void ClearWindow(object sender, EventArgs e)
         {
+            if (sender.GetType() == typeof(PatientsWindow))
+                patientsWindow = null;
             if (sender.GetType() == typeof(CompanySetupWindow))
                 companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))

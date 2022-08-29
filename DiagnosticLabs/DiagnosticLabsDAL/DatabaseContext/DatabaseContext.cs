@@ -22,6 +22,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleType> ModuleTypes { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemLocation> ItemLocations { get; set; }

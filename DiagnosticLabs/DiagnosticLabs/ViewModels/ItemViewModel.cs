@@ -39,9 +39,7 @@ namespace DiagnosticLabs.ViewModels
             this.ItemQuantities = new ObservableCollection<ItemQuantity>();
             this.ItemQuantities.CollectionChanged += ItemQuantities_CollectionChanged;
             if (id == 0)
-            {
-                this.Item = new Item() { Id = 0, ItemName = string.Empty, Cost = 0, IsActive = true };
-            }
+                NewItem();
             else
             {
                 this.Item = itemsBLL.GetItem(id);
@@ -61,6 +59,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewItem()
         {
+            if (this.Item == null)
+                this.Item = new Item();
+
             this.Item.Id = 0;
             this.Item.ItemName = string.Empty;
             this.Item.Cost = 0;
