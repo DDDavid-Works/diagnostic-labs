@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagnosticLabsDatabase.publish.xml" />
+    <None Include="Scripts\Data\SingleLineEntries.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

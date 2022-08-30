@@ -19,3 +19,4 @@ Post-Deployment Script Template
 :r Data\Companies.sql
 :r Data\Services.sql
 :r Data\Departments.sql
+:r Data\SingleLineEntries.sql
