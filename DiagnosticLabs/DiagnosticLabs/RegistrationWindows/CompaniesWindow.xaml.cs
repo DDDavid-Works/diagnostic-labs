@@ -2,7 +2,7 @@
 using DiagnosticLabs.ViewModels;
 using System.Windows;
 
-namespace DiagnosticLabs.ManagementWindows
+namespace DiagnosticLabs.RegistrationWindows
 {
     /// <summary>
     /// Interaction logic for CompaniesWindow.xaml
