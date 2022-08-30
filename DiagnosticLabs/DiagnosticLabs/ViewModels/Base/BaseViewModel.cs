@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using DiagnosticLabs.Constants;
+using PropertyChanged;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -20,6 +21,18 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             get { return this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty ? Visibility.Visible : Visibility.Collapsed; }
             set { _NotificationMessagesVisibility = value; OnPropertyChanged("NotificationMessagesVisibility"); }
+        }
+
+        private string _MessageBoxColor;
+        public string MessageBoxColor
+        {
+            get {
+                if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages != Messages.SavedSuccessfully)
+                    return "#db5e5e";
+                else
+                    return "#ffbd80";
+            }
+            set { _MessageBoxColor = value; OnPropertyChanged("MessageBoxColor"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
