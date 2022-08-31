@@ -1,6 +1,7 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabsDAL.Models;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DiagnosticLabs.UserControls
@@ -15,7 +16,7 @@ namespace DiagnosticLabs.UserControls
             InitializeComponent();
         }
 
-        private void SearchCompaniesButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SearchCompaniesButton_Click(object sender, RoutedEventArgs e)
         {
             SearchCompaniesWindow search = new SearchCompaniesWindow();
             search.ShowDialog();

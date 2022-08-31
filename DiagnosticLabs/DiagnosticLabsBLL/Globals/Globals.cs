@@ -25,6 +25,7 @@ namespace DiagnosticLabsBLL.Globals
     public class Modules
     {
         //PATIENTS
+        public const string PatientRegistrations = "Patient Registrations";
         public const string Patients = "Patients";
         public const string Companies = "Companies";
 

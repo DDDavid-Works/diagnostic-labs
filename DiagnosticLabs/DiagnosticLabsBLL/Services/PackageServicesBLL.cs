@@ -20,11 +20,11 @@ namespace DiagnosticLabsBLL.Services
             dbContext = new DatabaseContext();
         }
 
-        public List<PackageService> GetPackageServicesByPackageId(long packacgeId)
+        public List<PackageService> GetPackageServicesByPackageId(long packageId)
         {
             try
             {
-                return dbContext.PackageServices.Where(p => p.PackageId == packacgeId && p.IsActive == true).ToList();
+                return dbContext.PackageServices.Where(p => p.PackageId == packageId && p.IsActive == true).ToList();
             }
             catch (Exception ex)
             {

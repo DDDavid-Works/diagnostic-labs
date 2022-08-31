@@ -41,11 +41,11 @@
             <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="0" Grid.Column="0"></Label>
             <menu:CompanyDetailsUserControl Grid.Row="0" Grid.Column="1"></menu:CompanyDetailsUserControl>
             <Label Name="PackageNameLabel" Content="Package Name:" Grid.Row="1" Grid.Column="0"></Label>
-            <TextBox Name="PackageNameTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Package.PackageName, ValidatesOnDataErrors=True}"></TextBox>
+            <TextBox Name="PackageNameTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Package.PackageName}"></TextBox>
             <Label Name="PackageDescriptionLabel" Content="Description:" Grid.Row="2" Grid.Column="0"></Label>
-            <TextBox Name="PackageDescriptionTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Package.PackageDescription, ValidatesOnDataErrors=True}"></TextBox>
+            <TextBox Name="PackageDescriptionTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Package.PackageDescription}"></TextBox>
             <Label Name="PriceLabel" Content="Price:" Grid.Row="3" Grid.Column="0"></Label>
-            <TextBox Name="PriceTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Package.PackagePrice, ValidatesOnDataErrors=True}" HorizontalContentAlignment="Right"></TextBox>
+            <TextBox Name="PriceTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Package.PackagePrice}" HorizontalContentAlignment="Right"></TextBox>
             <Border BorderThickness="0,0,0,1" BorderBrush="Black" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
             <Label Name="ServicesLabel" Content="Included Services:" Grid.Row="4" Grid.Column="0" Margin="0,5,0,0"></Label>
             <Button Name="AddServiceButton" Grid.Row="5" Grid.Column="1" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"

@@ -6,16 +6,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class Patient : BaseModel, IDataErrorInfo
+    public class PatientRegistrationService : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private string il_PatientName;
-        private DateTime? il_DateOfBirth;
-        private string il_Age;
-        private string il_Gender;
-        private string il_CivilStatus;
-        private string il_ContactNumbers;
-        private string il_Address;
+        private long il_PatientRegistrationId;
+        private long il_ServiceId;
+        private decimal il_Price;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -29,46 +25,22 @@ namespace DiagnosticLabsDAL.Models
             set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public string PatientName
+        public long PatientRegistrationId
         {
-            get { return il_PatientName; }
-            set { il_PatientName = value; OnPropertyChanged("PatientName"); }
+            get { return il_PatientRegistrationId; }
+            set { il_PatientRegistrationId = value; OnPropertyChanged("PatientRegistrationId"); }
         }
 
-        public DateTime? DateOfBirth
+        public long ServiceId
         {
-            get { return il_DateOfBirth; }
-            set { il_DateOfBirth = value; OnPropertyChanged("DateOfBirth"); }
+            get { return il_ServiceId; }
+            set { il_ServiceId = value; OnPropertyChanged("ServiceId"); }
         }
 
-        public string Age
+        public decimal Price
         {
-            get { return il_Age; }
-            set { il_Age = value; OnPropertyChanged("Age"); }
-        }
-
-        public string Gender
-        {
-            get { return il_Gender; }
-            set { il_Gender = value; OnPropertyChanged("Gender"); }
-        }
-
-        public string CivilStatus
-        {
-            get { return il_CivilStatus; }
-            set { il_CivilStatus = value; OnPropertyChanged("CivilStatus"); }
-        }
-
-        public string Address
-        {
-            get { return il_Address; }
-            set { il_Address = value; OnPropertyChanged("Address"); }
-        }
-
-        public string ContactNumbers
-        {
-            get { return il_ContactNumbers; }
-            set { il_ContactNumbers = value; OnPropertyChanged("ContactNumbers"); }
+            get { return il_Price; }
+            set { il_Price = value; OnPropertyChanged("Price"); }
         }
 
         public bool IsActive
@@ -102,10 +74,13 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public bool IsAgeEdited { get; set; } = false;
+        public string PatientRegistrationServiceName { get; set; }
+
+        [NotMapped]
+        public string PatientRegistrationServicePrice { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PatientName" };
+        private static readonly string[] PropertiesToValidate = { "PackageServicePrice" };
 
         public string Error
         {
@@ -135,8 +110,13 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "PatientName" && this.PatientName.Trim() == string.Empty)
-                result = "Name can not be empty.";
+            if (columnName == "PackageServicePrice")
+            {
+                decimal packageServicePrice = 0;
+                bool isDecimal = decimal.TryParse(this.PatientRegistrationServicePrice, out packageServicePrice);
+                if (!isDecimal)
+                    result = $"\r\nPackage Service Price of {this.PatientRegistrationServiceName} is invalid.";
+            }
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

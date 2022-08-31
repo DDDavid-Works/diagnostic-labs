@@ -18,7 +18,6 @@ namespace DiagnosticLabs.ViewModels
         PackagesBLL packagesBLL = new PackagesBLL();
         PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
         ServicesBLL servicesBLL = new ServicesBLL();
-        CompaniesBLL companiesBLL = new CompaniesBLL();
 
         #region Public Properties
         public Package Package { get; set; }
@@ -44,9 +43,7 @@ namespace DiagnosticLabs.ViewModels
 
         public PackageViewModel(long id)
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-            companies.Insert(0, new Company() { Id = 0, CompanyName = "Walk-in" });
-            this.Companies = new ObservableCollection<Company>(companies);
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
 
             if (id == 0)
                 NewPackage();
@@ -85,6 +82,12 @@ namespace DiagnosticLabs.ViewModels
 
         private void SavePackage()
         {
+            if (this.Package.Id == 0)
+            {
+                this.NotificationMessages = Messages.NothingToDelete;
+                return;
+            }
+
             this.Package.CompanyId =  this.SelectedCompany.Id;
             if (!this.Package.IsValid || this.PackageServices.Where(p => !p.PackageService.IsValid).Any())
             {

@@ -27,10 +27,12 @@ namespace DiagnosticLabs.ViewModels.Base
         public string MessageBoxColor
         {
             get {
-                if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages != Messages.SavedSuccessfully)
-                    return "#db5e5e";
-                else
+                if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages == Messages.SavedSuccessfully)
                     return "#ffbd80";
+                else if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages == Messages.NothingToDelete)
+                    return "#ffffcc";
+                else
+                    return "#db5e5e";
             }
             set { _MessageBoxColor = value; OnPropertyChanged("MessageBoxColor"); }
         }

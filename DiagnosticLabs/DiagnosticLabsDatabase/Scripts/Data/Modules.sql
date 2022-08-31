@@ -2,6 +2,12 @@
 
 --REGISTRATION
 SELECT TOP 1 @ModuleTypeId = Id FROM ModuleTypes WHERE ModuleTypeName = 'Registration'
+IF NOT EXISTS (SELECT * FROM Modules WHERE ModuleName = 'Patient Registrations' AND ModuleTypeId = @ModuleTypeId)
+BEGIN
+    INSERT INTO Modules(ModuleTypeId, ModuleName, HasCreate, HasView, HasEdit, HasDelete, HasSearch, HasPrint, HasShowList, Icon, SortOrder, IsActive)
+    VALUES (@ModuleTypeId, 'Patient Registrations', 1, 1, 1, 1, 1, 1, 0, 'registration', 1, 1)
+END
+
 IF NOT EXISTS (SELECT * FROM Modules WHERE ModuleName = 'Patients' AND ModuleTypeId = @ModuleTypeId)
 BEGIN
     INSERT INTO Modules(ModuleTypeId, ModuleName, HasCreate, HasView, HasEdit, HasDelete, HasSearch, HasPrint, HasShowList, Icon, SortOrder, IsActive)

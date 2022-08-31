@@ -122,7 +122,7 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        #region
+        #region Private Methods
         private decimal PackagePrice(decimal packagePrice, string packagePriceString)
         {
             decimal newPackagePrice = 0;

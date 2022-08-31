@@ -7,5 +7,7 @@
 
         public const string DeletedSuccessfully = "Deleted Successfully.";
         public const string DeleteFailed = "Delete Failed.";
+
+        public const string NothingToDelete = "Nothing to delete.";
     }
 }

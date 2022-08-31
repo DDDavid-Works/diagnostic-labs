@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,16 +46,15 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        public List<Patient> GetPatients(string name, long? companyId)
+        public List<PatientCompany> GetPatientCompanies(string patientName, long? companyId)
         {
             try
             {
                 if (companyId == null || companyId == 0)
-                    return dbContext.Patients.Where(p => (name == string.Empty || p.PatientName.ToUpper().Contains(name.ToUpper())) &&
-                                                         p.IsActive).ToList();
+                    return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper()))).ToList();
                 else
-                    return dbContext.Patients.Where(p => (name == string.Empty || p.PatientName.ToUpper().Contains(name.ToUpper())) &&
-                                                         p.CompanyId == companyId && p.IsActive).ToList();
+                    return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
+                                                                  p.CompanyId == companyId).ToList();
             }
             catch (Exception ex)
             {
@@ -67,9 +67,6 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                if (patient.CompanyId == 0)
-                    patient.CompanyId = null;
-
                 if (patient.Id == 0)
                 {
                     patient.CreatedByUserId = Globals.Globals.LOGGEDINUSERID;

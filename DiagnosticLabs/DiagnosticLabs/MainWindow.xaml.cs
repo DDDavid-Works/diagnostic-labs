@@ -4,6 +4,7 @@ using DiagnosticLabs.SettingsWindows;
 using DiagnosticLabs.UserControls;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
+using DiagnosticLabsDAL.Models;
 using System;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace DiagnosticLabs
     /// </summary>
     public partial class MainWindow : Window
     {
+        PatientRegistrationsWindow patientRegistrationsWindow = null;
         PatientsWindow patientsWindow = null;
         CompanySetupWindow companySetupWindow = null;
         UsersWindow usersWindow = null;
@@ -43,6 +45,16 @@ namespace DiagnosticLabs
         {
             switch (menuItem.Module.ModuleName)
             {
+                case Modules.PatientRegistrations:
+                    if (patientRegistrationsWindow == null)
+                    {
+                        patientRegistrationsWindow = LoadWindow<PatientRegistrationsWindow>();
+                        SetActionToolbarUserControl(patientRegistrationsWindow.ActionToolbar, menuItem);
+                        patientRegistrationsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => patientRegistrationsWindow.Show();
+                    }
+                    else
+                        return () => patientRegistrationsWindow.Activate();
                 case Modules.Patients:
                     if (patientsWindow == null)
                     {
@@ -165,9 +177,11 @@ namespace DiagnosticLabs
 
         private void ClearWindow(object sender, EventArgs e)
         {
-            if (sender.GetType() == typeof(PatientsWindow))
+            if (sender.GetType() == typeof(PatientRegistrationsWindow))
+                patientRegistrationsWindow = null;
+            else if (sender.GetType() == typeof(PatientsWindow))
                 patientsWindow = null;
-            if (sender.GetType() == typeof(CompanySetupWindow))
+            else if (sender.GetType() == typeof(CompanySetupWindow))
                 companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))
                 usersWindow = null;

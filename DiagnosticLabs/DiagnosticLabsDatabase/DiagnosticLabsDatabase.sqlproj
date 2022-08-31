@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\Data" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\CompanySetups.sql" />
@@ -87,6 +88,9 @@
     <None Include="Scripts\Data\CompanySetups.sql" />
     <Build Include="Tables\Patients.sql" />
     <Build Include="Tables\SingleLineEntries.sql" />
+    <Build Include="Tables\PatientRegistrations.sql" />
+    <Build Include="Tables\PatientRegistrationServices.sql" />
+    <Build Include="Views\PatientCompanies.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagnosticLabsDatabase.publish.xml" />

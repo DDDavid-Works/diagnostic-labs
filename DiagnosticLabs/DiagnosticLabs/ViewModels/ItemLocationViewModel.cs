@@ -65,6 +65,12 @@ namespace DiagnosticLabs.ViewModels
 
         private void DeleteItemLocation()
         {
+            if (this.ItemLocation.Id == 0)
+            {
+                this.NotificationMessages = Messages.NothingToDelete;
+                return;
+            }
+
             MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 

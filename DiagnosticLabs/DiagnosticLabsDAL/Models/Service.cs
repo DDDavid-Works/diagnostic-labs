@@ -21,120 +21,63 @@ namespace DiagnosticLabsDAL.Models
         [Key]
         public long Id
         {
-            get
-            {
-                return il_Id;
-            }
-            set
-            {
-                il_Id = value;
-                OnPropertyChanged("Id");
-            }
+            get { return il_Id; }
+            set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
         public string ServiceName
         {
-            get
-            {
-                return il_ServiceName;
-            }
-            set
-            {
-                il_ServiceName = value;
-                OnPropertyChanged("ServiceName");
-            }
+            get { return il_ServiceName; }
+            set { il_ServiceName = value; OnPropertyChanged("ServiceName"); }
         }
 
         public string ServiceDescription
         {
-            get
-            {
-                return il_ServiceDescription;
-            }
-            set
-            {
-                il_ServiceDescription = value;
-                OnPropertyChanged("ServiceDescription");
-            }
+            get { return il_ServiceDescription; }
+            set { il_ServiceDescription = value; OnPropertyChanged("ServiceDescription"); }
         }
 
         public decimal Price
         {
-            get
-            {
-                return il_Price;
-            }
+            get { return il_Price; }
             set
             {
                 il_Price = value;
+                ServicePrice = value.ToString();
                 OnPropertyChanged("Price");
             }
         }
 
         public bool IsActive
         {
-            get
-            {
-                return il_IsActive;
-            }
-            set
-            {
-                il_IsActive = value;
-                OnPropertyChanged("IsActive");
-            }
+            get { return il_IsActive; }
+            set { il_IsActive = value; OnPropertyChanged("IsActive"); }
         }
 
         public long CreatedByUserId
         {
-            get
-            {
-                return il_CreatedByUserId;
-            }
-            set
-            {
-                il_CreatedByUserId = value;
-                OnPropertyChanged("CreatedByUserId");
-            }
+            get { return il_CreatedByUserId; }
+            set { il_CreatedByUserId = value; OnPropertyChanged("CreatedByUserId"); }
         }
 
         public DateTime CreatedDate
         {
-            get
-            {
-                return il_CreatedDate;
-            }
-            set
-            {
-                il_CreatedDate = value;
-                OnPropertyChanged("CreatedDate");
-            }
+            get { return il_CreatedDate; }
+            set { il_CreatedDate = value; OnPropertyChanged("CreatedDate"); }
         }
 
         public long UpdatedByUserId
         {
-            get
-            {
-                return il_UpdatedByUserId;
-            }
-            set
-            {
-                il_UpdatedByUserId = value;
-                OnPropertyChanged("UpdatedByUserId");
-            }
+            get { return il_UpdatedByUserId; }
+            set { il_UpdatedByUserId = value; OnPropertyChanged("UpdatedByUserId"); }
         }
 
         public DateTime UpdatedDate
         {
-            get
-            {
-                return il_UpdatedDate;
-            }
-            set
-            {
-                il_UpdatedDate = value;
-                OnPropertyChanged("UpdatedDate");
-            }
+            get { return il_UpdatedDate; }
+            set { il_UpdatedDate = value; OnPropertyChanged("UpdatedDate"); }
         }
+
 
         [NotMapped]
         public string ServicePrice { get; set; }

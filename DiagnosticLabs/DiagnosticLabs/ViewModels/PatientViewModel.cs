@@ -1,10 +1,8 @@
-﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabs.Constants;
+﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using DiagnosticLabs.Constants;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -19,11 +17,10 @@ namespace DiagnosticLabs.ViewModels
         DiagnosticLabsBLL.Services.CommonFunctions bllCommonFunctions = new DiagnosticLabsBLL.Services.CommonFunctions();
         CommonFunctions commonFunctions = new CommonFunctions();
         PatientsBLL patientsBLL = new PatientsBLL();
-        CompaniesBLL companiesBLL = new CompaniesBLL();
 
         #region Public Properties
         public Patient Patient { get; set; }
-
+        
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -31,23 +28,12 @@ namespace DiagnosticLabs.ViewModels
         public ICommand UpdateIsAgeEditedCommand { get; set; }
         public ICommand RefreshSingleLineEntryListCommand { get; set; }
 
-        public ObservableCollection<Company> Companies { get; set; }
         public ObservableCollection<string> Genders { get; set; }
         public ObservableCollection<string> CivilStatuses { get; set; }
-
-        private Company _SelectedCompany;
-        public Company SelectedCompany
-        {
-            get { return _SelectedCompany; }
-            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
-        }
         #endregion
 
         public PatientViewModel(long id)
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-            companies.Insert(0, new Company() { Id = 0, CompanyName = "Walk-in" });
-            this.Companies = new ObservableCollection<Company>(companies);
             LoadAllSingleLineEntryLists();
 
             if (id == 0)
@@ -56,8 +42,6 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.Patient = patientsBLL.GetPatient(id);
                 this.Patient.IsAgeEdited = true;
-                long companyId = this.Patient.CompanyId == null ? 0 : this.Patient.CompanyId.Value;
-                this.SelectedCompany = this.Companies.Where(c => c.Id == companyId).FirstOrDefault();
             }
 
             this.NewCommand = new RelayCommand(param => NewPatient());
@@ -84,13 +68,11 @@ namespace DiagnosticLabs.ViewModels
             this.Patient.ContactNumbers = string.Empty;
             this.Patient.IsActive = true;
             this.Patient.IsAgeEdited = false;
-            this.SelectedCompany = this.Companies.First();
             this.ClearNotificationMessages();
         }
 
         private void SavePatient()
         {
-            this.Patient.CompanyId = this.SelectedCompany.Id;
             if (!this.Patient.IsValid)
             {
                 this.NotificationMessages = this.Patient.ErrorMessages;
@@ -109,6 +91,12 @@ namespace DiagnosticLabs.ViewModels
 
         private void DeletePatient()
         {
+            if (this.Patient.Id == 0)
+            {
+                this.NotificationMessages = Messages.NothingToDelete;
+                return;
+            }
+
             MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 

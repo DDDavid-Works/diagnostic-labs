@@ -6,16 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class Patient : BaseModel, IDataErrorInfo
+    public class PatientRegistration : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private string il_PatientName;
-        private DateTime? il_DateOfBirth;
-        private string il_Age;
-        private string il_Gender;
-        private string il_CivilStatus;
-        private string il_ContactNumbers;
-        private string il_Address;
+        private DateTime il_InputDate;
+        private long? il_PatientId;
+        private long? il_CompanyId;
+        private long? il_PackageId;
+        private decimal il_Price;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -29,46 +27,39 @@ namespace DiagnosticLabsDAL.Models
             set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public string PatientName
+        public DateTime InputDate
         {
-            get { return il_PatientName; }
-            set { il_PatientName = value; OnPropertyChanged("PatientName"); }
+            get { return il_InputDate; }
+            set { il_InputDate = value; OnPropertyChanged("InputDate"); }
         }
 
-        public DateTime? DateOfBirth
+        public long? PatientId
         {
-            get { return il_DateOfBirth; }
-            set { il_DateOfBirth = value; OnPropertyChanged("DateOfBirth"); }
+            get { return il_PatientId; }
+            set { il_PatientId = value; OnPropertyChanged("PatientId"); }
         }
 
-        public string Age
+        public long? CompanyId
         {
-            get { return il_Age; }
-            set { il_Age = value; OnPropertyChanged("Age"); }
+            get { return il_CompanyId; }
+            set { il_CompanyId = value; OnPropertyChanged("CompanyId"); }
         }
 
-        public string Gender
+        public long? PackageId
         {
-            get { return il_Gender; }
-            set { il_Gender = value; OnPropertyChanged("Gender"); }
+            get { return il_PackageId; }
+            set { il_PackageId = value; OnPropertyChanged("PackageId"); }
         }
 
-        public string CivilStatus
+        public decimal Price
         {
-            get { return il_CivilStatus; }
-            set { il_CivilStatus = value; OnPropertyChanged("CivilStatus"); }
-        }
-
-        public string Address
-        {
-            get { return il_Address; }
-            set { il_Address = value; OnPropertyChanged("Address"); }
-        }
-
-        public string ContactNumbers
-        {
-            get { return il_ContactNumbers; }
-            set { il_ContactNumbers = value; OnPropertyChanged("ContactNumbers"); }
+            get { return il_Price; }
+            set
+            {
+                il_Price = value;
+                PatientRegistrationPrice = value.ToString();
+                OnPropertyChanged("Price");
+            }
         }
 
         public bool IsActive
@@ -102,10 +93,10 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public bool IsAgeEdited { get; set; } = false;
+        public string PatientRegistrationPrice { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PatientName" };
+        private static readonly string[] PropertiesToValidate = { "PatientRegistrationPrice" };
 
         public string Error
         {
@@ -135,8 +126,14 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "PatientName" && this.PatientName.Trim() == string.Empty)
-                result = "Name can not be empty.";
+
+            if (columnName == "PatientRegistrationPrice")
+            {
+                decimal patientRegistrationPrice = 0;
+                bool isDecimal = decimal.TryParse(this.PatientRegistrationPrice, out patientRegistrationPrice);
+                if (!isDecimal)
+                    result = "\r\nPrice is invalid.";
+            }
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

@@ -7,9 +7,11 @@ namespace DiagnosticLabs.ViewModels
     {
         private Service _service;
         public PackageService PackageService { get; set; }
-        public Service Service {
+        public Service Service
+        {
             get { return _service; }
-            set {
+            set
+            {
                 this.PackageService.PackageServicePrice = value.Price.ToString();
                 this.PackageService.PackageServiceName = value.ServiceName;
                 _service = value;

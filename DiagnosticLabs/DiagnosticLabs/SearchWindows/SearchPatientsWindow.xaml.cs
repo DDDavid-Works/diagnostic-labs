@@ -1,6 +1,7 @@
 ﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ namespace DiagnosticLabs.SearchWindows
     {
         PatientsBLL patientsBLL = new PatientsBLL();
 
-        public Patient SelectedPatient { get; set; }
+        public PatientCompany SelectedPatientCompany { get; set; }
 
         public SearchPatientsWindow()
         {
@@ -32,12 +33,12 @@ namespace DiagnosticLabs.SearchWindows
 
         private void PatientsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            SelectPatient();
+            SelectPatientCompany();
         }
 
         private void OkCancelUserControl_OkCommand(object sender, RoutedEventArgs e)
         {
-            SelectPatient();
+            SelectPatientCompany();
         }
 
         private void OkCancelUserControl_CancelCommand(object sender, RoutedEventArgs e)
@@ -47,22 +48,22 @@ namespace DiagnosticLabs.SearchWindows
         #endregion
 
         #region Data to/from UI
-        private void LoadPatientList(string name = null, long? companyId = 0)
+        private void LoadPatientList(string patientName = null, long? companyId = 0)
         {
-            PatientsDataGrid.ItemsSource = PatientList(name, companyId);
+            PatientsDataGrid.ItemsSource = PatientCompanyList(patientName, companyId);
             PatientsDataGrid.Items.Refresh();
         }
 
-        private List<Patient> PatientList(string name, long? companyId)
+        private List<PatientCompany> PatientCompanyList(string patientName, long? companyId)
         {
-            return patientsBLL.GetPatients(name, companyId);
+            return patientsBLL.GetPatientCompanies(patientName, companyId);
         }
 
-        private void SelectPatient()
+        private void SelectPatientCompany()
         {
             if (PatientsDataGrid.Items.Count == 0) return;
 
-            SelectedPatient = (Patient)PatientsDataGrid.SelectedItem;
+            SelectedPatientCompany = (PatientCompany)PatientsDataGrid.SelectedItem;
             this.Close();
         }
         #endregion

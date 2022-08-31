@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 
 namespace DiagnosticLabsDAL.DatabaseContext
 {
@@ -24,6 +25,8 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<ModuleType> ModuleTypes { get; set; }
         public DbSet<SingleLineEntry> SingleLineEntries { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<PatientRegistration> PatientRegistrations { get; set; }
+        public DbSet<PatientRegistrationService> PatientRegistrationServices { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemLocation> ItemLocations { get; set; }
@@ -33,6 +36,9 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<PackageService> PackageServices { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanySetup> CompanySetups { get; set; }
+
+        //VIEWS
+        public DbSet<PatientCompany> PatientCompanies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
