@@ -21,12 +21,12 @@ namespace DiagnosticLabs.RegistrationWindows
 
         private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
         {
-            SearchPatientsWindow search = new SearchPatientsWindow();
+            SearchPatientRegistrationsWindow search = new SearchPatientRegistrationsWindow();
             search.ShowDialog();
 
-            if (search.SelectedPatientCompany == null) return;
+            if (search.SelectedPatientRegistrationDetail == null) return;
 
-            this.DataContext = new PatientRegistrationViewModel(search.SelectedPatientCompany.PatientId);
+            this.DataContext = new PatientRegistrationViewModel(search.SelectedPatientRegistrationDetail.PatientRegistrationId);
         }
 
         private void DateOfBirthDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

@@ -241,6 +241,9 @@
     <Compile Include="SearchWindows\SearchPackagesWindow.xaml.cs">
       <DependentUpon>SearchPackagesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchWindows\SearchPatientRegistrationsWindow.xaml.cs">
+      <DependentUpon>SearchPatientRegistrationsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchWindows\SearchPatientsWindow.xaml.cs">
       <DependentUpon>SearchPatientsWindow.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,7 @@
     <Compile Include="ViewModels\PatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
+    <Compile Include="ViewModels\SearchPatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\SingleEntryViewModel.cs" />
@@ -366,6 +370,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchWindows\SearchPackagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchWindows\SearchPatientRegistrationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

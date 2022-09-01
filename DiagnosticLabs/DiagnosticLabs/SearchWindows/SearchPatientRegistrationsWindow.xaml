@@ -1,4 +1,4 @@
-﻿<Window x:Class="DiagnosticLabs.SearchWindows.SearchPatientsWindow"
+﻿<Window x:Class="DiagnosticLabs.SearchWindows.SearchPatientRegistrationsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DiagnosticLabs.SearchWindows"
         xmlns:uc="clr-namespace:DiagnosticLabs.UserControls"
         mc:Ignorable="d"
-        Title="Search Patients" Width="600" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf">
+        Title="Search Patient Registrations" Width="600" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf">
     <Grid Margin="5">
         <Grid.Resources>
             <Style TargetType="Label">
@@ -20,8 +20,15 @@
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+                <Setter Property="Padding" Value="0,0,0,0" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
             <Style TargetType="Button">
-                <Setter Property="Width" Value="60" />
                 <Setter Property="HorizontalAlignment" Value="Right" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="FontSize" Value="14" />
@@ -39,6 +46,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -46,15 +54,20 @@
         <uc:CompanyDetailsUserControl Grid.Row="0" Grid.Column="1"></uc:CompanyDetailsUserControl>
         <Label Name="NameLabel" Content="Name:" Grid.Row="1" Grid.Column="0"></Label>
         <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1"></TextBox>
-        <Button Name="SearchButton" Content="Search" Grid.Row="2" Grid.Column="1" Click="SearchButton_Click"></Button>
-        <DataGrid Name="PatientsDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
+
+        <Label Name="InputDateFilterLabel" Content="Date:" Grid.Row="2" Grid.Column="0"></Label>
+        <DatePicker Name="InputDateFilterDatePicker" Grid.Row="2" Grid.Column="1" Width="150"></DatePicker>
+
+        <Button Name="SearchButton" Content="Search" Grid.Row="3" Grid.Column="1" Width="60" Click="SearchButton_Click"></Button>
+        <DataGrid Name="PatientRegistrationDetailsDataGrid" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
             AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"
-            ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="PatientsDataGrid_MouseDoubleClick">
+            ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="PatientRegistrationDetailsDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding PatientName}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Input Date" Binding="{Binding InputDate}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <uc:OkCancelUserControl Grid.Row="4" Grid.Column="2" OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></uc:OkCancelUserControl>
+        <uc:OkCancelUserControl Grid.Row="5" Grid.Column="2" OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></uc:OkCancelUserControl>
     </Grid>
 </Window>

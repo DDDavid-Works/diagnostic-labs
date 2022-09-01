@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,24 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 return dbContext.PatientRegistrations.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
+        public List<PatientRegistrationDetail> GetPatientRegistrationDetails(string patientName, long? companyId, DateTime? inputDate)
+        {
+            try
+            {
+                if (companyId == null || companyId == 0)
+                    return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
+                                                                           (inputDate == null || p.InputDate == inputDate)).ToList();
+                else
+                    return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
+                                                                           (inputDate == null || p.InputDate == inputDate) && p.CompanyId == companyId).ToList();
             }
             catch (Exception ex)
             {
