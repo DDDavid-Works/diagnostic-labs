@@ -42,12 +42,9 @@ namespace DiagnosticLabs
             return values;
         }
 
-        public List<Company> CompaniesList(bool addWalkIn = false)
+        public List<Company> CompaniesList(bool includeSystemRecord = false)
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-
-            if (addWalkIn)
-                companies.Insert(0, new Company() { Id = 0, CompanyName = "Walk-in" });
+            List<Company> companies = companiesBLL.GetAllCompanies(includeSystemRecord);
 
             return companies;
         }

@@ -268,6 +268,9 @@
     <Compile Include="UserControls\CompanyDetailsUserControl.xaml.cs">
       <DependentUpon>CompanyDetailsUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DatePickerWithRemoveUserControl.xaml.cs">
+      <DependentUpon>DatePickerWithRemoveUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MessagesUserControl.xaml.cs">
       <DependentUpon>MessagesUserControl.xaml</DependentUpon>
     </Compile>
@@ -406,6 +409,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CompanyDetailsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DatePickerWithRemoveUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

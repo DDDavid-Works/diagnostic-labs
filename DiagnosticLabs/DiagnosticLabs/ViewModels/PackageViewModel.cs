@@ -82,13 +82,6 @@ namespace DiagnosticLabs.ViewModels
 
         private void SavePackage()
         {
-            if (this.Package.Id == 0)
-            {
-                this.NotificationMessages = Messages.NothingToDelete;
-                return;
-            }
-
-            this.Package.CompanyId =  this.SelectedCompany.Id;
             if (!this.Package.IsValid || this.PackageServices.Where(p => !p.PackageService.IsValid).Any())
             {
                 string errorMessages = this.Package.ErrorMessages;
@@ -109,6 +102,12 @@ namespace DiagnosticLabs.ViewModels
 
         private void DeletePackage()
         {
+            if (this.Package.Id == 0)
+            {
+                this.NotificationMessages = Messages.NothingToDelete;
+                return;
+            }
+
             MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 

@@ -54,10 +54,11 @@ namespace DiagnosticLabsBLL.Services
             {
                 if (companyId == null || companyId == 0)
                     return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
-                                                                           (inputDate == null || p.InputDate == inputDate)).ToList();
+                                                                           (inputDate == null || p.InputDate.Date == ((DateTime)inputDate).Date)).ToList();
                 else
                     return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
-                                                                           (inputDate == null || p.InputDate == inputDate) && p.CompanyId == companyId).ToList();
+                                                                           (inputDate == null || p.InputDate.Date == ((DateTime)inputDate).Date) && 
+                                                                           p.CompanyId == companyId).ToList();
             }
             catch (Exception ex)
             {

@@ -89,7 +89,7 @@ namespace DiagnosticLabsDAL.Models
         public string PackagePrice { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PackageName", "PackageDescription", "PackagePrice", "CompanyId" };
+        private static readonly string[] PropertiesToValidate = { "PackageName", "PackageDescription", "PackagePrice" };
 
         public string Error
         {
@@ -130,8 +130,6 @@ namespace DiagnosticLabsDAL.Models
                 if (!isDecimal)
                     result = "\r\nPackage Price is invalid.";
             }
-            else if (columnName == "CompanyId" && this.CompanyId == null)
-                result = "\r\nSelect a company.";
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

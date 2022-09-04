@@ -12,6 +12,7 @@ namespace DiagnosticLabsDAL.Models
         private string il_Address;
         private string il_ContactNumbers;
         private string il_ContactPerson;
+        private bool il_IsSystem;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -54,6 +55,12 @@ namespace DiagnosticLabsDAL.Models
         {
             get { return il_IsActive; }
             set { il_IsActive = value; OnPropertyChanged("IsActive"); }
+        }
+
+        public bool IsSystem
+        {
+            get { return il_IsSystem; }
+            set { il_IsSystem = value; OnPropertyChanged("IsSystem"); }
         }
 
         public long CreatedByUserId

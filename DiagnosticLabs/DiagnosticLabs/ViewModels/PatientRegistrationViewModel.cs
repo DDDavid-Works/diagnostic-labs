@@ -21,6 +21,7 @@ namespace DiagnosticLabs.ViewModels
         PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
         PatientsBLL patientsBLL = new PatientsBLL();
         ServicesBLL servicesBLL = new ServicesBLL();
+        PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
 
         #region Public Properties
         public PatientRegistration PatientRegistration { get; set; }
@@ -53,7 +54,11 @@ namespace DiagnosticLabs.ViewModels
         public Package SelectedPackage
         {
             get { return _SelectedPackage; }
-            set { _SelectedPackage = value; OnPropertyChanged("SelectedPackage"); }
+            set { 
+                _SelectedPackage = value;
+                OnPropertyChanged("SelectedPackage");
+                LoadPackageServices();
+            }
         }
         #endregion
 
@@ -185,6 +190,26 @@ namespace DiagnosticLabs.ViewModels
                 });
 
             return new ObservableCollection<PatientRegistrationServiceViewModel>(packageServicesList);
+        }
+
+        private void LoadPackageServices()
+        {
+            List<PackageService> packageServices = packageServicesBLL.GetPackageServicesByPackageId(this.SelectedPackage.Id);
+            foreach (PackageService packageService in packageServices)
+            {
+                PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
+                {
+                    PatientRegistrationService = new PatientRegistrationService()
+                    {
+                        PatientRegistrationId = this.PatientRegistration.Id,
+                        ServiceId = packageService.ServiceId,
+                        Price = packageService.Price,
+                        IsActive = true
+                    },
+                    Service = servicesBLL.GetService(packageService.ServiceId)
+                };
+                this.PatientRegistrationServices.Add(prsvm);
+            }
         }
 
         private void AddPatientRegistrationService(PatientRegistrationServiceViewModel patientRegistrationServiceVM)

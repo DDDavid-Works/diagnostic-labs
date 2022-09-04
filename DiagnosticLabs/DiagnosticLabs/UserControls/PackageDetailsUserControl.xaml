@@ -21,7 +21,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
-        <ComboBox Name="PackagesComboBox" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Packages}" SelectedItem="{Binding SelectedPackage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="PackageName" />
+        <ComboBox Name="PackagesComboBox" Grid.Row="0" Grid.Column="0" DisplayMemberPath="PackageName"
+                  ItemsSource="{Binding Packages}" SelectedItem="{Binding SelectedPackage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         <Button Name="SearchPackagesButton" Grid.Row="0" Grid.Column="1" Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Click="SearchPackagesButton_Click">
             <StackPanel>
                 <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>

@@ -1,10 +1,8 @@
-﻿using DiagnosticLabsBLL;
-using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
@@ -38,7 +36,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Companies.Where(i => i.IsActive).OrderBy(i => i.Id).LastOrDefault();
+                return dbContext.Companies.Where(c => c.IsActive && !c.IsSystem).OrderBy(i => i.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
@@ -47,11 +45,11 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        public List<Company> GetAllCompanies()
+        public List<Company> GetAllCompanies(bool includeSystemRecord = false)
         {
             try
             {
-                return dbContext.Companies.Where(i => i.IsActive).ToList();
+                return dbContext.Companies.Where(c => c.IsActive && (includeSystemRecord ? true : !c.IsSystem)).ToList();
             }
             catch (Exception ex)
             {
@@ -64,7 +62,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Companies.Where(i => (name == string.Empty || i.CompanyName.ToUpper().Contains(name.ToUpper())) && i.IsActive).ToList();
+                return dbContext.Companies.Where(c => (name == string.Empty || c.CompanyName.ToUpper().Contains(name.ToUpper())) && c.IsActive && !c.IsSystem).ToList();
             }
             catch (Exception ex)
             {

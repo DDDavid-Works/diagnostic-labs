@@ -5,6 +5,7 @@
     [Address] NVARCHAR(500) NOT NULL,
     [ContactNumbers] NVARCHAR(200) NOT NULL,
     [ContactPerson] NVARCHAR(200) NOT NULL,
+    [IsSystem] BIT NOT NULL DEFAULT 0, 
     [IsActive] BIT NOT NULL DEFAULT 1, 
     [CreatedByUserId] BIGINT NOT NULL DEFAULT 0,
     [CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(),

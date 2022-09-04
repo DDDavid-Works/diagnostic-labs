@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsDAL.Models;
+using System;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -12,7 +13,7 @@ namespace DiagnosticLabs.ViewModels
             get { return _service; }
             set
             {
-                this.PackageService.PackageServicePrice = value.Price.ToString();
+                this.PackageService.PackageServicePrice = String.Format("{0:0,0.00}", value.Price);
                 this.PackageService.PackageServiceName = value.ServiceName;
                 _service = value;
             }
