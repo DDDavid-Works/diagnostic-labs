@@ -1,5 +1,4 @@
 ﻿using DiagnosticLabs.ViewModels;
-using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models.Views;
 using System.Windows;
 using System.Windows.Input;
@@ -11,9 +10,6 @@ namespace DiagnosticLabs.SearchWindows
     /// </summary>
     public partial class SearchPatientRegistrationsWindow : Window
     {
-        PatientsBLL patientsBLL = new PatientsBLL();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-
         public PatientRegistrationDetail SelectedPatientRegistrationDetail { get; set; }
 
         public SearchPatientRegistrationsWindow()

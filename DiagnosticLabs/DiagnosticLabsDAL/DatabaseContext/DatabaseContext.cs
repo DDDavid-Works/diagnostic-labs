@@ -40,6 +40,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         //VIEWS
         public DbSet<PatientCompany> PatientCompanies { get; set; }
         public DbSet<PatientRegistrationDetail> PatientRegistrationDetails { get; set; }
+        public DbSet<PatientRegistrationBatch> PatientRegistrationBatches { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

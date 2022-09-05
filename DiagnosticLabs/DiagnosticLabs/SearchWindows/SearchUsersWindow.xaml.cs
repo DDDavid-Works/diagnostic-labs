@@ -1,40 +1,40 @@
-﻿using DiagnosticLabsBLL.Services;
+﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.SearchWindows
 {
     /// <summary>
-    /// Interaction logic for SearchUserWindow.xaml
+    /// Interaction logic for SearchUsersWindow.xaml
     /// </summary>
     public partial class SearchUsersWindow : Window
     {
-        UsersBLL usersBLL = new UsersBLL();
-
         public User SelectedUser { get; set; }
 
         public SearchUsersWindow()
         {
             InitializeComponent();
-            LoadUserList();
+            this.DataContext = new SearchUserViewModel();
         }
 
         #region UI Events
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadUserList(NameFilterTextBox.Text);
+            SearchUserViewModel vm = (SearchUserViewModel)this.DataContext;
+
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(null);
         }
 
         private void UsersDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            SelectUser();
+            SelectUserLocation();
         }
 
         private void OkCancelUserControl_OkCommand(object sender, RoutedEventArgs e)
         {
-            SelectUser();
+            SelectUserLocation();
         }
 
         private void OkCancelUserControl_CancelCommand(object sender, RoutedEventArgs e)
@@ -44,21 +44,7 @@ namespace DiagnosticLabs.SearchWindows
         #endregion
 
         #region Data to/from UI
-        private void LoadUserList(string name = null)
-        {
-            UsersDataGrid.ItemsSource = UserList(name);
-            UsersDataGrid.Items.Refresh();
-        }
-
-        private List<User> UserList(string name = null)
-        {
-            if (name == null)
-                return usersBLL.GetAllUsers();
-            else
-                return usersBLL.GetUsers(name);
-        }
-
-        private void SelectUser()
+        private void SelectUserLocation()
         {
             if (UsersDataGrid.Items.Count == 0) return;
 

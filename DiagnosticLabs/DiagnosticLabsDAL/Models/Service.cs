@@ -43,7 +43,7 @@ namespace DiagnosticLabsDAL.Models
             set
             {
                 il_Price = value;
-                ServicePrice = value.ToString();
+                ServicePrice = String.Format("{0:0,0.00}", value);
                 OnPropertyChanged("Price");
             }
         }

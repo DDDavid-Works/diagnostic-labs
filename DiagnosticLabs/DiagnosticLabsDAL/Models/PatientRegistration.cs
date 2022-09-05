@@ -13,6 +13,7 @@ namespace DiagnosticLabsDAL.Models
         private long? il_PatientId;
         private long? il_CompanyId;
         private long? il_PackageId;
+        private string il_BatchName;
         private decimal il_Price;
         private bool il_IsActive;
         private long il_CreatedByUserId;
@@ -51,13 +52,19 @@ namespace DiagnosticLabsDAL.Models
             set { il_PackageId = value; OnPropertyChanged("PackageId"); }
         }
 
+        public string BatchName
+        {
+            get { return il_BatchName; }
+            set { il_BatchName = value; OnPropertyChanged("BatchName"); }
+        }
+
         public decimal Price
         {
             get { return il_Price; }
             set
             {
                 il_Price = value;
-                PatientRegistrationPrice = value.ToString();
+                PatientRegistrationPrice = String.Format("{0:0,0.00}", value);
                 OnPropertyChanged("Price");
             }
         }

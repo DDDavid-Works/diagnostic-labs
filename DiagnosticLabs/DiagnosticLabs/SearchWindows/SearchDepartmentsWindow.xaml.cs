@@ -1,6 +1,5 @@
-﻿using DiagnosticLabsBLL.Services;
+﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,20 +10,21 @@ namespace DiagnosticLabs.SearchWindows
     /// </summary>
     public partial class SearchDepartmentsWindow : Window
     {
-        DepartmentsBLL departmentsBLL = new DepartmentsBLL();
-
         public Department SelectedDepartment { get; set; }
 
         public SearchDepartmentsWindow()
         {
             InitializeComponent();
-            LoadDepartmentList();
+            this.DataContext = new SearchDepartmentViewModel();
         }
 
         #region UI Events
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadDepartmentList(NameFilterTextBox.Text);
+            SearchDepartmentViewModel vm = (SearchDepartmentViewModel)this.DataContext;
+
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(null);
         }
 
         private void DepartmentsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -44,20 +44,6 @@ namespace DiagnosticLabs.SearchWindows
         #endregion
 
         #region Data to/from UI
-        private void LoadDepartmentList(string name = null)
-        {
-            DepartmentsDataGrid.ItemsSource = DepartmentList(name);
-            DepartmentsDataGrid.Items.Refresh();
-        }
-
-        private List<Department> DepartmentList(string name = null)
-        {
-            if (name == null)
-                return departmentsBLL.GetAllDepartments();
-            else
-                return departmentsBLL.GetDepartments(name);
-        }
-
         private void SelectDepartment()
         {
             if (DepartmentsDataGrid.Items.Count == 0) return;

@@ -265,6 +265,9 @@
     <Compile Include="UserControls\ActionToolbarUserControl.xaml.cs">
       <DependentUpon>ActionToolbarUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\BatchDetailsUserControl.xaml.cs">
+      <DependentUpon>BatchDetailsUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CompanyDetailsUserControl.xaml.cs">
       <DependentUpon>CompanyDetailsUserControl.xaml</DependentUpon>
     </Compile>
@@ -295,9 +298,13 @@
     <Compile Include="ViewModels\PatientRegistrationServiceViewModel.cs" />
     <Compile Include="ViewModels\PatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
+    <Compile Include="ViewModels\SearchCompanyViewModel.cs" />
+    <Compile Include="ViewModels\SearchDepartmentViewModel.cs" />
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientViewModel.cs" />
+    <Compile Include="ViewModels\SearchServiceViewModel.cs" />
+    <Compile Include="ViewModels\SearchUserViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\SingleEntryViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />
@@ -405,6 +412,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ActionToolbarUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BatchDetailsUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

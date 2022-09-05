@@ -5,6 +5,7 @@
 	[PatientId] BIGINT NOT NULL,
 	[CompanyId] BIGINT NULL DEFAULT 0,
 	[PackageId] BIGINT NULL DEFAULT 0,
+    [BatchName] NVARCHAR(200) NOT NULL,
     [Price] DECIMAL(18, 4) NOT NULL,
     [IsActive] BIT NOT NULL DEFAULT 1, 
     [CreatedByUserId] BIGINT NOT NULL DEFAULT 0,

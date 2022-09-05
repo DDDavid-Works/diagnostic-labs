@@ -12,6 +12,7 @@
             <Style TargetType="DatePicker">
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Height" Value="24" />
+                <Setter Property="MinWidth" Value="100" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="#ff707070" />

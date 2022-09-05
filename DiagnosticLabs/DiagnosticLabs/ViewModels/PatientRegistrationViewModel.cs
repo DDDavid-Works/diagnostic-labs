@@ -2,6 +2,7 @@
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +41,7 @@ namespace DiagnosticLabs.ViewModels
 
         public ObservableCollection<Company> Companies { get; set; }
         public ObservableCollection<Package> Packages { get; set; }
+        public ObservableCollection<PatientRegistrationBatch> PatientRegistrationBatches { get; set; }
         public ObservableCollection<string> Genders { get; set; }
         public ObservableCollection<string> CivilStatuses { get; set; }
 
@@ -60,6 +62,13 @@ namespace DiagnosticLabs.ViewModels
                 LoadPackageServices();
             }
         }
+
+        private string _SelectedBatchName;
+        public string SelectedBatchName
+        {
+            get { return _SelectedBatchName; }
+            set { _SelectedBatchName = value; OnPropertyChanged("SelectedBatchName"); }
+        }
         #endregion
 
         public PatientRegistrationViewModel(long id)
@@ -77,6 +86,7 @@ namespace DiagnosticLabs.ViewModels
 
                 this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
                 this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
+                this.SelectedBatchName = this.PatientRegistration.BatchName;
 
                 this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
             }
@@ -127,16 +137,13 @@ namespace DiagnosticLabs.ViewModels
 
         private void SavePatientRegistration()
         {
-            if (this.SelectedCompany.Id == 0)
-                this.PatientRegistration.CompanyId = null;
-            else
-                this.PatientRegistration.CompanyId = this.SelectedCompany.Id;
-
             if (this.SelectedPackage.Id == 0)
                 this.PatientRegistration.PackageId = null;
             else
                 this.PatientRegistration.PackageId = this.SelectedPackage.Id;
 
+            this.PatientRegistration.CompanyId = this.SelectedCompany.Id;
+            this.PatientRegistration.BatchName = this.SelectedBatchName;
             if (!this.PatientRegistration.IsValid || !this.Patient.IsValid || this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Any())
             {
                 this.NotificationMessages = this.PatientRegistration.ErrorMessages;
@@ -238,6 +245,7 @@ namespace DiagnosticLabs.ViewModels
         {
             this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
             this.Packages = new ObservableCollection<Package>(commonFunctions.PackagesList(true));
+            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList());
 
             LoadAllSingleLineEntryLists();
         }

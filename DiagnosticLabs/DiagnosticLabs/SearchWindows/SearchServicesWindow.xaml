@@ -42,11 +42,12 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="NameLabel" Content="Name:" Grid.Row="0" Grid.Column="0"></Label>
-        <TextBox Name="NameFilterTextBox" Grid.Row="0" Grid.Column="1"></TextBox>
+        <TextBox Name="NameFilterTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding ServiceName}"></TextBox>
         <Button Name="SearchButton" Content="Search" Grid.Row="1" Grid.Column="1" Click="SearchButton_Click"></Button>
         <DataGrid Name="ServicesDataGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
-            AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"
-            ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="ServicesDataGrid_MouseDoubleClick">
+                  AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="ServicesDataGrid_MouseDoubleClick"
+                  ItemsSource="{Binding Services}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding ServiceName}" Width="70*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat={}{0:0.00}}" Width="30*">

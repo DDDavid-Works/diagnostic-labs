@@ -11,6 +11,7 @@ namespace DiagnosticLabs.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         CompaniesBLL companiesBLL = new CompaniesBLL();
 
         #region Public Properties
@@ -26,9 +27,7 @@ namespace DiagnosticLabs.ViewModels
 
         public SearchPatientViewModel()
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-            companies.Insert(0, new Company() { Id = 0, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
-            this.Companies = new ObservableCollection<Company>(companies);
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

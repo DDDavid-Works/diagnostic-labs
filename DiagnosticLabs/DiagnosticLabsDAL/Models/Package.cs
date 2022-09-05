@@ -44,7 +44,7 @@ namespace DiagnosticLabsDAL.Models
             get { return il_Price; }
             set {
                 il_Price = value;
-                PackagePrice = value.ToString();
+                PackagePrice = String.Format("{0:0,0.00}", value);
                 OnPropertyChanged("Price");
             }
         }

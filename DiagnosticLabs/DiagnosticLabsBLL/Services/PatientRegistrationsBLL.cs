@@ -52,13 +52,22 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                if (companyId == null || companyId == 0)
-                    return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
-                                                                           (inputDate == null || p.InputDate.Date == ((DateTime)inputDate).Date)).ToList();
-                else
-                    return dbContext.PatientRegistrationDetails.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
-                                                                           (inputDate == null || p.InputDate.Date == ((DateTime)inputDate).Date) && 
-                                                                           p.CompanyId == companyId).ToList();
+                return dbContext.PatientRegistrationDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
+                                                                       (inputDate != null ? p.InputDate.Date == ((DateTime)inputDate).Date : true) &&
+                                                                       (companyId != -1 ? p.CompanyId == companyId : true)).ToList();
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
+        public List<PatientRegistrationBatch> GetPatientRegistrationBatches()
+        {
+            try
+            {
+                return dbContext.PatientRegistrationBatches.ToList();
             }
             catch (Exception ex)
             {

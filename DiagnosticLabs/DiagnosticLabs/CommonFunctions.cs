@@ -1,9 +1,9 @@
 ﻿using DiagnosticLabs.Constants;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,6 +15,7 @@ namespace DiagnosticLabs
         SingleLineEntriesBLL singleLineEntriesBLL = new SingleLineEntriesBLL();
         CompaniesBLL companiesBLL = new CompaniesBLL();
         PackagesBLL packagesBLL = new PackagesBLL();
+        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         public string ConfirmDeleteQuestion(string entity)
         {
@@ -42,9 +43,13 @@ namespace DiagnosticLabs
             return values;
         }
 
-        public List<Company> CompaniesList(bool includeSystemRecord = false)
+        public List<Company> CompaniesList(bool includeSystemRecord = false, bool includeAllSelection = false)
         {
-            List<Company> companies = companiesBLL.GetAllCompanies(includeSystemRecord);
+            List<Company> companies = new List<Company>();
+            companies = companiesBLL.GetAllCompanies(includeSystemRecord);
+
+            if (includeAllSelection)
+                companies.Insert(0, new Company() { Id = -1, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
 
             return companies;
         }
@@ -57,6 +62,11 @@ namespace DiagnosticLabs
                 packages.Insert(0, new Package() { Id = 0, PackageName = "None" });
 
             return packages;
+        }
+
+        public List<PatientRegistrationBatch> PatientRegistrationBatchList()
+        {
+            return patientRegistrationsBLL.GetPatientRegistrationBatches();
         }
     }
 }

@@ -1,20 +1,28 @@
-﻿using DiagnosticLabsBLL.Services;
+﻿using DiagnosticLabs.ViewModels.Base;
+using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class SearchPackageViewModel : INotifyPropertyChanged
+    public class SearchPackageViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        CompaniesBLL companiesBLL = new CompaniesBLL();
+        CommonFunctions commonFunctions = new CommonFunctions();
+        PackagesBLL packagesBLL = new PackagesBLL();
 
         #region Public Properties
+        public ObservableCollection<Package> Packages { get; set; }
         public ObservableCollection<Company> Companies { get; set; }
+
+        private string _PackageName;
+        public string PackageName
+        {
+            get { return _PackageName; }
+            set { _PackageName = value; OnPropertyChanged("PackageName"); }
+        }
 
         private Company _SelectedCompany;
         public Company SelectedCompany
@@ -22,18 +30,25 @@ namespace DiagnosticLabs.ViewModels
             get { return _SelectedCompany; }
             set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
         }
+
+        public ICommand SearchCommand { get; set; }
         #endregion
 
         public SearchPackageViewModel()
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-            companies.Insert(0, new Company() { Id = 0, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
-            this.Companies = new ObservableCollection<Company>(companies);
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.SelectedCompany = this.Companies.First();
+            this.PackageName = string.Empty;
+
+            this.SearchCommand = new RelayCommand(param => SearchPackages());
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        #region Private Methods
+        private void SearchPackages()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            List<Package> packages = packagesBLL.GetPackages(this.PackageName, this.SelectedCompany.Id);
+            this.Packages = new ObservableCollection<Package>(packages);
         }
+        #endregion
     }
 }

@@ -5,20 +5,21 @@ using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
     public class SearchPatientRegistrationViewModel : BaseViewModel
     {
+        CommonFunctions commonFunctions = new CommonFunctions();
         PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-        CompaniesBLL companiesBLL = new CompaniesBLL();
 
         #region Public Properties
         public ObservableCollection<PatientRegistrationDetail> PatientRegistrationDetails { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
-        
+
         private string _PatientName;
         public string PatientName
         {
@@ -45,10 +46,8 @@ namespace DiagnosticLabs.ViewModels
 
         public SearchPatientRegistrationViewModel()
         {
-            List<Company> companies = companiesBLL.GetAllCompanies();
-            companies.Insert(0, new Company() { Id = 0, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
-            this.Companies = new ObservableCollection<Company>(companies);
-
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.SelectedCompany = this.Companies.First();
             this.PatientName = string.Empty;
             this.InputDate = DateTime.Today;
 
@@ -58,8 +57,7 @@ namespace DiagnosticLabs.ViewModels
         #region Private Methods
         private void SearchPatientRegistrationDetails()
         {
-            long companyId = this.SelectedCompany != null ? this.SelectedCompany.Id : 0;
-            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientName, companyId, this.InputDate);
+            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientName, this.SelectedCompany.Id, this.InputDate);
             this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }
         #endregion

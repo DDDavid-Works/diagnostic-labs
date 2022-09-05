@@ -1,18 +1,7 @@
-﻿using DiagnosticLabsBLL.Services;
+﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiagnosticLabs.SearchWindows
 {
@@ -21,20 +10,21 @@ namespace DiagnosticLabs.SearchWindows
     /// </summary>
     public partial class SearchCompaniesWindow : Window
     {
-        CompaniesBLL companiesBLL = new CompaniesBLL();
-
         public Company SelectedCompany { get; set; }
 
         public SearchCompaniesWindow()
         {
             InitializeComponent();
-            LoadCompanyList();
+            this.DataContext = new SearchCompanyViewModel();
         }
 
         #region UI Events
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadCompanyList(NameFilterTextBox.Text);
+            SearchCompanyViewModel vm = (SearchCompanyViewModel)this.DataContext;
+
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(null);
         }
 
         private void CompaniesDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -54,20 +44,6 @@ namespace DiagnosticLabs.SearchWindows
         #endregion
 
         #region Data to/from UI
-        private void LoadCompanyList(string name = null)
-        {
-            CompaniesDataGrid.ItemsSource = CompanyList(name);
-            CompaniesDataGrid.Items.Refresh();
-        }
-
-        private List<Company> CompanyList(string name = null)
-        {
-            if (name == null)
-                return companiesBLL.GetAllCompanies();
-            else
-                return companiesBLL.GetCompanies(name);
-        }
-
         private void SelectCompany()
         {
             if (CompaniesDataGrid.Items.Count == 0) return;

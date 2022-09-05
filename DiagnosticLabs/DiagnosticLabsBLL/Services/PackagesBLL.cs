@@ -65,7 +65,7 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 return dbContext.Packages.Where(p => (name == string.Empty || p.PackageName.ToUpper().Contains(name.ToUpper())) &&
-                                                     (companyId == 0 || p.CompanyId == companyId) &&
+                                                     (companyId == -1 || p.CompanyId == companyId) &&
                                                      p.IsActive).ToList();
             }
             catch (Exception ex)

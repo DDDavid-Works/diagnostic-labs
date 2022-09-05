@@ -50,6 +50,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -67,40 +68,42 @@
             <DatePicker Name="InputDateDatePicker" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
             <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></Label>
             <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:CompanyDetailsUserControl>
+            <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+            <menu:BatchDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
 
-            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
 
-            <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="3" Grid.Column="0"></Label>
-            <TextBox Name="PatientNameTextBox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.PatientName}"></TextBox>
-            <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="4" Grid.Column="0"></Label>
-            <DatePicker Name="DateOfBirthDatePicker" Grid.Row="4" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
-            <Label Name="AgeLabel" Content="Age:" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
-            <TextBox Name="AgeTextBox" Grid.Row="4" Grid.Column="4" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
-            <Label Name="GenderLabel" Content="Gender:" Grid.Row="5" Grid.Column="0"></Label>
-            <ComboBox Name="GenderComboBox" Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
-            <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="6" Grid.Column="0"></Label>
-            <ComboBox Name="CivilStatusComboBox" Grid.Row="6" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedValue="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
-            <Label Name="AddressLabel" Content="Address:" Grid.Row="7" Grid.Column="0"></Label>
-            <TextBox Name="AddressTextBox" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.Address}"
+            <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="4" Grid.Column="0"></Label>
+            <TextBox Name="PatientNameTextBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.PatientName}"></TextBox>
+            <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="5" Grid.Column="0"></Label>
+            <DatePicker Name="DateOfBirthDatePicker" Grid.Row="5" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
+            <Label Name="AgeLabel" Content="Age:" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
+            <TextBox Name="AgeTextBox" Grid.Row="5" Grid.Column="4" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
+            <Label Name="GenderLabel" Content="Gender:" Grid.Row="6" Grid.Column="0"></Label>
+            <ComboBox Name="GenderComboBox" Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
+            <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="7" Grid.Column="0"></Label>
+            <ComboBox Name="CivilStatusComboBox" Grid.Row="7" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedValue="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
+            <Label Name="AddressLabel" Content="Address:" Grid.Row="8" Grid.Column="0"></Label>
+            <TextBox Name="AddressTextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.Address}"
                          Height="80" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          VerticalContentAlignment="Top"></TextBox>
-            <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="8" Grid.Column="0"></Label>
-            <TextBox Name="ContactNumbersTextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.ContactNumbers}" Margin="0,0,0,10"></TextBox>
+            <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="9" Grid.Column="0"></Label>
+            <TextBox Name="ContactNumbersTextBox" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.ContactNumbers}" Margin="0,0,0,10"></TextBox>
 
-            <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
+            <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
 
-            <Label Name="PackageNameLabel" Content="Package:" Grid.Row="10" Grid.Column="0"></Label>
-            <menu:PackageDetailsUserControl Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3"></menu:PackageDetailsUserControl>
+            <Label Name="PackageNameLabel" Content="Package:" Grid.Row="11" Grid.Column="0"></Label>
+            <menu:PackageDetailsUserControl Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="3"></menu:PackageDetailsUserControl>
 
-            <Label Name="ServicesLabel" Content="Services:" Grid.Row="11" Grid.Column="0" Margin="25,0,0,0"></Label>
-            <Button Name="AddServiceButton" Grid.Row="11" Grid.Column="3" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+            <Label Name="ServicesLabel" Content="Services:" Grid.Row="12" Grid.Column="0" Margin="25,0,0,0"></Label>
+            <Button Name="AddServiceButton" Grid.Row="12" Grid.Column="3" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                         Click="AddServiceButton_Click" >
                 <StackPanel>
                     <Image Source="/Images/16x16/add.png" />
                 </StackPanel>
             </Button>
 
-            <Grid Margin="25,0,0,10" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="4">
+            <Grid Margin="25,0,0,10" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="4">
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="Margin" Value="5,5,5,0" />
@@ -164,8 +167,8 @@
                 <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" />
             </Grid>
 
-            <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="13" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
-            <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
+            <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="14" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
+            <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
                      HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice}"></TextBox>
         </Grid>
     </StackPanel>
