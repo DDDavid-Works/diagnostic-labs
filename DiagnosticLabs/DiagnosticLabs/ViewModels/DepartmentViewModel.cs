@@ -50,7 +50,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Department.IsValid)
             {
-                this.NotificationMessages = this.Department.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Department.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
             
@@ -58,17 +58,17 @@ namespace DiagnosticLabs.ViewModels
             if (departmentsBLL.SaveDepartment(this.Department, ref id))
             {
                 this.Department.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeleteDepartment()
         {
             if (this.Department.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -80,10 +80,10 @@ namespace DiagnosticLabs.ViewModels
             if (departmentsBLL.SaveDepartment(this.Department, ref id))
             {
                 this.Department = departmentsBLL.GetLatestDepartment();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
     }

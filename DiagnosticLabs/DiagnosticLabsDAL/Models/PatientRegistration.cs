@@ -102,6 +102,9 @@ namespace DiagnosticLabsDAL.Models
         [NotMapped]
         public string PatientRegistrationPrice { get; set; }
 
+        [NotMapped]
+        public bool IsPriceEdited { get; set; }
+
         #region Validation
         private static readonly string[] PropertiesToValidate = { "PatientRegistrationPrice" };
 

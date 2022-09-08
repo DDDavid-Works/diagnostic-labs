@@ -13,6 +13,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "SingleEntry";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         SingleLineEntriesBLL singleLineEntriesBLL = new SingleLineEntriesBLL();
         ModulesBLL modulesBLL = new ModulesBLL();
 
@@ -47,14 +48,14 @@ namespace DiagnosticLabs.ViewModels
             if (this.SingleLineEntries.Where(s => !s.IsValid).Any())
             {
                 string errorMessages = string.Join("", this.SingleLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
-                this.NotificationMessages = errorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             if (singleLineEntriesBLL.SaveSingleLineEntryList(this.SingleLineEntries.ToList()))
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         #endregion

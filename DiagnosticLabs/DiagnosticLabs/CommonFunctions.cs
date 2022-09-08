@@ -1,4 +1,5 @@
 ﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.Models;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
@@ -67,6 +68,16 @@ namespace DiagnosticLabs
         public List<PatientRegistrationBatch> PatientRegistrationBatchList()
         {
             return patientRegistrationsBLL.GetPatientRegistrationBatches();
+        }
+
+        public NotificationMessage CustomNotificationMessage(string message, Messages.MessageType messageType, bool isAutoCloseMessage)
+        {
+            return new NotificationMessage()
+            {
+                Message = message,
+                MessageType = messageType,
+                IsAutoCloseMessage = isAutoCloseMessage
+            };
         }
     }
 }

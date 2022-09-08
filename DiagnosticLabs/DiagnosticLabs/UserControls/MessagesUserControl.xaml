@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DiagnosticLabs.UserControls"
-             mc:Ignorable="d" Background="{Binding MessageBoxColor}" BorderBrush="#ea9a62" BorderThickness="0,2,0,2">
+             mc:Ignorable="d" Background="{Binding NotificationMessage.MessageBoxColor}" BorderBrush="#ea9a62" BorderThickness="0,2,0,2">
     <Border>
-        <StackPanel Name="MessagesStackPanel" Visibility="{Binding NotificationMessagesVisibility}" IsVisibleChanged="MessagesStackPanel_IsVisibleChanged">
-            <Label Name="MessageLabel" Content="{Binding NotificationMessages}"
+        <StackPanel Name="MessagesStackPanel" Visibility="{Binding NotificationMessage.Visibility}" IsVisibleChanged="MessagesStackPanel_IsVisibleChanged">
+            <Label Name="MessageLabel" Content="{Binding NotificationMessage.Message}"
                    FontSize="14" FontStyle="Italic" 
                    HorizontalAlignment="Right" HorizontalContentAlignment="Right"></Label>
         </StackPanel>

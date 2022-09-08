@@ -169,7 +169,7 @@
 
             <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="14" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
             <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
-                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice}"></TextBox>
+                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice}" LostFocus="PatientRegistrationPriceTextBox_LostFocus"></TextBox>
         </Grid>
     </StackPanel>
 </Window>

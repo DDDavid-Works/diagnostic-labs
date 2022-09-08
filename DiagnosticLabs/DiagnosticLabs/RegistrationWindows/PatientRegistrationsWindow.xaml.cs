@@ -45,6 +45,14 @@ namespace DiagnosticLabs.RegistrationWindows
                 vm.UpdateIsAgeEditedCommand.Execute(null);
         }
 
+        private void PatientRegistrationPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var vm = (PatientRegistrationViewModel)DataContext;
+
+            if (vm.UpdateIsPriceEditedCommand.CanExecute(null))
+                vm.UpdateIsPriceEditedCommand.Execute(null);
+        }
+
         private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (GenderComboBox.SelectedItem != null && GenderComboBox.SelectedItem.ToString() == Texts.NewEntry)

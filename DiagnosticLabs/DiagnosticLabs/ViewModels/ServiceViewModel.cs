@@ -55,7 +55,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Service.IsValid)
             {
-                this.NotificationMessages = this.Service.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Service.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -63,17 +63,17 @@ namespace DiagnosticLabs.ViewModels
             if (servicesBLL.SaveService(this.Service, ref id))
             {
                 this.Service.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeleteService()
         {
             if (this.Service.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -85,10 +85,10 @@ namespace DiagnosticLabs.ViewModels
             if (servicesBLL.SaveService(this.Service, ref id))
             {
                 this.Service = servicesBLL.GetLatestService();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
 

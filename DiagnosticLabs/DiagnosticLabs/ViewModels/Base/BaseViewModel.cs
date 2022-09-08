@@ -1,40 +1,19 @@
 ﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.Models;
 using PropertyChanged;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace DiagnosticLabs.ViewModels.Base
 {
     [AddINotifyPropertyChangedInterface]
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private string _NotificationMessages;
-        public string NotificationMessages
+        private NotificationMessage _NotificationMessage = Messages.EmptyDefault;
+        public NotificationMessage NotificationMessage
         {
-            get { return _NotificationMessages; }
-            set { _NotificationMessages = value; OnPropertyChanged("NotificationMessages"); }
-        }
-
-        private Visibility _NotificationMessagesVisibility;
-        public Visibility NotificationMessagesVisibility
-        {
-            get { return this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty ? Visibility.Visible : Visibility.Collapsed; }
-            set { _NotificationMessagesVisibility = value; OnPropertyChanged("NotificationMessagesVisibility"); }
-        }
-
-        private string _MessageBoxColor;
-        public string MessageBoxColor
-        {
-            get {
-                if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages == Messages.SavedSuccessfully)
-                    return "#ffbd80";
-                else if (this.NotificationMessages != null && this.NotificationMessages.Trim() != string.Empty && this.NotificationMessages == Messages.NothingToDelete)
-                    return "#ffffcc";
-                else
-                    return "#db5e5e";
-            }
-            set { _MessageBoxColor = value; OnPropertyChanged("MessageBoxColor"); }
+            get { return _NotificationMessage; }
+            set { _NotificationMessage = value; OnPropertyChanged("NotificationMessage"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
@@ -46,8 +25,7 @@ namespace DiagnosticLabs.ViewModels.Base
 
         public void ClearNotificationMessages()
         {
-            this.NotificationMessages = string.Empty;
-            this.NotificationMessagesVisibility = Visibility.Hidden;
+            this.NotificationMessage = Messages.EmptyDefault;
         }
     }
 }

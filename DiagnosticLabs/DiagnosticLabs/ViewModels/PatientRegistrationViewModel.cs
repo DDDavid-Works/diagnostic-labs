@@ -37,6 +37,7 @@ namespace DiagnosticLabs.ViewModels
         public ICommand UpdatePatientRegistrationServiceCommand { get; set; }
         public ICommand UpdateAgeByDateOfBirthCommand { get; set; }
         public ICommand UpdateIsAgeEditedCommand { get; set; }
+        public ICommand UpdateIsPriceEditedCommand { get; set; }
         public ICommand RefreshSingleLineEntryListCommand { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
@@ -81,6 +82,7 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration(id);
                 this.PatientRegistration.PatientRegistrationPrice = this.PatientRegistration.Price.ToString("0.00");
+                this.PatientRegistration.IsPriceEdited = true;
                 this.Patient = patientsBLL.GetPatient((long)PatientRegistration.PatientId);
                 this.Patient.IsAgeEdited = true;
 
@@ -99,6 +101,7 @@ namespace DiagnosticLabs.ViewModels
             this.UpdatePatientRegistrationServiceCommand = new RelayCommand(param => UpdatePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdateAgeByDateOfBirthCommand = new RelayCommand(param => UpdateAgeByDateOfBirth((DateTime?)param));
             this.UpdateIsAgeEditedCommand = new RelayCommand(param => UpdateIsAgeEdited());
+            this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited());
             this.RefreshSingleLineEntryListCommand = new RelayCommand(param => RefreshSingleLineEntryList((string)param));
         }
 
@@ -114,6 +117,7 @@ namespace DiagnosticLabs.ViewModels
             this.PatientRegistration.Price = 0;
             this.PatientRegistration.PatientRegistrationPrice = "0.00";
             this.PatientRegistration.InputDate = DateTime.Now;
+            this.PatientRegistration.IsPriceEdited = false;
 
             if (this.Patient == null)
                 this.Patient = new Patient();
@@ -146,9 +150,12 @@ namespace DiagnosticLabs.ViewModels
             this.PatientRegistration.BatchName = this.SelectedBatchName;
             if (!this.PatientRegistration.IsValid || !this.Patient.IsValid || this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Any())
             {
-                this.NotificationMessages = this.PatientRegistration.ErrorMessages;
-                this.NotificationMessages += this.Patient.ErrorMessages;
-                this.NotificationMessages += string.Join("", this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Select(p => p.PatientRegistrationService.ErrorMessages).ToList());
+                string errorMessages = string.Empty;
+                errorMessages = this.PatientRegistration.ErrorMessages;
+                errorMessages += this.Patient.ErrorMessages;
+                errorMessages += string.Join("", this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Select(p => p.PatientRegistrationService.ErrorMessages).ToList());
+
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -156,17 +163,17 @@ namespace DiagnosticLabs.ViewModels
             if (patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(this.PatientRegistration, this.Patient, this.PatientRegistrationServices.Select(p => p.PatientRegistrationService).ToList(), ref id))
             {
                 this.PatientRegistration.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeletePatientRegistration()
         {
             if (this.PatientRegistration.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -178,10 +185,10 @@ namespace DiagnosticLabs.ViewModels
             if (patientRegistrationsBLL.SavePatientRegistration(this.PatientRegistration, ref id))
             {
                 this.PatientRegistration = patientRegistrationsBLL.GetLatestPatientRegistration();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
 
@@ -228,17 +235,34 @@ namespace DiagnosticLabs.ViewModels
             }
             else
                 this.PatientRegistrationServices.Add(patientRegistrationServiceVM);
+
+            ComputeTotalPrice();
         }
 
         private void RemovePatientRegistrationService(PatientRegistrationServiceViewModel patientRegistrationServiceVM)
         {
             this.PatientRegistrationServices.Remove(patientRegistrationServiceVM);
+
+            ComputeTotalPrice();
         }
 
         private void UpdatePatientRegistrationService(PatientRegistrationServiceViewModel patientRegistrationServiceVM)
         {
             int index = this.PatientRegistrationServices.IndexOf(patientRegistrationServiceVM);
             this.PatientRegistrationServices[index] = patientRegistrationServiceVM;
+
+            ComputeTotalPrice();
+        }
+
+        private void ComputeTotalPrice()
+        {
+            if (!this.PatientRegistration.IsPriceEdited)
+            {
+                decimal price = this.PatientRegistrationServices.Select(p => p.PatientRegistrationService.Price).Sum();
+                this.PatientRegistration.Price = price;
+                this.PatientRegistration.PatientRegistrationPrice = price.ToString("0.00");
+                this.PatientRegistration.IsPriceEdited = false;
+            }
         }
 
         private void LoadComboBoxes()
@@ -269,6 +293,11 @@ namespace DiagnosticLabs.ViewModels
         private void UpdateIsAgeEdited()
         {
             this.Patient.IsAgeEdited = true;
+        }
+
+        private void UpdateIsPriceEdited()
+        {
+            this.PatientRegistration.IsPriceEdited = true;
         }
 
         private void RefreshSingleLineEntryList(string listName)

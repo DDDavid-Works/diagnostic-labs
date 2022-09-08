@@ -79,17 +79,17 @@ namespace DiagnosticLabs.ViewModels
             if (itemsBLL.SaveWithQuantities(this.Item, new List<ItemQuantity>(this.ItemQuantities), ref id))
             {
                 this.Item.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeleteItem()
         {
             if (this.Item.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -101,10 +101,10 @@ namespace DiagnosticLabs.ViewModels
             if (itemsBLL.SaveItem(this.Item, ref id))
             {
                 this.Item = itemsBLL.GetLatestItem();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
 
         private void AddItemQuantity()

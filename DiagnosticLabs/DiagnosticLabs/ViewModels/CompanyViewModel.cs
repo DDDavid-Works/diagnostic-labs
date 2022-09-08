@@ -52,7 +52,8 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Company.IsValid)
             {
-                this.NotificationMessages = this.Company.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Company.ErrorMessages, Messages.MessageType.Error, false);
+
                 return;
             }
 
@@ -60,17 +61,17 @@ namespace DiagnosticLabs.ViewModels
             if (companiesBLL.SaveCompany(this.Company, ref id))
             {
                 this.Company.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeleteCompany()
         {
             if (this.Company.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -82,10 +83,10 @@ namespace DiagnosticLabs.ViewModels
             if (companiesBLL.SaveCompany(this.Company, ref id))
             {
                 this.Company = companiesBLL.GetLatestCompany();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
     }

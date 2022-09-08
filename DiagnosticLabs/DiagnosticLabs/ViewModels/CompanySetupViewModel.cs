@@ -1,14 +1,8 @@
-﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabs.Constants;
+﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,6 +13,7 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "CompanySetup";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         CompanySetupBLL companySetupBLL = new CompanySetupBLL();
 
         #region Public Properties
@@ -47,14 +42,14 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.CompanySetup.IsValid)
             {
-                this.NotificationMessages = this.CompanySetup.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.CompanySetup.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             if (companySetupBLL.SaveCompanySetup(this.CompanySetup))
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
         #endregion
 

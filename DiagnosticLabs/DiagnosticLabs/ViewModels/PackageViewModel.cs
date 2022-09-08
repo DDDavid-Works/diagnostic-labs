@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -86,7 +87,7 @@ namespace DiagnosticLabs.ViewModels
             {
                 string errorMessages = this.Package.ErrorMessages;
                 errorMessages += string.Join("", this.PackageServices.Where(p => !p.PackageService.IsValid).Select(p => p.PackageService.ErrorMessages).ToList());
-                this.NotificationMessages = errorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -94,17 +95,17 @@ namespace DiagnosticLabs.ViewModels
             if (packagesBLL.SaveWithPackageServices(this.Package, this.PackageServices.Select(p => p.PackageService).ToList(), ref id))
             {
                 this.Package.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeletePackage()
         {
             if (this.Package.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -116,10 +117,10 @@ namespace DiagnosticLabs.ViewModels
             if (packagesBLL.SavePackage(this.Package, ref id))
             {
                 this.Package = packagesBLL.GetLatestPackage();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
 
@@ -141,7 +142,12 @@ namespace DiagnosticLabs.ViewModels
                 this.PackageServices.Add(psvm);
             }
             else
-                this.PackageServices.Add(packageServiceVM);
+            {
+                if (this.PackageServices.Any(p => p.Service.Id == packageServiceVM.Service.Id))
+                    this.NotificationMessage = Messages.PackageServiceExists;
+                else
+                    this.PackageServices.Add(packageServiceVM);
+            }
         }
 
         private void RemovePackageService(PackageServiceViewModel packageServiceVM)
@@ -151,8 +157,13 @@ namespace DiagnosticLabs.ViewModels
 
         private void UpdatePackageService(PackageServiceViewModel packageServiceVM)
         {
-            int index = this.PackageServices.IndexOf(packageServiceVM);
-            this.PackageServices[index] = packageServiceVM;
+            if (this.PackageServices.Any(p => p.Service.Id == packageServiceVM.Service.Id))
+                this.NotificationMessage = Messages.PackageServiceExists;
+            else
+            {
+                int index = this.PackageServices.IndexOf(packageServiceVM);
+                this.PackageServices[index] = packageServiceVM;
+            }
         }
         #endregion
     }

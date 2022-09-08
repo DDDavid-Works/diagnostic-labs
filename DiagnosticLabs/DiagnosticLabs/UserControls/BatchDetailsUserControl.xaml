@@ -21,8 +21,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
-        <!--<ComboBox Name="PackagesComboBox" Grid.Row="0" Grid.Column="0" DisplayMemberPath="BatchName" IsEditable="True" IsTextSearchEnabled="True"
-                  ItemsSource="{Binding Batches}" SelectedItem="{Binding SelectedBatchName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />-->
         <ComboBox Name="PackagesComboBox" Grid.Row="0" Grid.Column="0" DisplayMemberPath="BatchName" IsEditable="True" IsTextSearchEnabled="True"
                   ItemsSource="{Binding PatientRegistrationBatches}" Text="{Binding SelectedBatchName}" />
         <Button Name="SearchBatchButton" Grid.Row="0" Grid.Column="1" Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Click="SearchBatchButton_Click">

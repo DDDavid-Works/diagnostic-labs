@@ -49,7 +49,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.ItemLocation.IsValid)
             {
-                this.NotificationMessages = this.ItemLocation.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.ItemLocation.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -57,17 +57,17 @@ namespace DiagnosticLabs.ViewModels
             if (itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
             {
                 this.ItemLocation.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeleteItemLocation()
         {
             if (this.ItemLocation.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -79,10 +79,10 @@ namespace DiagnosticLabs.ViewModels
             if (itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
             {
                 this.ItemLocation = itemLocationsBLL.GetLatestItemLocation();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
     }

@@ -75,7 +75,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Patient.IsValid)
             {
-                this.NotificationMessages = this.Patient.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Patient.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -83,17 +83,17 @@ namespace DiagnosticLabs.ViewModels
             if (patientsBLL.SavePatient(this.Patient, ref id))
             {
                 this.Patient.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
 
         private void DeletePatient()
         {
             if (this.Patient.Id == 0)
             {
-                this.NotificationMessages = Messages.NothingToDelete;
+                this.NotificationMessage = Messages.NothingToDelete;
                 return;
             }
 
@@ -105,10 +105,10 @@ namespace DiagnosticLabs.ViewModels
             if (patientsBLL.SavePatient(this.Patient, ref id))
             {
                 this.Patient = patientsBLL.GetLatestPatient();
-                this.NotificationMessages = Messages.DeletedSuccessfully;
+                this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.DeleteFailed;
+                this.NotificationMessage = Messages.DeleteFailed;
         }
         #endregion
 

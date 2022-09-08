@@ -217,6 +217,7 @@
     <Compile Include="ManagementWindows\PackagesWindow.xaml.cs">
       <DependentUpon>PackagesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\NotificationMessage.cs" />
     <Compile Include="RegistrationWindows\CompaniesWindow.xaml.cs">
       <DependentUpon>CompaniesWindow.xaml</DependentUpon>
     </Compile>

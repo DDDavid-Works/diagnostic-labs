@@ -45,7 +45,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.User.IsValid || !this.IsValid())
             {
-                this.NotificationMessages = this.User.ErrorMessages;
+                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.User.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
@@ -54,10 +54,10 @@ namespace DiagnosticLabs.ViewModels
             if (usersBLL.SaveUser(this.User, ref id))
             {
                 this.User.Id = id;
-                this.NotificationMessages = Messages.SavedSuccessfully;
+                this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
-                this.NotificationMessages = Messages.SaveFailed;
+                this.NotificationMessage = Messages.SaveFailed;
         }
         #endregion
 

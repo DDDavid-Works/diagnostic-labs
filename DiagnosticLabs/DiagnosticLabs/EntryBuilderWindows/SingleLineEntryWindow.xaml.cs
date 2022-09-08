@@ -28,7 +28,7 @@ namespace DiagnosticLabs.EntryBuilderWindows
             if (vm.SaveCommand.CanExecute(null))
                 vm.SaveCommand.Execute(null);
             
-            if (vm.NotificationMessages == Messages.SavedSuccessfully)
+            if (vm.NotificationMessage == Messages.SavedSuccessfully)
                 this.Close();
         }
 
