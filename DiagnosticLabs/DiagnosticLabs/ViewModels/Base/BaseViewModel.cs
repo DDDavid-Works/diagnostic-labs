@@ -27,5 +27,7 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             this.NotificationMessage = Messages.EmptyDefault;
         }
+
+        public bool Init { get; set; } = true;
     }
 }

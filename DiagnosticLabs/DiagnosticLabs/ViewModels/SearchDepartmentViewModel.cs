@@ -18,7 +18,7 @@ namespace DiagnosticLabs.ViewModels
         public string DepartmentName
         {
             get { return _DepartmentName; }
-            set { _DepartmentName = value; OnPropertyChanged("DepartmentName"); }
+            set { _DepartmentName = value; OnPropertyChanged("DepartmentName"); SearchDepartments(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -28,12 +28,16 @@ namespace DiagnosticLabs.ViewModels
         {
             this.DepartmentName = string.Empty;
 
-            this.SearchCommand = new RelayCommand(param => SearchDepartments());
+            this.SearchCommand = new RelayCommand(param => SearchDepartments((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchDepartments()
+        private void SearchDepartments(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.DepartmentName.Trim() == string.Empty)) return;
+
             List<Department> departments = departmentsBLL.GetDepartments(this.DepartmentName);
             this.Departments = new ObservableCollection<Department>(departments);
         }

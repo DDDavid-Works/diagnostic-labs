@@ -45,7 +45,8 @@
         <Label Name="CompaniesLabel" Content="Company:" Grid.Row="0" Grid.Column="0"></Label>
         <uc:CompanyDetailsUserControl Grid.Row="0" Grid.Column="1"></uc:CompanyDetailsUserControl>
         <Label Name="NameLabel" Content="Name:" Grid.Row="1" Grid.Column="0"></Label>
-        <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding PackageName}"></TextBox>
+        <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1"
+                 Text="{Binding PackageName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewKeyDown="NameFilterTextBox_PreviewKeyDown"></TextBox>
         <Button Name="SearchButton" Content="Search" Grid.Row="2" Grid.Column="1" Click="SearchButton_Click"></Button>
         <DataGrid Name="PackagesDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
                   AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"

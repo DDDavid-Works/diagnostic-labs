@@ -46,11 +46,25 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public List<Patient> GetPatients(string name)
+        {
+            try
+            {
+                return dbContext.Patients.Where(p => (name == string.Empty || p.PatientName.ToUpper().Contains(name.ToUpper())) &&
+                                                     p.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
         public List<PatientCompany> GetPatientCompanies(string patientName, long? companyId)
         {
             try
             {
-                if (companyId == null || companyId == 0)
+                if (companyId == null || companyId == -1)
                     return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper()))).ToList();
                 else
                     return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&

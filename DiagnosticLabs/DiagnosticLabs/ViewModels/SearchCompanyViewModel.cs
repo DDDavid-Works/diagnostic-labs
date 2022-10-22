@@ -18,7 +18,7 @@ namespace DiagnosticLabs.ViewModels
         public string CompanyName
         {
             get { return _CompanyName; }
-            set { _CompanyName = value; OnPropertyChanged("CompanyName"); }
+            set { _CompanyName = value; OnPropertyChanged("CompanyName"); SearchCompanies(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -28,12 +28,16 @@ namespace DiagnosticLabs.ViewModels
         {
             this.CompanyName = string.Empty;
 
-            this.SearchCommand = new RelayCommand(param => SearchCompanies());
+            this.SearchCommand = new RelayCommand(param => SearchCompanies((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchCompanies()
+        private void SearchCompanies(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.CompanyName.Trim() == string.Empty)) return;
+
             List<Company> companies = companiesBLL.GetCompanies(this.CompanyName);
             this.Companies = new ObservableCollection<Company>(companies);
         }

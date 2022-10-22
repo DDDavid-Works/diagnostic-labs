@@ -24,7 +24,7 @@ namespace DiagnosticLabs.ViewModels
         public string PatientName
         {
             get { return _PatientName; }
-            set { _PatientName = value; OnPropertyChanged("PatientName"); }
+            set { _PatientName = value; OnPropertyChanged("PatientName"); SearchPatientRegistrationDetails(false); }
         }
 
         private DateTime? _InputDate;
@@ -51,13 +51,18 @@ namespace DiagnosticLabs.ViewModels
             this.PatientName = string.Empty;
             this.InputDate = DateTime.Today;
 
-            this.SearchCommand = new RelayCommand(param => SearchPatientRegistrationDetails());
+            this.SearchCommand = new RelayCommand(param => SearchPatientRegistrationDetails((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchPatientRegistrationDetails()
+        private void SearchPatientRegistrationDetails(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.PatientName.Trim() == string.Empty)) return;
+
             List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientName, this.SelectedCompany.Id, this.InputDate);
+
             this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }
         #endregion

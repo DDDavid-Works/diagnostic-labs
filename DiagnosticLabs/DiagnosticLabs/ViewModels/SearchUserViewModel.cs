@@ -18,7 +18,7 @@ namespace DiagnosticLabs.ViewModels
         public string UserName
         {
             get { return _UserName; }
-            set { _UserName = value; OnPropertyChanged("UserName"); }
+            set { _UserName = value; OnPropertyChanged("UserName"); SearchUsers(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -28,12 +28,16 @@ namespace DiagnosticLabs.ViewModels
         {
             this.UserName = string.Empty;
 
-            this.SearchCommand = new RelayCommand(param => SearchUsers());
+            this.SearchCommand = new RelayCommand(param => SearchUsers((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchUsers()
+        private void SearchUsers(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.UserName.Trim() == string.Empty)) return;
+
             List<User> services = servicesBLL.GetUsers(this.UserName);
             this.Users = new ObservableCollection<User>(services);
         }

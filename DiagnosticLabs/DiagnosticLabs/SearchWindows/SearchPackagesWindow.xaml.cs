@@ -16,15 +16,13 @@ namespace DiagnosticLabs.SearchWindows
         {
             InitializeComponent();
             this.DataContext = new SearchPackageViewModel();
+            NameFilterTextBox.Focus();
         }
 
         #region UI Events
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchPackageViewModel vm = (SearchPackageViewModel)this.DataContext;
-
-            if (vm.SearchCommand.CanExecute(null))
-                vm.SearchCommand.Execute(null);
+            SearchPackages();
         }
 
         private void PackagesDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -41,9 +39,23 @@ namespace DiagnosticLabs.SearchWindows
         {
             this.Close();
         }
+
+        private void NameFilterTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down)
+                PackagesDataGrid.Focus();
+        }
         #endregion
 
         #region Data to/from UI
+        private void SearchPackages()
+        {
+            SearchPackageViewModel vm = (SearchPackageViewModel)this.DataContext;
+
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(true);
+        }
+
         private void SelectPackage()
         {
             if (PackagesDataGrid.Items.Count == 0) return;

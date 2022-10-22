@@ -21,7 +21,7 @@ namespace DiagnosticLabs.ViewModels
         public string PackageName
         {
             get { return _PackageName; }
-            set { _PackageName = value; OnPropertyChanged("PackageName"); }
+            set { _PackageName = value; OnPropertyChanged("PackageName"); SearchPackages(false); }
         }
 
         private Company _SelectedCompany;
@@ -40,12 +40,16 @@ namespace DiagnosticLabs.ViewModels
             this.SelectedCompany = this.Companies.First();
             this.PackageName = string.Empty;
 
-            this.SearchCommand = new RelayCommand(param => SearchPackages());
+            this.SearchCommand = new RelayCommand(param => SearchPackages((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchPackages()
+        private void SearchPackages(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.PackageName.Trim() == string.Empty)) return;
+
             List<Package> packages = packagesBLL.GetPackages(this.PackageName, this.SelectedCompany.Id);
             this.Packages = new ObservableCollection<Package>(packages);
         }

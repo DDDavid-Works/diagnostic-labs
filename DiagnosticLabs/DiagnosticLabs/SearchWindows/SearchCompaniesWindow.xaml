@@ -42,7 +42,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="NameLabel" Content="Name:" Grid.Row="0" Grid.Column="0"></Label>
-        <TextBox Name="NameFilterTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding CompanyName}"></TextBox>
+        <TextBox Name="NameFilterTextBox" Grid.Row="0" Grid.Column="1"
+                 Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewKeyDown="NameFilterTextBox_PreviewKeyDown"></TextBox>
         <Button Name="SearchButton" Content="Search" Grid.Row="1" Grid.Column="1" Click="SearchButton_Click"></Button>
         <DataGrid Name="CompaniesDataGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
             AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"

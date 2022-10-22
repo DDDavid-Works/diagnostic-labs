@@ -18,7 +18,7 @@ namespace DiagnosticLabs.ViewModels
         public string ServiceName
         {
             get { return _ServiceName; }
-            set { _ServiceName = value; OnPropertyChanged("ServiceName"); }
+            set { _ServiceName = value; OnPropertyChanged("ServiceName"); SearchServices(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -28,12 +28,16 @@ namespace DiagnosticLabs.ViewModels
         {
             this.ServiceName = string.Empty;
 
-            this.SearchCommand = new RelayCommand(param => SearchServices());
+            this.SearchCommand = new RelayCommand(param => SearchServices((bool)param));
+
+            this.Init = false;
         }
 
         #region Private Methods
-        private void SearchServices()
+        private void SearchServices(bool isBlankSearch)
         {
+            if (this.Init || (!isBlankSearch && this.ServiceName.Trim() == string.Empty)) return;
+
             List<Service> services = servicesBLL.GetServices(this.ServiceName);
             this.Services = new ObservableCollection<Service>(services);
         }

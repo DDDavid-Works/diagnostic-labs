@@ -1,8 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels;
-using DiagnosticLabsBLL.Services;
-using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,8 +10,6 @@ namespace DiagnosticLabs.SearchWindows
     /// </summary>
     public partial class SearchPatientsWindow : Window
     {
-        PatientsBLL patientsBLL = new PatientsBLL();
-
         public PatientCompany SelectedPatientCompany { get; set; }
 
         public SearchPatientsWindow()
@@ -26,9 +21,7 @@ namespace DiagnosticLabs.SearchWindows
         #region UI Events
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchPatientViewModel vm = (SearchPatientViewModel)this.DataContext;
-            long companyId = vm.SelectedCompany != null ? vm.SelectedCompany.Id : 0;
-            LoadPatientList(NameFilterTextBox.Text, companyId);
+            SearchPatients();
         }
 
         private void PatientsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -45,18 +38,21 @@ namespace DiagnosticLabs.SearchWindows
         {
             this.Close();
         }
+
+        private void NameFilterTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down)
+                PatientsDataGrid.Focus();
+        }
         #endregion
 
         #region Data to/from UI
-        private void LoadPatientList(string patientName = null, long? companyId = 0)
+        private void SearchPatients()
         {
-            PatientsDataGrid.ItemsSource = PatientCompanyList(patientName, companyId);
-            PatientsDataGrid.Items.Refresh();
-        }
+            SearchPatientViewModel vm = (SearchPatientViewModel)this.DataContext;
 
-        private List<PatientCompany> PatientCompanyList(string patientName, long? companyId)
-        {
-            return patientsBLL.GetPatientCompanies(patientName, companyId);
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(true);
         }
 
         private void SelectPatientCompany()

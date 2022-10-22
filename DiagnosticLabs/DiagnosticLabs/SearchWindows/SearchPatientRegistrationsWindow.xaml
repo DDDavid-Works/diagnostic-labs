@@ -53,7 +53,8 @@
         <Label Name="CompaniesLabel" Content="Company:" Grid.Row="0" Grid.Column="0"></Label>
         <uc:CompanyDetailsUserControl Grid.Row="0" Grid.Column="1"></uc:CompanyDetailsUserControl>
         <Label Name="NameLabel" Content="Name:" Grid.Row="1" Grid.Column="0"></Label>
-        <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding PatientName}"></TextBox>
+        <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1"
+                 Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewKeyDown="NameFilterTextBox_PreviewKeyDown"></TextBox>
         <Label Name="InputDateFilterLabel" Content="Date:" Grid.Row="2" Grid.Column="0"></Label>
         <uc:DatePickerWithRemoveUserControl Grid.Row="2" Grid.Column="1" x:Name="InputDateDatePicker" SelectedDateTime="{Binding InputDate, Mode=TwoWay}"></uc:DatePickerWithRemoveUserControl>
         <Button Name="SearchButton" Content="Search" Grid.Row="3" Grid.Column="1" Width="60" Click="SearchButton_Click"></Button>
