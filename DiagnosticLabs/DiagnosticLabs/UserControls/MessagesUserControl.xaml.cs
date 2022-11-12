@@ -21,36 +21,36 @@ namespace DiagnosticLabs.UserControls
 
         private void MessagesStackPanel_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
-            dispatcherTimer.Start();
+            //DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            //dispatcherTimer.Tick += dispatcherTimer_Tick;
+            //dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+            //dispatcherTimer.Start();
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            var vm = this.DataContext;
+        //private void dispatcherTimer_Tick(object sender, EventArgs e)
+        //{
+        //    var vm = this.DataContext;
 
-            Type vmType = vm.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(vmType.GetProperties());
+        //    Type vmType = vm.GetType();
+        //    IList<PropertyInfo> props = new List<PropertyInfo>(vmType.GetProperties());
 
-            foreach (PropertyInfo prop in props)
-            {
-                if (prop.PropertyType == typeof(NotificationMessage))
-                {
-                    NotificationMessage notificationMessage = (NotificationMessage)prop.GetValue(vm, null);
+        //    foreach (PropertyInfo prop in props)
+        //    {
+        //        if (prop.PropertyType == typeof(NotificationMessage))
+        //        {
+        //            NotificationMessage notificationMessage = (NotificationMessage)prop.GetValue(vm, null);
 
-                    if (notificationMessage != null)
-                    {
-                        if (notificationMessage.IsAutoCloseMessage)
-                            MessagesStackPanel.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                }
-            }
+        //            if (notificationMessage != null)
+        //            {
+        //                if (notificationMessage.IsAutoCloseMessage)
+        //                    MessagesStackPanel.Visibility = System.Windows.Visibility.Collapsed;
+        //            }
+        //        }
+        //    }
 
-            //if (MessagesStackPanel.IsVisible &&
-            //    (MessageLabel.Content.ToString() == Messages.SavedSuccessfully || MessageLabel.Content.ToString() == Messages.NothingToDelete))
-            //    MessagesStackPanel.Visibility = System.Windows.Visibility.Collapsed;
-        }
+        //    //if (MessagesStackPanel.IsVisible &&
+        //    //    (MessageLabel.Content.ToString() == Messages.SavedSuccessfully || MessageLabel.Content.ToString() == Messages.NothingToDelete))
+        //    //    MessagesStackPanel.Visibility = System.Windows.Visibility.Collapsed;
+        //}
     }
 }

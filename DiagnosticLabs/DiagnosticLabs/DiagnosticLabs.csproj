@@ -227,6 +227,9 @@
     <Compile Include="RegistrationWindows\PatientsWindow.xaml.cs">
       <DependentUpon>PatientsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SalesWindows\PaymentsWindow.xaml.cs">
+      <DependentUpon>PaymentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchWindows\SearchCompaniesWindow.xaml.cs">
       <DependentUpon>SearchCompaniesWindow.xaml</DependentUpon>
     </Compile>
@@ -299,6 +302,7 @@
     <Compile Include="ViewModels\PatientRegistrationServiceViewModel.cs" />
     <Compile Include="ViewModels\PatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\SearchCompanyViewModel.cs" />
     <Compile Include="ViewModels\SearchDepartmentViewModel.cs" />
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
@@ -361,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindows\PatientsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SalesWindows\PaymentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

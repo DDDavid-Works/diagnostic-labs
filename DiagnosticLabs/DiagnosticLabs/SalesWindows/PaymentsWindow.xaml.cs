@@ -5,17 +5,16 @@ using DiagnosticLabs.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DiagnosticLabs.RegistrationWindows
+namespace DiagnosticLabs.SalesWindows
 {
     /// <summary>
-    /// Interaction logic for PatietntsWindow.xaml
+    /// Interaction logic for PaymentsWindow.xaml
     /// </summary>
-    public partial class PatientsWindow : Window
+    public partial class PaymentsWindow : Window
     {
-        public PatientsWindow()
+        public PaymentsWindow()
         {
             InitializeComponent();
-            this.DataContext = new PatientViewModel(0);
         }
 
         private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
@@ -68,6 +67,21 @@ namespace DiagnosticLabs.RegistrationWindows
                 if (vm.RefreshSingleLineEntryListCommand.CanExecute(null))
                     vm.RefreshSingleLineEntryListCommand.Execute(SingleLineEntries.CivilStatus);
             }
+        }
+
+        private void AddServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PatientRegistrationPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

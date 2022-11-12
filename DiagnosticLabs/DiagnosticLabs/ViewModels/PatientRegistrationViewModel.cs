@@ -269,7 +269,9 @@ namespace DiagnosticLabs.ViewModels
         {
             this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
             this.Packages = new ObservableCollection<Package>(commonFunctions.PackagesList(true));
-            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList());
+
+            long? companyId = this.SelectedCompany?.Id;
+            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList(companyId));
 
             LoadAllSingleLineEntryLists();
         }

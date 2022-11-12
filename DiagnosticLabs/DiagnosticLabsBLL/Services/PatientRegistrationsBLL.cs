@@ -63,11 +63,14 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        public List<PatientRegistrationBatch> GetPatientRegistrationBatches()
+        public List<PatientRegistrationBatch> GetPatientRegistrationBatches(long? companyId)
         {
             try
             {
-                return dbContext.PatientRegistrationBatches.ToList();
+                if (companyId != null)
+                    return dbContext.PatientRegistrationBatches.Where(b => b.CompanyId == companyId).ToList();
+                else
+                    return new List<PatientRegistrationBatch>();
             }
             catch (Exception ex)
             {

@@ -67,7 +67,7 @@
             <Label Name="InputDateLabel" Content="Date:" Grid.Row="0" Grid.Column="0"></Label>
             <DatePicker Name="InputDateDatePicker" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
             <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-            <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:CompanyDetailsUserControl>
+            <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,0"></menu:CompanyDetailsUserControl>
             <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
             <menu:BatchDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
 

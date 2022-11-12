@@ -27,6 +27,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<Patient> Patients { get; set; }
         public DbSet<PatientRegistration> PatientRegistrations { get; set; }
         public DbSet<PatientRegistrationService> PatientRegistrationServices { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemLocation> ItemLocations { get; set; }

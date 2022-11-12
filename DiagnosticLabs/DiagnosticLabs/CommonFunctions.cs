@@ -5,6 +5,7 @@ using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -65,9 +66,9 @@ namespace DiagnosticLabs
             return packages;
         }
 
-        public List<PatientRegistrationBatch> PatientRegistrationBatchList()
+        public List<PatientRegistrationBatch> PatientRegistrationBatchList(long? companyId)
         {
-            return patientRegistrationsBLL.GetPatientRegistrationBatches();
+            return patientRegistrationsBLL.GetPatientRegistrationBatches(companyId);
         }
 
         public NotificationMessage CustomNotificationMessage(string message, Messages.MessageType messageType, bool isAutoCloseMessage)
