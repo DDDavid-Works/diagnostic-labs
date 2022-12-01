@@ -42,34 +42,19 @@ namespace DiagnosticLabsDAL.Models
         public decimal AmountDue
         {
             get { return il_AmountDue; }
-            set
-            {
-                il_AmountDue = value;
-                PaymentAmountDue = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("AmountDue");
-            }
+            set { il_AmountDue = value; OnPropertyChanged("AmountDue"); }
         }
 
         public decimal Cash
         {
             get { return il_Cash; }
-            set
-            {
-                il_Cash = value;
-                PaymentCash = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("Cash");
-            }
+            set { il_Cash = value; OnPropertyChanged("Cash"); }
         }
 
         public decimal Change
         {
             get { return il_Change; }
-            set
-            {
-                il_Change = value;
-                PaymentChange = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("Change");
-            }
+            set { il_Change = value; OnPropertyChanged("Change"); }
         }
 
         public bool IsActive
@@ -104,7 +89,11 @@ namespace DiagnosticLabsDAL.Models
 
         [NotMapped]
         public string PaymentAmountDue { get; set; }
+
+        [NotMapped]
         public string PaymentCash { get; set; }
+
+        [NotMapped]
         public string PaymentChange { get; set; }
 
         [NotMapped]

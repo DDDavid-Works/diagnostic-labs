@@ -4,6 +4,7 @@ using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Windows;
 using System.Windows.Input;
+using System;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -28,7 +29,8 @@ namespace DiagnosticLabs.ViewModels
             else
             {
                 this.Service = servicesBLL.GetService(id);
-                this.Service.ServicePrice = this.Service.Price.ToString("0.00");
+                this.Service.ServicePrice = String.Format("{0:0,0.00}", this.Service.Price);
+
             }
 
             this.NewCommand = new RelayCommand(param => NewService());

@@ -1,6 +1,9 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DiagnosticLabsBLL.Services
 {
@@ -9,6 +12,9 @@ namespace DiagnosticLabsBLL.Services
         private const string LogFileName = "PaymentsBLL";
 
         CommonFunctions commonFunctions = new CommonFunctions();
+        PatientsBLL patientsBLL = new PatientsBLL();
+        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
+        PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
 
         private static DatabaseContext dbContext;
 
@@ -17,11 +23,48 @@ namespace DiagnosticLabsBLL.Services
             dbContext = new DatabaseContext();
         }
 
+        public Payment NewPayment()
+        {
+            return new Payment()
+            {
+                Id = 0,
+                PaymentDate = DateTime.Now,
+                PatientRegistrationId = 0,
+                AmountDue = 0,
+                Cash = 0,
+                Change = 0,
+                IsActive = true,
+                PaymentAmountDue = "0.00",
+                PaymentCash = "0.00",
+                PaymentChange = "0.00"
+            };
+        }
+
         public Payment GetPayment(long id)
         {
             try
             {
-                return dbContext.Payments.Find(id);
+                Payment payment = dbContext.Payments.Find(id);
+                payment.PaymentAmountDue = String.Format("{0:0,0.00}", payment.AmountDue);
+                payment.PaymentCash = String.Format("{0:0,0.00}", payment.Cash);
+                payment.PaymentChange = String.Format("{0:0,0.00}", payment.Change);
+
+                return payment;
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
+        public List<PaymentDetail> GetPaymentDetails(string patientName, long? companyId, DateTime? paymentDate)
+        {
+            try
+            {
+                return dbContext.PaymentDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
+                                                           (paymentDate != null ? p.PaymentDate.Date == ((DateTime)paymentDate).Date : true) &&
+                                                           (companyId != -1 ? p.CompanyId == companyId : true)).ToList();
             }
             catch (Exception ex)
             {
@@ -56,6 +99,26 @@ namespace DiagnosticLabsBLL.Services
                 id = payment.Id;
 
                 return true;
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return false;
+            }
+        }
+
+        public bool SavePaymentWithPatientRegistrationPatientAndServices(Payment payment, PatientRegistration patientRegistration, Patient patient, List<PatientRegistrationService> patientRegistrationServices, ref long id)
+        {
+            try
+            {
+                long patientRegistrationId = 0;
+                if (patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(patientRegistration, patient, patientRegistrationServices, ref patientRegistrationId))
+                {
+                    payment.PatientRegistrationId = patientRegistrationId;
+                    return SavePayment(payment, ref id);
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {

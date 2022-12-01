@@ -1,6 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models.Views;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 

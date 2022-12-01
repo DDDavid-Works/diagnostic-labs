@@ -251,6 +251,9 @@
     <Compile Include="SearchWindows\SearchPatientsWindow.xaml.cs">
       <DependentUpon>SearchPatientsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchWindows\SearchPaymentsWindow.xaml.cs">
+      <DependentUpon>SearchPaymentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchWindows\SearchServicesWindow.xaml.cs">
       <DependentUpon>SearchServicesWindow.xaml</DependentUpon>
     </Compile>
@@ -287,6 +290,11 @@
     <Compile Include="UserControls\PackageDetailsUserControl.xaml.cs">
       <DependentUpon>PackageDetailsUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PatientDetailsUserControl.xaml.cs">
+      <DependentUpon>PatientDetailsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Base\BasePatientRegistrationViewModel.cs" />
+    <Compile Include="ViewModels\Base\BasePatientViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
@@ -308,6 +316,7 @@
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientViewModel.cs" />
+    <Compile Include="ViewModels\SearchPaymentViewModel.cs" />
     <Compile Include="ViewModels\SearchServiceViewModel.cs" />
     <Compile Include="ViewModels\SearchUserViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
@@ -400,6 +409,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SearchWindows\SearchPaymentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchWindows\SearchServicesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -445,6 +458,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\PackageDetailsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PatientDetailsUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

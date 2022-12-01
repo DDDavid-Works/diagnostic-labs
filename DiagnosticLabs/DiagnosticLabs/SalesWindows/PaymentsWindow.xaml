@@ -9,7 +9,7 @@
         Title="Payments" Width="1000" ShowInTaskbar="False"
         SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf">
     <StackPanel Orientation="Vertical">
-        <!--<menu:MessagesUserControl></menu:MessagesUserControl>-->
+        <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
                                        SearchCommand="ActionToolbar_SearchCommand"></menu:ActionToolbarUserControl>
         <Grid>
@@ -19,9 +19,11 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Grid Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Top">
+            <Grid Grid.Row="0" Grid.Column="0" Margin="10,10,10,0" VerticalAlignment="Top">
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="Margin" Value="0,0,0,5" />
@@ -60,6 +62,60 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="InputRegDateLabel" Content="Reg. Date:" Grid.Row="0" Grid.Column="0"></Label>
+                <DatePicker Name="InputDateDatePicker" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
+                <Button Name="SearchPatientRegistrationButton" Grid.Row="0" Grid.Column="2" Height="22" Width="24" HorizontalAlignment="Left" Margin="0,0,0,5" Click="SearchPatientRegistrationButton_Click">
+                    <StackPanel>
+                        <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+                <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,0"></menu:CompanyDetailsUserControl>
+                <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+                <menu:BatchDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
+
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
+            </Grid>
+
+            <menu:PatientDetailsUserControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" ShowSearchButton="True"></menu:PatientDetailsUserControl>
+
+            <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="10,0,10,10" VerticalAlignment="Top">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Padding" Value="2,0,0,0" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="DatePicker">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"></ColumnDefinition>
+                    <ColumnDefinition Width="35*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="25*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
                     <RowDefinition Height="10"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -68,89 +124,20 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Name="InputRegDateLabel" Content="Reg. Date:" Grid.Row="0" Grid.Column="0"></Label>
-                <DatePicker Name="InputDateDatePicker" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
-                <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-                <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,0"></menu:CompanyDetailsUserControl>
-                <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-                <menu:BatchDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
+                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,1,0,0" BorderBrush="Black" />
 
-                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
+                <Label Name="PackageNameLabel" Content="Package:" Grid.Row="1" Grid.Column="0"></Label>
+                <menu:PackageDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"></menu:PackageDetailsUserControl>
 
-                <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="4" Grid.Column="0"></Label>
-                <TextBox Name="PatientNameTextBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.PatientName}"></TextBox>
-                <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="5" Grid.Column="0"></Label>
-                <DatePicker Name="DateOfBirthDatePicker" Grid.Row="5" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
-                <Label Name="AgeLabel" Content="Age:" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
-                <TextBox Name="AgeTextBox" Grid.Row="5" Grid.Column="3" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
-                <Label Name="GenderLabel" Content="Gender:" Grid.Row="6" Grid.Column="0"></Label>
-                <ComboBox Name="GenderComboBox" Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedItem="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
-                <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="7" Grid.Column="0"></Label>
-                <ComboBox Name="CivilStatusComboBox" Grid.Row="7" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedItem="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
-                <Label Name="AddressLabel" Content="Address:" Grid.Row="8" Grid.Column="0"></Label>
-                <TextBox Name="AddressTextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.Address}"
-                     Height="80" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                     VerticalContentAlignment="Top"></TextBox>
-                <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="9" Grid.Column="0"></Label>
-                <TextBox Name="ContactNumbersTextBox" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.ContactNumbers}"></TextBox>
-            </Grid>
-
-            <Grid Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Top">
-                <Grid.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="Padding" Value="0,2,0,0" />
-                        <Setter Property="HorizontalAlignment" Value="Left" />
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="Height" Value="22" />
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                    <Style TargetType="ComboBox">
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="Height" Value="22" />
-                        <Setter Property="Padding" Value="2,0,0,0" />
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                    <Style TargetType="DatePicker">
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="Height" Value="22" />
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="Padding" Value="0,0,0,0" />
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*"></ColumnDefinition>
-                    <ColumnDefinition Width="35*"></ColumnDefinition>
-                    <ColumnDefinition Width="15*"></ColumnDefinition>
-                    <ColumnDefinition Width="25*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Label Name="PackageNameLabel" Content="Package:" Grid.Row="0" Grid.Column="0"></Label>
-                <menu:PackageDetailsUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"></menu:PackageDetailsUserControl>
-
-                <Label Name="ServicesLabel" Content="Services:" Grid.Row="1" Grid.Column="0" Margin="25,0,0,0"></Label>
-                <Button Name="AddServiceButton" Grid.Row="1" Grid.Column="3" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                <Label Name="ServicesLabel" Content="Services:" Grid.Row="2" Grid.Column="0" Margin="25,0,0,0"></Label>
+                <Button Name="AddServiceButton" Grid.Row="2" Grid.Column="3" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                         Click="AddServiceButton_Click" >
                     <StackPanel>
                         <Image Source="/Images/16x16/add.png" />
                     </StackPanel>
                 </Button>
 
-                <Grid Margin="25,0,0,10" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+                <Grid Margin="25,0,0,10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
                     <Grid.Resources>
                         <Style TargetType="Label">
                             <Setter Property="Margin" Value="5,5,5,0" />
@@ -214,10 +201,72 @@
                     <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" />
                 </Grid>
 
-                <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="3" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
-                <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
-                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice}"
+                <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="4" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
+                <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
+                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice, UpdateSourceTrigger=PropertyChanged}"
                      LostFocus="PatientRegistrationPriceTextBox_LostFocus"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="10,10,10,0" VerticalAlignment="Top">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Padding" Value="2,0,0,0" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="DatePicker">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Margin" Value="0,0,0,5" />
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style x:Key="LargeLabel" TargetType="Label">
+                        <Setter Property="FontSize" Value="20" />
+                    </Style>
+                    <Style x:Key="LargeTextBox" TargetType="TextBox">
+                        <Setter Property="Height" Value="30" />
+                        <Setter Property="FontSize" Value="20" />
+                        <Setter Property="HorizontalContentAlignment" Value="Right" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
+                    <ColumnDefinition Width="35*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="PaymentDateLabel" Content="Payment Date:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+                <DatePicker Name="PaymentDateDatePicker" Grid.Row="0" Grid.Column="3" SelectedDate="{Binding Payment.PaymentDate}"></DatePicker>
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,1,0,0" BorderBrush="Black" />
+                
+                <Label Name="AmountDueLabel" Content="Amount Due:" Grid.Row="2" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
+                <TextBox Name="AmountDueTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentAmountDue}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
+                <Label Name="CashLabel" Content="Cash:" Grid.Row="3" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
+                <TextBox Name="CashTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentCash}" Style="{StaticResource LargeTextBox}" TextChanged="CashTextBox_TextChanged"></TextBox>
+                <Label Name="ChangeLabel" Content="Change:" Grid.Row="4" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
+                <TextBox Name="ChangeTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentChange}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
             </Grid>
         </Grid>
     </StackPanel>

@@ -1,4 +1,5 @@
 ﻿using DiagnosticLabs.SearchWindows;
+using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
 using System.Linq;
 using System.Windows;
@@ -25,6 +26,15 @@ namespace DiagnosticLabs.UserControls
 
             int itemIndex = CompaniesComboBox.Items.IndexOf(CompaniesComboBox.Items.OfType<Company>().Where(c => c.Id == search.SelectedCompany.Id).FirstOrDefault());
             CompaniesComboBox.SelectedItem = CompaniesComboBox.Items.GetItemAt(itemIndex);
+        }
+
+        private void CompaniesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext.GetType().Equals(typeof(PatientRegistrationViewModel)))
+            {
+                var vm = (PatientRegistrationViewModel)DataContext;
+                vm.RefreshPatientRegistrationBatchCommand.Execute(null);
+            }
         }
     }
 }

@@ -7,12 +7,13 @@
              HorizontalContentAlignment="Stretch"
              HorizontalAlignment="Left"
              mc:Ignorable="d">
-    <StackPanel x:Name="DatePickerStackPanel" Orientation="Horizontal">
+    <StackPanel x:Name="DatePickerStackPanel" Orientation="Horizontal" VerticalAlignment="Top">
         <StackPanel.Resources>
             <Style TargetType="DatePicker">
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="Height" Value="24" />
-                <Setter Property="MinWidth" Value="100" />
+                <Setter Property="Width" Value="140" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="#ff707070" />
@@ -21,7 +22,7 @@
         </StackPanel.Resources>
         <DatePicker Name="DateDatePicker" SelectedDate="{Binding SelectedDateTime}"></DatePicker>
         <Button Name="RemoveButton" Height="24" Content="Clear" Click="RemoveButton_Click"
-                Width="34" HorizontalAlignment="Right" Margin="0,0,0,5" FontSize="12">
+                Width="34" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,5" FontSize="12">
         </Button>
     </StackPanel>
 </UserControl>

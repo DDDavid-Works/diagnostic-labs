@@ -1,10 +1,10 @@
 ﻿using DiagnosticLabs.ManagementWindows;
 using DiagnosticLabs.RegistrationWindows;
+using DiagnosticLabs.SalesWindows;
 using DiagnosticLabs.SettingsWindows;
 using DiagnosticLabs.UserControls;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
-using DiagnosticLabsDAL.Models;
 using System;
 using System.Linq;
 using System.Windows;
@@ -21,6 +21,7 @@ namespace DiagnosticLabs
     {
         PatientRegistrationsWindow patientRegistrationsWindow = null;
         PatientsWindow patientsWindow = null;
+        PaymentsWindow paymentsWindow = null;
         CompanySetupWindow companySetupWindow = null;
         UsersWindow usersWindow = null;
         ChangePasswordWindow changePasswordWindow = null;
@@ -65,6 +66,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => patientsWindow.Activate();
+                case Modules.Payments:
+                    if (paymentsWindow == null)
+                    {
+                        paymentsWindow = LoadWindow<PaymentsWindow>();
+                        SetActionToolbarUserControl(paymentsWindow.ActionToolbar, menuItem);
+                        paymentsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => paymentsWindow.Show();
+                    }
+                    else
+                        return () => paymentsWindow.Activate();
                 case Modules.CompanySetup:
                     if (companySetupWindow == null)
                     {
@@ -181,6 +192,8 @@ namespace DiagnosticLabs
                 patientRegistrationsWindow = null;
             else if (sender.GetType() == typeof(PatientsWindow))
                 patientsWindow = null;
+            else if (sender.GetType() == typeof(PaymentsWindow))
+                paymentsWindow = null;
             else if (sender.GetType() == typeof(CompanySetupWindow))
                 companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))
@@ -205,7 +218,7 @@ namespace DiagnosticLabs
         #region UI Events
         private void Window_Closed(object sender, EventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void ModuleTypeButton_Click(object sender, RoutedEventArgs e)

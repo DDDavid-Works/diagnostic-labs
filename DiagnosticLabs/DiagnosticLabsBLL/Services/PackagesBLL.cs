@@ -3,7 +3,6 @@ using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
@@ -21,11 +20,27 @@ namespace DiagnosticLabsBLL.Services
             dbContext = new DatabaseContext();
         }
 
+        public Package NewPackage()
+        {
+            return new Package()
+            {
+                Id = 0,
+                PackageName = string.Empty,
+                PackageDescription = string.Empty,
+                Price = 0,
+                IsActive = true,
+                PackagePrice = "0.00"
+            };
+        }
+
         public Package GetPackage(long id)
         {
             try
             {
-                return dbContext.Packages.Find(id);
+                Package package = dbContext.Packages.Find(id);
+                package.PackagePrice = String.Format("{0:0,0.00}", package.Price);
+
+                return package;
             }
             catch (Exception ex)
             {

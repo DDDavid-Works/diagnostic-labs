@@ -22,11 +22,31 @@ namespace DiagnosticLabsBLL.Services
             dbContext = new DatabaseContext();
         }
 
+        public PatientRegistration NewPatientRegistration()
+        {
+            return new PatientRegistration()
+            {
+                Id = 0,
+                PatientId = null,
+                CompanyId = null,
+                PackageId = null,
+                BatchName = string.Empty,
+                Price = 0,
+                IsActive = true,
+                PatientRegistrationPrice = "0.00",
+                InputDate = DateTime.Now,
+                IsPriceEdited = false,
+            };
+        }
+
         public PatientRegistration GetPatientRegistration(long id)
         {
             try
             {
-                return dbContext.PatientRegistrations.Find(id);
+                PatientRegistration patientRegistration  = dbContext.PatientRegistrations.Find(id);
+                patientRegistration.PatientRegistrationPrice = String.Format("{0:0,0.00}", patientRegistration.Price);
+
+                return patientRegistration;
             }
             catch (Exception ex)
             {

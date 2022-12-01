@@ -30,7 +30,7 @@ namespace DiagnosticLabsBLL.Globals
         public const string Companies = "Companies";
 
         //SALES
-        public const string Payment = "Payment";
+        public const string Payments = "Payment";
 
         //LAB RESULTS
         public const string StoolFecalysis = "Stool/Fecalysis";

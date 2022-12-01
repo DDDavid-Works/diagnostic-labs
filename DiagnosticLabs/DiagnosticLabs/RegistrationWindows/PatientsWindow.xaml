@@ -12,65 +12,6 @@
         <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
                                        SearchCommand="ActionToolbar_SearchCommand"></menu:ActionToolbarUserControl>
-        <Grid Margin="10" VerticalAlignment="Top">
-            <Grid.Resources>
-                <Style TargetType="Label">
-                    <Setter Property="Margin" Value="0,0,0,5" />
-                    <Setter Property="Padding" Value="0,2,0,0" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                    <Setter Property="FontSize" Value="14" />
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="Height" Value="22" />
-                    <Setter Property="Margin" Value="0,0,0,5" />
-                    <Setter Property="FontSize" Value="14" />
-                </Style>
-                <Style TargetType="ComboBox">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="Height" Value="22" />
-                    <Setter Property="Padding" Value="2,0,0,0" />
-                    <Setter Property="Margin" Value="0,0,0,5" />
-                    <Setter Property="FontSize" Value="14" />
-                </Style>
-                <Style TargetType="DatePicker">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="Height" Value="22" />
-                    <Setter Property="Margin" Value="0,0,0,5" />
-                    <Setter Property="Padding" Value="0,0,0,0" />
-                    <Setter Property="FontSize" Value="14" />
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25*"></ColumnDefinition>
-                <ColumnDefinition Width="35*"></ColumnDefinition>
-                <ColumnDefinition Width="15*"></ColumnDefinition>
-                <ColumnDefinition Width="25*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="0" Grid.Column="0"></Label>
-            <TextBox Name="PatientNameTextBox" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.PatientName}"></TextBox>
-            <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="1" Grid.Column="0"></Label>
-            <DatePicker Name="DateOfBirthDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
-            <Label Name="AgeLabel" Content="Age:" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
-            <TextBox Name="AgeTextBox" Grid.Row="1" Grid.Column="3" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
-            <Label Name="GenderLabel" Content="Gender:" Grid.Row="2" Grid.Column="0"></Label>
-            <ComboBox Name="GenderComboBox" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedItem="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
-            <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="3" Grid.Column="0"></Label>
-            <ComboBox Name="CivilStatusComboBox" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedItem="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
-            <Label Name="AddressLabel" Content="Address:" Grid.Row="4" Grid.Column="0"></Label>
-            <TextBox Name="AddressTextBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.Address}"
-                     Height="80" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                     VerticalContentAlignment="Top"></TextBox>
-            <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="5" Grid.Column="0"></Label>
-            <TextBox Name="ContactNumbersTextBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.ContactNumbers}"></TextBox>
-        </Grid>
+        <menu:PatientDetailsUserControl ShowSearchButton="False"></menu:PatientDetailsUserControl>
     </StackPanel>
 </Window>

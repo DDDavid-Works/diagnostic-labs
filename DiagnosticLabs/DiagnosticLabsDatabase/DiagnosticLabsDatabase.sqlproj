@@ -94,6 +94,7 @@
     <Build Include="Views\PatientRegistrationDetails.sql" />
     <Build Include="Views\PatientRegistrationBatches.sql" />
     <Build Include="Tables\Payments.sql" />
+    <Build Include="Views\PaymentDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagnosticLabsDatabase.publish.xml" />

@@ -51,8 +51,7 @@ namespace DiagnosticLabs.ViewModels
             else
             {
                 this.Package = packagesBLL.GetPackage(id);
-                this.Package.PackagePrice = this.Package.Price.ToString("0.00");
-                this.SelectedCompany = this.Companies.Where(c => c.Id == (long)this.Package.CompanyId).FirstOrDefault();
+                this.SelectedCompany = this.Companies.Where(c => c.Id == (long?)this.Package.CompanyId).FirstOrDefault();
                 this.PackageServices = this.PackageServiceViewModelList(packageServicesBLL.GetPackageServicesByPackageId(id));
             }
 
@@ -67,22 +66,15 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPackage()
         {
-            if (this.Package == null)
-                this.Package = new Package();
-
-            this.Package.Id = 0;
-            this.Package.PackageName = string.Empty;
-            this.Package.PackageDescription = string.Empty;
-            this.Package.Price = 0;
-            this.Package.IsActive = true;
+            this.Package = packagesBLL.NewPackage();
             this.SelectedCompany = this.Companies.First();
-            this.Package.PackagePrice = "0.00";
             this.PackageServices = new ObservableCollection<PackageServiceViewModel>();
             this.ClearNotificationMessages();
         }
 
         private void SavePackage()
         {
+            this.Package.CompanyId = this.SelectedCompany.Id;
             if (!this.Package.IsValid || this.PackageServices.Where(p => !p.PackageService.IsValid).Any())
             {
                 string errorMessages = this.Package.ErrorMessages;

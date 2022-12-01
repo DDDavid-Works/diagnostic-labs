@@ -20,6 +20,23 @@ namespace DiagnosticLabsBLL.Services
             dbContext = new DatabaseContext();
         }
 
+        public Patient NewPatient()
+        {
+            return new Patient()
+            {
+                Id = 0,
+                PatientName = string.Empty,
+                DateOfBirth = null,
+                Age = null,
+                Gender = string.Empty,
+                CivilStatus = string.Empty,
+                Address = string.Empty,
+                ContactNumbers = string.Empty,
+                IsActive = true,
+                IsAgeEdited = false
+            };
+        }
+
         public Patient GetPatient(long id)
         {
             try

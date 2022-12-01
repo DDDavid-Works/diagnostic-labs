@@ -40,12 +40,7 @@ namespace DiagnosticLabsDAL.Models
         public decimal Price
         {
             get { return il_Price; }
-            set
-            {
-                il_Price = value;
-                ServicePrice = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("Price");
-            }
+            set { il_Price = value; OnPropertyChanged("Price"); }
         }
 
         public bool IsActive

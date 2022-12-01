@@ -61,12 +61,7 @@ namespace DiagnosticLabsDAL.Models
         public decimal Price
         {
             get { return il_Price; }
-            set
-            {
-                il_Price = value;
-                PatientRegistrationPrice = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("Price");
-            }
+            set { il_Price = value; OnPropertyChanged("Price"); }
         }
 
         public bool IsActive
@@ -149,6 +144,13 @@ namespace DiagnosticLabsDAL.Models
             ErrorMessages = ErrorMessages.Trim('\r', '\n');
 
             return result;
+        }
+        #endregion
+
+        #region Computations
+        private void ComputeTotals()
+        {
+            
         }
         #endregion
     }
