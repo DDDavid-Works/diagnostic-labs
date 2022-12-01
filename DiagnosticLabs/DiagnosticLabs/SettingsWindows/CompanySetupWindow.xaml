@@ -54,6 +54,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Orientation="Horizontal" VerticalAlignment="Top">
@@ -79,6 +80,12 @@
             <TextBox Name="ContactNumbersTextBox" Grid.Row="4" Grid.Column="2" Text="{Binding CompanySetup.ContactNumbers}"></TextBox>
             <Label Name="EmailLabel" Content="Email Address:" Grid.Row="5" Grid.Column="1"></Label>
             <TextBox Name="EmailTextBox" Grid.Row="5" Grid.Column="2" Text="{Binding CompanySetup.Email}"></TextBox>
+
+            <Border Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="0,1,0,0" BorderBrush="Black" />
+
+            <Label Name="CodeLabel" Content="Company Code:" Grid.Row="7" Grid.Column="1"></Label>
+            <TextBox Name="CodeTextBox" Grid.Row="7" Grid.Column="2" Text="{Binding CompanySetup.Code}"></TextBox>
+
         </Grid>
     </StackPanel>
 </Window>

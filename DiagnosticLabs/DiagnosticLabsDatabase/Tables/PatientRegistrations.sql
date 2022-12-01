@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[PatientRegistrations]
 (
 	[Id] BIGINT NOT NULL IDENTITY, 
+    [RegistrationCode] NVARCHAR(100) NOT NULL DEFAULT '',
     [InputDate] DATETIME NOT NULL DEFAULT GETDATE(),
 	[PatientId] BIGINT NOT NULL,
 	[CompanyId] BIGINT NULL DEFAULT 0,

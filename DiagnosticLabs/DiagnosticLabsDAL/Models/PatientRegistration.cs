@@ -9,6 +9,7 @@ namespace DiagnosticLabsDAL.Models
     public class PatientRegistration : BaseModel, IDataErrorInfo
     {
         private long il_Id;
+        private string il_RegistrationCode;
         private DateTime il_InputDate;
         private long? il_PatientId;
         private long? il_CompanyId;
@@ -26,6 +27,12 @@ namespace DiagnosticLabsDAL.Models
         {
             get { return il_Id; }
             set { il_Id = value; OnPropertyChanged("Id"); }
+        }
+
+        public string RegistrationCode
+        {
+            get { return il_RegistrationCode; }
+            set { il_RegistrationCode = value; OnPropertyChanged("RegistrationCode"); }
         }
 
         public DateTime InputDate

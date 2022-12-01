@@ -1,9 +1,7 @@
 ﻿using DiagnosticLabsDAL.Models.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DiagnosticLabsDAL.Models
 {
@@ -16,6 +14,7 @@ namespace DiagnosticLabsDAL.Models
         private string il_Address;
         private string il_ContactNumbers;
         private string il_Email;
+        private string il_Code;
         private byte[] il_Logo;
         private long il_UpdatedByUserId;
         private DateTime il_UpdatedDate;
@@ -63,6 +62,12 @@ namespace DiagnosticLabsDAL.Models
             set { il_Email = value; OnPropertyChanged("Email"); }
         }
 
+        public string Code
+        {
+            get { return il_Code; }
+            set { il_Code = value; OnPropertyChanged("Code"); }
+        }
+
         public byte[] Logo
         {
             get { return il_Logo; }
@@ -82,7 +87,7 @@ namespace DiagnosticLabsDAL.Models
         }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "CompanyName", "Address", "ContactNumber" };
+        private static readonly string[] PropertiesToValidate = { "CompanyName", "Address", "ContactNumber", "Code" };
 
         public string Error
         {
@@ -116,8 +121,10 @@ namespace DiagnosticLabsDAL.Models
                 result = "Name can not be empty.";
             else if (columnName == "Address" && this.Address.Trim() == string.Empty)
                 result = "\r\nAddress can not be empty.";
-            else if (columnName == "ContactNumber" && this.Address.Trim() == string.Empty)
+            else if (columnName == "ContactNumber" && this.ContactNumbers.Trim() == string.Empty)
                 result = "\r\nContact Number can not be empty.";
+            else if (columnName == "Code" && this.Code.Trim() == string.Empty)
+                result = "\r\nCode can not be empty.";
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

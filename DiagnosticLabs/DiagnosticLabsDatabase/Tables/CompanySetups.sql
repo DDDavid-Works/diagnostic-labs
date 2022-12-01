@@ -7,6 +7,7 @@
     [Address] NVARCHAR(200) NULL,
     [ContactNumbers] NVARCHAR(200) NULL,
     [Email] NVARCHAR(200) NULL,
+    [Code] NVARCHAR(20) NULL,
     [Logo] VARBINARY(MAX) NULL,
     [UpdatedByUserId] BIGINT NOT NULL DEFAULT 0,
     [UpdatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
