@@ -14,6 +14,7 @@ namespace DiagnosticLabsBLL.Services
         CommonFunctions commonFunctions = new CommonFunctions();
         PatientsBLL patientsBLL = new PatientsBLL();
         PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
+        CompanySetupBLL companySetupBLL = new CompanySetupBLL();
 
         private static DatabaseContext dbContext;
 
@@ -24,9 +25,13 @@ namespace DiagnosticLabsBLL.Services
 
         public PatientRegistration NewPatientRegistration()
         {
+            CompanySetup companySetup = companySetupBLL.GetLatestCompanySetup();
+            string code = companySetup.Code;
+
             return new PatientRegistration()
             {
                 Id = 0,
+                RegistrationCode = code,
                 PatientId = null,
                 CompanyId = null,
                 PackageId = null,

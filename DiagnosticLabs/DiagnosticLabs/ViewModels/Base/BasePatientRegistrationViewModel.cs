@@ -16,6 +16,7 @@ namespace DiagnosticLabs.ViewModels.Base
         PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
         PatientsBLL patientsBLL = new PatientsBLL();
         ServicesBLL servicesBLL = new ServicesBLL();
+        PackagesBLL packagesBLL = new PackagesBLL();
         PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
 
         #region Public Properties
@@ -68,7 +69,7 @@ namespace DiagnosticLabs.ViewModels.Base
             this.RemovePatientRegistrationServiceCommand = new RelayCommand(param => RemovePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdatePatientRegistrationServiceCommand = new RelayCommand(param => UpdatePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited());
-            this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshPatientRegistrationBatches());
+            this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshComboBoxesByCompanyId());
             this.LoadPatientRegistrationCommand = new RelayCommand(param => LoadPatientRegistration((long)param));
         }
 
@@ -102,8 +103,8 @@ namespace DiagnosticLabs.ViewModels.Base
 
         public void RefreshComboBoxes()
         {
-            this.SelectedCompany = this.Companies.First();
-            this.SelectedPackage = this.Packages.First();
+            this.SelectedCompany = this.Companies.FirstOrDefault();
+            this.SelectedPackage = this.Packages.FirstOrDefault();
             this.SelectedBatchName = string.Empty;
         }
 
@@ -114,7 +115,7 @@ namespace DiagnosticLabs.ViewModels.Base
 
             RefreshComboBoxes();
 
-            RefreshPatientRegistrationBatches();
+            RefreshComboBoxesByCompanyId();
         }
 
         public virtual void UpdateIsPriceEdited()
@@ -187,10 +188,11 @@ namespace DiagnosticLabs.ViewModels.Base
             }
         }
 
-        private void RefreshPatientRegistrationBatches()
+        private void RefreshComboBoxesByCompanyId()
         {
             long? companyId = this.SelectedCompany?.Id;
             this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList(companyId));
+            this.Packages = new ObservableCollection<Package>(packagesBLL.GetPackagesByCompanyId(companyId));
         }
         #endregion
     }

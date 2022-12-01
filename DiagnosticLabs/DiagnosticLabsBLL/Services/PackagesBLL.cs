@@ -49,6 +49,19 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public List<Package> GetPackagesByCompanyId(long? companyId)
+        {
+            try
+            {
+                return dbContext.Packages.Where(p => p.CompanyId == companyId && p.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
         public Package GetLatestPackage()
         {
             try
