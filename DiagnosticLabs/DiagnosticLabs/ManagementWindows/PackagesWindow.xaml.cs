@@ -1,7 +1,10 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents.DocumentStructures;
 
 namespace DiagnosticLabs.ManagementWindows
 {
@@ -28,20 +31,27 @@ namespace DiagnosticLabs.ManagementWindows
 
         private void AddServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchServicesWindow search = new SearchServicesWindow();
-            search.ShowDialog();
-
-            if (search.SelectedService == null) return;
-
             var vm = (PackageViewModel)DataContext;
-            if (vm.AddPackageServiceCommand.CanExecute(null))
+
+            SelectServicesWindow select = new SelectServicesWindow(vm.PackageServices.Select(s => s.Service).ToList());
+
+            select.ShowDialog();
+
+            if (select.SelectedServices == null) return;
+
+            if (vm.UpdateAllPackageServicesCommand.CanExecute(null))
             {
-                PackageServiceViewModel psvm = new PackageServiceViewModel()
+                List<PackageServiceViewModel> list = new List<PackageServiceViewModel>();
+                foreach (Service service in select.SelectedServices)
                 {
-                    PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = search.SelectedService.Id, Price = search.SelectedService.Price, IsActive = true },
-                    Service = search.SelectedService
-                };
-                vm.AddPackageServiceCommand.Execute(psvm);
+                    PackageServiceViewModel psvm = new PackageServiceViewModel()
+                    {
+                        PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = service.Id, Price = service.Price, IsActive = true },
+                        Service = service
+                    };
+                    list.Add(psvm);
+                }
+                vm.UpdateAllPackageServicesCommand.Execute(list);
             }
         }
 

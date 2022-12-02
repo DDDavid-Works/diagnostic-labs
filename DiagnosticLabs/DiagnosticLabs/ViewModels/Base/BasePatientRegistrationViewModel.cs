@@ -26,6 +26,7 @@ namespace DiagnosticLabs.ViewModels.Base
         public ICommand AddPatientRegistrationServiceCommand { get; set; }
         public ICommand RemovePatientRegistrationServiceCommand { get; set; }
         public ICommand UpdatePatientRegistrationServiceCommand { get; set; }
+        public ICommand UpdateAllPatientRegistrationServicesCommand { get; set; }
         public ICommand UpdateIsPriceEditedCommand { get; set; }
         public ICommand RefreshPatientRegistrationBatchCommand { get; set; }
         public ICommand LoadPatientRegistrationCommand { get; set; }
@@ -68,6 +69,7 @@ namespace DiagnosticLabs.ViewModels.Base
             this.AddPatientRegistrationServiceCommand = new RelayCommand(param => AddPatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.RemovePatientRegistrationServiceCommand = new RelayCommand(param => RemovePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdatePatientRegistrationServiceCommand = new RelayCommand(param => UpdatePatientRegistrationService((PatientRegistrationServiceViewModel)param));
+            this.UpdateAllPatientRegistrationServicesCommand = new RelayCommand(param => UpdateAllPatientRegistrationService((List<PatientRegistrationServiceViewModel>)param));
             this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited());
             this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshComboBoxesByCompanyId());
             this.LoadPatientRegistrationCommand = new RelayCommand(param => LoadPatientRegistration((long)param));
@@ -175,6 +177,12 @@ namespace DiagnosticLabs.ViewModels.Base
             this.PatientRegistrationServices[index] = patientRegistrationServiceVM;
 
             ComputeTotalPrice();
+        }
+
+        private void UpdateAllPatientRegistrationService(List<PatientRegistrationServiceViewModel> patientRegistrationServiceVMs)
+        {
+            this.PatientRegistrationServices.Clear();
+            this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>(patientRegistrationServiceVMs);
         }
 
         private void ComputeTotalPrice()

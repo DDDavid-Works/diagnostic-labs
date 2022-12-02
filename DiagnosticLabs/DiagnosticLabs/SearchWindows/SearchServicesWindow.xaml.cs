@@ -27,12 +27,12 @@ namespace DiagnosticLabs.SearchWindows
 
         private void ServicesDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            SelectServiceLocation();
+            SelectService();
         }
 
         private void OkCancelUserControl_OkCommand(object sender, RoutedEventArgs e)
         {
-            SelectServiceLocation();
+            SelectService();
         }
 
         private void OkCancelUserControl_CancelCommand(object sender, RoutedEventArgs e)
@@ -56,7 +56,7 @@ namespace DiagnosticLabs.SearchWindows
                 vm.SearchCommand.Execute(true);
         }
         
-        private void SelectServiceLocation()
+        private void SelectService()
         {
             if (ServicesDataGrid.Items.Count == 0) return;
 

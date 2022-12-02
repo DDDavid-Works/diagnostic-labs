@@ -1,6 +1,8 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -29,26 +31,33 @@ namespace DiagnosticLabs.SalesWindows
 
         private void AddServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchServicesWindow search = new SearchServicesWindow();
-            search.ShowDialog();
-
-            if (search.SelectedService == null) return;
-
             var vm = (PaymentViewModel)DataContext;
-            if (vm.AddPatientRegistrationServiceCommand.CanExecute(null))
+
+            SelectServicesWindow select = new SelectServicesWindow(vm.PatientRegistrationServices.Select(s => s.Service).ToList());
+
+            select.ShowDialog();
+
+            if (select.SelectedServices == null) return;
+
+            if (vm.UpdateAllPatientRegistrationServicesCommand.CanExecute(null))
             {
-                PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
+                List<PatientRegistrationServiceViewModel> list = new List<PatientRegistrationServiceViewModel>();
+                foreach (Service service in select.SelectedServices)
                 {
-                    PatientRegistrationService = new PatientRegistrationService()
+                    PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
                     {
-                        PatientRegistrationId = vm.PatientRegistration.Id,
-                        ServiceId = search.SelectedService.Id,
-                        Price = search.SelectedService.Price,
-                        IsActive = true
-                    },
-                    Service = search.SelectedService
-                };
-                vm.AddPatientRegistrationServiceCommand.Execute(prsvm);
+                        PatientRegistrationService = new PatientRegistrationService()
+                        {
+                            PatientRegistrationId = vm.PatientRegistration.Id,
+                            ServiceId = service.Id,
+                            Price = service.Price,
+                            IsActive = true
+                        },
+                        Service = service
+                    };
+                    list.Add(prsvm);
+                }
+                vm.UpdateAllPatientRegistrationServicesCommand.Execute(list);
             }
         }
 

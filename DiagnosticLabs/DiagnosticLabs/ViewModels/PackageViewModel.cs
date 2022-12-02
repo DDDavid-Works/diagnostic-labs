@@ -31,6 +31,7 @@ namespace DiagnosticLabs.ViewModels
         public ICommand AddPackageServiceCommand { get; set; }
         public ICommand RemovePackageServiceCommand { get; set; }
         public ICommand UpdatePackageServiceCommand { get; set; }
+        public ICommand UpdateAllPackageServicesCommand { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
 
@@ -61,6 +62,7 @@ namespace DiagnosticLabs.ViewModels
             this.AddPackageServiceCommand = new RelayCommand(param => AddPackageService((PackageServiceViewModel)param));
             this.RemovePackageServiceCommand = new RelayCommand(param => RemovePackageService((PackageServiceViewModel)param));
             this.UpdatePackageServiceCommand = new RelayCommand(param => UpdatePackageService((PackageServiceViewModel)param));
+            this.UpdateAllPackageServicesCommand = new RelayCommand(param => UpdateAllPackageServices((List<PackageServiceViewModel>)param));
         }
 
         #region Data Actions
@@ -156,6 +158,12 @@ namespace DiagnosticLabs.ViewModels
                 int index = this.PackageServices.IndexOf(packageServiceVM);
                 this.PackageServices[index] = packageServiceVM;
             }
+        }
+
+        private void UpdateAllPackageServices(List<PackageServiceViewModel> packageServiceVMs)
+        {
+            this.PackageServices.Clear();
+            this.PackageServices = new ObservableCollection<PackageServiceViewModel>(packageServiceVMs);
         }
         #endregion
     }
