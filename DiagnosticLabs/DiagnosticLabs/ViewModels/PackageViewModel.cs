@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore.Internal;
+using System;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -32,6 +33,7 @@ namespace DiagnosticLabs.ViewModels
         public ICommand RemovePackageServiceCommand { get; set; }
         public ICommand UpdatePackageServiceCommand { get; set; }
         public ICommand UpdateAllPackageServicesCommand { get; set; }
+        public ICommand UpdateIsPriceEditedCommand { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
 
@@ -63,6 +65,7 @@ namespace DiagnosticLabs.ViewModels
             this.RemovePackageServiceCommand = new RelayCommand(param => RemovePackageService((PackageServiceViewModel)param));
             this.UpdatePackageServiceCommand = new RelayCommand(param => UpdatePackageService((PackageServiceViewModel)param));
             this.UpdateAllPackageServicesCommand = new RelayCommand(param => UpdateAllPackageServices((List<PackageServiceViewModel>)param));
+            this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited((bool)param));
         }
 
         #region Data Actions
@@ -118,7 +121,7 @@ namespace DiagnosticLabs.ViewModels
         }
         #endregion
 
-        #region Private Methods
+        #region Data Actions
         private ObservableCollection<PackageServiceViewModel> PackageServiceViewModelList(List<PackageService> packageServices)
         {
             List<PackageServiceViewModel> packageServicesList = new List<PackageServiceViewModel>();
@@ -142,11 +145,15 @@ namespace DiagnosticLabs.ViewModels
                 else
                     this.PackageServices.Add(packageServiceVM);
             }
+
+            ComputeTotalPrice();
         }
 
         private void RemovePackageService(PackageServiceViewModel packageServiceVM)
         {
             this.PackageServices.Remove(packageServiceVM);
+
+            ComputeTotalPrice();
         }
 
         private void UpdatePackageService(PackageServiceViewModel packageServiceVM)
@@ -158,12 +165,36 @@ namespace DiagnosticLabs.ViewModels
                 int index = this.PackageServices.IndexOf(packageServiceVM);
                 this.PackageServices[index] = packageServiceVM;
             }
+
+            ComputeTotalPrice();
         }
 
         private void UpdateAllPackageServices(List<PackageServiceViewModel> packageServiceVMs)
         {
             this.PackageServices.Clear();
             this.PackageServices = new ObservableCollection<PackageServiceViewModel>(packageServiceVMs);
+
+            ComputeTotalPrice();
+        }
+
+        public void UpdateIsPriceEdited(bool isValueChanged)
+        {
+            if (!isValueChanged) return;
+
+            this.Package.IsPriceEdited = true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void ComputeTotalPrice()
+        {
+            if (!this.Package.IsPriceEdited)
+            {
+                decimal price = this.PackageServices.Select(p => p.PackageService.Price).Sum();
+                this.Package.Price = price;
+                this.Package.PackagePrice = String.Format("{0:N}", price);
+                this.Package.IsPriceEdited = false;
+            }
         }
         #endregion
     }

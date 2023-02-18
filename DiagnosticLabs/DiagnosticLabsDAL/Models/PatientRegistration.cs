@@ -15,7 +15,7 @@ namespace DiagnosticLabsDAL.Models
         private long? il_CompanyId;
         private long? il_PackageId;
         private string il_BatchName;
-        private decimal il_Price;
+        private decimal il_AmountDue;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -65,10 +65,10 @@ namespace DiagnosticLabsDAL.Models
             set { il_BatchName = value; OnPropertyChanged("BatchName"); }
         }
 
-        public decimal Price
+        public decimal AmountDue
         {
-            get { return il_Price; }
-            set { il_Price = value; OnPropertyChanged("Price"); }
+            get { return il_AmountDue; }
+            set { il_AmountDue = value; OnPropertyChanged("AmountDue"); }
         }
 
         public bool IsActive
@@ -102,13 +102,13 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public string PatientRegistrationPrice { get; set; }
+        public string PatientRegistrationAmountDue { get; set; }
 
         [NotMapped]
         public bool IsPriceEdited { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PatientRegistrationPrice" };
+        private static readonly string[] PropertiesToValidate = { "PatientRegistrationAmountDue" };
 
         public string Error
         {
@@ -139,10 +139,10 @@ namespace DiagnosticLabsDAL.Models
         {
             string result = string.Empty;
 
-            if (columnName == "PatientRegistrationPrice")
+            if (columnName == "PatientRegistrationAmountDue")
             {
                 decimal patientRegistrationPrice = 0;
-                bool isDecimal = decimal.TryParse(this.PatientRegistrationPrice, out patientRegistrationPrice);
+                bool isDecimal = decimal.TryParse(this.PatientRegistrationAmountDue, out patientRegistrationPrice);
                 if (!isDecimal)
                     result = "\r\nPrice is invalid.";
             }

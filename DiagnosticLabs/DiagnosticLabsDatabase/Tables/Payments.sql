@@ -4,6 +4,7 @@
     [PaymentDate] DATETIME NOT NULL DEFAULT GETDATE(),
     [PatientRegistrationId] BIGINT NOT NULL DEFAULT 0,
     [AmountDue] DECIMAL(18, 4) NOT NULL,
+    [AmountPaid] DECIMAL(18, 4) NOT NULL,
     [Cash] DECIMAL(18, 4) NOT NULL,
     [Change] DECIMAL(18, 4) NOT NULL,
     [IsActive] BIT NOT NULL DEFAULT 1, 

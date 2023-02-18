@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
+using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsDAL.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,12 +100,20 @@ namespace DiagnosticLabs.SalesWindows
             }
         }
 
-        private void PatientRegistrationPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void PatientRegistrationAmountDueTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var vm = (PaymentViewModel)DataContext;
 
             if (vm.UpdateIsPriceEditedAndAmountDueCommand.CanExecute(null))
-                vm.UpdateIsPriceEditedAndAmountDueCommand.Execute(null);
+            {
+                decimal textBoxValue = 0;
+                bool isDecimal = decimal.TryParse(((TextBox)sender).Text, out textBoxValue);
+                if (isDecimal)
+                {
+                    bool isValueChanged = vm.PatientRegistration.AmountDue != textBoxValue;
+                    vm.UpdateIsPriceEditedAndAmountDueCommand.Execute(isValueChanged);
+                }
+            }
         }
 
         private void CashTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -113,6 +122,22 @@ namespace DiagnosticLabs.SalesWindows
 
             if (vm.ComputeTotalsCommand.CanExecute(null))
                 vm.ComputeTotalsCommand.Execute(((TextBox)sender).Text);
+        }
+
+        private void RegistrationCodeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var vm = (PaymentViewModel)DataContext;
+
+            if (vm.GetPatientRegistrationByCodeCommand.CanExecute(null))
+                vm.GetPatientRegistrationByCodeCommand.Execute(((TextBox)sender).Text);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var vm = (PaymentViewModel)DataContext;
+
+            if (vm.GetPatientRegistrationCommand.CanExecute(null))
+                vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOPAY);
         }
     }
 }

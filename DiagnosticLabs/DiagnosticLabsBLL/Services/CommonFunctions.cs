@@ -58,6 +58,8 @@ namespace DiagnosticLabsBLL.Services
 
                 if (ex.InnerException != null)
                     file.WriteLine(src + " : " + ex.InnerException.Message);
+
+                file.WriteLine(src + " : " + ex.StackTrace);
             }
         }
 

@@ -35,6 +35,11 @@ namespace DiagnosticLabs.UserControls
                 var vm = (PatientRegistrationViewModel)DataContext;
                 vm.RefreshPatientRegistrationBatchCommand.Execute(null);
             }
+            else if (DataContext.GetType().Equals(typeof(PaymentViewModel)))
+            {
+                var vm = (PaymentViewModel)DataContext;
+                vm.RefreshPatientRegistrationBatchCommand.Execute(null);
+            }
         }
     }
 }

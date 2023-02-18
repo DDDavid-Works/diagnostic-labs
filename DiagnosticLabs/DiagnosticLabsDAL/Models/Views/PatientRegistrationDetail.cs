@@ -8,7 +8,7 @@ namespace DiagnosticLabsDAL.Models.Views
         [Key]
         public long PatientRegistrationId { get; set; }
         public DateTime InputDate { get; set; }
-        public decimal Price { get; set; }
+        public decimal AmountDue { get; set; }
         public long PatientId { get; set; }
         public string PatientName { get; set; }
         public long? CompanyId { get; set; }

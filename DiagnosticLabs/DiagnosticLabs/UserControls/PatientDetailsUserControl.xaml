@@ -52,7 +52,8 @@
         <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="0" Grid.Column="0"></Label>
         <TextBox Name="PatientNameTextBox" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Patient.PatientName}"></TextBox>
 
-        <Button Name="SearchPatientsButton" Grid.Row="0" Grid.Column="4" Height="22" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Click="SearchPatientsButton_Click">
+        <Button Name="SearchPatientsButton" Grid.Row="0" Grid.Column="4" Height="22" Width="23" HorizontalAlignment="Right" Margin="0,0,0,5" Background="#d0e2d0"
+                Click="SearchPatientsButton_Click">
             <StackPanel>
                 <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>
             </StackPanel>

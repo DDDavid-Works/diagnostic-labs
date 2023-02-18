@@ -32,13 +32,32 @@ namespace DiagnosticLabs.UserControls
 
         private void DateOfBirthDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext.GetType().Equals(typeof(PatientRegistrationViewModel)))
-            {
-                var vm = (PatientRegistrationViewModel)DataContext;
+            var vm = (BasePatientViewModel)DataContext;
 
-                if (vm.UpdateAgeByDateOfBirthCommand.CanExecute(null))
-                    vm.UpdateAgeByDateOfBirthCommand.Execute(DateOfBirthDatePicker.SelectedDate);
-            }
+            if (vm.UpdateAgeByDateOfBirthCommand.CanExecute(null))
+                vm.UpdateAgeByDateOfBirthCommand.Execute(DateOfBirthDatePicker.SelectedDate);
+
+            //if (DataContext.GetType().Equals(typeof(PatientRegistrationViewModel)))
+            //{
+            //    var vm = (PatientRegistrationViewModel)DataContext;
+
+            //    if (vm.UpdateAgeByDateOfBirthCommand.CanExecute(null))
+            //        vm.UpdateAgeByDateOfBirthCommand.Execute(DateOfBirthDatePicker.SelectedDate);
+            //}
+            //else if (DataContext.GetType().Equals(typeof(PatientViewModel)))
+            //{
+            //    var vm = (PatientViewModel)DataContext;
+
+            //    if (vm.UpdateAgeByDateOfBirthCommand.CanExecute(null))
+            //        vm.UpdateAgeByDateOfBirthCommand.Execute(DateOfBirthDatePicker.SelectedDate);
+            //}
+            //else if (DataContext.GetType().Equals(typeof(PaymentViewModel)))
+            //{
+            //    var vm = (PaymentViewModel)DataContext;
+
+            //    if (vm.UpdateAgeByDateOfBirthCommand.CanExecute(null))
+            //        vm.UpdateAgeByDateOfBirthCommand.Execute(DateOfBirthDatePicker.SelectedDate);
+            //}
         }
 
         private void AgeTextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -29,7 +29,7 @@
                                         <Setter Property="Background" Value="#d0e2d0" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="Background" Value="#efffef"/>
+                                                <Setter Property="Background" Value="#ffbd80"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

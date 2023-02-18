@@ -4,7 +4,7 @@ using DiagnosticLabsDAL.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents.DocumentStructures;
+using System.Windows.Controls;
 
 namespace DiagnosticLabs.ManagementWindows
 {
@@ -65,10 +65,26 @@ namespace DiagnosticLabs.ManagementWindows
             var vm = (PackageViewModel)DataContext;
             if (vm.UpdatePackageServiceCommand.CanExecute(null))
             {
-                PackageServiceViewModel psvm = (PackageServiceViewModel)((System.Windows.Controls.Button)sender).CommandParameter;
+                PackageServiceViewModel psvm = (PackageServiceViewModel)((Button)sender).CommandParameter;
                 psvm.PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = search.SelectedService.Id, Price = search.SelectedService.Price, IsActive = true };
                 psvm.Service = search.SelectedService;
                 vm.UpdatePackageServiceCommand.Execute(psvm);
+            }
+        }
+
+        private void PriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var vm = (PackageViewModel)DataContext;
+
+            if (vm.UpdateIsPriceEditedCommand.CanExecute(null))
+            {
+                decimal textBoxValue = 0;
+                bool isDecimal = decimal.TryParse(((TextBox)sender).Text, out textBoxValue);
+                if (isDecimal)
+                {
+                    bool isValueChanged = vm.Package.Price != textBoxValue;
+                    vm.UpdateIsPriceEditedCommand.Execute(isValueChanged);
+                }
             }
         }
     }

@@ -54,6 +54,13 @@ namespace DiagnosticLabs.Constants
             IsAutoCloseMessage = true
         };
 
+        public static readonly NotificationMessage PatientRegistrationDoesNotExists = new NotificationMessage()
+        {
+            Message = "Registration Code not found.",
+            MessageType = MessageType.Error,
+            IsAutoCloseMessage = true
+        };
+
         public enum MessageType
         {
             Success = 1,

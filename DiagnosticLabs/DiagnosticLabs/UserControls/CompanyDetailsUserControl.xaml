@@ -25,7 +25,8 @@
         </Grid.ColumnDefinitions>
         <ComboBox Name="CompaniesComboBox" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Companies}" DisplayMemberPath="CompanyName"
                   SelectedItem="{Binding SelectedCompany, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectionChanged="CompaniesComboBox_SelectionChanged" />
-        <Button Name="SearchCompaniesButton" Grid.Row="0" Grid.Column="1" Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Click="SearchCompaniesButton_Click">
+        <Button Name="SearchCompaniesButton" Grid.Row="0" Grid.Column="1" Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Background="#d0e2d0"
+                Click="SearchCompaniesButton_Click">
             <StackPanel>
                 <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>
             </StackPanel>

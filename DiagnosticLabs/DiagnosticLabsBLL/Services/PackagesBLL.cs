@@ -29,7 +29,8 @@ namespace DiagnosticLabsBLL.Services
                 PackageDescription = string.Empty,
                 Price = 0,
                 IsActive = true,
-                PackagePrice = "0.00"
+                PackagePrice = "0.00",
+                IsPriceEdited = false
             };
         }
 
@@ -38,7 +39,12 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 Package package = dbContext.Packages.Find(id);
-                package.PackagePrice = String.Format("{0:0,0.00}", package.Price);
+
+                if (package != null)
+                {
+                    package.PackagePrice = String.Format("{0:N}", package.Price);
+                    package.IsPriceEdited = true;
+                }
 
                 return package;
             }
@@ -49,11 +55,16 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        public List<Package> GetPackagesByCompanyId(long? companyId)
+        public List<Package> GetPackagesByCompanyId(long? companyId, bool addNone = false)
         {
             try
             {
-                return dbContext.Packages.Where(p => p.CompanyId == companyId && p.IsActive).ToList();
+                List<Package> packages = dbContext.Packages.Where(p => p.CompanyId == companyId && p.IsActive).ToList();
+
+                if (addNone)
+                    packages.Insert(0, new Package() { Id = 0, PackageName = "None" });
+
+                return packages;
             }
             catch (Exception ex)
             {

@@ -23,11 +23,20 @@ namespace DiagnosticLabs.ViewModels
 
         #region Public Properties
         public Payment Payment { get; set; }
+        public string NextPatientRegistrationCode { get; set; }
+
+        private bool _IsPatientRegistrationCodeReadOnly;
+        public bool IsPatientRegistrationCodeReadOnly
+        {
+            get { return _IsPatientRegistrationCodeReadOnly; }
+            set { _IsPatientRegistrationCodeReadOnly = value; OnPropertyChanged("IsPatientRegistrationCodeReadOnly"); }
+        }
 
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand GetPatientRegistrationCommand { get; set; }
+        public ICommand GetPatientRegistrationByCodeCommand { get; set; }
         public ICommand UpdateIsPriceEditedAndAmountDueCommand { get; set; }
         public ICommand ComputeTotalsCommand { get; set; }
         #endregion
@@ -40,16 +49,20 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.Payment = paymentsBLL.GetPayment(id);
                 this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration((long)this.Payment.PatientRegistrationId);
+                this.PatientRegistrationPayment = patientRegistrationsBLL.GetPatientRegistrationPayment(id);
                 this.Patient = patientsBLL.GetPatient((long)this.PatientRegistration.PatientId);
 
                 this.PatientRegistrationServices = this.PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(this.PatientRegistration.Id));
             }
 
+            this.NextPatientRegistrationCode = patientRegistrationsBLL.NewRegistrationCode();
+
             this.NewCommand = new RelayCommand(param => NewPayment());
             this.SaveCommand = new RelayCommand(param => SavePayment());
             this.DeleteCommand = new RelayCommand(param => DeletePayment());
             this.GetPatientRegistrationCommand = new RelayCommand(param => GetPatientRegistration((long)param));
-            this.UpdateIsPriceEditedAndAmountDueCommand = new RelayCommand(param => UpdateIsPriceEditedAndAmountDue());
+            this.GetPatientRegistrationByCodeCommand = new RelayCommand(param => GetPatientRegistrationByCode((string)param));
+            this.UpdateIsPriceEditedAndAmountDueCommand = new RelayCommand(param => UpdateIsPriceEditedAndAmountDue((bool)param));
             this.ComputeTotalsCommand = new RelayCommand(param => ComputeTotals((string)param));
         }
 
@@ -60,14 +73,16 @@ namespace DiagnosticLabs.ViewModels
             this.PatientRegistration = patientRegistrationsBLL.NewPatientRegistration();
             this.Patient = patientsBLL.NewPatient();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
+            this.IsPatientRegistrationCodeReadOnly = false;
 
             this.LoadPatientRegistrationComboBoxes();
-
             this.ClearNotificationMessages();
         }
 
         private void SavePayment()
         {
+            base.SavePatientRegistration();
+
             if (!this.Payment.IsValid)
             {
                 this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Payment.ErrorMessages, Messages.MessageType.Error, false);
@@ -109,26 +124,54 @@ namespace DiagnosticLabs.ViewModels
 
         private void GetPatientRegistration(long patientRegistrationId)
         {
+            if (patientRegistrationId == 0) return;
+
             this.LoadPatientRegistration(patientRegistrationId);
-            this.Payment.AmountDue = this.PatientRegistration.Price;
-            this.Payment.PaymentAmountDue = String.Format("{0:0,0.00}", this.Payment.AmountDue);
+            this.Payment.AmountDue = this.PatientRegistration.AmountDue;
+            this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
             this.Payment.Cash = 0;
-            this.Payment.PaymentCash = String.Format("{0:0,0.00}", this.Payment.Cash);
+            this.Payment.PaymentCash = String.Format("{0:N}", this.Payment.Cash);
             this.Payment.Change = 0;
-            this.Payment.PaymentChange = String.Format("{0:0,0.00}", this.Payment.Change);
+            this.Payment.PaymentChange = String.Format("{0:N}", this.Payment.Change);
         }
 
-        private void UpdateIsPriceEditedAndAmountDue()
+        private void GetPatientRegistrationByCode(string code)
         {
-            this.UpdateIsPriceEdited();
+            if (code == this.NextPatientRegistrationCode) return;
+
+            PatientRegistration patientRegistration = patientRegistrationsBLL.GetPatientRegistrationByCode(code);
+            if (patientRegistration != null)
+            {
+                this.GetPatientRegistration(patientRegistration.Id);
+                this.ClearNotificationMessages();
+                this.IsPatientRegistrationCodeReadOnly = true;
+            }
+            else
+                this.NotificationMessage = Messages.PatientRegistrationDoesNotExists;
+        }
+
+        private void UpdateIsPriceEditedAndAmountDue(bool isValueChanged)
+        {
+            this.UpdateIsPriceEdited(isValueChanged);
 
             decimal patientRegistrationPrice = 0;
-            bool isDecimal = decimal.TryParse(this.PatientRegistration.PatientRegistrationPrice, out patientRegistrationPrice);
+            bool isDecimal = decimal.TryParse(this.PatientRegistration.PatientRegistrationAmountDue, out patientRegistrationPrice);
             if (isDecimal)
-                this.PatientRegistration.Price = patientRegistrationPrice;
+                this.PatientRegistration.AmountDue = patientRegistrationPrice;
 
-            this.Payment.AmountDue = this.PatientRegistration.Price;
-            this.Payment.PaymentAmountDue = String.Format("{0:0,0.00}", this.Payment.AmountDue);
+            this.Payment.AmountDue = this.PatientRegistration.AmountDue;
+            this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
+        }
+
+        public override void LoadPackageServices()
+        {
+            base.LoadPackageServices();
+
+            if (this.PatientRegistration != null)
+            {
+                this.Payment.AmountDue = this.PatientRegistration.AmountDue;
+                this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
+            }
         }
         #endregion
 
@@ -141,7 +184,7 @@ namespace DiagnosticLabs.ViewModels
                 this.Payment.Cash = cash;
 
             this.Payment.Change = cash - this.Payment.AmountDue;
-            this.Payment.PaymentChange = String.Format("{0:0,0.00}", this.Payment.Change);
+            this.Payment.PaymentChange = String.Format("{0:N}", this.Payment.Change);
         }
         #endregion
     }

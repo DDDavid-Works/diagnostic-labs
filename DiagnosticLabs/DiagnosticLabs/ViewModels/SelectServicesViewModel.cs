@@ -30,7 +30,7 @@ namespace DiagnosticLabs.ViewModels
 
             foreach (var service in services)
             {
-                string price = String.Format("{0:0,0.00}", service.Price);
+                string price = String.Format("{0:N}", service.Price);
                 serviceDetails.Add(new ServiceDetailViewModel()
                 {
                     Service = service,

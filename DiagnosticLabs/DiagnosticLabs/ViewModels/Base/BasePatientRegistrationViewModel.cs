@@ -21,6 +21,7 @@ namespace DiagnosticLabs.ViewModels.Base
 
         #region Public Properties
         public PatientRegistration PatientRegistration { get; set; }
+        public PatientRegistrationPayment PatientRegistrationPayment { get; set; }
         public ObservableCollection<PatientRegistrationServiceViewModel> PatientRegistrationServices { get; set; }
 
         public ICommand AddPatientRegistrationServiceCommand { get; set; }
@@ -50,7 +51,7 @@ namespace DiagnosticLabs.ViewModels.Base
             {
                 _SelectedPackage = value;
                 OnPropertyChanged("SelectedPackage");
-                LoadPackageServices();
+                this.LoadPackageServices();
             }
         }
 
@@ -70,85 +71,21 @@ namespace DiagnosticLabs.ViewModels.Base
             this.RemovePatientRegistrationServiceCommand = new RelayCommand(param => RemovePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdatePatientRegistrationServiceCommand = new RelayCommand(param => UpdatePatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.UpdateAllPatientRegistrationServicesCommand = new RelayCommand(param => UpdateAllPatientRegistrationService((List<PatientRegistrationServiceViewModel>)param));
-            this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited());
-            this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshComboBoxesByCompanyId());
+            this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited((bool)param));
+            this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshComboBoxesByCompanyId(false));
             this.LoadPatientRegistrationCommand = new RelayCommand(param => LoadPatientRegistration((long)param));
         }
 
         #region Data Actions
-        public ObservableCollection<PatientRegistrationServiceViewModel> PatientRegistrationServiceViewModelList(List<PatientRegistrationService> patientRegistrationServices)
+        public virtual void SavePatientRegistration()
         {
-            List<PatientRegistrationServiceViewModel> packageServicesList = new List<PatientRegistrationServiceViewModel>();
-            foreach (PatientRegistrationService patientRegistrationService in patientRegistrationServices)
-                packageServicesList.Add(new PatientRegistrationServiceViewModel()
-                {
-                    PatientRegistrationService = patientRegistrationService,
-                    Service = servicesBLL.GetService(patientRegistrationService.ServiceId)
-                });
+            if (this.SelectedPackage == null || this.SelectedPackage.Id == 0)
+                this.PatientRegistration.PackageId = null;
+            else
+                this.PatientRegistration.PackageId = this.SelectedPackage.Id;
 
-            return new ObservableCollection<PatientRegistrationServiceViewModel>(packageServicesList);
-        }
-
-        public void LoadPatientRegistration(long id)
-        {
-            this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration(id);
-            this.PatientRegistration.IsPriceEdited = true;
-            this.Patient = patientsBLL.GetPatient((long)PatientRegistration.PatientId);
-            this.Patient.IsAgeEdited = true;
-
-            this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
-            this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
-            this.SelectedBatchName = this.PatientRegistration.BatchName;
-
-            this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
-        }
-
-        public void RefreshComboBoxes()
-        {
-            this.SelectedCompany = this.Companies.FirstOrDefault();
-            this.SelectedPackage = this.Packages.FirstOrDefault();
-            this.SelectedBatchName = string.Empty;
-        }
-
-        public void LoadPatientRegistrationComboBoxes()
-        {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
-            this.Packages = new ObservableCollection<Package>(commonFunctions.PackagesList(true));
-
-            RefreshComboBoxes();
-
-            RefreshComboBoxesByCompanyId();
-        }
-
-        public virtual void UpdateIsPriceEdited()
-        {
-            this.PatientRegistration.IsPriceEdited = true;
-        }
-        #endregion
-
-        #region Private Methods
-        private void LoadPackageServices()
-        {
-            if (this.SelectedPackage == null) return;
-
-            this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
-
-            List<PackageService> packageServices = packageServicesBLL.GetPackageServicesByPackageId(this.SelectedPackage.Id);
-            foreach (PackageService packageService in packageServices)
-            {
-                PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
-                {
-                    PatientRegistrationService = new PatientRegistrationService()
-                    {
-                        PatientRegistrationId = this.PatientRegistration.Id,
-                        ServiceId = packageService.ServiceId,
-                        Price = packageService.Price,
-                        IsActive = true
-                    },
-                    Service = servicesBLL.GetService(packageService.ServiceId)
-                };
-                this.PatientRegistrationServices.Add(prsvm);
-            }
+            this.PatientRegistration.CompanyId = this.SelectedCompany.Id;
+            this.PatientRegistration.BatchName = this.SelectedBatchName == null ? string.Empty : this.SelectedBatchName;
         }
 
         private void AddPatientRegistrationService(PatientRegistrationServiceViewModel patientRegistrationServiceVM)
@@ -183,24 +120,121 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             this.PatientRegistrationServices.Clear();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>(patientRegistrationServiceVMs);
+
+            ComputeTotalPrice();
         }
 
+        public void UpdateIsPriceEdited(bool isValueChanged)
+        {
+            if (!isValueChanged) return;
+
+            this.PatientRegistration.IsPriceEdited = true;
+        }
+
+        private void RefreshComboBoxesByCompanyId(bool isInit)
+        {
+            if (isInit) return;
+
+            long? companyId = this.SelectedCompany?.Id;
+            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList(companyId));
+            this.Packages = new ObservableCollection<Package>(packagesBLL.GetPackagesByCompanyId(companyId, true));
+        }
+
+        public void LoadPatientRegistration(long id)
+        {
+            this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration(id);
+            this.PatientRegistration.IsPriceEdited = true;
+            this.Patient = patientsBLL.GetPatient((long)PatientRegistration.PatientId);
+            this.Patient.IsAgeEdited = true;
+            this.PatientRegistrationPayment = patientRegistrationsBLL.GetPatientRegistrationPayment(id);
+
+            this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
+            this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
+            this.SelectedBatchName = this.PatientRegistration.BatchName;
+
+            this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
+        }
+
+        public virtual void LoadPackageServices()
+        {
+            if (this.PatientRegistration != null)
+            {
+                this.PatientRegistration.AmountDue = 0;
+                this.PatientRegistration.PatientRegistrationAmountDue = "0.00";
+                this.PatientRegistration.IsPriceEdited = false;
+            }
+
+            if (this.SelectedPackage == null) return;
+
+            if (this.SelectedPackage.Id != 0)
+            {
+                Package package = packagesBLL.GetPackage(this.SelectedPackage.Id);
+                this.PatientRegistration.AmountDue = package.Price;
+                this.PatientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", package.Price);
+                this.PatientRegistration.IsPriceEdited = true;
+            }
+
+            this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
+            List<PackageService> packageServices = packageServicesBLL.GetPackageServicesByPackageId(this.SelectedPackage.Id);
+            foreach (PackageService packageService in packageServices)
+            {
+                PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
+                {
+                    PatientRegistrationService = new PatientRegistrationService()
+                    {
+                        PatientRegistrationId = this.PatientRegistration.Id,
+                        ServiceId = packageService.ServiceId,
+                        Price = packageService.Price,
+                        IsActive = true
+                    },
+                    Service = servicesBLL.GetService(packageService.ServiceId)
+                };
+                this.PatientRegistrationServices.Add(prsvm);
+            }
+        }
+        #endregion
+
+        #region Public Methods
+        public ObservableCollection<PatientRegistrationServiceViewModel> PatientRegistrationServiceViewModelList(List<PatientRegistrationService> patientRegistrationServices)
+        {
+            List<PatientRegistrationServiceViewModel> packageServicesList = new List<PatientRegistrationServiceViewModel>();
+            foreach (PatientRegistrationService patientRegistrationService in patientRegistrationServices)
+                packageServicesList.Add(new PatientRegistrationServiceViewModel()
+                {
+                    PatientRegistrationService = patientRegistrationService,
+                    Service = servicesBLL.GetService(patientRegistrationService.ServiceId)
+                });
+
+            return new ObservableCollection<PatientRegistrationServiceViewModel>(packageServicesList);
+        }
+
+        public void RefreshComboBoxes()
+        {
+            this.SelectedCompany = this.Companies.FirstOrDefault();
+            this.SelectedPackage = this.Packages.FirstOrDefault();
+            this.SelectedBatchName = string.Empty;
+        }
+
+        public void LoadPatientRegistrationComboBoxes()
+        {
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
+            this.Packages = new ObservableCollection<Package>(commonFunctions.PackagesList(true));
+
+            RefreshComboBoxes();
+            RefreshComboBoxesByCompanyId(true);
+        }
+        #endregion
+
+        #region Private Methods
         private void ComputeTotalPrice()
         {
             if (!this.PatientRegistration.IsPriceEdited)
             {
                 decimal price = this.PatientRegistrationServices.Select(p => p.PatientRegistrationService.Price).Sum();
-                this.PatientRegistration.Price = price;
-                this.PatientRegistration.PatientRegistrationPrice = String.Format("{0:0,0.00}", price);
+                this.PatientRegistration.AmountDue = price;
+                this.PatientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", price);
                 this.PatientRegistration.IsPriceEdited = false;
             }
-        }
-
-        private void RefreshComboBoxesByCompanyId()
-        {
-            long? companyId = this.SelectedCompany?.Id;
-            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList(companyId));
-            this.Packages = new ObservableCollection<Package>(packagesBLL.GetPackagesByCompanyId(companyId));
         }
         #endregion
     }

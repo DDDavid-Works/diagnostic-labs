@@ -45,7 +45,7 @@
             <Label Name="PackageDescriptionLabel" Content="Description:" Grid.Row="2" Grid.Column="0"></Label>
             <TextBox Name="PackageDescriptionTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Package.PackageDescription}"></TextBox>
             <Label Name="PriceLabel" Content="Price:" Grid.Row="3" Grid.Column="0"></Label>
-            <TextBox Name="PriceTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Package.PackagePrice}" HorizontalContentAlignment="Right"></TextBox>
+            <TextBox Name="PriceTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Package.PackagePrice}" HorizontalContentAlignment="Right" TextChanged="PriceTextBox_TextChanged"></TextBox>
             <Border BorderThickness="0,0,0,1" BorderBrush="Black" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
             <Label Name="ServicesLabel" Content="Included Services:" Grid.Row="4" Grid.Column="0" Margin="0,5,0,0"></Label>
             <Button Name="AddServiceButton" Grid.Row="5" Grid.Column="1" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"

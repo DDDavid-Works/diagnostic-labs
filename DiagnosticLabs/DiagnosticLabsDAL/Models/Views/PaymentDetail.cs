@@ -14,7 +14,7 @@ namespace DiagnosticLabsDAL.Models.Views
         public decimal AmountPaid { get; set; }
         public long PatientId { get; set; }
         public string PatientName { get; set;}
-        public long CompanyId { get; set; }
+        public long? CompanyId { get; set; }
         public string CompanyName { get; set;}
     }
 }

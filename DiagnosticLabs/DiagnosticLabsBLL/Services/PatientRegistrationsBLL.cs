@@ -25,22 +25,19 @@ namespace DiagnosticLabsBLL.Services
 
         public PatientRegistration NewPatientRegistration()
         {
-            CompanySetup companySetup = companySetupBLL.GetLatestCompanySetup();
-            string code = companySetup.Code;
-
             return new PatientRegistration()
             {
                 Id = 0,
-                RegistrationCode = code,
+                RegistrationCode = NewRegistrationCode(),
                 PatientId = null,
                 CompanyId = null,
                 PackageId = null,
                 BatchName = string.Empty,
-                Price = 0,
+                AmountDue = 0,
                 IsActive = true,
-                PatientRegistrationPrice = "0.00",
+                PatientRegistrationAmountDue = "0.00",
                 InputDate = DateTime.Now,
-                IsPriceEdited = false,
+                IsPriceEdited = false
             };
         }
 
@@ -48,8 +45,28 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                PatientRegistration patientRegistration  = dbContext.PatientRegistrations.Find(id);
-                patientRegistration.PatientRegistrationPrice = String.Format("{0:0,0.00}", patientRegistration.Price);
+                PatientRegistration patientRegistration = dbContext.PatientRegistrations.Find(id);
+                patientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", patientRegistration.AmountDue);
+                patientRegistration.IsPriceEdited = true;
+
+                return patientRegistration;
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
+        public PatientRegistration GetPatientRegistrationByCode(string code)
+        {
+            try
+            {
+                PatientRegistration patientRegistration = dbContext.PatientRegistrations.Where(p => p.RegistrationCode == code).FirstOrDefault();
+                
+                if (patientRegistration == null) return null;
+                
+                patientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", patientRegistration.AmountDue);
 
                 return patientRegistration;
             }
@@ -79,7 +96,7 @@ namespace DiagnosticLabsBLL.Services
             {
                 return dbContext.PatientRegistrationDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
                                                                        (inputDate != null ? p.InputDate.Date == ((DateTime)inputDate).Date : true) &&
-                                                                       (companyId != -1 ? p.CompanyId == companyId : true)).ToList();
+                                                                       (companyId != -1 && companyId != null ? p.CompanyId == companyId : true)).ToList();
             }
             catch (Exception ex)
             {
@@ -104,11 +121,33 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public PatientRegistrationPayment GetPatientRegistrationPayment(long? patientRegistrationId)
+        {
+            try
+            {
+                PatientRegistrationPayment patientRegistrationPayment = dbContext.PatientRegistrationPayments.Where(p => p.PatientRegistrationId == patientRegistrationId).FirstOrDefault();
+
+                if (patientRegistrationPayment != null)
+                {
+                    patientRegistrationPayment.PatientRegistrationPaymentAmountDue = String.Format("{0:N}", patientRegistrationPayment.AmountDue);
+                    patientRegistrationPayment.PatientRegistrationPaymentAmountPaid = String.Format("{0:N}", patientRegistrationPayment.AmountPaid);
+                    patientRegistrationPayment.PatientRegistrationPaymentBalance = String.Format("{0:N}", patientRegistrationPayment.Balance);
+                }
+
+                return patientRegistrationPayment;
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
         public bool SavePatientRegistration(PatientRegistration patientRegistration, ref long id)
         {
             try
             {
-                patientRegistration.Price = PatientRegistrationPrice(patientRegistration.Price, patientRegistration.PatientRegistrationPrice);
+                patientRegistration.AmountDue = PatientRegistrationAmountDue(patientRegistration.AmountDue, patientRegistration.PatientRegistrationAmountDue);
                 if (patientRegistration.Id == 0)
                 {
                     patientRegistration.CreatedByUserId = Globals.Globals.LOGGEDINUSERID;
@@ -158,15 +197,61 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        #region Private Methods
-        private decimal PatientRegistrationPrice(decimal patientRegistrationPrice, string patientRegistrationPriceString)
+        public string NewRegistrationCode()
         {
-            decimal newPatientRegistrationPrice = 0;
-            bool isDecimal = decimal.TryParse(patientRegistrationPriceString, out newPatientRegistrationPrice);
-            if (isDecimal && newPatientRegistrationPrice != patientRegistrationPrice)
-                return newPatientRegistrationPrice;
+            try
+            {
+                string code = Globals.Globals.COMPANYSETUPCODE;
+                string prefix = TodaysPrefix();
+                List<LatestCodeNumber> latestCodeNumbers = companySetupBLL.GetLatestCodeNumbers();
+
+                int? todaysMaxNumber = latestCodeNumbers.Where(c => c.Prefix == prefix).Select(c => c.MaxNumber).FirstOrDefault();
+                if (todaysMaxNumber == null) todaysMaxNumber = 0;
+
+                return $"{code}-{prefix}-{((int)(todaysMaxNumber + 1)).ToString("00000")}";
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return string.Empty;
+            }
+        }
+
+        #region Private Methods
+        private decimal PatientRegistrationAmountDue(decimal patientRegistrationPrice, string patientRegistrationPriceString)
+        {
+            decimal newPatientRegistrationAmountDue = 0;
+            bool isDecimal = decimal.TryParse(patientRegistrationPriceString, out newPatientRegistrationAmountDue);
+            if (isDecimal && newPatientRegistrationAmountDue != patientRegistrationPrice)
+                return newPatientRegistrationAmountDue;
             else
                 return patientRegistrationPrice;
+        }
+
+        private string TodaysPrefix()
+        {
+            string dd = DateTime.Today.ToString("dd");
+            string mm = string.Empty;
+
+            switch (DateTime.Today.Month)
+            {
+                case 1: mm = "JA"; break;
+                case 2: mm = "FE"; break;
+                case 3: mm = "MR"; break;
+                case 4: mm = "AP"; break;
+                case 5: mm = "MY"; break;
+                case 6: mm = "JN"; break;
+                case 7: mm = "JL"; break;
+                case 8: mm = "AU"; break;
+                case 9: mm = "SE"; break;
+                case 10: mm = "OC"; break;
+                case 11: mm = "NO"; break;
+                case 12: mm = "DE"; break;
+            }
+
+            string yy = DateTime.Today.ToString("yy");
+
+            return $"{dd}{mm}{yy}";
         }
         #endregion
     }

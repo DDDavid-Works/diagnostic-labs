@@ -12,6 +12,7 @@ namespace DiagnosticLabsDAL.Models
         private DateTime il_PaymentDate;
         private long? il_PatientRegistrationId;
         private decimal il_AmountDue;
+        private decimal il_AmountPaid;
         private decimal il_Cash;
         private decimal il_Change;
         private bool il_IsActive;
@@ -43,6 +44,12 @@ namespace DiagnosticLabsDAL.Models
         {
             get { return il_AmountDue; }
             set { il_AmountDue = value; OnPropertyChanged("AmountDue"); }
+        }
+
+        public decimal AmountPaid
+        {
+            get { return il_AmountPaid; }
+            set { il_AmountPaid = value; OnPropertyChanged("AmountPaid"); }
         }
 
         public decimal Cash
@@ -89,6 +96,9 @@ namespace DiagnosticLabsDAL.Models
 
         [NotMapped]
         public string PaymentAmountDue { get; set; }
+
+        [NotMapped]
+        public string PaymentAmountPaid { get; set; }
 
         [NotMapped]
         public string PaymentCash { get; set; }

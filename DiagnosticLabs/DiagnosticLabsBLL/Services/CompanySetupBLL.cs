@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +50,19 @@ namespace DiagnosticLabsBLL.Services
                 return false;
             }
         }
+
+        public List<LatestCodeNumber> GetLatestCodeNumbers()
+        {
+            try
+            {
+                return dbContext.LatestCodeNumbers.ToList();
+            }
+            catch (Exception ex)
+            {
+                commonFunctions.LogException(LogFileName, ex);
+                return null;
+            }
+        }
+
     }
 }

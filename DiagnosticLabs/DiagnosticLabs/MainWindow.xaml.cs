@@ -5,7 +5,9 @@ using DiagnosticLabs.SettingsWindows;
 using DiagnosticLabs.UserControls;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
+using DiagnosticLabsDAL.Models.Views;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +41,13 @@ namespace DiagnosticLabs
         }
 
         #region Data to/from UI
+        private void SearchPatientRegistrations()
+        {
+            MainViewModel vm = (MainViewModel)this.DataContext;
+
+            if (vm.SearchCommand.CanExecute(null))
+                vm.SearchCommand.Execute(null);
+        }
         #endregion
 
         #region Private Methods
@@ -193,7 +202,10 @@ namespace DiagnosticLabs
             else if (sender.GetType() == typeof(PatientsWindow))
                 patientsWindow = null;
             else if (sender.GetType() == typeof(PaymentsWindow))
+            {
+                Globals.PATIENTREGISTRATIONIDTOPAY = 0;
                 paymentsWindow = null;
+            }
             else if (sender.GetType() == typeof(CompanySetupWindow))
                 companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))
@@ -232,12 +244,34 @@ namespace DiagnosticLabs
         private void ModuleButton_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = (MenuItem)((Button)sender).CommandParameter;
+            LaunchModuleWindow(menuItem);
+        }
 
-            Action action = WindowAction(menuItem);
-            if (action != null)
-                this.Dispatcher.BeginInvoke(action);
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchPatientRegistrations();
+        }
 
+        private void PayButton_Click(object sender, RoutedEventArgs e)
+        {
+            PatientRegistrationDetail prd = (PatientRegistrationDetail)((Button)sender).CommandParameter;
+
+            MenuItem paymentMenuItem = Globals.MENUITEMS.Where(m => m.Module.ModuleName == Modules.Payments).FirstOrDefault();
+            Globals.PATIENTREGISTRATIONIDTOPAY = prd.PatientRegistrationId;
+            LaunchModuleWindow(paymentMenuItem);
         }
         #endregion UI Events
+
+        #region Private Methods
+        private void LaunchModuleWindow(MenuItem menuItem)
+        {
+            if (menuItem != null)
+            {
+                Action action = WindowAction(menuItem);
+                if (action != null)
+                    this.Dispatcher.BeginInvoke(action);
+            }
+        }
+        #endregion
     }
 }

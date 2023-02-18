@@ -2,9 +2,12 @@
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -12,32 +15,56 @@ namespace DiagnosticLabs.ViewModels
     {
         private const string EntityName = "Main";
 
+        CommonFunctions commonFunctions = new CommonFunctions();
         UsersBLL usersBLL = new UsersBLL();
         CompanySetupBLL companySetupBLL = new CompanySetupBLL();
         ModulesBLL modulesBLL = new ModulesBLL();
         ModuleTypesBLL moduleTypesBLL = new ModuleTypesBLL();
         UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
+        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
         public User User { get; set; }
+        public DateTime? InputDateFilter { get; set; }
+        public string PatientNameFilter { get; set; }
 
+        public ObservableCollection<Company> Companies { get; set; }
+        public ObservableCollection<PatientRegistrationDetail> PatientRegistrationDetails { get; set; }
         public ObservableCollection<MenuItem> MenuItems { get; set; }
+
+        private Company _SelectedCompany;
+        public Company SelectedCompany
+        {
+            get { return _SelectedCompany; }
+            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
+        }
+
+        public ICommand SearchCommand { get; set; }
         #endregion
 
         public MainViewModel(long userId)
         {
             this.CompanySetup = companySetupBLL.GetLatestCompanySetup();
             this.User = usersBLL.GetUser(userId);
+            this.InputDateFilter = DateTime.Today;
+            this.PatientNameFilter = string.Empty;
+            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.SelectedCompany = this.Companies.FirstOrDefault();
 
             Globals.LOGGEDINUSERID = userId;
             Globals.USERPERMISSIONS = userPermissionsBLL.GetUserPermissionsByUserId(Globals.LOGGEDINUSERID);
             Globals.MODULES = modulesBLL.GetModules();
             Globals.MODULETYPES = moduleTypesBLL.GetModuleTypes();
+            Globals.COMPANYSETUPCODE = this.CompanySetup.Code;
 
             this.MenuItems = MenuItemsList();
+            this.PatientRegistrationDetails = PatientRegistrationDetailList();
+
+            this.SearchCommand = new RelayCommand(param => SearchPatientRegistrationDetails());
         }
 
+        #region Private Methods
         private ObservableCollection<MenuItem> MenuItemsList()
         {
             string imagesPath = "Images/48x48/", imageExt = ".png";
@@ -62,6 +89,7 @@ namespace DiagnosticLabs.ViewModels
                         Module = module,
                         UserPermission = userPermission
                     };
+                    Globals.MENUITEMS.Add(item);
                     type.Items.Add(item);
                 }
                 menuItems.Add(type);
@@ -69,5 +97,20 @@ namespace DiagnosticLabs.ViewModels
 
             return new ObservableCollection<MenuItem>(menuItems);
         }
+
+        private ObservableCollection<PatientRegistrationDetail> PatientRegistrationDetailList()
+        {
+            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(string.Empty, null, DateTime.Today);
+
+            return new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
+        }
+
+        private void SearchPatientRegistrationDetails()
+        {
+            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientNameFilter, this.SelectedCompany.Id, this.InputDateFilter);
+
+            this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
+        }
+        #endregion
     }
 }

@@ -48,15 +48,9 @@ namespace DiagnosticLabs.ViewModels
             this.ClearNotificationMessages();
         }
 
-        private void SavePatientRegistration()
+        public override void SavePatientRegistration()
         {
-            if (this.SelectedPackage.Id == 0)
-                this.PatientRegistration.PackageId = null;
-            else
-                this.PatientRegistration.PackageId = this.SelectedPackage.Id;
-
-            this.PatientRegistration.CompanyId = this.SelectedCompany.Id;
-            this.PatientRegistration.BatchName = this.SelectedBatchName == null ? string.Empty : this.SelectedBatchName;
+            base.SavePatientRegistration();
             if (!this.PatientRegistration.IsValid || !this.Patient.IsValid || this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Any())
             {
                 string errorMessages = string.Empty;

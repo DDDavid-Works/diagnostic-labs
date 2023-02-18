@@ -29,12 +29,20 @@ namespace DiagnosticLabs.RegistrationWindows
             this.DataContext = new PatientRegistrationViewModel(search.SelectedPatientRegistrationDetail.PatientRegistrationId);
         }
 
-        private void PatientRegistrationPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void PatientRegistrationAmountDueTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var vm = (PatientRegistrationViewModel)DataContext;
 
             if (vm.UpdateIsPriceEditedCommand.CanExecute(null))
-                vm.UpdateIsPriceEditedCommand.Execute(null);
+            {
+                decimal textBoxValue = 0;
+                bool isDecimal = decimal.TryParse(((TextBox)sender).Text, out textBoxValue);
+                if (isDecimal)
+                {
+                    bool isValueChanged = vm.PatientRegistration.AmountDue != textBoxValue;
+                    vm.UpdateIsPriceEditedCommand.Execute(isValueChanged);
+                }
+            }
         }
 
         private void AddServiceButton_Click(object sender, RoutedEventArgs e)

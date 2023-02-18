@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
 
 namespace DiagnosticLabsDAL.Models
 {
@@ -42,11 +41,7 @@ namespace DiagnosticLabsDAL.Models
         public decimal Price
         {
             get { return il_Price; }
-            set {
-                il_Price = value;
-                PackagePrice = String.Format("{0:0,0.00}", value);
-                OnPropertyChanged("Price");
-            }
+            set { il_Price = value; OnPropertyChanged("Price"); }
         }
 
         public long? CompanyId
@@ -87,6 +82,9 @@ namespace DiagnosticLabsDAL.Models
 
         [NotMapped]
         public string PackagePrice { get; set; }
+
+        [NotMapped]
+        public bool IsPriceEdited { get; set; }
 
         #region Validation
         private static readonly string[] PropertiesToValidate = { "PackageName", "PackageDescription", "PackagePrice" };

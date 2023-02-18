@@ -20,6 +20,11 @@
                     <Setter Property="HorizontalAlignment" Value="Left" />
                     <Setter Property="FontSize" Value="14" />
                 </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
                 <Style TargetType="ComboBox">
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="Height" Value="22" />
@@ -45,15 +50,18 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="InputDateLabel" Content="Date:" Grid.Row="0" Grid.Column="0"></Label>
-            <DatePicker Name="InputDateDatePicker" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
-            <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-            <menu:CompanyDetailsUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,0"></menu:CompanyDetailsUserControl>
-            <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-            <menu:BatchDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
+            <Label Name="RegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
+            <TextBox Name="RegistrationCodeTextBox" Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding PatientRegistration.RegistrationCode}"></TextBox>
+            <Label Name="InputDateLabel" Content="Date:" Grid.Row="1" Grid.Column="0"></Label>
+            <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
+            <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+            <menu:CompanyDetailsUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,0"></menu:CompanyDetailsUserControl>
+            <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+            <menu:BatchDetailsUserControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5"></menu:BatchDetailsUserControl>
 
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
         </Grid>
         <menu:PatientDetailsUserControl ShowSearchButton="True"></menu:PatientDetailsUserControl>
         <Grid Margin="10,0,10,10" VerticalAlignment="Top">
@@ -172,9 +180,9 @@
                 <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" />
             </Grid>
 
-            <Label Name="PatientRegistrationPriceLabel" Content="Price:" Grid.Row="5" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
-            <TextBox Name="PatientRegistrationPriceTextBox" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
-                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationPrice}" LostFocus="PatientRegistrationPriceTextBox_LostFocus"></TextBox>
+            <Label Name="PatientRegistrationAmountDueLabel" Content="Price:" Grid.Row="5" Grid.Column="2" FontSize="16" FontWeight="Bold"></Label>
+            <TextBox Name="PatientRegistrationAmountDueTextBox" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" Height="24" FontSize="16" FontWeight="Bold"
+                     HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Text="{Binding PatientRegistration.PatientRegistrationAmountDue}" LostFocus="PatientRegistrationAmountDueTextBox_LostFocus"></TextBox>
         </Grid>
     </StackPanel>
 </Window>

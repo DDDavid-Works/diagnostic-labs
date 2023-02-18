@@ -12,9 +12,7 @@ namespace DiagnosticLabsBLL.Services
         private const string LogFileName = "PaymentsBLL";
 
         CommonFunctions commonFunctions = new CommonFunctions();
-        PatientsBLL patientsBLL = new PatientsBLL();
         PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-        PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
 
         private static DatabaseContext dbContext;
 
@@ -45,9 +43,9 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 Payment payment = dbContext.Payments.Find(id);
-                payment.PaymentAmountDue = String.Format("{0:0,0.00}", payment.AmountDue);
-                payment.PaymentCash = String.Format("{0:0,0.00}", payment.Cash);
-                payment.PaymentChange = String.Format("{0:0,0.00}", payment.Change);
+                payment.PaymentAmountDue = String.Format("{0:N}", payment.AmountDue);
+                payment.PaymentCash = String.Format("{0:N}", payment.Cash);
+                payment.PaymentChange = String.Format("{0:N}", payment.Change);
 
                 return payment;
             }
@@ -78,6 +76,7 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 payment.AmountDue = PaymentDecimalStringToDecimal(payment.AmountDue, payment.PaymentAmountDue);
+                payment.AmountPaid = PaymentDecimalStringToDecimal(payment.AmountDue, payment.PaymentAmountDue);
                 payment.Cash = PaymentDecimalStringToDecimal(payment.Cash, payment.PaymentCash);
                 payment.Change = PaymentDecimalStringToDecimal(payment.Change, payment.PaymentChange);
 
@@ -138,6 +137,5 @@ namespace DiagnosticLabsBLL.Services
                 return decimalValue;
         }
         #endregion
-
     }
 }
