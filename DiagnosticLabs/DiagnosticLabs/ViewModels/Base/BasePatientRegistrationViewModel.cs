@@ -19,6 +19,8 @@ namespace DiagnosticLabs.ViewModels.Base
         PackagesBLL packagesBLL = new PackagesBLL();
         PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
 
+        bool isLoading = false;
+
         #region Public Properties
         public PatientRegistration PatientRegistration { get; set; }
         public PatientRegistrationPayment PatientRegistrationPayment { get; set; }
@@ -142,6 +144,7 @@ namespace DiagnosticLabs.ViewModels.Base
 
         public void LoadPatientRegistration(long id)
         {
+            this.isLoading = true;
             this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration(id);
             this.PatientRegistration.IsPriceEdited = true;
             this.Patient = patientsBLL.GetPatient((long)PatientRegistration.PatientId);
@@ -153,10 +156,13 @@ namespace DiagnosticLabs.ViewModels.Base
             this.SelectedBatchName = this.PatientRegistration.BatchName;
 
             this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
+            this.isLoading = false;
         }
 
         public virtual void LoadPackageServices()
         {
+            if (this.isLoading) return;
+
             if (this.PatientRegistration != null)
             {
                 this.PatientRegistration.AmountDue = 0;

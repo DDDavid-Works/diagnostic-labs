@@ -2,6 +2,7 @@
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -127,12 +128,7 @@ namespace DiagnosticLabs.ViewModels
             if (patientRegistrationId == 0) return;
 
             this.LoadPatientRegistration(patientRegistrationId);
-            this.Payment.AmountDue = this.PatientRegistration.AmountDue;
-            this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
-            this.Payment.Cash = 0;
-            this.Payment.PaymentCash = String.Format("{0:N}", this.Payment.Cash);
-            this.Payment.Change = 0;
-            this.Payment.PaymentChange = String.Format("{0:N}", this.Payment.Change);
+            this.Payment.PaymentPaymentBalance = String.Format("{0:N}", this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid);
         }
 
         private void GetPatientRegistrationByCode(string code)
@@ -157,34 +153,23 @@ namespace DiagnosticLabs.ViewModels
             decimal patientRegistrationPrice = 0;
             bool isDecimal = decimal.TryParse(this.PatientRegistration.PatientRegistrationAmountDue, out patientRegistrationPrice);
             if (isDecimal)
-                this.PatientRegistration.AmountDue = patientRegistrationPrice;
-
-            this.Payment.AmountDue = this.PatientRegistration.AmountDue;
-            this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
-        }
-
-        public override void LoadPackageServices()
-        {
-            base.LoadPackageServices();
-
-            if (this.PatientRegistration != null)
             {
-                this.Payment.AmountDue = this.PatientRegistration.AmountDue;
-                this.Payment.PaymentAmountDue = String.Format("{0:N}", this.Payment.AmountDue);
+                this.PatientRegistration.AmountDue = patientRegistrationPrice;
+                this.PatientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", this.PatientRegistration.AmountDue);
             }
         }
         #endregion
 
         #region Private Methods
-        private void ComputeTotals(string paymentCash)
+        private void ComputeTotals(string paymentAmount)
         {
-            decimal cash = 0;
-            bool isDecimal = decimal.TryParse(paymentCash, out cash);
+            decimal amount = 0;
+            bool isDecimal = decimal.TryParse(paymentAmount, out amount);
             if (isDecimal)
-                this.Payment.Cash = cash;
-
-            this.Payment.Change = cash - this.Payment.AmountDue;
-            this.Payment.PaymentChange = String.Format("{0:N}", this.Payment.Change);
+            {
+                this.Payment.PaymentAmount = amount;
+                this.Payment.PaymentPaymentBalance = String.Format("{0:N}", (this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid) - amount);
+            }
         }
         #endregion
     }

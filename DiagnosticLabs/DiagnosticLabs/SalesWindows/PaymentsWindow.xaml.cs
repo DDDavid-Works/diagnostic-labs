@@ -116,14 +116,6 @@ namespace DiagnosticLabs.SalesWindows
             }
         }
 
-        private void CashTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var vm = (PaymentViewModel)DataContext;
-
-            if (vm.ComputeTotalsCommand.CanExecute(null))
-                vm.ComputeTotalsCommand.Execute(((TextBox)sender).Text);
-        }
-
         private void RegistrationCodeTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var vm = (PaymentViewModel)DataContext;
@@ -138,6 +130,14 @@ namespace DiagnosticLabs.SalesWindows
 
             if (vm.GetPatientRegistrationCommand.CanExecute(null))
                 vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOPAY);
+        }
+
+        private void PaymentAmountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var vm = (PaymentViewModel)DataContext;
+
+            if (vm.ComputeTotalsCommand.CanExecute(null))
+                vm.ComputeTotalsCommand.Execute(((TextBox)sender).Text);
         }
     }
 }

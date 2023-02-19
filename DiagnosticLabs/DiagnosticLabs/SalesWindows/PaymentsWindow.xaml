@@ -22,7 +22,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <Grid Grid.Row="0" Grid.Column="0" Margin="10,10,10,0" VerticalAlignment="Top">
                 <Grid.Resources>
                     <Style TargetType="Label">
@@ -240,40 +240,49 @@
                         <Setter Property="FontSize" Value="14" />
                     </Style>
                     <Style x:Key="LargeLabel" TargetType="Label">
+                        <Setter Property="Padding" Value="0,2,0,0" />
                         <Setter Property="FontSize" Value="20" />
+                        <Setter Property="Margin" Value="0,3,0,4" />
                     </Style>
                     <Style x:Key="LargeTextBox" TargetType="TextBox">
                         <Setter Property="Height" Value="30" />
                         <Setter Property="FontSize" Value="20" />
                         <Setter Property="HorizontalContentAlignment" Value="Right" />
+                        <Setter Property="Margin" Value="0,3,0,4" />
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15*"></ColumnDefinition>
-                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="35*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
                     <ColumnDefinition Width="35*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="27*"></RowDefinition>
                     <RowDefinition Height="10"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="35*"></RowDefinition>
+                    <RowDefinition Height="35*"></RowDefinition>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="35*"></RowDefinition>
+                    <RowDefinition Height="35*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Name="PaymentDateLabel" Content="Payment Date:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-                <DatePicker Name="PaymentDateDatePicker" Grid.Row="0" Grid.Column="3" SelectedDate="{Binding Payment.PaymentDate}"></DatePicker>
+                <DatePicker Name="PaymentDateDatePicker" Grid.Row="0" Grid.Column="3" SelectedDate="{Binding Payment.PaymentDate}" Margin="0,0,0,5"></DatePicker>
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,1,0,0" BorderBrush="Black" />
 
                 <Label Name="AmountDueLabel" Content="Amount Due:" Grid.Row="2" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
-                <TextBox Name="AmountDueTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentAmountDue}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
-                <Label Name="BalanceLabel" Content="Balance:" Grid.Row="3" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
-                <TextBox Name="BalanceTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding PatientRegistrationPayment.PatientRegistrationPaymentBalance}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
-                <Label Name="CashLabel" Content="Cash:" Grid.Row="4" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
-                <TextBox Name="CashTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentCash}" Style="{StaticResource LargeTextBox}" TextChanged="CashTextBox_TextChanged"></TextBox>
-                <Label Name="ChangeLabel" Content="Change:" Grid.Row="5" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
-                <TextBox Name="ChangeTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentChange}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
+                <TextBox Name="AmountDueTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding PatientRegistration.PatientRegistrationAmountDue}" Style="{StaticResource LargeTextBox}" IsEnabled="False"></TextBox>
+
+                <Label Name="AmountPaidLabel" Content="Amount Paid:" Grid.Row="3" Grid.Column="1"></Label>
+                <TextBox Name="AmountPaidTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding PatientRegistrationPayment.PatientRegistrationPaymentAmountPaid}" HorizontalContentAlignment="Right" IsEnabled="False"></TextBox>
+
+                <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,1,0,0" BorderBrush="Black" />
+
+                <Label Name="PaymentAmountLabel" Content="Payment Amount:" Grid.Row="5" Grid.Column="1" Style="{StaticResource LargeLabel}"></Label>
+                <TextBox Name="PaymentAmountTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentPaymentAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LargeTextBox}" TextChanged="PaymentAmountTextBox_TextChanged"></TextBox>
+
+                <Label Name="BalanceLabel" Content="Balance:" Grid.Row="6" Grid.Column="1"></Label>
+                <TextBox Name="BalanceTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Payment.PaymentPaymentBalance}" HorizontalContentAlignment="Right" IsEnabled="False"></TextBox>
             </Grid>
         </Grid>
     </StackPanel>

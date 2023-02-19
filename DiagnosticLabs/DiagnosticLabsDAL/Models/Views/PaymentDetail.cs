@@ -10,8 +10,6 @@ namespace DiagnosticLabsDAL.Models.Views
         public DateTime PaymentDate { get; set; }
         public long PatientRegistrationId { get; set; }
         public DateTime PatientRegistrationDate { get; set; }
-        public decimal AmountDue { get; set; }
-        public decimal AmountPaid { get; set; }
         public long PatientId { get; set; }
         public string PatientName { get; set;}
         public long? CompanyId { get; set; }

@@ -49,7 +49,8 @@ namespace DiagnosticLabs.ViewModels.Base
 
         private void UpdateIsAgeEdited()
         {
-            this.Patient.IsAgeEdited = true;
+            if (Patient.DateOfBirth != null)
+                this.Patient.IsAgeEdited = true;
         }
 
         private void RefreshSingleLineEntryList(string listName)
@@ -71,6 +72,5 @@ namespace DiagnosticLabs.ViewModels.Base
             }
         }
         #endregion
-
     }
 }

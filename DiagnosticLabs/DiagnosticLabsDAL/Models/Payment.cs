@@ -11,10 +11,7 @@ namespace DiagnosticLabsDAL.Models
         private long il_Id;
         private DateTime il_PaymentDate;
         private long? il_PatientRegistrationId;
-        private decimal il_AmountDue;
-        private decimal il_AmountPaid;
-        private decimal il_Cash;
-        private decimal il_Change;
+        private decimal il_PaymentAmount;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -40,28 +37,10 @@ namespace DiagnosticLabsDAL.Models
             set { il_PatientRegistrationId = value; OnPropertyChanged("PatientRegistrationId"); }
         }
 
-        public decimal AmountDue
+        public decimal PaymentAmount
         {
-            get { return il_AmountDue; }
-            set { il_AmountDue = value; OnPropertyChanged("AmountDue"); }
-        }
-
-        public decimal AmountPaid
-        {
-            get { return il_AmountPaid; }
-            set { il_AmountPaid = value; OnPropertyChanged("AmountPaid"); }
-        }
-
-        public decimal Cash
-        {
-            get { return il_Cash; }
-            set { il_Cash = value; OnPropertyChanged("Cash"); }
-        }
-
-        public decimal Change
-        {
-            get { return il_Change; }
-            set { il_Change = value; OnPropertyChanged("Change"); }
+            get { return il_PaymentAmount; }
+            set { il_PaymentAmount = value; OnPropertyChanged("PaymentAmount"); }
         }
 
         public bool IsActive
@@ -95,22 +74,16 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public string PaymentAmountDue { get; set; }
+        public string PaymentPaymentAmount { get; set; }
 
         [NotMapped]
-        public string PaymentAmountPaid { get; set; }
-
-        [NotMapped]
-        public string PaymentCash { get; set; }
-
-        [NotMapped]
-        public string PaymentChange { get; set; }
+        public string PaymentPaymentBalance { get; set; }
 
         [NotMapped]
         public bool IsAmountDueEdited { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PaymentCash" };
+        private static readonly string[] PropertiesToValidate = { "PaymentPaymentAmount" };
 
         public string Error
         {
@@ -141,12 +114,12 @@ namespace DiagnosticLabsDAL.Models
         {
             string result = string.Empty;
 
-            if (columnName == "PaymentCash")
+            if (columnName == "AmountPaid")
             {
-                decimal paymentCash = 0;
-                bool isDecimal = decimal.TryParse(this.PaymentCash, out paymentCash);
+                decimal amountPaid = 0;
+                bool isDecimal = decimal.TryParse(this.PaymentPaymentAmount, out amountPaid);
                 if (!isDecimal)
-                    result = "\r\nCash is invalid.";
+                    result = "\r\nAmount Paid is invalid.";
             }
 
             ErrorMessages += result;

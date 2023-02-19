@@ -28,13 +28,8 @@ namespace DiagnosticLabsBLL.Services
                 Id = 0,
                 PaymentDate = DateTime.Now,
                 PatientRegistrationId = 0,
-                AmountDue = 0,
-                Cash = 0,
-                Change = 0,
-                IsActive = true,
-                PaymentAmountDue = "0.00",
-                PaymentCash = "0.00",
-                PaymentChange = "0.00"
+                PaymentAmount = 0,
+                IsActive = true
             };
         }
 
@@ -43,9 +38,7 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 Payment payment = dbContext.Payments.Find(id);
-                payment.PaymentAmountDue = String.Format("{0:N}", payment.AmountDue);
-                payment.PaymentCash = String.Format("{0:N}", payment.Cash);
-                payment.PaymentChange = String.Format("{0:N}", payment.Change);
+                payment.PaymentPaymentAmount = String.Format("{0:N}", payment.PaymentAmount);
 
                 return payment;
             }
@@ -75,11 +68,8 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                payment.AmountDue = PaymentDecimalStringToDecimal(payment.AmountDue, payment.PaymentAmountDue);
-                payment.AmountPaid = PaymentDecimalStringToDecimal(payment.AmountDue, payment.PaymentAmountDue);
-                payment.Cash = PaymentDecimalStringToDecimal(payment.Cash, payment.PaymentCash);
-                payment.Change = PaymentDecimalStringToDecimal(payment.Change, payment.PaymentChange);
-
+                payment.PaymentAmount = PaymentDecimalStringToDecimal(payment.PaymentAmount, payment.PaymentPaymentAmount);
+ 
                 if (payment.Id == 0)
                 {
                     payment.CreatedByUserId = Globals.Globals.LOGGEDINUSERID;

@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticLabs", "DiagnosticLabs\DiagnosticLabs.csproj", "{745637BF-32D4-41B2-913B-9CB84F35843E}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DiagnosticLabsDatabase", "DiagnosticLabsDatabase\DiagnosticLabsDatabase.sqlproj", "{BB7E2411-235E-4B85-8835-D2829419EEDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticLabsDAL", "DiagnosticLabsDAL\DiagnosticLabsDAL.csproj", "{1879C697-4A50-4123-B040-54042573C229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagnosticLabsDAL", "DiagnosticLabsDAL\DiagnosticLabsDAL.csproj", "{1879C697-4A50-4123-B040-54042573C229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticLabsBLL", "DiagnosticLabsBLL\DiagnosticLabsBLL.csproj", "{A919AED5-2E72-47BF-B664-ECFBD117EA13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagnosticLabsBLL", "DiagnosticLabsBLL\DiagnosticLabsBLL.csproj", "{A919AED5-2E72-47BF-B664-ECFBD117EA13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
