@@ -105,7 +105,7 @@ namespace DiagnosticLabsDAL.Models
         public bool IsAgeEdited { get; set; } = false;
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PatientName" };
+        private static readonly string[] _propertiesToValidate = { "PatientName" };
 
         public string Error
         {
@@ -124,7 +124,7 @@ namespace DiagnosticLabsDAL.Models
                 ErrorMessages = string.Empty;
 
                 bool errorFound = false;
-                foreach (string property in PropertiesToValidate)
+                foreach (string property in _propertiesToValidate)
                     if (GetValidationError(property) != string.Empty)
                         errorFound = true;
 

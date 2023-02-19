@@ -1,5 +1,5 @@
-﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabs.Constants;
+﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.POCOs;
@@ -15,12 +15,12 @@ namespace DiagnosticLabs.ViewModels
 {
     public class ItemViewModel : BaseViewModel
     {
-        private const string EntityName = "Item";
+        private const string _entityName = "Item";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        ItemsBLL itemsBLL = new ItemsBLL();
-        ItemLocationsBLL itemLocationsBLL = new ItemLocationsBLL();
-        ItemQuantitiesBLL itemQuantitiesBLL = new ItemQuantitiesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        ItemsBLL _itemsBLL = new ItemsBLL();
+        ItemLocationsBLL _itemLocationsBLL = new ItemLocationsBLL();
+        ItemQuantitiesBLL _itemQuantitiesBLL = new ItemQuantitiesBLL();
 
         #region Public Properties
         public Item Item { get; set; }
@@ -43,12 +43,12 @@ namespace DiagnosticLabs.ViewModels
                 NewItem();
             else
             {
-                this.Item = itemsBLL.GetItem(id);
-                foreach (var itemQuantity in itemQuantitiesBLL.GetItemQuantityDetailsByItemId(id))
+                this.Item = _itemsBLL.GetItem(id);
+                foreach (var itemQuantity in _itemQuantitiesBLL.GetItemQuantityDetailsByItemId(id))
                     this.ItemQuantities.Add(itemQuantity);
             }
             this.ItemDetail = new ItemDetail() { TotalQuantity = this.ItemQuantities.Sum(i => i.Quantity) };
-            this.ItemLocations = new ObservableCollection<ItemLocation>(itemLocationsBLL.GetAllItemLocations());
+            this.ItemLocations = new ObservableCollection<ItemLocation>(_itemLocationsBLL.GetAllItemLocations());
 
             this.NewCommand = new RelayCommand(param => NewItem());
             this.SaveCommand = new RelayCommand(param => SaveItem());
@@ -76,7 +76,7 @@ namespace DiagnosticLabs.ViewModels
             if (!Item.IsValid) return;
 
             long id = this.Item.Id;
-            if (itemsBLL.SaveWithQuantities(this.Item, new List<ItemQuantity>(this.ItemQuantities), ref id))
+            if (_itemsBLL.SaveWithQuantities(this.Item, new List<ItemQuantity>(this.ItemQuantities), ref id))
             {
                 this.Item.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -93,14 +93,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Item.Id;
             this.Item.IsActive = false;
-            if (itemsBLL.SaveItem(this.Item, ref id))
+            if (_itemsBLL.SaveItem(this.Item, ref id))
             {
-                this.Item = itemsBLL.GetLatestItem();
+                this.Item = _itemsBLL.GetLatestItem();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

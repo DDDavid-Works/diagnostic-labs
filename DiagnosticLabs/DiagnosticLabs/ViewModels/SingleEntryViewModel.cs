@@ -1,5 +1,5 @@
-﻿using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabs.Constants;
+﻿using DiagnosticLabs.Constants;
+using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System;
@@ -11,11 +11,11 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SingleEntryViewModel : BaseViewModel
     {
-        private const string EntityName = "SingleEntry";
+        private const string _entityName = "SingleEntry";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        SingleLineEntriesBLL singleLineEntriesBLL = new SingleLineEntriesBLL();
-        ModulesBLL modulesBLL = new ModulesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        SingleLineEntriesBLL _singleLineEntriesBLL = new SingleLineEntriesBLL();
+        ModulesBLL _modulesBLL = new ModulesBLL();
 
         #region Public Properties
         public Module Module { get; set; }
@@ -32,10 +32,10 @@ namespace DiagnosticLabs.ViewModels
             if (moduleId == null || moduleId == 0)
                 this.Module = new Module() { Id = 0, ModuleName = "General Field" };
             else
-                this.Module = modulesBLL.GetModule((long)moduleId);
+                this.Module = _modulesBLL.GetModule((long)moduleId);
 
             this.FieldName = fieldName;
-            this.SingleLineEntries = new ObservableCollection<SingleLineEntry>(singleLineEntriesBLL.GetSingleLineEntries(moduleId, fieldName));
+            this.SingleLineEntries = new ObservableCollection<SingleLineEntry>(_singleLineEntriesBLL.GetSingleLineEntries(moduleId, fieldName));
 
             this.SaveCommand = new RelayCommand(param => SaveSingleLineEntries());
             this.AddSingleLineEntryCommand = new RelayCommand(param => AddSingleLineEntry());
@@ -48,11 +48,11 @@ namespace DiagnosticLabs.ViewModels
             if (this.SingleLineEntries.Where(s => !s.IsValid).Any())
             {
                 string errorMessages = string.Join("", this.SingleLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
-            if (singleLineEntriesBLL.SaveSingleLineEntryList(this.SingleLineEntries.ToList()))
+            if (_singleLineEntriesBLL.SaveSingleLineEntryList(this.SingleLineEntries.ToList()))
                 this.NotificationMessage = Messages.SavedSuccessfully;
             else
                 this.NotificationMessage = Messages.SaveFailed;

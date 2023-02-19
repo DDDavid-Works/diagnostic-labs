@@ -9,10 +9,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class ItemLocationViewModel : BaseViewModel
     {
-        private const string EntityName = "Item Location";
+        private const string _entityName = "Item Location";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        ItemLocationsBLL itemLocationsBLL = new ItemLocationsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        ItemLocationsBLL _itemLocationsBLL = new ItemLocationsBLL();
 
         #region Public Properties
         public ItemLocation ItemLocation { get; set; }
@@ -26,7 +26,7 @@ namespace DiagnosticLabs.ViewModels
             if (id == 0)
                 NewItemLocation();
             else
-                this.ItemLocation = itemLocationsBLL.GetItemLocation(id);
+                this.ItemLocation = _itemLocationsBLL.GetItemLocation(id);
 
             this.NewCommand = new RelayCommand(param => NewItemLocation());
             this.SaveCommand = new RelayCommand(param => SaveItemLocation());
@@ -49,12 +49,12 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.ItemLocation.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.ItemLocation.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.ItemLocation.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.ItemLocation.Id;
-            if (itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
+            if (_itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
             {
                 this.ItemLocation.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -71,14 +71,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.ItemLocation.Id;
             this.ItemLocation.IsActive = false;
-            if (itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
+            if (_itemLocationsBLL.SaveItemLocations(this.ItemLocation, ref id))
             {
-                this.ItemLocation = itemLocationsBLL.GetLatestItemLocation();
+                this.ItemLocation = _itemLocationsBLL.GetLatestItemLocation();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

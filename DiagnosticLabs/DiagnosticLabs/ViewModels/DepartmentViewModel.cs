@@ -9,10 +9,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class DepartmentViewModel : BaseViewModel
     {
-        private const string EntityName = "Department";
+        private const string _entityName = "Department";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        DepartmentsBLL departmentsBLL = new DepartmentsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        DepartmentsBLL _departmentsBLL = new DepartmentsBLL();
 
         #region Public Properties
         public Department Department { get; set; }
@@ -26,7 +26,7 @@ namespace DiagnosticLabs.ViewModels
             if (id == 0)
                 NewDepartment();
             else
-                this.Department = departmentsBLL.GetDepartment(id);
+                this.Department = _departmentsBLL.GetDepartment(id);
 
             this.NewCommand = new RelayCommand(param => NewDepartment());
             this.SaveCommand = new RelayCommand(param => SaveDepartment());
@@ -50,12 +50,12 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Department.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Department.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.Department.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
             
             long id = this.Department.Id;
-            if (departmentsBLL.SaveDepartment(this.Department, ref id))
+            if (_departmentsBLL.SaveDepartment(this.Department, ref id))
             {
                 this.Department.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -72,14 +72,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Department.Id;
             this.Department.IsActive = false;
-            if (departmentsBLL.SaveDepartment(this.Department, ref id))
+            if (_departmentsBLL.SaveDepartment(this.Department, ref id))
             {
-                this.Department = departmentsBLL.GetLatestDepartment();
+                this.Department = _departmentsBLL.GetLatestDepartment();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

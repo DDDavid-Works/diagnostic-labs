@@ -3,8 +3,6 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace DiagnosticLabsDAL.Models
 {
@@ -95,7 +93,7 @@ namespace DiagnosticLabsDAL.Models
         public string ConfirmPassword { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "Username" };
+        private static readonly string[] _propertiesToValidate = { "Username" };
 
         public string Error
         {
@@ -114,7 +112,7 @@ namespace DiagnosticLabsDAL.Models
                 ErrorMessages = string.Empty;
 
                 bool errorFound = false;
-                foreach (string property in PropertiesToValidate)
+                foreach (string property in _propertiesToValidate)
                     if (GetValidationError(property) != string.Empty)
                         errorFound = true;
 

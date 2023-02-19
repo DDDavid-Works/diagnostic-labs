@@ -8,26 +8,26 @@ namespace DiagnosticLabsBLL.Services
 {
     public class PatientRegistrationServicesBLL
     {
-        private const string LogFileName = "PatientRegistrationServicesBLL";
+        private const string _logFileName = "PatientRegistrationServicesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PatientRegistrationServicesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public List<PatientRegistrationService> GetPatientRegistrationServicesByPatientRegistrationId(long patientRegistrationId)
         {
             try
             {
-                return dbContext.PatientRegistrationServices.Where(p => p.PatientRegistrationId == patientRegistrationId && p.IsActive == true).ToList();
+                return _dbContext.PatientRegistrationServices.Where(p => p.PatientRegistrationId == patientRegistrationId && p.IsActive == true).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -42,14 +42,14 @@ namespace DiagnosticLabsBLL.Services
                     patientRegistrationService.CreatedDate = DateTime.Now;
                     patientRegistrationService.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patientRegistrationService.UpdatedDate = DateTime.Now;
-                    dbContext.PatientRegistrationServices.Add(patientRegistrationService);
+                    _dbContext.PatientRegistrationServices.Add(patientRegistrationService);
                 }
                 else
                 {
                     patientRegistrationService.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patientRegistrationService.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = patientRegistrationService.Id;
 
@@ -57,7 +57,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -90,7 +90,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

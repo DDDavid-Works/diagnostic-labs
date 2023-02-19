@@ -9,18 +9,18 @@ namespace DiagnosticLabsBLL.Services
 {
     public class PatientRegistrationsBLL
     {
-        private const string LogFileName = "PatientRegistrationsBLL";
+        private const string _logFileName = "PatientRegistrationsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientsBLL patientsBLL = new PatientsBLL();
-        PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
-        CompanySetupBLL companySetupBLL = new CompanySetupBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientsBLL _patientsBLL = new PatientsBLL();
+        PatientRegistrationServicesBLL _patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
+        CompanySetupBLL _companySetupBLL = new CompanySetupBLL();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PatientRegistrationsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public PatientRegistration NewPatientRegistration()
@@ -45,7 +45,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                PatientRegistration patientRegistration = dbContext.PatientRegistrations.Find(id);
+                PatientRegistration patientRegistration = _dbContext.PatientRegistrations.Find(id);
                 patientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", patientRegistration.AmountDue);
                 patientRegistration.IsPriceEdited = true;
 
@@ -53,7 +53,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -62,7 +62,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                PatientRegistration patientRegistration = dbContext.PatientRegistrations.Where(p => p.RegistrationCode == code).FirstOrDefault();
+                PatientRegistration patientRegistration = _dbContext.PatientRegistrations.Where(p => p.RegistrationCode == code).FirstOrDefault();
                 
                 if (patientRegistration == null) return null;
                 
@@ -72,7 +72,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -81,11 +81,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.PatientRegistrations.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
+                return _dbContext.PatientRegistrations.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -94,13 +94,13 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.PatientRegistrationDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
+                return _dbContext.PatientRegistrationDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
                                                                        (inputDate != null ? p.InputDate.Date == ((DateTime)inputDate).Date : true) &&
                                                                        (companyId != -1 && companyId != null ? p.CompanyId == companyId : true)).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -110,13 +110,13 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 if (companyId != null)
-                    return dbContext.PatientRegistrationBatches.Where(b => b.CompanyId == companyId).ToList();
+                    return _dbContext.PatientRegistrationBatches.Where(b => b.CompanyId == companyId).ToList();
                 else
                     return new List<PatientRegistrationBatch>();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -125,7 +125,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                PatientRegistrationPayment patientRegistrationPayment = dbContext.PatientRegistrationPayments.Where(p => p.PatientRegistrationId == patientRegistrationId).FirstOrDefault();
+                PatientRegistrationPayment patientRegistrationPayment = _dbContext.PatientRegistrationPayments.Where(p => p.PatientRegistrationId == patientRegistrationId).FirstOrDefault();
 
                 if (patientRegistrationPayment != null)
                 {
@@ -138,7 +138,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -154,14 +154,14 @@ namespace DiagnosticLabsBLL.Services
                     patientRegistration.CreatedDate = DateTime.Now;
                     patientRegistration.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patientRegistration.UpdatedDate = DateTime.Now;
-                    dbContext.PatientRegistrations.Add(patientRegistration);
+                    _dbContext.PatientRegistrations.Add(patientRegistration);
                 }
                 else
                 {
                     patientRegistration.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patientRegistration.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = patientRegistration.Id;
 
@@ -169,7 +169,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -179,11 +179,11 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 long patientId = 0;
-                if (patientsBLL.SavePatient(patient, ref patientId))
+                if (_patientsBLL.SavePatient(patient, ref patientId))
                 {
                     patientRegistration.PatientId = patientId;
                     if (SavePatientRegistration(patientRegistration, ref id))
-                        return patientRegistrationServicesBLL.SavePatientRegistrationServiceList(patientRegistrationServices, id);
+                        return _patientRegistrationServicesBLL.SavePatientRegistrationServiceList(patientRegistrationServices, id);
                     else
                         return false;
                 }
@@ -192,7 +192,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -203,7 +203,7 @@ namespace DiagnosticLabsBLL.Services
             {
                 string code = Globals.Globals.COMPANYSETUPCODE;
                 string prefix = TodaysPrefix();
-                List<LatestCodeNumber> latestCodeNumbers = companySetupBLL.GetLatestCodeNumbers();
+                List<LatestCodeNumber> latestCodeNumbers = _companySetupBLL.GetLatestCodeNumbers();
 
                 int? todaysMaxNumber = latestCodeNumbers.Where(c => c.Prefix == prefix).Select(c => c.MaxNumber).FirstOrDefault();
                 if (todaysMaxNumber == null) todaysMaxNumber = 0;
@@ -212,7 +212,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return string.Empty;
             }
         }

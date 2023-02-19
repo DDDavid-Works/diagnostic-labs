@@ -4,32 +4,31 @@ using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class CompanySetupBLL
     {
-        private const string LogFileName = "CompanySetupBLL";
+        private const string _logFileName = "CompanySetupBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public CompanySetupBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public CompanySetup GetLatestCompanySetup()
         {
             try
             {
-                return dbContext.CompanySetups.OrderBy(i => i.Id).FirstOrDefault();
+                return _dbContext.CompanySetups.OrderBy(i => i.Id).FirstOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -40,13 +39,13 @@ namespace DiagnosticLabsBLL.Services
             {
                 companySetup.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                 companySetup.UpdatedDate = DateTime.Now;
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 return true;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -55,11 +54,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.LatestCodeNumbers.ToList();
+                return _dbContext.LatestCodeNumbers.ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }

@@ -3,35 +3,34 @@ using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class UsersBLL
     {
-        private const string LogFileName = "UsersBLL";
+        private const string _logFileName = "UsersBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        UserPermissionsBLL _userPermissionsBLL = new UserPermissionsBLL();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public UsersBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public User GetUser(long id)
         {
             try
             {
-                User user = dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
+                User user = _dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
 
                 return user;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -40,11 +39,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Users.Where(u => u.IsActive).OrderBy(u => u.Id).LastOrDefault();
+                return _dbContext.Users.Where(u => u.IsActive).OrderBy(u => u.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -53,11 +52,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Users.Where(u => u.IsActive).ToList();
+                return _dbContext.Users.Where(u => u.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -66,11 +65,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Users.Where(u => (name == string.Empty || u.Username.ToUpper().Contains(name.ToUpper())) && u.IsActive).ToList();
+                return _dbContext.Users.Where(u => (name == string.Empty || u.Username.ToUpper().Contains(name.ToUpper())) && u.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -80,7 +79,7 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 userId = 0;
-                User user = dbContext.Users.Where(u => u.Username == username && u.Password == password && u.IsActive).FirstOrDefault();
+                User user = _dbContext.Users.Where(u => u.Username == username && u.Password == password && u.IsActive).FirstOrDefault();
 
                 if (user == null)
                     return false;
@@ -92,7 +91,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -107,14 +106,14 @@ namespace DiagnosticLabsBLL.Services
                     user.CreatedDate = DateTime.Now;
                     user.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     user.UpdatedDate = DateTime.Now;
-                    dbContext.Users.Add(user);
+                    _dbContext.Users.Add(user);
                 }
                 else
                 {
                     user.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     user.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = user.Id;
 
@@ -122,7 +121,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -132,13 +131,13 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 if (SaveUser(user, ref id))
-                    return userPermissionsBLL.SaveUserPermissionList(userPermissions, id);
+                    return _userPermissionsBLL.SaveUserPermissionList(userPermissions, id);
                 else
                     return false;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

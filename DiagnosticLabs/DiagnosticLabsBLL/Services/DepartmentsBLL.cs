@@ -8,26 +8,26 @@ namespace DiagnosticLabsBLL.Services
 {
     public class DepartmentsBLL
     {
-        private const string LogFileName = "DepartmentsBLL";
+        private const string _logFileName = "DepartmentsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public DepartmentsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Department GetDepartment(long id)
         {
             try
             {
-                return dbContext.Departments.Find(id);
+                return _dbContext.Departments.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -36,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Departments.Where(i => i.IsActive).OrderBy(i => i.Id).LastOrDefault();
+                return _dbContext.Departments.Where(i => i.IsActive).OrderBy(i => i.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -49,11 +49,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Departments.Where(i => i.IsActive).ToList();
+                return _dbContext.Departments.Where(i => i.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -62,11 +62,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Departments.Where(i => (name == string.Empty || i.DepartmentName.ToUpper().Contains(name.ToUpper())) && i.IsActive).ToList();
+                return _dbContext.Departments.Where(i => (name == string.Empty || i.DepartmentName.ToUpper().Contains(name.ToUpper())) && i.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -81,14 +81,14 @@ namespace DiagnosticLabsBLL.Services
                     department.CreatedDate = DateTime.Now;
                     department.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     department.UpdatedDate = DateTime.Now;
-                    dbContext.Departments.Add(department);
+                    _dbContext.Departments.Add(department);
                 }
                 else
                 {
                     department.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     department.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = department.Id;
 
@@ -96,7 +96,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

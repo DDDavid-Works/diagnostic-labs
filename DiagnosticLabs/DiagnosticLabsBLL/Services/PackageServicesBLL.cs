@@ -3,32 +3,31 @@ using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class PackageServicesBLL
     {
-        private const string LogFileName = "PackageServicesBLL";
+        private const string _logFileName = "PackageServicesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PackageServicesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public List<PackageService> GetPackageServicesByPackageId(long packageId)
         {
             try
             {
-                return dbContext.PackageServices.Where(p => p.PackageId == packageId && p.IsActive == true).ToList();
+                return _dbContext.PackageServices.Where(p => p.PackageId == packageId && p.IsActive == true).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -43,14 +42,14 @@ namespace DiagnosticLabsBLL.Services
                     packageService.CreatedDate = DateTime.Now;
                     packageService.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     packageService.UpdatedDate = DateTime.Now;
-                    dbContext.PackageServices.Add(packageService);
+                    _dbContext.PackageServices.Add(packageService);
                 }
                 else
                 {
                     packageService.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     packageService.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = packageService.Id;
 
@@ -58,7 +57,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -90,7 +89,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

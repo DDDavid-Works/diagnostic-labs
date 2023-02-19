@@ -50,6 +50,5 @@ namespace DiagnosticLabs.ViewModels
             get { return _canDelete; }
             set { _canDelete = value; OnPropertyChanged("CanDelete"); }
         }
-
     }
 }

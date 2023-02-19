@@ -1,7 +1,4 @@
 ﻿using DiagnosticLabsDAL.POCOs.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DiagnosticLabsDAL.POCOs
 {

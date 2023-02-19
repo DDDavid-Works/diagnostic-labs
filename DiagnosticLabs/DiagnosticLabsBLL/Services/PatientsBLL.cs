@@ -9,15 +9,15 @@ namespace DiagnosticLabsBLL.Services
 {
     public class PatientsBLL
     {
-        private const string LogFileName = "PatientsBLL";
+        private const string _logFileName = "PatientsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PatientsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Patient NewPatient()
@@ -41,11 +41,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Patients.Find(id);
+                return _dbContext.Patients.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -54,11 +54,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Patients.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
+                return _dbContext.Patients.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -67,12 +67,12 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Patients.Where(p => (name == string.Empty || p.PatientName.ToUpper().Contains(name.ToUpper())) &&
+                return _dbContext.Patients.Where(p => (name == string.Empty || p.PatientName.ToUpper().Contains(name.ToUpper())) &&
                                                      p.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -82,14 +82,14 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 if (companyId == null || companyId == -1)
-                    return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper()))).ToList();
+                    return _dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper()))).ToList();
                 else
-                    return dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
+                    return _dbContext.PatientCompanies.Where(p => (patientName == string.Empty || p.PatientName.ToUpper().Contains(patientName.ToUpper())) &&
                                                                   p.CompanyId == companyId).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -104,14 +104,14 @@ namespace DiagnosticLabsBLL.Services
                     patient.CreatedDate = DateTime.Now;
                     patient.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patient.UpdatedDate = DateTime.Now;
-                    dbContext.Patients.Add(patient);
+                    _dbContext.Patients.Add(patient);
                 }
                 else
                 {
                     patient.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     patient.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = patient.Id;
 
@@ -119,7 +119,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

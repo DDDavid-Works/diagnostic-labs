@@ -8,26 +8,26 @@ namespace DiagnosticLabsBLL.Services
 {
     public class ModuleTypesBLL
     {
-        private const string LogFileName = "ModuleTypesBLL";
+        private const string _logFileName = "ModuleTypesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public ModuleTypesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public ModuleType GetModuleType(long id)
         {
             try
             {
-                return dbContext.ModuleTypes.Find(id);
+                return _dbContext.ModuleTypes.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -36,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.ModuleTypes.Where(m => m.IsActive).OrderBy(m => m.SortOrder).ToList();
+                return _dbContext.ModuleTypes.Where(m => m.IsActive).OrderBy(m => m.SortOrder).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }

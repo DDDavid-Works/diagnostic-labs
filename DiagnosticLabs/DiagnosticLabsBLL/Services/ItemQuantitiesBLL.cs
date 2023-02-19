@@ -1,36 +1,33 @@
-﻿using DiagnosticLabsBLL;
-using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
-using DiagnosticLabsDAL.POCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class ItemQuantitiesBLL
     {
-        private const string LogFileName = "ItemQuantitiesBLL";
+        private const string _logFileName = "ItemQuantitiesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public ItemQuantitiesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public ItemQuantity GetItemQuantity(long id)
         {
             try
             {
-                return dbContext.ItemQuantities.Where(i => i.Id == id).FirstOrDefault();
+                return _dbContext.ItemQuantities.Where(i => i.Id == id).FirstOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -39,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.ItemQuantities.Where(i => i.ItemId == itemId && i.IsActive == true).ToList();
+                return _dbContext.ItemQuantities.Where(i => i.ItemId == itemId && i.IsActive == true).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -58,14 +55,14 @@ namespace DiagnosticLabsBLL.Services
                     itemQuantity.CreatedDate = DateTime.Now;
                     itemQuantity.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     itemQuantity.UpdatedDate = DateTime.Now;
-                    dbContext.ItemQuantities.Add(itemQuantity);
+                    _dbContext.ItemQuantities.Add(itemQuantity);
                 }
                 else
                 {
                     itemQuantity.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     itemQuantity.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = itemQuantity.Id;
 
@@ -73,7 +70,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

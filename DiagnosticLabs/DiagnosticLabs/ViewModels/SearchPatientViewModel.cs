@@ -11,26 +11,26 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchPatientViewModel : BaseViewModel
     {
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientsBLL patientsBLL = new PatientsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientsBLL _patientsBLL = new PatientsBLL();
 
         #region Public Properties
         public ObservableCollection<PatientCompany> PatientCompanies { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
 
-        private string _PatientName;
+        private string _patientName;
         public string PatientName
         {
-            get { return _PatientName; }
-            set { _PatientName = value; OnPropertyChanged("PatientName"); SearchPatientCompanies(false); }
+            get { return _patientName; }
+            set { _patientName = value; OnPropertyChanged("PatientName"); SearchPatientCompanies(false); }
         }
 
-        private Company _SelectedCompany;
+        private Company _selectedCompany;
         public Company SelectedCompany
         {
-            get { return _SelectedCompany; }
-            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
+            get { return _selectedCompany; }
+            set { _selectedCompany = value; OnPropertyChanged("SelectedCompany"); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -38,7 +38,7 @@ namespace DiagnosticLabs.ViewModels
 
         public SearchPatientViewModel()
         {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true, true));
 
             this.SelectedCompany = this.Companies.First();
             this.PatientName = string.Empty;
@@ -54,7 +54,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.PatientName.Trim() == string.Empty)) return;
 
-            List<PatientCompany> patientCompanies = patientsBLL.GetPatientCompanies(this.PatientName, this.SelectedCompany.Id);
+            List<PatientCompany> patientCompanies = _patientsBLL.GetPatientCompanies(this.PatientName, this.SelectedCompany.Id);
 
             this.PatientCompanies = new ObservableCollection<PatientCompany>(patientCompanies);
         }

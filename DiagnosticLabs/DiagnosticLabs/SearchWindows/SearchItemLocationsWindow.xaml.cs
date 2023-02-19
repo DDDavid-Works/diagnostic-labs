@@ -1,18 +1,8 @@
 ﻿using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiagnosticLabs.SearchWindows
 {
@@ -21,7 +11,7 @@ namespace DiagnosticLabs.SearchWindows
     /// </summary>
     public partial class SearchItemLocationsWindow : Window
     {
-        ItemLocationsBLL itemLocationsBLL = new ItemLocationsBLL();
+        ItemLocationsBLL _itemLocationsBLL = new ItemLocationsBLL();
 
         public ItemLocation SelectedItemLocation { get; set; }
 
@@ -63,9 +53,9 @@ namespace DiagnosticLabs.SearchWindows
         private List<ItemLocation> ItemLocationList(string name = null)
         {
             if (name == null)
-                return itemLocationsBLL.GetAllItemLocations();
+                return _itemLocationsBLL.GetAllItemLocations();
             else
-                return itemLocationsBLL.GetItemLocations(name);
+                return _itemLocationsBLL.GetItemLocations(name);
         }
 
         private void SelectItemLocation()

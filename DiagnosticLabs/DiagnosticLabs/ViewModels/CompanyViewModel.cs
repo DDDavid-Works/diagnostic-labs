@@ -9,10 +9,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class CompanyViewModel : BaseViewModel
     {
-        private const string EntityName = "Company";
+        private const string _entityName = "Company";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        CompaniesBLL companiesBLL = new CompaniesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        CompaniesBLL _companiesBLL = new CompaniesBLL();
 
         #region Public Properties
         public Company Company { get; set; }
@@ -26,7 +26,7 @@ namespace DiagnosticLabs.ViewModels
             if (id == 0)
                 NewCompany();
             else
-                this.Company = companiesBLL.GetCompany(id);
+                this.Company = _companiesBLL.GetCompany(id);
 
             this.NewCommand = new RelayCommand(param => NewCompany());
             this.SaveCommand = new RelayCommand(param => SaveCompany());
@@ -52,13 +52,13 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Company.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Company.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.Company.ErrorMessages, Messages.MessageType.Error, false);
 
                 return;
             }
 
             long id = this.Company.Id;
-            if (companiesBLL.SaveCompany(this.Company, ref id))
+            if (_companiesBLL.SaveCompany(this.Company, ref id))
             {
                 this.Company.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -75,14 +75,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Company.Id;
             this.Company.IsActive = false;
-            if (companiesBLL.SaveCompany(this.Company, ref id))
+            if (_companiesBLL.SaveCompany(this.Company, ref id))
             {
-                this.Company = companiesBLL.GetLatestCompany();
+                this.Company = _companiesBLL.GetLatestCompany();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

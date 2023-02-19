@@ -7,7 +7,6 @@ using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsDAL.Models.Views;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,18 +20,18 @@ namespace DiagnosticLabs
     /// </summary>
     public partial class MainWindow : Window
     {
-        PatientRegistrationsWindow patientRegistrationsWindow = null;
-        PatientsWindow patientsWindow = null;
-        PaymentsWindow paymentsWindow = null;
-        CompanySetupWindow companySetupWindow = null;
-        UsersWindow usersWindow = null;
-        ChangePasswordWindow changePasswordWindow = null;
-        DepartmentsWindow departmentsWindow = null;
-        ServicesWindow servicesWindow = null;
-        ItemsWindow itemsWindow = null;
-        ItemLocationsWindow itemLocationsWindow = null;
-        CompaniesWindow companiesWindow = null;
-        PackagesWindow packagesWindow = null;
+        PatientRegistrationsWindow _patientRegistrationsWindow = null;
+        PatientsWindow _patientsWindow = null;
+        PaymentsWindow _paymentsWindow = null;
+        CompanySetupWindow _companySetupWindow = null;
+        UsersWindow _usersWindow = null;
+        ChangePasswordWindow _changePasswordWindow = null;
+        DepartmentsWindow _departmentsWindow = null;
+        ServicesWindow _servicesWindow = null;
+        ItemsWindow _itemsWindow = null;
+        ItemLocationsWindow _itemLocationsWindow = null;
+        CompaniesWindow _companiesWindow = null;
+        PackagesWindow _packagesWindow = null;
 
         public MainWindow(long userId)
         {
@@ -56,125 +55,125 @@ namespace DiagnosticLabs
             switch (menuItem.Module.ModuleName)
             {
                 case Modules.PatientRegistrations:
-                    if (patientRegistrationsWindow == null)
+                    if (_patientRegistrationsWindow == null)
                     {
-                        patientRegistrationsWindow = LoadWindow<PatientRegistrationsWindow>();
-                        SetActionToolbarUserControl(patientRegistrationsWindow.ActionToolbar, menuItem);
-                        patientRegistrationsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => patientRegistrationsWindow.Show();
+                        _patientRegistrationsWindow = LoadWindow<PatientRegistrationsWindow>();
+                        SetActionToolbarUserControl(_patientRegistrationsWindow.ActionToolbar, menuItem);
+                        _patientRegistrationsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _patientRegistrationsWindow.Show();
                     }
                     else
-                        return () => patientRegistrationsWindow.Activate();
+                        return () => _patientRegistrationsWindow.Activate();
                 case Modules.Patients:
-                    if (patientsWindow == null)
+                    if (_patientsWindow == null)
                     {
-                        patientsWindow = LoadWindow<PatientsWindow>();
-                        SetActionToolbarUserControl(patientsWindow.ActionToolbar, menuItem);
-                        patientsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => patientsWindow.Show();
+                        _patientsWindow = LoadWindow<PatientsWindow>();
+                        SetActionToolbarUserControl(_patientsWindow.ActionToolbar, menuItem);
+                        _patientsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _patientsWindow.Show();
                     }
                     else
-                        return () => patientsWindow.Activate();
+                        return () => _patientsWindow.Activate();
                 case Modules.Payments:
-                    if (paymentsWindow == null)
+                    if (_paymentsWindow == null)
                     {
-                        paymentsWindow = LoadWindow<PaymentsWindow>();
-                        SetActionToolbarUserControl(paymentsWindow.ActionToolbar, menuItem);
-                        paymentsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => paymentsWindow.Show();
+                        _paymentsWindow = LoadWindow<PaymentsWindow>();
+                        SetActionToolbarUserControl(_paymentsWindow.ActionToolbar, menuItem);
+                        _paymentsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _paymentsWindow.Show();
                     }
                     else
-                        return () => paymentsWindow.Activate();
+                        return () => _paymentsWindow.Activate();
                 case Modules.CompanySetup:
-                    if (companySetupWindow == null)
+                    if (_companySetupWindow == null)
                     {
-                        companySetupWindow = LoadWindow<CompanySetupWindow>();
-                        SetActionToolbarUserControl(companySetupWindow.ActionToolbar, menuItem);
-                        companySetupWindow.Closed += new EventHandler(ClearWindow);
-                        return () => companySetupWindow.Show();
+                        _companySetupWindow = LoadWindow<CompanySetupWindow>();
+                        SetActionToolbarUserControl(_companySetupWindow.ActionToolbar, menuItem);
+                        _companySetupWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _companySetupWindow.Show();
                     }
                     else
-                        return () => companySetupWindow.Activate();
+                        return () => _companySetupWindow.Activate();
                 case Modules.Users:
-                    if (usersWindow == null)
+                    if (_usersWindow == null)
                     {
-                        usersWindow = LoadWindow<UsersWindow>();
-                        SetActionToolbarUserControl(usersWindow.ActionToolbar, menuItem);
-                        usersWindow.Closed += new EventHandler(ClearWindow);
-                        return () => usersWindow.Show();
+                        _usersWindow = LoadWindow<UsersWindow>();
+                        SetActionToolbarUserControl(_usersWindow.ActionToolbar, menuItem);
+                        _usersWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _usersWindow.Show();
                     }
                     else
-                        return () => usersWindow.Activate();
+                        return () => _usersWindow.Activate();
                 case Modules.ChangePassword:
-                    if (changePasswordWindow == null)
+                    if (_changePasswordWindow == null)
                     {
-                        changePasswordWindow = LoadWindow<ChangePasswordWindow>();
-                        SetActionToolbarUserControl(changePasswordWindow.ActionToolbar, menuItem);
-                        changePasswordWindow.Closed += new EventHandler(ClearWindow);
-                        return () => changePasswordWindow.Show();
+                        _changePasswordWindow = LoadWindow<ChangePasswordWindow>();
+                        SetActionToolbarUserControl(_changePasswordWindow.ActionToolbar, menuItem);
+                        _changePasswordWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _changePasswordWindow.Show();
                     }
                     else
-                        return () => changePasswordWindow.Activate();
+                        return () => _changePasswordWindow.Activate();
                 case Modules.Departments:
-                    if (departmentsWindow == null)
+                    if (_departmentsWindow == null)
                     {
-                        departmentsWindow = LoadWindow<DepartmentsWindow>();
-                        SetActionToolbarUserControl(departmentsWindow.ActionToolbar, menuItem);
-                        departmentsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => departmentsWindow.Show();
+                        _departmentsWindow = LoadWindow<DepartmentsWindow>();
+                        SetActionToolbarUserControl(_departmentsWindow.ActionToolbar, menuItem);
+                        _departmentsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _departmentsWindow.Show();
                     }
                     else
-                        return () => departmentsWindow.Activate();
+                        return () => _departmentsWindow.Activate();
                 case Modules.Services:
-                    if (servicesWindow == null)
+                    if (_servicesWindow == null)
                     {
-                        servicesWindow = LoadWindow<ServicesWindow>();
-                        SetActionToolbarUserControl(servicesWindow.ActionToolbar, menuItem);
-                        servicesWindow.Closed += new EventHandler(ClearWindow);
-                        return () => servicesWindow.Show();
+                        _servicesWindow = LoadWindow<ServicesWindow>();
+                        SetActionToolbarUserControl(_servicesWindow.ActionToolbar, menuItem);
+                        _servicesWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _servicesWindow.Show();
                     }
                     else
-                        return () => servicesWindow.Activate();
+                        return () => _servicesWindow.Activate();
                 case Modules.Items:
-                    if (itemsWindow == null)
+                    if (_itemsWindow == null)
                     {
-                        itemsWindow = new ItemsWindow();
-                        SetActionToolbarUserControl(itemsWindow.ActionToolbar, menuItem);
-                        itemsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => itemsWindow.Show();
+                        _itemsWindow = new ItemsWindow();
+                        SetActionToolbarUserControl(_itemsWindow.ActionToolbar, menuItem);
+                        _itemsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _itemsWindow.Show();
                     }
                     else
-                        return () => itemsWindow.Activate();
+                        return () => _itemsWindow.Activate();
                 case Modules.ItemLocations:
-                    if (itemLocationsWindow == null)
+                    if (_itemLocationsWindow == null)
                     {
-                        itemLocationsWindow = LoadWindow<ItemLocationsWindow>();
-                        SetActionToolbarUserControl(itemLocationsWindow.ActionToolbar, menuItem);
-                        itemLocationsWindow.Closed += new EventHandler(ClearWindow);
-                        return () => itemLocationsWindow.Show();
+                        _itemLocationsWindow = LoadWindow<ItemLocationsWindow>();
+                        SetActionToolbarUserControl(_itemLocationsWindow.ActionToolbar, menuItem);
+                        _itemLocationsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _itemLocationsWindow.Show();
                     }
                     else
-                        return () => itemLocationsWindow.Activate();
+                        return () => _itemLocationsWindow.Activate();
                 case Modules.Companies:
-                    if (companiesWindow == null)
+                    if (_companiesWindow == null)
                     {
-                        companiesWindow = LoadWindow<CompaniesWindow>();
-                        SetActionToolbarUserControl(companiesWindow.ActionToolbar, menuItem);
-                        companiesWindow.Closed += new EventHandler(ClearWindow);
-                        return () => companiesWindow.Show();
+                        _companiesWindow = LoadWindow<CompaniesWindow>();
+                        SetActionToolbarUserControl(_companiesWindow.ActionToolbar, menuItem);
+                        _companiesWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _companiesWindow.Show();
                     }
                     else
-                        return () => companiesWindow.Activate();
+                        return () => _companiesWindow.Activate();
                 case Modules.Packages:
-                    if (packagesWindow == null)
+                    if (_packagesWindow == null)
                     {
-                        packagesWindow = LoadWindow<PackagesWindow>();
-                        SetActionToolbarUserControl(packagesWindow.ActionToolbar, menuItem);
-                        packagesWindow.Closed += new EventHandler(ClearWindow);
-                        return () => packagesWindow.Show();
+                        _packagesWindow = LoadWindow<PackagesWindow>();
+                        SetActionToolbarUserControl(_packagesWindow.ActionToolbar, menuItem);
+                        _packagesWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _packagesWindow.Show();
                     }
                     else
-                        return () => packagesWindow.Activate();
+                        return () => _packagesWindow.Activate();
                 default:
                     return null;
             }
@@ -198,32 +197,32 @@ namespace DiagnosticLabs
         private void ClearWindow(object sender, EventArgs e)
         {
             if (sender.GetType() == typeof(PatientRegistrationsWindow))
-                patientRegistrationsWindow = null;
+                _patientRegistrationsWindow = null;
             else if (sender.GetType() == typeof(PatientsWindow))
-                patientsWindow = null;
+                _patientsWindow = null;
             else if (sender.GetType() == typeof(PaymentsWindow))
             {
                 Globals.PATIENTREGISTRATIONIDTOPAY = 0;
-                paymentsWindow = null;
+                _paymentsWindow = null;
             }
             else if (sender.GetType() == typeof(CompanySetupWindow))
-                companySetupWindow = null;
+                _companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))
-                usersWindow = null;
+                _usersWindow = null;
             else if (sender.GetType() == typeof(ChangePasswordWindow))
-                changePasswordWindow = null;
+                _changePasswordWindow = null;
             else if (sender.GetType() == typeof(DepartmentsWindow))
-                departmentsWindow = null;
+                _departmentsWindow = null;
             else if (sender.GetType() == typeof(ServicesWindow))
-                servicesWindow = null;
+                _servicesWindow = null;
             else if (sender.GetType() == typeof(ItemsWindow))
-                itemsWindow = null;
+                _itemsWindow = null;
             else if (sender.GetType() == typeof(ItemLocationsWindow))
-                itemLocationsWindow = null;
+                _itemLocationsWindow = null;
             else if (sender.GetType() == typeof(CompaniesWindow))
-                companiesWindow = null;
+                _companiesWindow = null;
             else if (sender.GetType() == typeof(PackagesWindow))
-                packagesWindow = null;
+                _packagesWindow = null;
         }
         #endregion Private Methods
 

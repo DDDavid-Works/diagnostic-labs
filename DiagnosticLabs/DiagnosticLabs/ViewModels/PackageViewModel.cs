@@ -14,12 +14,12 @@ namespace DiagnosticLabs.ViewModels
 {
     public class PackageViewModel : BaseViewModel
     {
-        private const string EntityName = "Package";
+        private const string _entityName = "Package";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PackagesBLL packagesBLL = new PackagesBLL();
-        PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
-        ServicesBLL servicesBLL = new ServicesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PackagesBLL _packagesBLL = new PackagesBLL();
+        PackageServicesBLL _packageServicesBLL = new PackageServicesBLL();
+        ServicesBLL _servicesBLL = new ServicesBLL();
 
         #region Public Properties
         public Package Package { get; set; }
@@ -37,25 +37,25 @@ namespace DiagnosticLabs.ViewModels
 
         public ObservableCollection<Company> Companies { get; set; }
 
-        private Company _SelectedCompany;
+        private Company _selectedCompany;
         public Company SelectedCompany
         {
-            get { return _SelectedCompany; }
-            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
+            get { return _selectedCompany; }
+            set { _selectedCompany = value; OnPropertyChanged("SelectedCompany"); }
         }
         #endregion
 
         public PackageViewModel(long id)
         {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true));
 
             if (id == 0)
                 NewPackage();
             else
             {
-                this.Package = packagesBLL.GetPackage(id);
+                this.Package = _packagesBLL.GetPackage(id);
                 this.SelectedCompany = this.Companies.Where(c => c.Id == (long?)this.Package.CompanyId).FirstOrDefault();
-                this.PackageServices = this.PackageServiceViewModelList(packageServicesBLL.GetPackageServicesByPackageId(id));
+                this.PackageServices = this.PackageServiceViewModelList(_packageServicesBLL.GetPackageServicesByPackageId(id));
             }
 
             this.NewCommand = new RelayCommand(param => NewPackage());
@@ -71,7 +71,7 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPackage()
         {
-            this.Package = packagesBLL.NewPackage();
+            this.Package = _packagesBLL.NewPackage();
             this.SelectedCompany = this.Companies.First();
             this.PackageServices = new ObservableCollection<PackageServiceViewModel>();
             this.ClearNotificationMessages();
@@ -84,12 +84,12 @@ namespace DiagnosticLabs.ViewModels
             {
                 string errorMessages = this.Package.ErrorMessages;
                 errorMessages += string.Join("", this.PackageServices.Where(p => !p.PackageService.IsValid).Select(p => p.PackageService.ErrorMessages).ToList());
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.Package.Id;
-            if (packagesBLL.SaveWithPackageServices(this.Package, this.PackageServices.Select(p => p.PackageService).ToList(), ref id))
+            if (_packagesBLL.SaveWithPackageServices(this.Package, this.PackageServices.Select(p => p.PackageService).ToList(), ref id))
             {
                 this.Package.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -106,14 +106,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Package.Id;
             this.Package.IsActive = false;
-            if (packagesBLL.SavePackage(this.Package, ref id))
+            if (_packagesBLL.SavePackage(this.Package, ref id))
             {
-                this.Package = packagesBLL.GetLatestPackage();
+                this.Package = _packagesBLL.GetLatestPackage();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
@@ -126,7 +126,7 @@ namespace DiagnosticLabs.ViewModels
         {
             List<PackageServiceViewModel> packageServicesList = new List<PackageServiceViewModel>();
             foreach (PackageService packageService in packageServices)
-                packageServicesList.Add(new PackageServiceViewModel() { PackageService = packageService, Service = servicesBLL.GetService(packageService.ServiceId) });
+                packageServicesList.Add(new PackageServiceViewModel() { PackageService = packageService, Service = _servicesBLL.GetService(packageService.ServiceId) });
 
             return new ObservableCollection<PackageServiceViewModel>(packageServicesList);
         }

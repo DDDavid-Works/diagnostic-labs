@@ -7,35 +7,35 @@ namespace DiagnosticLabs.Models
 {
     public class NotificationMessage : INotifyPropertyChanged
     {
-        private string _Message;
+        private string _message;
         public string Message
         {
-            get { return _Message; }
-            set { _Message = value; OnPropertyChanged("Message"); }
+            get { return _message; }
+            set { _message = value; OnPropertyChanged("Message"); }
         }
 
-        private Messages.MessageType _MessageType;
+        private Messages.MessageType _messageType;
         public Messages.MessageType MessageType
         {
-            get { return _MessageType; }
-            set { _MessageType = value; OnPropertyChanged("MessageType"); }
+            get { return _messageType; }
+            set { _messageType = value; OnPropertyChanged("MessageType"); }
         }
 
-        private bool _IsAutoCloseMessage;
+        private bool _isAutoCloseMessage;
         public bool IsAutoCloseMessage
         {
-            get { return _IsAutoCloseMessage; }
-            set { _IsAutoCloseMessage = value; OnPropertyChanged("IsAutoCloseMessage"); }
+            get { return _isAutoCloseMessage; }
+            set { _isAutoCloseMessage = value; OnPropertyChanged("IsAutoCloseMessage"); }
         }
 
-        private Visibility _Visibility;
+        private Visibility _visibility;
         public Visibility Visibility
         {
-            get { return _Visibility; }
-            set { _Visibility = value; OnPropertyChanged("Visibility"); }
+            get { return _visibility; }
+            set { _visibility = value; OnPropertyChanged("Visibility"); }
         }
 
-        private string _MessageBoxColor;
+        private string _messageBoxColor;
         public string MessageBoxColor
         {
             get
@@ -52,7 +52,7 @@ namespace DiagnosticLabs.Models
                         return "black";
                 }
             }
-            set { _MessageBoxColor = value; OnPropertyChanged("MessageBoxColor"); }
+            set { _messageBoxColor = value; OnPropertyChanged("MessageBoxColor"); }
         }
 
         public NotificationMessage()

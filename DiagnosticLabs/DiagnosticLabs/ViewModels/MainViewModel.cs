@@ -13,15 +13,15 @@ namespace DiagnosticLabs.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private const string EntityName = "Main";
+        private const string _entityName = "Main";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        UsersBLL usersBLL = new UsersBLL();
-        CompanySetupBLL companySetupBLL = new CompanySetupBLL();
-        ModulesBLL modulesBLL = new ModulesBLL();
-        ModuleTypesBLL moduleTypesBLL = new ModuleTypesBLL();
-        UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        UsersBLL _usersBLL = new UsersBLL();
+        CompanySetupBLL _companySetupBLL = new CompanySetupBLL();
+        ModulesBLL _modulesBLL = new ModulesBLL();
+        ModuleTypesBLL _moduleTypesBLL = new ModuleTypesBLL();
+        UserPermissionsBLL _userPermissionsBLL = new UserPermissionsBLL();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
@@ -45,17 +45,17 @@ namespace DiagnosticLabs.ViewModels
 
         public MainViewModel(long userId)
         {
-            this.CompanySetup = companySetupBLL.GetLatestCompanySetup();
-            this.User = usersBLL.GetUser(userId);
+            this.CompanySetup = _companySetupBLL.GetLatestCompanySetup();
+            this.User = _usersBLL.GetUser(userId);
             this.InputDateFilter = DateTime.Today;
             this.PatientNameFilter = string.Empty;
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true, true));
             this.SelectedCompany = this.Companies.FirstOrDefault();
 
             Globals.LOGGEDINUSERID = userId;
-            Globals.USERPERMISSIONS = userPermissionsBLL.GetUserPermissionsByUserId(Globals.LOGGEDINUSERID);
-            Globals.MODULES = modulesBLL.GetModules();
-            Globals.MODULETYPES = moduleTypesBLL.GetModuleTypes();
+            Globals.USERPERMISSIONS = _userPermissionsBLL.GetUserPermissionsByUserId(Globals.LOGGEDINUSERID);
+            Globals.MODULES = _modulesBLL.GetModules();
+            Globals.MODULETYPES = _moduleTypesBLL.GetModuleTypes();
             Globals.COMPANYSETUPCODE = this.CompanySetup.Code;
 
             this.MenuItems = MenuItemsList();
@@ -100,14 +100,14 @@ namespace DiagnosticLabs.ViewModels
 
         private ObservableCollection<PatientRegistrationDetail> PatientRegistrationDetailList()
         {
-            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(string.Empty, null, DateTime.Today);
+            List<PatientRegistrationDetail> patientRegistrationDetails = _patientRegistrationsBLL.GetPatientRegistrationDetails(string.Empty, null, DateTime.Today);
 
             return new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }
 
         private void SearchPatientRegistrationDetails()
         {
-            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientNameFilter, this.SelectedCompany.Id, this.InputDateFilter);
+            List<PatientRegistrationDetail> patientRegistrationDetails = _patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientNameFilter, this.SelectedCompany.Id, this.InputDateFilter);
 
             this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }

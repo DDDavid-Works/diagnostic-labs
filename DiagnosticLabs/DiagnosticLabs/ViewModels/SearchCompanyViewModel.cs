@@ -9,16 +9,16 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchCompanyViewModel : BaseViewModel
     {
-        CompaniesBLL companiesBLL = new CompaniesBLL();
+        CompaniesBLL _companiesBLL = new CompaniesBLL();
 
         #region Public Properties
         public ObservableCollection<Company> Companies { get; set; }
 
-        private string _CompanyName;
+        private string _companyName;
         public string CompanyName
         {
-            get { return _CompanyName; }
-            set { _CompanyName = value; OnPropertyChanged("CompanyName"); SearchCompanies(false); }
+            get { return _companyName; }
+            set { _companyName = value; OnPropertyChanged("CompanyName"); SearchCompanies(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -38,7 +38,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.CompanyName.Trim() == string.Empty)) return;
 
-            List<Company> companies = companiesBLL.GetCompanies(this.CompanyName);
+            List<Company> companies = _companiesBLL.GetCompanies(this.CompanyName);
             this.Companies = new ObservableCollection<Company>(companies);
         }
         #endregion

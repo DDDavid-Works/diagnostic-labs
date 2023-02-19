@@ -82,7 +82,7 @@ namespace DiagnosticLabsDAL.Models
         public string PackageServicePrice { get; set; }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "PackageServicePrice" };
+        private static readonly string[] _propertiesToValidate = { "PackageServicePrice" };
 
         public string Error
         {
@@ -101,7 +101,7 @@ namespace DiagnosticLabsDAL.Models
                 ErrorMessages = string.Empty;
 
                 bool errorFound = false;
-                foreach (string property in PropertiesToValidate)
+                foreach (string property in _propertiesToValidate)
                     if (GetValidationError(property) != string.Empty)
                         errorFound = true;
 

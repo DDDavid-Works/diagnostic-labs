@@ -10,10 +10,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class ServiceViewModel : BaseViewModel
     {
-        private const string EntityName = "Service";
+        private const string _entityName = "Service";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        ServicesBLL servicesBLL = new ServicesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        ServicesBLL _servicesBLL = new ServicesBLL();
 
         #region Public Properties
         public Service Service { get; set; }
@@ -28,7 +28,7 @@ namespace DiagnosticLabs.ViewModels
                 NewService();
             else
             {
-                this.Service = servicesBLL.GetService(id);
+                this.Service = _servicesBLL.GetService(id);
                 this.Service.ServicePrice = String.Format("{0:N}", this.Service.Price);
 
             }
@@ -57,12 +57,12 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Service.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Service.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.Service.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.Service.Id;
-            if (servicesBLL.SaveService(this.Service, ref id))
+            if (_servicesBLL.SaveService(this.Service, ref id))
             {
                 this.Service.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -79,14 +79,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Service.Id;
             this.Service.IsActive = false;
-            if (servicesBLL.SaveService(this.Service, ref id))
+            if (_servicesBLL.SaveService(this.Service, ref id))
             {
-                this.Service = servicesBLL.GetLatestService();
+                this.Service = _servicesBLL.GetLatestService();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

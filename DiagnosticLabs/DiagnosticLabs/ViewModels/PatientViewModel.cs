@@ -8,10 +8,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class PatientViewModel : BasePatientViewModel
     {
-        private const string EntityName = "Patient";
+        private const string _entityName = "Patient";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientsBLL patientsBLL = new PatientsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientsBLL _patientsBLL = new PatientsBLL();
 
         #region Public Properties        
         public ICommand NewCommand { get; set; }
@@ -25,7 +25,7 @@ namespace DiagnosticLabs.ViewModels
                 NewPatient();
             else
             {
-                this.Patient = patientsBLL.GetPatient(id);
+                this.Patient = _patientsBLL.GetPatient(id);
                 this.Patient.IsAgeEdited = true;
             }
 
@@ -37,7 +37,7 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPatient()
         {
-            this.Patient = patientsBLL.NewPatient();
+            this.Patient = _patientsBLL.NewPatient();
 
             this.ClearNotificationMessages();
         }
@@ -46,12 +46,12 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.Patient.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Patient.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.Patient.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.Patient.Id;
-            if (patientsBLL.SavePatient(this.Patient, ref id))
+            if (_patientsBLL.SavePatient(this.Patient, ref id))
             {
                 this.Patient.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -68,14 +68,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Patient.Id;
             this.Patient.IsActive = false;
-            if (patientsBLL.SavePatient(this.Patient, ref id))
+            if (_patientsBLL.SavePatient(this.Patient, ref id))
             {
-                this.Patient = patientsBLL.GetLatestPatient();
+                this.Patient = _patientsBLL.GetLatestPatient();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

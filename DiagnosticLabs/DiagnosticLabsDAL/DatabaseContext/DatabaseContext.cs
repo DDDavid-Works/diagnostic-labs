@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
-using DiagnosticLabsDAL.Models;
-using DiagnosticLabsDAL.Models.Views;
 
 namespace DiagnosticLabsDAL.DatabaseContext
 {
     public class DatabaseContext : DbContext
     {
-        static readonly string connectionString = ConfigurationManager.ConnectionStrings["DiagnosticLabsDBConnectionString"].ConnectionString;
+        static readonly string _connectionString = ConfigurationManager.ConnectionStrings["DiagnosticLabsDBConnectionString"].ConnectionString;
 
         public DatabaseContext() : base() { }
 
@@ -48,7 +45,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(_connectionString);
         }
     }
 }

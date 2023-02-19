@@ -8,26 +8,26 @@ namespace DiagnosticLabsBLL.Services
 {
     public class CompaniesBLL
     {
-        private const string LogFileName = "CompaniesBLL";
+        private const string _logFileName = "CompaniesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public CompaniesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Company GetCompany(long id)
         {
             try
             {
-                return dbContext.Companies.Find(id);
+                return _dbContext.Companies.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -36,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Companies.Where(c => c.IsActive && !c.IsSystem).OrderBy(i => i.Id).LastOrDefault();
+                return _dbContext.Companies.Where(c => c.IsActive && !c.IsSystem).OrderBy(i => i.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -49,11 +49,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Companies.Where(c => c.IsActive && (includeSystemRecord ? true : !c.IsSystem)).ToList();
+                return _dbContext.Companies.Where(c => c.IsActive && (includeSystemRecord ? true : !c.IsSystem)).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -62,11 +62,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Companies.Where(c => (name == string.Empty || c.CompanyName.ToUpper().Contains(name.ToUpper())) && c.IsActive && !c.IsSystem).ToList();
+                return _dbContext.Companies.Where(c => (name == string.Empty || c.CompanyName.ToUpper().Contains(name.ToUpper())) && c.IsActive && !c.IsSystem).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -81,14 +81,14 @@ namespace DiagnosticLabsBLL.Services
                     company.CreatedDate = DateTime.Now;
                     company.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     company.UpdatedDate = DateTime.Now;
-                    dbContext.Companies.Add(company);
+                    _dbContext.Companies.Add(company);
                 }
                 else
                 {
                     company.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     company.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = company.Id;
 
@@ -96,7 +96,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

@@ -11,10 +11,10 @@ namespace DiagnosticLabs.ViewModels
 {
     public class CompanySetupViewModel : BaseViewModel
     {
-        private const string EntityName = "CompanySetup";
+        private const string _entityName = "CompanySetup";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        CompanySetupBLL companySetupBLL = new CompanySetupBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        CompanySetupBLL _companySetupBLL = new CompanySetupBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
@@ -31,7 +31,7 @@ namespace DiagnosticLabs.ViewModels
 
         public CompanySetupViewModel()
         {
-            this.CompanySetup = companySetupBLL.GetLatestCompanySetup();
+            this.CompanySetup = _companySetupBLL.GetLatestCompanySetup();
             this.SaveCommand = new RelayCommand(param => SaveCompanySetup());
             this.ChangeLogoCommand = new RelayCommand(param => ChangeLogo((ImageSource)param));
             LoadLogo();
@@ -42,11 +42,11 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.CompanySetup.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.CompanySetup.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.CompanySetup.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
-            if (companySetupBLL.SaveCompanySetup(this.CompanySetup))
+            if (_companySetupBLL.SaveCompanySetup(this.CompanySetup))
                 this.NotificationMessage = Messages.SavedSuccessfully;
             else
                 this.NotificationMessage = Messages.SaveFailed;

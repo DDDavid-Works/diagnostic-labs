@@ -12,13 +12,13 @@ namespace DiagnosticLabs.ViewModels
 {
     public class UserViewModel : BaseViewModel
     {
-        private const string EntityName = "User";
+        private const string _entityName = "User";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        UsersBLL usersBLL = new UsersBLL();
-        UserPermissionsBLL userPermissionsBLL = new UserPermissionsBLL();
-        ModulesBLL modulesBLL = new ModulesBLL();
-        ModuleTypesBLL moduleTypesBLL = new ModuleTypesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        UsersBLL _usersBLL = new UsersBLL();
+        UserPermissionsBLL _userPermissionsBLL = new UserPermissionsBLL();
+        ModulesBLL _modulesBLL = new ModulesBLL();
+        ModuleTypesBLL _moduleTypesBLL = new ModuleTypesBLL();
 
         #region Public Properties
         public User User { get; set; }
@@ -39,19 +39,19 @@ namespace DiagnosticLabs.ViewModels
 
         public UserViewModel(long id)
         {
-            this.ModuleTypes = moduleTypesBLL.GetModuleTypes();
-            this.Modules = modulesBLL.GetModules();
+            this.ModuleTypes = _moduleTypesBLL.GetModuleTypes();
+            this.Modules = _modulesBLL.GetModules();
             this.UserPermissions = new List<UserPermission>();
 
             if (id == 0)
                 NewUser();
             else
             {
-                this.User = usersBLL.GetUser(id);
-                foreach (UserPermission userPermission in userPermissionsBLL.GetUserPermissionsByUserId(id))
+                this.User = _usersBLL.GetUser(id);
+                foreach (UserPermission userPermission in _userPermissionsBLL.GetUserPermissionsByUserId(id))
                     this.UserPermissions.Add((UserPermission)userPermission.Clone());
 
-                this.UserPermissionModuleTypes = UserPermissionModuleTypeViewModelList(userPermissionsBLL.GetUserPermissionsByUserId(id));
+                this.UserPermissionModuleTypes = UserPermissionModuleTypeViewModelList(_userPermissionsBLL.GetUserPermissionsByUserId(id));
             }
 
             this.SelectedUserPermissionModuleType = this.UserPermissionModuleTypes.First();
@@ -83,12 +83,12 @@ namespace DiagnosticLabs.ViewModels
         {
             if (!this.User.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.User.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.User.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.User.Id;
-            if (usersBLL.SaveUserWithUserPermissions(this.User, UserPermissionsFromUserPermissionModuleTypes(), ref id))
+            if (_usersBLL.SaveUserWithUserPermissions(this.User, UserPermissionsFromUserPermissionModuleTypes(), ref id))
             {
                 this.User.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -105,14 +105,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.User.Id;
             this.User.IsActive = false;
-            if (usersBLL.SaveUser(this.User, ref id))
+            if (_usersBLL.SaveUser(this.User, ref id))
             {
-                this.User = usersBLL.GetLatestUser();
+                this.User = _usersBLL.GetLatestUser();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

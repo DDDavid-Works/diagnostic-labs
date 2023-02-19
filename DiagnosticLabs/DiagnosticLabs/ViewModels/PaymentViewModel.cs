@@ -2,7 +2,6 @@
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,23 +13,23 @@ namespace DiagnosticLabs.ViewModels
 {
     public class PaymentViewModel : BasePatientRegistrationViewModel
     {
-        private const string EntityName = "Payment";
+        private const string _entityName = "Payment";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PaymentsBLL paymentsBLL = new PaymentsBLL();
-        PatientsBLL patientsBLL = new PatientsBLL();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-        PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PaymentsBLL _paymentsBLL = new PaymentsBLL();
+        PatientsBLL _patientsBLL = new PatientsBLL();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        PatientRegistrationServicesBLL _patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
 
         #region Public Properties
         public Payment Payment { get; set; }
         public string NextPatientRegistrationCode { get; set; }
 
-        private bool _IsPatientRegistrationCodeReadOnly;
+        private bool _isPatientRegistrationCodeReadOnly;
         public bool IsPatientRegistrationCodeReadOnly
         {
-            get { return _IsPatientRegistrationCodeReadOnly; }
-            set { _IsPatientRegistrationCodeReadOnly = value; OnPropertyChanged("IsPatientRegistrationCodeReadOnly"); }
+            get { return _isPatientRegistrationCodeReadOnly; }
+            set { _isPatientRegistrationCodeReadOnly = value; OnPropertyChanged("IsPatientRegistrationCodeReadOnly"); }
         }
 
         public ICommand NewCommand { get; set; }
@@ -48,15 +47,15 @@ namespace DiagnosticLabs.ViewModels
                 NewPayment();
             else
             {
-                this.Payment = paymentsBLL.GetPayment(id);
-                this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration((long)this.Payment.PatientRegistrationId);
-                this.PatientRegistrationPayment = patientRegistrationsBLL.GetPatientRegistrationPayment(id);
-                this.Patient = patientsBLL.GetPatient((long)this.PatientRegistration.PatientId);
+                this.Payment = _paymentsBLL.GetPayment(id);
+                this.PatientRegistration = _patientRegistrationsBLL.GetPatientRegistration((long)this.Payment.PatientRegistrationId);
+                this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment(id);
+                this.Patient = _patientsBLL.GetPatient((long)this.PatientRegistration.PatientId);
 
-                this.PatientRegistrationServices = this.PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(this.PatientRegistration.Id));
+                this.PatientRegistrationServices = this.PatientRegistrationServiceViewModelList(_patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(this.PatientRegistration.Id));
             }
 
-            this.NextPatientRegistrationCode = patientRegistrationsBLL.NewRegistrationCode();
+            this.NextPatientRegistrationCode = _patientRegistrationsBLL.NewRegistrationCode();
 
             this.NewCommand = new RelayCommand(param => NewPayment());
             this.SaveCommand = new RelayCommand(param => SavePayment());
@@ -70,9 +69,9 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPayment()
         {
-            this.Payment = paymentsBLL.NewPayment();
-            this.PatientRegistration = patientRegistrationsBLL.NewPatientRegistration();
-            this.Patient = patientsBLL.NewPatient();
+            this.Payment = _paymentsBLL.NewPayment();
+            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration();
+            this.Patient = _patientsBLL.NewPatient();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
             this.IsPatientRegistrationCodeReadOnly = false;
 
@@ -86,13 +85,13 @@ namespace DiagnosticLabs.ViewModels
 
             if (!this.Payment.IsValid)
             {
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(this.Payment.ErrorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.Payment.ErrorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.Payment.Id;
             List<PatientRegistrationService> patientRegistrationServicesList = this.PatientRegistrationServices.Select(p => p.PatientRegistrationService).ToList();
-            if (paymentsBLL.SavePaymentWithPatientRegistrationPatientAndServices(this.Payment, this.PatientRegistration, this.Patient, patientRegistrationServicesList, ref id))
+            if (_paymentsBLL.SavePaymentWithPatientRegistrationPatientAndServices(this.Payment, this.PatientRegistration, this.Patient, patientRegistrationServicesList, ref id))
             {
                 this.Payment.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -109,14 +108,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.Payment.Id;
             this.Payment.IsActive = false;
-            if (paymentsBLL.SavePayment(this.Payment, ref id))
+            if (_paymentsBLL.SavePayment(this.Payment, ref id))
             {
-                //this.Payment = paymentsBLL.GetLatestPayment();
+                //this.Payment = _paymentsBLL.GetLatestPayment();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else
@@ -135,7 +134,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (code == this.NextPatientRegistrationCode) return;
 
-            PatientRegistration patientRegistration = patientRegistrationsBLL.GetPatientRegistrationByCode(code);
+            PatientRegistration patientRegistration = _patientRegistrationsBLL.GetPatientRegistrationByCode(code);
             if (patientRegistration != null)
             {
                 this.GetPatientRegistration(patientRegistration.Id);

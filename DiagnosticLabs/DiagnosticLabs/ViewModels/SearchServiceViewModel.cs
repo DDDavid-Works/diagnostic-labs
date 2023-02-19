@@ -9,16 +9,16 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchServiceViewModel : BaseViewModel
     {
-        ServicesBLL servicesBLL = new ServicesBLL();
+        ServicesBLL _servicesBLL = new ServicesBLL();
 
         #region Public Properties
         public ObservableCollection<Service> Services { get; set; }
 
-        private string _ServiceName;
+        private string _serviceName;
         public string ServiceName
         {
-            get { return _ServiceName; }
-            set { _ServiceName = value; OnPropertyChanged("ServiceName"); SearchServices(false); }
+            get { return _serviceName; }
+            set { _serviceName = value; OnPropertyChanged("ServiceName"); SearchServices(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -38,7 +38,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.ServiceName.Trim() == string.Empty)) return;
 
-            List<Service> services = servicesBLL.GetServices(this.ServiceName);
+            List<Service> services = _servicesBLL.GetServices(this.ServiceName);
             this.Services = new ObservableCollection<Service>(services);
         }
         #endregion

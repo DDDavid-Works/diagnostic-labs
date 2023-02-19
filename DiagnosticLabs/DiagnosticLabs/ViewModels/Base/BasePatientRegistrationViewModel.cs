@@ -11,13 +11,13 @@ namespace DiagnosticLabs.ViewModels.Base
 {
     public class BasePatientRegistrationViewModel : BasePatientViewModel
     {
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-        PatientRegistrationServicesBLL patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
-        PatientsBLL patientsBLL = new PatientsBLL();
-        ServicesBLL servicesBLL = new ServicesBLL();
-        PackagesBLL packagesBLL = new PackagesBLL();
-        PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        PatientRegistrationServicesBLL _patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
+        PatientsBLL _patientsBLL = new PatientsBLL();
+        ServicesBLL _servicesBLL = new ServicesBLL();
+        PackagesBLL _packagesBLL = new PackagesBLL();
+        PackageServicesBLL _packageServicesBLL = new PackageServicesBLL();
 
         bool isLoading = false;
 
@@ -138,24 +138,24 @@ namespace DiagnosticLabs.ViewModels.Base
             if (isInit) return;
 
             long? companyId = this.SelectedCompany?.Id;
-            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(commonFunctions.PatientRegistrationBatchList(companyId));
-            this.Packages = new ObservableCollection<Package>(packagesBLL.GetPackagesByCompanyId(companyId, true));
+            this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(_commonFunctions.PatientRegistrationBatchList(companyId));
+            this.Packages = new ObservableCollection<Package>(_packagesBLL.GetPackagesByCompanyId(companyId, true));
         }
 
         public void LoadPatientRegistration(long id)
         {
             this.isLoading = true;
-            this.PatientRegistration = patientRegistrationsBLL.GetPatientRegistration(id);
+            this.PatientRegistration = _patientRegistrationsBLL.GetPatientRegistration(id);
             this.PatientRegistration.IsPriceEdited = true;
-            this.Patient = patientsBLL.GetPatient((long)PatientRegistration.PatientId);
+            this.Patient = _patientsBLL.GetPatient((long)PatientRegistration.PatientId);
             this.Patient.IsAgeEdited = true;
-            this.PatientRegistrationPayment = patientRegistrationsBLL.GetPatientRegistrationPayment(id);
+            this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment(id);
 
             this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
             this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
             this.SelectedBatchName = this.PatientRegistration.BatchName;
 
-            this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
+            this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(_patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
             this.isLoading = false;
         }
 
@@ -174,14 +174,14 @@ namespace DiagnosticLabs.ViewModels.Base
 
             if (this.SelectedPackage.Id != 0)
             {
-                Package package = packagesBLL.GetPackage(this.SelectedPackage.Id);
+                Package package = _packagesBLL.GetPackage(this.SelectedPackage.Id);
                 this.PatientRegistration.AmountDue = package.Price;
                 this.PatientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", package.Price);
                 this.PatientRegistration.IsPriceEdited = true;
             }
 
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
-            List<PackageService> packageServices = packageServicesBLL.GetPackageServicesByPackageId(this.SelectedPackage.Id);
+            List<PackageService> packageServices = _packageServicesBLL.GetPackageServicesByPackageId(this.SelectedPackage.Id);
             foreach (PackageService packageService in packageServices)
             {
                 PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
@@ -193,7 +193,7 @@ namespace DiagnosticLabs.ViewModels.Base
                         Price = packageService.Price,
                         IsActive = true
                     },
-                    Service = servicesBLL.GetService(packageService.ServiceId)
+                    Service = _servicesBLL.GetService(packageService.ServiceId)
                 };
                 this.PatientRegistrationServices.Add(prsvm);
             }
@@ -208,7 +208,7 @@ namespace DiagnosticLabs.ViewModels.Base
                 packageServicesList.Add(new PatientRegistrationServiceViewModel()
                 {
                     PatientRegistrationService = patientRegistrationService,
-                    Service = servicesBLL.GetService(patientRegistrationService.ServiceId)
+                    Service = _servicesBLL.GetService(patientRegistrationService.ServiceId)
                 });
 
             return new ObservableCollection<PatientRegistrationServiceViewModel>(packageServicesList);
@@ -223,8 +223,8 @@ namespace DiagnosticLabs.ViewModels.Base
 
         public void LoadPatientRegistrationComboBoxes()
         {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true));
-            this.Packages = new ObservableCollection<Package>(commonFunctions.PackagesList(true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true));
+            this.Packages = new ObservableCollection<Package>(_commonFunctions.PackagesList(true));
 
             RefreshComboBoxes();
             RefreshComboBoxesByCompanyId(true);

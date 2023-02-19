@@ -73,7 +73,7 @@ namespace DiagnosticLabsDAL.Models
         }
 
         #region Validation
-        private static readonly string[] PropertiesToValidate = { "FieldValue" };
+        private static readonly string[] _propertiesToValidate = { "FieldValue" };
 
         public string Error
         {
@@ -92,7 +92,7 @@ namespace DiagnosticLabsDAL.Models
                 ErrorMessages = string.Empty;
 
                 bool errorFound = false;
-                foreach (string property in PropertiesToValidate)
+                foreach (string property in _propertiesToValidate)
                     if (GetValidationError(property) != string.Empty)
                         errorFound = true;
 

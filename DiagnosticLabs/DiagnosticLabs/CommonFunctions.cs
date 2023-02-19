@@ -5,7 +5,6 @@ using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,10 +13,10 @@ namespace DiagnosticLabs
 {
     public class CommonFunctions
     {
-        SingleLineEntriesBLL singleLineEntriesBLL = new SingleLineEntriesBLL();
-        CompaniesBLL companiesBLL = new CompaniesBLL();
-        PackagesBLL packagesBLL = new PackagesBLL();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
+        SingleLineEntriesBLL _singleLineEntriesBLL = new SingleLineEntriesBLL();
+        CompaniesBLL _companiesBLL = new CompaniesBLL();
+        PackagesBLL _packagesBLL = new PackagesBLL();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         public string ConfirmDeleteQuestion(string entity)
         {
@@ -37,7 +36,7 @@ namespace DiagnosticLabs
 
         public List<string> GeneralSingleLineEntryList(string fieldName, bool addNewEntryOption = false)
         {
-            List<string> values = singleLineEntriesBLL.GetSingleLineEntries(null, fieldName).Select(s => s.FieldValue).ToList();
+            List<string> values = _singleLineEntriesBLL.GetSingleLineEntries(null, fieldName).Select(s => s.FieldValue).ToList();
 
             if (addNewEntryOption)
                 values.Add(Texts.NewEntry);
@@ -48,7 +47,7 @@ namespace DiagnosticLabs
         public List<Company> CompaniesList(bool includeSystemRecord = false, bool includeAllSelection = false)
         {
             List<Company> companies = new List<Company>();
-            companies = companiesBLL.GetAllCompanies(includeSystemRecord);
+            companies = _companiesBLL.GetAllCompanies(includeSystemRecord);
 
             if (includeAllSelection)
                 companies.Insert(0, new Company() { Id = -1, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
@@ -58,7 +57,7 @@ namespace DiagnosticLabs
 
         public List<Package> PackagesList(bool addNone = false)
         {
-            List<Package> packages = packagesBLL.GetAllPackages();
+            List<Package> packages = _packagesBLL.GetAllPackages();
 
             if (addNone)
                 packages.Insert(0, new Package() { Id = 0, PackageName = "None" });
@@ -68,7 +67,7 @@ namespace DiagnosticLabs
 
         public List<PatientRegistrationBatch> PatientRegistrationBatchList(long? companyId)
         {
-            return patientRegistrationsBLL.GetPatientRegistrationBatches(companyId);
+            return _patientRegistrationsBLL.GetPatientRegistrationBatches(companyId);
         }
 
         public NotificationMessage CustomNotificationMessage(string message, Messages.MessageType messageType, bool isAutoCloseMessage)

@@ -9,8 +9,8 @@ namespace DiagnosticLabs.ViewModels.Base
 {
     public class BasePatientViewModel : BaseViewModel
     {
-        DiagnosticLabsBLL.Services.CommonFunctions bllCommonFunctions = new DiagnosticLabsBLL.Services.CommonFunctions();
-        CommonFunctions commonFunctions = new CommonFunctions();
+        DiagnosticLabsBLL.Services.CommonFunctions _bllCommonFunctions = new DiagnosticLabsBLL.Services.CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
         public Patient Patient { get; set; }
         
@@ -41,7 +41,7 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             if (!this.Patient.IsAgeEdited && dateOfBirth != null)
             {
-                int age = bllCommonFunctions.ComputeAge((DateTime)dateOfBirth);
+                int age = _bllCommonFunctions.ComputeAge((DateTime)dateOfBirth);
                 this.Patient.Age = age.ToString() + " years old";
                 this.Patient.IsAgeEdited = false;
             }
@@ -58,12 +58,12 @@ namespace DiagnosticLabs.ViewModels.Base
             switch (listName)
             {
                 case SingleLineEntries.Gender:
-                    this.Genders = new ObservableCollection<string>(commonFunctions.GeneralSingleLineEntryList(SingleLineEntries.Gender, true));
+                    this.Genders = new ObservableCollection<string>(_commonFunctions.GeneralSingleLineEntryList(SingleLineEntries.Gender, true));
                     if (this.Patient != null && this.Patient.Gender != string.Empty)
                         this.Patient.Gender = this.Genders.First();
                     break;
                 case SingleLineEntries.CivilStatus:
-                    this.CivilStatuses = new ObservableCollection<string>(commonFunctions.GeneralSingleLineEntryList(SingleLineEntries.CivilStatus, true));
+                    this.CivilStatuses = new ObservableCollection<string>(_commonFunctions.GeneralSingleLineEntryList(SingleLineEntries.CivilStatus, true));
                     if (this.Patient != null && this.Patient.CivilStatus != string.Empty)
                         this.Patient.CivilStatus = this.CivilStatuses.First();
                     break;

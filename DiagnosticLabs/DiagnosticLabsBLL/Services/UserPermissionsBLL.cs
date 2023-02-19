@@ -8,28 +8,28 @@ namespace DiagnosticLabsBLL.Services
 {
     public class UserPermissionsBLL
     {
-        private const string LogFileName = "UserPermissionsBLL";
+        private const string _logFileName = "UserPermissionsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public UserPermissionsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public List<UserPermission> GetUserPermissionsByUserId(long userId)
         {
             try
             {
-                List<UserPermission> userPermissions = dbContext.UserPermissions.Where(u => u.UserId == userId).ToList();
+                List<UserPermission> userPermissions = _dbContext.UserPermissions.Where(u => u.UserId == userId).ToList();
 
                 return userPermissions;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -44,14 +44,14 @@ namespace DiagnosticLabsBLL.Services
                     userPermission.CreatedDate = DateTime.Now;
                     userPermission.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     userPermission.UpdatedDate = DateTime.Now;
-                    dbContext.UserPermissions.Add(userPermission);
+                    _dbContext.UserPermissions.Add(userPermission);
                 }
                 else
                 {
                     userPermission.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     userPermission.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = userPermission.Id;
 
@@ -59,7 +59,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -81,7 +81,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

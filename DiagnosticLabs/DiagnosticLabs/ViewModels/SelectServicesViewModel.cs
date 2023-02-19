@@ -11,7 +11,7 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SelectServicesViewModel : BaseViewModel
     {
-        ServicesBLL servicesBLL = new ServicesBLL();
+        ServicesBLL _servicesBLL = new ServicesBLL();
 
         #region Public Properties
         public ObservableCollection<ServiceDetailViewModel> Services { get; set; }
@@ -26,7 +26,7 @@ namespace DiagnosticLabs.ViewModels
         private ObservableCollection<ServiceDetailViewModel> ServiceDetails(List<Service> selectedServices)
         {
             List<ServiceDetailViewModel> serviceDetails = new List<ServiceDetailViewModel>();
-            List<Service> services = servicesBLL.GetAllServices();
+            List<Service> services = _servicesBLL.GetAllServices();
 
             foreach (var service in services)
             {

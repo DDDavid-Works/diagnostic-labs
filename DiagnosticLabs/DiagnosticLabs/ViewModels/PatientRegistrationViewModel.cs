@@ -12,11 +12,11 @@ namespace DiagnosticLabs.ViewModels
 {
     public class PatientRegistrationViewModel : BasePatientRegistrationViewModel
     {
-        private const string EntityName = "Patient Registration";
+        private const string _entityName = "Patient Registration";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
-        PatientsBLL patientsBLL = new PatientsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        PatientsBLL _patientsBLL = new PatientsBLL();
 
         #region Public Properties
         public ICommand NewCommand { get; set; }
@@ -39,8 +39,8 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void NewPatientRegistration()
         {
-            this.PatientRegistration = patientRegistrationsBLL.NewPatientRegistration();
-            this.Patient = patientsBLL.NewPatient();
+            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration();
+            this.Patient = _patientsBLL.NewPatient();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
 
             this.RefreshComboBoxes();
@@ -58,13 +58,13 @@ namespace DiagnosticLabs.ViewModels
                 errorMessages += this.Patient.ErrorMessages;
                 errorMessages += string.Join("", this.PatientRegistrationServices.Where(p => !p.PatientRegistrationService.IsValid).Select(p => p.PatientRegistrationService.ErrorMessages).ToList());
 
-                this.NotificationMessage = commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
+                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
             long id = this.PatientRegistration.Id;
             List<PatientRegistrationService> patientRegistrationServicesList = this.PatientRegistrationServices.Select(p => p.PatientRegistrationService).ToList();
-            if (patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(this.PatientRegistration, this.Patient, patientRegistrationServicesList, ref id))
+            if (_patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(this.PatientRegistration, this.Patient, patientRegistrationServicesList, ref id))
             {
                 this.PatientRegistration.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -81,14 +81,14 @@ namespace DiagnosticLabs.ViewModels
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show(commonFunctions.ConfirmDeleteQuestion(EntityName), EntityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult confirmation = MessageBox.Show(_commonFunctions.ConfirmDeleteQuestion(_entityName), _entityName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (confirmation == MessageBoxResult.No) return;
 
             long id = this.PatientRegistration.Id;
             this.PatientRegistration.IsActive = false;
-            if (patientRegistrationsBLL.SavePatientRegistration(this.PatientRegistration, ref id))
+            if (_patientRegistrationsBLL.SavePatientRegistration(this.PatientRegistration, ref id))
             {
-                this.PatientRegistration = patientRegistrationsBLL.GetLatestPatientRegistration();
+                this.PatientRegistration = _patientRegistrationsBLL.GetLatestPatientRegistration();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
             }
             else

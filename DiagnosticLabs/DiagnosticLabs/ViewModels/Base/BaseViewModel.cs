@@ -9,11 +9,11 @@ namespace DiagnosticLabs.ViewModels.Base
     [AddINotifyPropertyChangedInterface]
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private NotificationMessage _NotificationMessage = Messages.EmptyDefault;
+        private NotificationMessage _notificationMessage = Messages.EmptyDefault;
         public NotificationMessage NotificationMessage
         {
-            get { return _NotificationMessage; }
-            set { _NotificationMessage = value; OnPropertyChanged("NotificationMessage"); }
+            get { return _notificationMessage; }
+            set { _notificationMessage = value; OnPropertyChanged("NotificationMessage"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };

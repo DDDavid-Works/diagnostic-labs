@@ -1,35 +1,33 @@
-﻿using DiagnosticLabsBLL;
-using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class ItemLocationsBLL
     {
-        private const string LogFileName = "ItemLocationsBLL";
+        private const string _logFileName = "ItemLocationsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public ItemLocationsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public ItemLocation GetItemLocation(long id)
         {
             try
             {
-                return dbContext.ItemLocations.Find(id);
+                return _dbContext.ItemLocations.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -38,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.ItemLocations.Where(i => i.IsActive).OrderBy(i => i.Id).LastOrDefault();
+                return _dbContext.ItemLocations.Where(i => i.IsActive).OrderBy(i => i.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -51,11 +49,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.ItemLocations.Where(i => i.IsActive).ToList();
+                return _dbContext.ItemLocations.Where(i => i.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -64,11 +62,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.ItemLocations.Where(i => (name == string.Empty || i.ItemLocationName.ToUpper().Contains(name.ToUpper())) && i.IsActive).ToList();
+                return _dbContext.ItemLocations.Where(i => (name == string.Empty || i.ItemLocationName.ToUpper().Contains(name.ToUpper())) && i.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -83,14 +81,14 @@ namespace DiagnosticLabsBLL.Services
                     itemLocation.CreatedDate = DateTime.Now;
                     itemLocation.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     itemLocation.UpdatedDate = DateTime.Now;
-                    dbContext.ItemLocations.Add(itemLocation);
+                    _dbContext.ItemLocations.Add(itemLocation);
                 }
                 else
                 {
                     itemLocation.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     itemLocation.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = itemLocation.Id;
 
@@ -98,7 +96,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

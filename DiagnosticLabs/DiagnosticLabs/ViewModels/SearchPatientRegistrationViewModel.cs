@@ -12,33 +12,33 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchPatientRegistrationViewModel : BaseViewModel
     {
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         #region Public Properties
         public ObservableCollection<PatientRegistrationDetail> PatientRegistrationDetails { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
 
-        private string _PatientName;
+        private string _patientName;
         public string PatientName
         {
-            get { return _PatientName; }
-            set { _PatientName = value; OnPropertyChanged("PatientName"); SearchPatientRegistrationDetails(false); }
+            get { return _patientName; }
+            set { _patientName = value; OnPropertyChanged("PatientName"); SearchPatientRegistrationDetails(false); }
         }
 
-        private DateTime? _InputDate;
+        private DateTime? _inputDate;
         public DateTime? InputDate
         {
-            get { return _InputDate; }
-            set { _InputDate = value; OnPropertyChanged("InputDate"); }
+            get { return _inputDate; }
+            set { _inputDate = value; OnPropertyChanged("InputDate"); }
         }
         
-        private Company _SelectedCompany;
+        private Company _selectedCompany;
         public Company SelectedCompany
         {
-            get { return _SelectedCompany; }
-            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
+            get { return _selectedCompany; }
+            set { _selectedCompany = value; OnPropertyChanged("SelectedCompany"); }
         }
         
         public ICommand SearchCommand { get; set; }
@@ -46,7 +46,7 @@ namespace DiagnosticLabs.ViewModels
 
         public SearchPatientRegistrationViewModel()
         {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true, true));
             this.SelectedCompany = this.Companies.First();
             this.PatientName = string.Empty;
             this.InputDate = DateTime.Today;
@@ -61,7 +61,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.PatientName.Trim() == string.Empty)) return;
 
-            List<PatientRegistrationDetail> patientRegistrationDetails = patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientName, this.SelectedCompany.Id, this.InputDate);
+            List<PatientRegistrationDetail> patientRegistrationDetails = _patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientName, this.SelectedCompany.Id, this.InputDate);
 
             this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }

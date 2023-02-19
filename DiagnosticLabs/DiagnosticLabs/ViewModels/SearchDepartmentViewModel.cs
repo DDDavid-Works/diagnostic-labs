@@ -9,16 +9,16 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchDepartmentViewModel : BaseViewModel
     {
-        DepartmentsBLL departmentsBLL = new DepartmentsBLL();
+        DepartmentsBLL _departmentsBLL = new DepartmentsBLL();
 
         #region Public Properties
         public ObservableCollection<Department> Departments { get; set; }
 
-        private string _DepartmentName;
+        private string _departmentName;
         public string DepartmentName
         {
-            get { return _DepartmentName; }
-            set { _DepartmentName = value; OnPropertyChanged("DepartmentName"); SearchDepartments(false); }
+            get { return _departmentName; }
+            set { _departmentName = value; OnPropertyChanged("DepartmentName"); SearchDepartments(false); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -38,7 +38,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.DepartmentName.Trim() == string.Empty)) return;
 
-            List<Department> departments = departmentsBLL.GetDepartments(this.DepartmentName);
+            List<Department> departments = _departmentsBLL.GetDepartments(this.DepartmentName);
             this.Departments = new ObservableCollection<Department>(departments);
         }
         #endregion

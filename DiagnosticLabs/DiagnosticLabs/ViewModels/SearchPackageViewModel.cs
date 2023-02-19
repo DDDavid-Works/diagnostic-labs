@@ -10,25 +10,25 @@ namespace DiagnosticLabs.ViewModels
 {
     public class SearchPackageViewModel : BaseViewModel
     {
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PackagesBLL packagesBLL = new PackagesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PackagesBLL _packagesBLL = new PackagesBLL();
 
         #region Public Properties
         public ObservableCollection<Package> Packages { get; set; }
         public ObservableCollection<Company> Companies { get; set; }
 
-        private string _PackageName;
+        private string _packageName;
         public string PackageName
         {
-            get { return _PackageName; }
-            set { _PackageName = value; OnPropertyChanged("PackageName"); SearchPackages(false); }
+            get { return _packageName; }
+            set { _packageName = value; OnPropertyChanged("PackageName"); SearchPackages(false); }
         }
 
-        private Company _SelectedCompany;
+        private Company _selectedCompany;
         public Company SelectedCompany
         {
-            get { return _SelectedCompany; }
-            set { _SelectedCompany = value; OnPropertyChanged("SelectedCompany"); }
+            get { return _selectedCompany; }
+            set { _selectedCompany = value; OnPropertyChanged("SelectedCompany"); }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -36,7 +36,7 @@ namespace DiagnosticLabs.ViewModels
 
         public SearchPackageViewModel()
         {
-            this.Companies = new ObservableCollection<Company>(commonFunctions.CompaniesList(true, true));
+            this.Companies = new ObservableCollection<Company>(_commonFunctions.CompaniesList(true, true));
             this.SelectedCompany = this.Companies.First();
             this.PackageName = string.Empty;
 
@@ -50,7 +50,7 @@ namespace DiagnosticLabs.ViewModels
         {
             if (this.Init || (!isBlankSearch && this.PackageName.Trim() == string.Empty)) return;
 
-            List<Package> packages = packagesBLL.GetPackages(this.PackageName, this.SelectedCompany.Id);
+            List<Package> packages = _packagesBLL.GetPackages(this.PackageName, this.SelectedCompany.Id);
             this.Packages = new ObservableCollection<Package>(packages);
         }
         #endregion

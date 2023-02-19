@@ -9,16 +9,16 @@ namespace DiagnosticLabsBLL.Services
 {
     public class PaymentsBLL
     {
-        private const string LogFileName = "PaymentsBLL";
+        private const string _logFileName = "PaymentsBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PatientRegistrationsBLL patientRegistrationsBLL = new PatientRegistrationsBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PaymentsBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Payment NewPayment()
@@ -37,14 +37,14 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                Payment payment = dbContext.Payments.Find(id);
+                Payment payment = _dbContext.Payments.Find(id);
                 payment.PaymentPaymentAmount = String.Format("{0:N}", payment.PaymentAmount);
 
                 return payment;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -53,13 +53,13 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.PaymentDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
+                return _dbContext.PaymentDetails.Where(p => (patientName != string.Empty ? p.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
                                                            (paymentDate != null ? p.PaymentDate.Date == ((DateTime)paymentDate).Date : true) &&
                                                            (companyId != -1 ? p.CompanyId == companyId : true)).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -76,14 +76,14 @@ namespace DiagnosticLabsBLL.Services
                     payment.CreatedDate = DateTime.Now;
                     payment.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     payment.UpdatedDate = DateTime.Now;
-                    dbContext.Payments.Add(payment);
+                    _dbContext.Payments.Add(payment);
                 }
                 else
                 {
                     payment.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     payment.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = payment.Id;
 
@@ -91,7 +91,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -101,7 +101,7 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 long patientRegistrationId = 0;
-                if (patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(patientRegistration, patient, patientRegistrationServices, ref patientRegistrationId))
+                if (_patientRegistrationsBLL.SavePatientRegistrationWithPatientAndServices(patientRegistration, patient, patientRegistrationServices, ref patientRegistrationId))
                 {
                     payment.PatientRegistrationId = patientRegistrationId;
                     return SavePayment(payment, ref id);
@@ -111,7 +111,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

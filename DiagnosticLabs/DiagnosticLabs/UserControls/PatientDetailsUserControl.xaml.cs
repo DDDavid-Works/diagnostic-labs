@@ -14,7 +14,7 @@ namespace DiagnosticLabs.UserControls
     /// </summary>
     public partial class PatientDetailsUserControl : UserControl
     {
-        PatientsBLL patientsBLL = new PatientsBLL();
+        PatientsBLL _patientsBLL = new PatientsBLL();
 
         public static readonly DependencyProperty ShowSearchButtonProperty =
             DependencyProperty.Register("ShowSearchButton", typeof(bool), typeof(PatientDetailsUserControl), new PropertyMetadata(true, new PropertyChangedCallback(OnShowSearchButtonChanged)));
@@ -111,7 +111,7 @@ namespace DiagnosticLabs.UserControls
 
             if (search.SelectedPatientCompany == null) return;
 
-            ((BasePatientViewModel)DataContext).Patient = patientsBLL.GetPatient(search.SelectedPatientCompany.PatientId);
+            ((BasePatientViewModel)DataContext).Patient = _patientsBLL.GetPatient(search.SelectedPatientCompany.PatientId);
         }
 
         private static void OnShowSearchButtonChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

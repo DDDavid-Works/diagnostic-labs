@@ -3,32 +3,31 @@ using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class ServicesBLL
     {
-        private const string LogFileName = "ServicesBLL";
+        private const string _logFileName = "ServicesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public ServicesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Service GetService(long id)
         {
             try
             {
-                return dbContext.Services.Find(id);
+                return _dbContext.Services.Find(id);
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -37,11 +36,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Services.Where(s => s.IsActive).OrderBy(s => s.Id).LastOrDefault();
+                return _dbContext.Services.Where(s => s.IsActive).OrderBy(s => s.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -50,11 +49,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Services.Where(i => i.IsActive).ToList();
+                return _dbContext.Services.Where(i => i.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -63,11 +62,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Services.Where(s => (name == string.Empty || s.ServiceName.ToUpper().Contains(name.ToUpper())) && s.IsActive).ToList();
+                return _dbContext.Services.Where(s => (name == string.Empty || s.ServiceName.ToUpper().Contains(name.ToUpper())) && s.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -83,14 +82,14 @@ namespace DiagnosticLabsBLL.Services
                     service.CreatedDate = DateTime.Now;
                     service.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     service.UpdatedDate = DateTime.Now;
-                    dbContext.Services.Add(service);
+                    _dbContext.Services.Add(service);
                 }
                 else
                 {
                     service.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     service.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = service.Id;
 
@@ -98,7 +97,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

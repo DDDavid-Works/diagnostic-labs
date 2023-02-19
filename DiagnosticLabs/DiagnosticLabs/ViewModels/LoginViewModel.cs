@@ -10,11 +10,11 @@ namespace DiagnosticLabs.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private const string EntityName = "Login";
+        private const string _entityName = "Login";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        UsersBLL usersBLL = new UsersBLL();
-        CompanySetupBLL companySetupBLL = new CompanySetupBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        UsersBLL _usersBLL = new UsersBLL();
+        CompanySetupBLL _companySetupBLL = new CompanySetupBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
@@ -36,7 +36,7 @@ namespace DiagnosticLabs.ViewModels
 
         public LoginViewModel()
         {
-            this.CompanySetup = companySetupBLL.GetLatestCompanySetup();
+            this.CompanySetup = _companySetupBLL.GetLatestCompanySetup();
             LoadLogo();
 
             this.Username = string.Empty;
@@ -49,7 +49,7 @@ namespace DiagnosticLabs.ViewModels
         private void Login()
         {
             //long userId = 0;
-            //this.IsLoginSuccess = usersBLL.IsLoginSuccess(this.Username, commonFunctions.HashPassword(this.Password), ref userId);
+            //this.IsLoginSuccess = _usersBLL.IsLoginSuccess(this.Username, _commonFunctions.HashPassword(this.Password), ref userId);
             //this.LoggedUserId = userId;
 
             //AUTO LOGIN

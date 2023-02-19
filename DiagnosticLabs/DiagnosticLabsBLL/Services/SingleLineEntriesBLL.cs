@@ -1,33 +1,33 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace DiagnosticLabsBLL.Services
 {
     public class SingleLineEntriesBLL
     {
-        private const string LogFileName = "SingleLineEntriesBLL";
+        private const string _logFileName = "SingleLineEntriesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
+        CommonFunctions _commonFunctions = new CommonFunctions();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public SingleLineEntriesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public List<SingleLineEntry> GetSingleLineEntries(int? moduleId, string fieldName)
         {
             try
             {
-                return dbContext.SingleLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
+                return _dbContext.SingleLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -42,14 +42,14 @@ namespace DiagnosticLabsBLL.Services
                     singleLineEntry.CreatedDate = DateTime.Now;
                     singleLineEntry.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     singleLineEntry.UpdatedDate = DateTime.Now;
-                    dbContext.SingleLineEntries.Add(singleLineEntry);
+                    _dbContext.SingleLineEntries.Add(singleLineEntry);
                 }
                 else
                 {
                     singleLineEntry.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     singleLineEntry.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = singleLineEntry.Id;
 
@@ -57,7 +57,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -92,7 +92,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }

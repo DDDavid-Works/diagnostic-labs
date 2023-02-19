@@ -8,16 +8,16 @@ namespace DiagnosticLabsBLL.Services
 {
     public class PackagesBLL
     {
-        private const string LogFileName = "PackagesBLL";
+        private const string _logFileName = "PackagesBLL";
 
-        CommonFunctions commonFunctions = new CommonFunctions();
-        PackageServicesBLL packageServicesBLL = new PackageServicesBLL();
+        CommonFunctions _commonFunctions = new CommonFunctions();
+        PackageServicesBLL _packageServicesBLL = new PackageServicesBLL();
 
-        private static DatabaseContext dbContext;
+        private static DatabaseContext _dbContext;
 
         public PackagesBLL()
         {
-            dbContext = new DatabaseContext();
+            _dbContext = new DatabaseContext();
         }
 
         public Package NewPackage()
@@ -38,7 +38,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                Package package = dbContext.Packages.Find(id);
+                Package package = _dbContext.Packages.Find(id);
 
                 if (package != null)
                 {
@@ -50,7 +50,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -59,7 +59,7 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                List<Package> packages = dbContext.Packages.Where(p => p.CompanyId == companyId && p.IsActive).ToList();
+                List<Package> packages = _dbContext.Packages.Where(p => p.CompanyId == companyId && p.IsActive).ToList();
 
                 if (addNone)
                     packages.Insert(0, new Package() { Id = 0, PackageName = "None" });
@@ -68,7 +68,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -77,11 +77,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Packages.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
+                return _dbContext.Packages.Where(p => p.IsActive).OrderBy(p => p.Id).LastOrDefault();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -90,11 +90,11 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Packages.Where(p => p.IsActive).ToList();
+                return _dbContext.Packages.Where(p => p.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -103,13 +103,13 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return dbContext.Packages.Where(p => (name == string.Empty || p.PackageName.ToUpper().Contains(name.ToUpper())) &&
+                return _dbContext.Packages.Where(p => (name == string.Empty || p.PackageName.ToUpper().Contains(name.ToUpper())) &&
                                                      (companyId == -1 || p.CompanyId == companyId) &&
                                                      p.IsActive).ToList();
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return null;
             }
         }
@@ -125,14 +125,14 @@ namespace DiagnosticLabsBLL.Services
                     package.CreatedDate = DateTime.Now;
                     package.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     package.UpdatedDate = DateTime.Now;
-                    dbContext.Packages.Add(package);
+                    _dbContext.Packages.Add(package);
                 }
                 else
                 {
                     package.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
                     package.UpdatedDate = DateTime.Now;
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 id = package.Id;
 
@@ -140,7 +140,7 @@ namespace DiagnosticLabsBLL.Services
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
@@ -150,13 +150,13 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 if (SavePackage(service, ref id))
-                    return packageServicesBLL.SavePackageServiceList(packageServices, id);
+                    return _packageServicesBLL.SavePackageServiceList(packageServices, id);
                 else
                     return false;
             }
             catch (Exception ex)
             {
-                commonFunctions.LogException(LogFileName, ex);
+                _commonFunctions.LogException(_logFileName, ex);
                 return false;
             }
         }
