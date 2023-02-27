@@ -1,4 +1,5 @@
-﻿using DiagnosticLabs.ManagementWindows;
+﻿using DiagnosticLabs.LabResultsWindows;
+using DiagnosticLabs.ManagementWindows;
 using DiagnosticLabs.RegistrationWindows;
 using DiagnosticLabs.SalesWindows;
 using DiagnosticLabs.SettingsWindows;
@@ -32,6 +33,7 @@ namespace DiagnosticLabs
         ItemLocationsWindow _itemLocationsWindow = null;
         CompaniesWindow _companiesWindow = null;
         PackagesWindow _packagesWindow = null;
+        StoolFecalysisWindow _stoolFecalysisWindow = null;
 
         public MainWindow(long userId)
         {
@@ -54,6 +56,7 @@ namespace DiagnosticLabs
         {
             switch (menuItem.Module.ModuleName)
             {
+                #region Registration
                 case Modules.PatientRegistrations:
                     if (_patientRegistrationsWindow == null)
                     {
@@ -74,6 +77,18 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _patientsWindow.Activate();
+                case Modules.Companies:
+                    if (_companiesWindow == null)
+                    {
+                        _companiesWindow = LoadWindow<CompaniesWindow>();
+                        SetActionToolbarUserControl(_companiesWindow.ActionToolbar, menuItem);
+                        _companiesWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _companiesWindow.Show();
+                    }
+                    else
+                        return () => _companiesWindow.Activate();
+                #endregion
+                #region Sales
                 case Modules.Payments:
                     if (_paymentsWindow == null)
                     {
@@ -84,6 +99,8 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _paymentsWindow.Activate();
+                #endregion
+                #region Settings
                 case Modules.CompanySetup:
                     if (_companySetupWindow == null)
                     {
@@ -114,6 +131,8 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _changePasswordWindow.Activate();
+                #endregion
+                #region Management
                 case Modules.Departments:
                     if (_departmentsWindow == null)
                     {
@@ -154,16 +173,6 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _itemLocationsWindow.Activate();
-                case Modules.Companies:
-                    if (_companiesWindow == null)
-                    {
-                        _companiesWindow = LoadWindow<CompaniesWindow>();
-                        SetActionToolbarUserControl(_companiesWindow.ActionToolbar, menuItem);
-                        _companiesWindow.Closed += new EventHandler(ClearWindow);
-                        return () => _companiesWindow.Show();
-                    }
-                    else
-                        return () => _companiesWindow.Activate();
                 case Modules.Packages:
                     if (_packagesWindow == null)
                     {
@@ -174,6 +183,19 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _packagesWindow.Activate();
+                #endregion
+                #region Lab Results
+                case Modules.StoolFecalysis:
+                    if (_stoolFecalysisWindow == null)
+                    {
+                        _stoolFecalysisWindow = LoadWindow<StoolFecalysisWindow>();
+                        SetActionToolbarUserControl(_stoolFecalysisWindow.ActionToolbar, menuItem);
+                        _stoolFecalysisWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _stoolFecalysisWindow.Show();
+                    }
+                    else
+                        return () => _stoolFecalysisWindow.Activate();
+                #endregion
                 default:
                     return null;
             }
@@ -223,6 +245,8 @@ namespace DiagnosticLabs
                 _companiesWindow = null;
             else if (sender.GetType() == typeof(PackagesWindow))
                 _packagesWindow = null;
+            else if (sender.GetType() == typeof(StoolFecalysisWindow))
+                _stoolFecalysisWindow = null;
         }
         #endregion Private Methods
 

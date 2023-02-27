@@ -1,0 +1,93 @@
+﻿<Window x:Class="DiagnosticLabs.SearchWindows.SelectMultiLineEntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiagnosticLabs.SearchWindows"
+        xmlns:okc="clr-namespace:DiagnosticLabs.UserControls"
+        xmlns:menu="clr-namespace:DiagnosticLabs.UserControls"
+        mc:Ignorable="d"
+        Title="Entry Builder" Width="800" ShowInTaskbar="False"
+        SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Background="#dfecdf">
+    <StackPanel Orientation="Vertical">
+        <menu:MessagesUserControl></menu:MessagesUserControl>
+        <Grid Margin="5" VerticalAlignment="Top">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="ModuleNameLabel" Content="Module:" Grid.Row="0" Grid.Column="0"></Label>
+            <Label Name="FieldNameLabel" Content="Field Name:" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Name="ModuleNameValueLabel" Content="{Binding Module.ModuleName}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold"></Label>
+            <Label Name="FieldNameValueLabel" Content="{Binding FieldName}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold"></Label>
+            <Border BorderThickness="0,0,0,1" BorderBrush="Black" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+            <Label Name="EntryNamesLabel" Content="Entry Names:" Grid.Row="2" Grid.Column="0" Margin="0,5,0,0"></Label>
+            <Button Name="EditMultiLineEntriesButton" Grid.Row="2" Grid.Column="1" Width="18" Height="18" Margin="0,2,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Click="EditMultiLineEntriesButton_Click">
+                <StackPanel>
+                    <Image Source="/Images/16x16/edit.png" />
+                </StackPanel>
+            </Button>
+            <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="218" Margin="0,0,0,5" Padding="0,5,0,0">
+                <ItemsControl Name="Entries" ItemsSource="{Binding MultiLineEntries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0">
+                                <Grid.Resources>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        <Setter Property="Height" Value="20" />
+                                        <Setter Property="Margin" Value="20,2,5,5" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                        <Setter Property="FontSize" Value="12" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Background" Value="#ffbd80"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBox Name="FieldValueTitleTextBox" Grid.Row="0" Grid.Column="0" Text="{Binding FieldValueTitle}" IsReadOnly="True" GotFocus="FieldValueTitleTextBox_GotFocus" MouseDoubleClick="FieldValueTitleTextBox_MouseDoubleClick"></TextBox>
+                                <Button Name="EditFieldValueButton" Visibility="Collapsed" CommandParameter="{Binding}" Click="EditFieldValueButton_Click"></Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <TextBox Name="SelectedFieldValueTextBox" Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" Height="224" TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"
+                     Text="{Binding SelectedMultiLineEntry.FieldValue}"></TextBox>
+            <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="1" />
+            <okc:OkCancelUserControl Grid.Row="4" Grid.Column="2" OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></okc:OkCancelUserControl>
+        </Grid>
+    </StackPanel>
+</Window>

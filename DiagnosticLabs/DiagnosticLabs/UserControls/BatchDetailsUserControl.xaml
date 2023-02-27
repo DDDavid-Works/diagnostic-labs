@@ -9,9 +9,9 @@
         <Grid.Resources>
             <Style TargetType="ComboBox">
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="Height" Value="24" />
-                <Setter Property="Margin" Value="0,0,0,5" />
-                <Setter Property="Padding" Value="5,0,0,0" />
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Margin" Value="0,0,-1,5" />
+                <Setter Property="Padding" Value="2,0,0,0" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
@@ -19,11 +19,11 @@
         <Grid.RowDefinitions />
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="22" />
         </Grid.ColumnDefinitions>
         <ComboBox Name="PackagesComboBox" Grid.Row="0" Grid.Column="0" DisplayMemberPath="BatchName" IsEditable="True" IsTextSearchEnabled="True"
                   ItemsSource="{Binding PatientRegistrationBatches}" Text="{Binding SelectedBatchName}" />
-        <Button Name="SearchBatchButton" Grid.Row="0" Grid.Column="1" Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,5" Background="#d0e2d0"
+        <Button Name="SearchBatchButton" Grid.Row="0" Grid.Column="1" Height="22" Width="22" HorizontalAlignment="Right" Margin="0,0,0,5" Background="#d0e2d0"
                 Click="SearchBatchButton_Click">
             <StackPanel>
                 <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>

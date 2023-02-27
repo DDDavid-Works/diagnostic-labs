@@ -35,7 +35,6 @@ namespace DiagnosticLabs.ViewModels
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
-        public ICommand GetPatientRegistrationCommand { get; set; }
         public ICommand GetPatientRegistrationByCodeCommand { get; set; }
         public ICommand UpdateIsPriceEditedAndAmountDueCommand { get; set; }
         public ICommand ComputeTotalsCommand { get; set; }
@@ -64,13 +63,16 @@ namespace DiagnosticLabs.ViewModels
             this.GetPatientRegistrationByCodeCommand = new RelayCommand(param => GetPatientRegistrationByCode((string)param));
             this.UpdateIsPriceEditedAndAmountDueCommand = new RelayCommand(param => UpdateIsPriceEditedAndAmountDue((bool)param));
             this.ComputeTotalsCommand = new RelayCommand(param => ComputeTotals((string)param));
+                  
+            this.ShowSearchPatientButton = true;
         }
 
         #region Data Actions
         private void NewPayment()
         {
             this.Payment = _paymentsBLL.NewPayment();
-            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration();
+            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration(true);
+            this.PatientRegistrationPayment = _patientRegistrationsBLL.NewPatientRegistrationPayment();
             this.Patient = _patientsBLL.NewPatient();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
             this.IsPatientRegistrationCodeReadOnly = false;
@@ -122,12 +124,14 @@ namespace DiagnosticLabs.ViewModels
                 this.NotificationMessage = Messages.DeleteFailed;
         }
 
-        private void GetPatientRegistration(long patientRegistrationId)
+        public override void GetPatientRegistration(long patientRegistrationId)
         {
-            if (patientRegistrationId == 0) return;
+            base.GetPatientRegistration(patientRegistrationId);
 
-            this.LoadPatientRegistration(patientRegistrationId);
-            this.Payment.PaymentPaymentBalance = String.Format("{0:N}", this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid);
+            if (this.PatientRegistrationPayment != null)
+                this.Payment.PaymentPaymentBalance = String.Format("{0:N}", this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid);
+            else
+                this.Payment.PaymentPaymentBalance = "0.00";
         }
 
         private void GetPatientRegistrationByCode(string code)

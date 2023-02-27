@@ -13,7 +13,8 @@ namespace DiagnosticLabs.ViewModels.Base
         CommonFunctions _commonFunctions = new CommonFunctions();
 
         public Patient Patient { get; set; }
-        
+        public bool ShowSearchPatientButton { get; set; }
+
         public ICommand UpdateAgeByDateOfBirthCommand { get; set; }
         public ICommand UpdateIsAgeEditedCommand { get; set; }
         public ICommand RefreshSingleLineEntryListCommand { get; set; }
@@ -26,8 +27,8 @@ namespace DiagnosticLabs.ViewModels.Base
             LoadAllSingleLineEntryLists();
 
             this.UpdateAgeByDateOfBirthCommand = new RelayCommand(param => UpdateAgeByDateOfBirth((DateTime?)param));
-            this.UpdateIsAgeEditedCommand = new RelayCommand(param => UpdateIsAgeEdited());
             this.RefreshSingleLineEntryListCommand = new RelayCommand(param => RefreshSingleLineEntryList((string)param));
+            this.UpdateIsAgeEditedCommand = new RelayCommand(param => UpdateIsAgeEdited());
         }
 
         #region Private Methods

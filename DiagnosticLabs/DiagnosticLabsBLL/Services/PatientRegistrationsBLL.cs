@@ -23,19 +23,19 @@ namespace DiagnosticLabsBLL.Services
             _dbContext = new DatabaseContext();
         }
 
-        public PatientRegistration NewPatientRegistration()
+        public PatientRegistration NewPatientRegistration(bool generateInitValues)
         {
             return new PatientRegistration()
             {
                 Id = 0,
-                RegistrationCode = NewRegistrationCode(),
+                RegistrationCode = generateInitValues ? NewRegistrationCode() : string.Empty,
                 PatientId = null,
                 CompanyId = null,
                 PackageId = null,
                 BatchName = string.Empty,
                 AmountDue = 0,
                 IsActive = true,
-                PatientRegistrationAmountDue = "0.00",
+                PatientRegistrationAmountDue = generateInitValues ? "0.00" : string.Empty,
                 InputDate = DateTime.Now,
                 IsPriceEdited = false
             };
@@ -121,6 +121,20 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public PatientRegistrationPayment NewPatientRegistrationPayment()
+        {
+            return new PatientRegistrationPayment()
+            {
+                PatientRegistrationId = 0,
+                AmountDue = 0,
+                AmountPaid = 0,
+                Balance = 0,
+                PatientRegistrationPaymentAmountDue = "0.00",
+                PatientRegistrationPaymentAmountPaid = "0.00",
+                PatientRegistrationPaymentBalance = "0.00"
+            };
+        }
+
         public PatientRegistrationPayment GetPatientRegistrationPayment(long? patientRegistrationId)
         {
             try
@@ -184,6 +198,29 @@ namespace DiagnosticLabsBLL.Services
                     patientRegistration.PatientId = patientId;
                     if (SavePatientRegistration(patientRegistration, ref id))
                         return _patientRegistrationServicesBLL.SavePatientRegistrationServiceList(patientRegistrationServices, id);
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return false;
+            }
+        }
+
+        public bool SavePatientRegistrationWithPatient(PatientRegistration patientRegistration, Patient patient, ref long id)
+        {
+            try
+            {
+                long patientId = 0;
+                if (_patientsBLL.SavePatient(patient, ref patientId))
+                {
+                    patientRegistration.PatientId = patientId;
+                    if (SavePatientRegistration(patientRegistration, ref id))
+                        return true;
                     else
                         return false;
                 }

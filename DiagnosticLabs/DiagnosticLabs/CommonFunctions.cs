@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabs.Constants;
 using DiagnosticLabs.Models;
+using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
@@ -18,6 +19,7 @@ namespace DiagnosticLabs
         PackagesBLL _packagesBLL = new PackagesBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
+        #region Common
         public string ConfirmDeleteQuestion(string entity)
         {
             return $"Are you sure you want to delete this {entity.ToLower()}?";
@@ -79,5 +81,35 @@ namespace DiagnosticLabs
                 IsAutoCloseMessage = isAutoCloseMessage
             };
         }
+
+        public int? GetModuleId(string moduleName)
+        {
+            return Globals.MODULES.Where(m => m.ModuleName == moduleName).Select(m => m.Id).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region Lab Results
+        public List<string> LabResultsGeneralSingleLineEntryList(string fieldName, bool addNewEntryOption = false)
+        {
+            List<string> values = _singleLineEntriesBLL.GetSingleLineEntries(null, fieldName).Select(s => s.FieldValue).ToList();
+
+            if (addNewEntryOption)
+                values.Add(Texts.NewEntry);
+
+            return values;
+        }
+
+        public List<string> LabResultsSingleLineEntryList(string fieldName, int? moduleId, bool addNewEntryOption = false)
+        {
+            List<string> values = _singleLineEntriesBLL.GetSingleLineEntries(moduleId, fieldName).Select(s => s.FieldValue).ToList();
+
+            if (addNewEntryOption)
+                values.Add(Texts.NewEntry);
+
+            return values;
+        }
+
+        #endregion
     }
 }

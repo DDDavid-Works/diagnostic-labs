@@ -1,9 +1,7 @@
 ﻿using DiagnosticLabs.Constants;
 using DiagnosticLabs.EntryBuilderWindows;
-using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabs.ViewModels.Base;
-using DiagnosticLabsBLL.Services;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,8 +12,6 @@ namespace DiagnosticLabs.UserControls
     /// </summary>
     public partial class PatientDetailsUserControl : UserControl
     {
-        PatientsBLL _patientsBLL = new PatientsBLL();
-
         public static readonly DependencyProperty ShowSearchButtonProperty =
             DependencyProperty.Register("ShowSearchButton", typeof(bool), typeof(PatientDetailsUserControl), new PropertyMetadata(true, new PropertyChangedCallback(OnShowSearchButtonChanged)));
 
@@ -104,34 +100,10 @@ namespace DiagnosticLabs.UserControls
             }
         }
 
-        private void SearchPatientsButton_Click(object sender, RoutedEventArgs e)
-        {
-            SearchPatientsWindow search = new SearchPatientsWindow();
-            search.ShowDialog();
-
-            if (search.SelectedPatientCompany == null) return;
-
-            ((BasePatientViewModel)DataContext).Patient = _patientsBLL.GetPatient(search.SelectedPatientCompany.PatientId);
-        }
-
         private static void OnShowSearchButtonChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PatientDetailsUserControl patientDetailsUserControl = d as PatientDetailsUserControl;
-            patientDetailsUserControl.OnShowSearchButtonChanged(e);
-        }
-
-        private void OnShowSearchButtonChanged(DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue.ToString().ToLower() == "true")
-            {
-                PatientNameTextBox.SetValue(Grid.ColumnSpanProperty, 3);
-                SearchPatientsButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                PatientNameTextBox.SetValue(Grid.ColumnSpanProperty, 4);
-                SearchPatientsButton.Visibility = Visibility.Collapsed;
-            }
+            //PatientDetailsUserControl patientDetailsUserControl = d as PatientDetailsUserControl;
+            //patientDetailsUserControl.ShowSearchButton = e.ToString();
         }
     }
 }

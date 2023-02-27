@@ -6,16 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class Patient : BaseModel, IDataErrorInfo
+    public class MultiLineEntry : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private string il_PatientName;
-        private DateTime? il_DateOfBirth;
-        private string il_Age;
-        private string il_Gender;
-        private string il_CivilStatus;
-        private string il_ContactNumbers;
-        private string il_Address;
+        private int? il_ModuleId;
+        private string il_FieldName;
+        private string il_FieldValueTitle;
+        private string il_FieldValue;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -29,46 +26,28 @@ namespace DiagnosticLabsDAL.Models
             set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public string PatientName
+        public int? ModuleId
         {
-            get { return il_PatientName; }
-            set { il_PatientName = value; OnPropertyChanged("PatientName"); }
+            get { return il_ModuleId; }
+            set { il_ModuleId = value; OnPropertyChanged("ModuleId"); }
         }
 
-        public DateTime? DateOfBirth
+        public string FieldName
         {
-            get { return il_DateOfBirth; }
-            set { il_DateOfBirth = value; OnPropertyChanged("DateOfBirth"); }
+            get { return il_FieldName; }
+            set { il_FieldName = value; OnPropertyChanged("FieldName"); }
         }
 
-        public string Age
+        public string FieldValueTitle
         {
-            get { return il_Age; }
-            set { il_Age = value; OnPropertyChanged("Age"); }
+            get { return il_FieldValueTitle; }
+            set { il_FieldValueTitle = value; OnPropertyChanged("FieldValueTitle"); }
         }
 
-        public string Gender
+        public string FieldValue
         {
-            get { return il_Gender; }
-            set { il_Gender = value; OnPropertyChanged("Gender"); }
-        }
-
-        public string CivilStatus
-        {
-            get { return il_CivilStatus; }
-            set { il_CivilStatus = value; OnPropertyChanged("CivilStatus"); }
-        }
-
-        public string Address
-        {
-            get { return il_Address; }
-            set { il_Address = value; OnPropertyChanged("Address"); }
-        }
-
-        public string ContactNumbers
-        {
-            get { return il_ContactNumbers; }
-            set { il_ContactNumbers = value; OnPropertyChanged("ContactNumbers"); }
+            get { return il_FieldValue; }
+            set { il_FieldValue = value; OnPropertyChanged("FieldValue"); }
         }
 
         public bool IsActive
@@ -102,13 +81,10 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
-        public string PatientCode { get; set; } = string.Empty;
-
-        [NotMapped]
-        public bool IsAgeEdited { get; set; } = false;
+        public bool IsSelected { get; set; } = false;
 
         #region Validation
-        private static readonly string[] _propertiesToValidate = { "PatientName" };
+        private static readonly string[] _propertiesToValidate = { "FieldValueTitle" ,"FieldValue" };
 
         public string Error
         {
@@ -138,8 +114,10 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "PatientName" && this.PatientName.Trim() == string.Empty)
-                result = "Name can not be empty.";
+            if (columnName == "FieldValueTitle" && this.FieldValueTitle.Trim() == string.Empty)
+                result = "Entry Name can not be empty.";
+            else if (columnName == "FieldValue" && this.FieldValue.Trim() == string.Empty)
+                result = "Entry Value can not be empty.";
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

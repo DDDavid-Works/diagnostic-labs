@@ -32,6 +32,8 @@ namespace DiagnosticLabs.ViewModels
             this.NewCommand = new RelayCommand(param => NewPatient());
             this.SaveCommand = new RelayCommand(param => SavePatient());
             this.DeleteCommand = new RelayCommand(param => DeletePatient());
+
+            this.ShowSearchPatientButton = false;
         }
 
         #region Data Actions

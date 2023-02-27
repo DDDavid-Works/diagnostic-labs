@@ -97,6 +97,9 @@
     <Build Include="Views\PaymentDetails.sql" />
     <Build Include="Views\LatestCodeNumbers.sql" />
     <Build Include="Views\PatientRegistrationPayments.sql" />
+    <Build Include="Tables\StoolFecalyses.sql" />
+    <Build Include="Views\LabResults.sql" />
+    <Build Include="Tables\MultiLineEntries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagnosticLabsDatabase.publish.xml" />

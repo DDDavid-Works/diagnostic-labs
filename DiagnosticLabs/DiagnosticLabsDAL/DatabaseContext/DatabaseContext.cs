@@ -21,6 +21,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleType> ModuleTypes { get; set; }
         public DbSet<SingleLineEntry> SingleLineEntries { get; set; }
+        public DbSet<MultiLineEntry> MultiLineEntries{ get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<PatientRegistration> PatientRegistrations { get; set; }
         public DbSet<PatientRegistrationService> PatientRegistrationServices { get; set; }
@@ -34,6 +35,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<PackageService> PackageServices { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanySetup> CompanySetups { get; set; }
+        public DbSet<StoolFecalysis> StoolFecalyses { get; set; }
 
         //VIEWS
         public DbSet<PatientCompany> PatientCompanies { get; set; }
@@ -42,6 +44,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<PatientRegistrationPayment> PatientRegistrationPayments { get; set; }
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<LatestCodeNumber> LatestCodeNumbers { get; set; }
+        public DbSet<LabResult> LabResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -85,21 +85,6 @@ namespace DiagnosticLabs.SalesWindows
             }
         }
 
-        private void SearchPatientRegistrationButton_Click(object sender, RoutedEventArgs e)
-        {
-            SearchPatientRegistrationsWindow search = new SearchPatientRegistrationsWindow();
-            search.ShowDialog();
-
-            if (search.SelectedPatientRegistrationDetail == null) return;
-
-            var vm = (PaymentViewModel)DataContext;
-            if (vm.GetPatientRegistrationCommand.CanExecute(null))
-            {
-                long patientRegistrationId = search.SelectedPatientRegistrationDetail.PatientRegistrationId;
-                vm.GetPatientRegistrationCommand.Execute(patientRegistrationId);
-            }
-        }
-
         private void PatientRegistrationAmountDueTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var vm = (PaymentViewModel)DataContext;
@@ -114,14 +99,6 @@ namespace DiagnosticLabs.SalesWindows
                     vm.UpdateIsPriceEditedAndAmountDueCommand.Execute(isValueChanged);
                 }
             }
-        }
-
-        private void RegistrationCodeTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var vm = (PaymentViewModel)DataContext;
-
-            if (vm.GetPatientRegistrationByCodeCommand.CanExecute(null))
-                vm.GetPatientRegistrationByCodeCommand.Execute(((TextBox)sender).Text);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

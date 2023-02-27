@@ -24,7 +24,6 @@ namespace DiagnosticLabs.ViewModels.Base
         #region Public Properties
         public PatientRegistration PatientRegistration { get; set; }
         public PatientRegistrationPayment PatientRegistrationPayment { get; set; }
-        public ObservableCollection<PatientRegistrationServiceViewModel> PatientRegistrationServices { get; set; }
 
         public ICommand AddPatientRegistrationServiceCommand { get; set; }
         public ICommand RemovePatientRegistrationServiceCommand { get; set; }
@@ -32,11 +31,13 @@ namespace DiagnosticLabs.ViewModels.Base
         public ICommand UpdateAllPatientRegistrationServicesCommand { get; set; }
         public ICommand UpdateIsPriceEditedCommand { get; set; }
         public ICommand RefreshPatientRegistrationBatchCommand { get; set; }
+        public ICommand GetPatientRegistrationCommand { get; set; }
         public ICommand LoadPatientRegistrationCommand { get; set; }
 
         public ObservableCollection<Company> Companies { get; set; }
         public ObservableCollection<Package> Packages { get; set; }
         public ObservableCollection<PatientRegistrationBatch> PatientRegistrationBatches { get; set; }
+        public ObservableCollection<PatientRegistrationServiceViewModel> PatientRegistrationServices { get; set; }
 
         private Company _SelectedCompany;
         public Company SelectedCompany
@@ -67,7 +68,7 @@ namespace DiagnosticLabs.ViewModels.Base
 
         public BasePatientRegistrationViewModel()
         {
-            LoadPatientRegistrationComboBoxes();
+            this.LoadPatientRegistrationComboBoxes();
 
             this.AddPatientRegistrationServiceCommand = new RelayCommand(param => AddPatientRegistrationService((PatientRegistrationServiceViewModel)param));
             this.RemovePatientRegistrationServiceCommand = new RelayCommand(param => RemovePatientRegistrationService((PatientRegistrationServiceViewModel)param));
@@ -75,6 +76,7 @@ namespace DiagnosticLabs.ViewModels.Base
             this.UpdateAllPatientRegistrationServicesCommand = new RelayCommand(param => UpdateAllPatientRegistrationService((List<PatientRegistrationServiceViewModel>)param));
             this.UpdateIsPriceEditedCommand = new RelayCommand(param => UpdateIsPriceEdited((bool)param));
             this.RefreshPatientRegistrationBatchCommand = new RelayCommand(param => RefreshComboBoxesByCompanyId(false));
+            this.GetPatientRegistrationCommand = new RelayCommand(param => GetPatientRegistration((long)param));
             this.LoadPatientRegistrationCommand = new RelayCommand(param => LoadPatientRegistration((long)param));
         }
 
@@ -86,7 +88,7 @@ namespace DiagnosticLabs.ViewModels.Base
             else
                 this.PatientRegistration.PackageId = this.SelectedPackage.Id;
 
-            this.PatientRegistration.CompanyId = this.SelectedCompany.Id;
+            this.PatientRegistration.CompanyId = this.SelectedCompany?.Id;
             this.PatientRegistration.BatchName = this.SelectedBatchName == null ? string.Empty : this.SelectedBatchName;
         }
 
@@ -140,6 +142,13 @@ namespace DiagnosticLabs.ViewModels.Base
             long? companyId = this.SelectedCompany?.Id;
             this.PatientRegistrationBatches = new ObservableCollection<PatientRegistrationBatch>(_commonFunctions.PatientRegistrationBatchList(companyId));
             this.Packages = new ObservableCollection<Package>(_packagesBLL.GetPackagesByCompanyId(companyId, true));
+        }
+
+        public virtual void GetPatientRegistration(long patientRegistrationId)
+        {
+            if (patientRegistrationId == 0) return;
+
+            this.LoadPatientRegistration(patientRegistrationId);
         }
 
         public void LoadPatientRegistration(long id)

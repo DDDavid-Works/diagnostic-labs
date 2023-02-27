@@ -63,7 +63,7 @@
 
             <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="Black" />
         </Grid>
-        <menu:PatientDetailsUserControl ShowSearchButton="True"></menu:PatientDetailsUserControl>
+        <menu:PatientDetailsUserControl ShowSearchButton="{Binding ShowSearchPatientButton}"></menu:PatientDetailsUserControl>
         <Grid Margin="10,0,10,10" VerticalAlignment="Top">
             <Grid.Resources>
                 <Style TargetType="Label">

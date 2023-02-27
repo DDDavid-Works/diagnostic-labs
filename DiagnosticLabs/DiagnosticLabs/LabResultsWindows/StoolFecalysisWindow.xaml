@@ -1,0 +1,247 @@
+﻿<Window x:Class="DiagnosticLabs.LabResultsWindows.StoolFecalysisWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiagnosticLabs.LabResultsWindows"
+        xmlns:menu="clr-namespace:DiagnosticLabs.UserControls"
+        mc:Ignorable="d"
+        Title="Stool/Fecalysis" Width="750" ShowInTaskbar="False"
+        SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf">
+    <StackPanel Orientation="Vertical">
+        <menu:MessagesUserControl></menu:MessagesUserControl>
+        <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
+                                       SearchCommand="ActionToolbar_SearchCommand"></menu:ActionToolbarUserControl>
+        <Grid Margin="10" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Background="#efffef">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Margin" Value="5,5,0,5" />
+                        <Setter Property="Padding" Value="0,2,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Margin" Value="0,5,5,5" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="DatePicker">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="22" />
+                        <Setter Property="Margin" Value="0,5,5,5" />
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" />
+                <Label Name="PatientRegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
+                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0"></menu:PatientRegistrationSearchByCodeUserControl>
+                <Label Name="InputRegDateLabel" Content="Registration Date:" Grid.Row="1" Grid.Column="0"></Label>
+                <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}" IsEnabled="False"></DatePicker>
+                <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="0" Grid.Column="3"></Label>
+                <TextBox Name="CompanyNameTextBox" Grid.Row="0" Grid.Column="4" Text="{Binding SelectedCompany.CompanyName}" IsReadOnly="True"></TextBox>
+                <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="1" Grid.Column="3"></Label>
+                <TextBox Name="BatchNameTextBox" Grid.Row="1" Grid.Column="4" Text="{Binding SelectedBatchName}" IsReadOnly="True"></TextBox>
+            </Grid>
+            <Label Name="StoolFecalysisLabel" Content="STOOL/FECALYSIS" Grid.Row="1" Grid.Column="0" FontSize="16" Margin="0,22,0,0"
+                   FontWeight="SemiBold" Padding="0,5,5,5" BorderThickness="0,0,0,2" BorderBrush="Black" VerticalAlignment="Top"></Label>
+
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Border BorderThickness="2" BorderBrush="Black" Margin="0" Height="120" Width="120" Padding="2">
+                    <Image Name="Photo" Source="{Binding LogoImageSource}"></Image>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="10,10,10,0" VerticalAlignment="Top">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Padding" Value="2,0,0,0" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="PatientCodeLabel" Content="Patient Code:" Grid.Row="0" Grid.Column="0"></Label>
+            <menu:PatientSearchByCodeUserControl Grid.Row="0" Grid.Column="1"></menu:PatientSearchByCodeUserControl>
+            <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="1" Grid.Column="0"></Label>
+            <menu:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1"></menu:PatientSearchByNameUserControl>
+            <Label Name="CompanyOrPhysicianLabel" Content="Company/Physician:" Grid.Row="2" Grid.Column="0"></Label>
+            <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" Text="" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" SelectedValue="{Binding StoolFecalysis.CompanyOrPhysician}"></ComboBox>
+            <Label Name="AgeLabel" Content="Age:" Grid.Row="0" Grid.Column="3"></Label>
+            <TextBox Name="AgeTextBox" Grid.Row="0" Grid.Column="4" Text="{Binding Patient.Age}"></TextBox>
+            <Label Name="SexLabel" Content="Sex:" Grid.Row="0" Grid.Column="6"></Label>
+            <ComboBox Name="SexTextBox" Grid.Row="0" Grid.Column="7" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}"></ComboBox>
+            <Label Name="DateRequestedLabel" Content="Date Requested:" Grid.Row="1" Grid.Column="3"></Label>
+            <DatePicker Name="DateRequestedTextBox" Grid.Row="1" Grid.Column="4" SelectedDate="{Binding StoolFecalysis.DateRequested}"></DatePicker>
+        </Grid>
+        <Grid Margin="10,10,10,0" VerticalAlignment="Top">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="5,5,5,5" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Padding" Value="2,0,0,0" />
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="Height" Value="18" />
+                    <Setter Property="Width" Value="18" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="5" />
+            <Border BorderThickness="1" Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="5" />
+
+            <Label Name="ColorLabel" Content="Color:" Grid.Row="0" Grid.Column="0"></Label>
+            <ComboBox Name="ColorComboBox" Grid.Row="0" Grid.Column="1" IsEditable="True" IsTextSearchEnabled="True"
+                      ItemsSource="{Binding Colors}" SelectedValue="{Binding StoolFecalysis.Color}" SelectionChanged="ColorComboBox_SelectionChanged"></ComboBox>
+            <Label Name="ConsistencyLabel" Content="Consistency:" Grid.Row="0" Grid.Column="3"></Label>
+            <ComboBox Name="ConsistencyComboBox" Grid.Row="0" Grid.Column="4" IsEditable="True" IsTextSearchEnabled="True"
+                      ItemsSource="{Binding Consistencies}" SelectedValue="{Binding StoolFecalysis.Consistency}" SelectionChanged="ConsistencyComboBox_SelectionChanged"></ComboBox>
+            <Label Name="ResultLabel" Content="Result:" Grid.Row="1" Grid.Column="0"></Label>
+            <TextBox Name="ResultTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding StoolFecalysis.Result}" Height="100" MouseDoubleClick="ResultTextBox_MouseDoubleClick"></TextBox>
+            <Button Name="SelectResultButton" Grid.Row="1" Grid.Column="4" Margin="7" Click="SelectResultButton_Click">
+                <StackPanel>
+                    <Image Source="/Images/16x16/edit.png" />
+                </StackPanel>
+            </Button>
+            <Label Name="RemarksLabel" Content="Remarks:" Grid.Row="2" Grid.Column="0"></Label>
+            <TextBox Name="RemarksTextBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Text="{Binding StoolFecalysis.Remarks}" MouseDoubleClick="RemarksTextBox_MouseDoubleClick"
+                     Height="40" Margin="5,0,5,5"></TextBox>
+            <Button Name="SelectRemarksButton" Grid.Row="3" Grid.Column="4" Margin="7" Click="SelectRemarksButton_Click">
+                <StackPanel>
+                    <Image Source="/Images/16x16/edit.png" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Grid Margin="10,0,10,10" VerticalAlignment="Top">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5,0,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="Margin" Value="10,10,10,0" />
+                    <Setter Property="Padding" Value="5,0,0,0" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <ComboBox Name="MedicalTechnologistComboBox" Grid.Row="0" Grid.Column="0" IsEditable="True" IsTextSearchEnabled="True"
+                      ItemsSource="{Binding MedicalTechnologists}" SelectedValue="{Binding StoolFecalysis.MedicalTechnologist}" SelectionChanged="MedicalTechnologistComboBox_SelectionChanged"></ComboBox>
+            <Label Name="MedicalTechnologistLabel" Content="Medical Technologist" Grid.Row="1" Grid.Column="0"></Label>
+            <ComboBox Name="PathologistComboBox" Grid.Row="0" Grid.Column="1" IsEditable="True" IsTextSearchEnabled="True"
+                      ItemsSource="{Binding Pathologists}" SelectedValue="{Binding StoolFecalysis.Pathologist}" SelectionChanged="PathologistComboBox_SelectionChanged"></ComboBox>
+            <Label Name="PathologistLabel" Content="Pathologist" Grid.Row="1" Grid.Column="1"></Label>
+        </Grid>
+    </StackPanel>
+</Window>

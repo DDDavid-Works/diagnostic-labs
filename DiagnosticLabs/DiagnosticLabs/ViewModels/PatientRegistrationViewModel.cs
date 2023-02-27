@@ -34,12 +34,14 @@ namespace DiagnosticLabs.ViewModels
             this.NewCommand = new RelayCommand(param => NewPatientRegistration());
             this.SaveCommand = new RelayCommand(param => SavePatientRegistration());
             this.DeleteCommand = new RelayCommand(param => DeletePatientRegistration());
+
+            this.ShowSearchPatientButton = true;
         }
 
         #region Data Actions
         private void NewPatientRegistration()
         {
-            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration();
+            this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration(true);
             this.Patient = _patientsBLL.NewPatient();
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
 

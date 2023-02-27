@@ -65,13 +65,7 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Name="RegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
-                <TextBox Name="RegistrationCodeTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding PatientRegistration.RegistrationCode}" IsReadOnly="{Binding IsPatientRegistrationCodeReadOnly}"
-                         LostFocus="RegistrationCodeTextBox_LostFocus"></TextBox>
-                <Button Name="SearchPatientRegistrationButton" Grid.Row="0" Grid.Column="2" Height="22" Width="24" HorizontalAlignment="Left" Margin="0,0,0,5" Click="SearchPatientRegistrationButton_Click">
-                    <StackPanel>
-                        <Image Width="14" HorizontalAlignment="Center" Source="../Images/24x24/search.png"></Image>
-                    </StackPanel>
-                </Button>
+                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1"></menu:PatientRegistrationSearchByCodeUserControl>
                 <Label Name="InputRegDateLabel" Content="Reg. Date:" Grid.Row="1" Grid.Column="0"></Label>
                 <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}"></DatePicker>
                 <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Label>

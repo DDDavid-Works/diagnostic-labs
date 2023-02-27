@@ -12,19 +12,19 @@ namespace DiagnosticLabs.EntryBuilderWindows
         public SingleLineEntryWindow(int? moduleId, string fieldName)
         {
             InitializeComponent();
-            this.DataContext = new SingleEntryViewModel(moduleId, fieldName);
+            this.DataContext = new SingleLineEntryViewModel(moduleId, fieldName);
         }
 
         private void AddSingleLineEntryButton_Click(object sender, RoutedEventArgs e)
         {
-            var vm = (SingleEntryViewModel)DataContext;
+            var vm = (SingleLineEntryViewModel)DataContext;
             if (vm.AddSingleLineEntryCommand.CanExecute(null))
                 vm.AddSingleLineEntryCommand.Execute(null);
         }
 
         private void OkCancelUserControl_OkCommand(object sender, RoutedEventArgs e)
         {
-            var vm = (SingleEntryViewModel)DataContext;
+            var vm = (SingleLineEntryViewModel)DataContext;
             if (vm.SaveCommand.CanExecute(null))
                 vm.SaveCommand.Execute(null);
             

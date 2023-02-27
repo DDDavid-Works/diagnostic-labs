@@ -9,9 +9,9 @@ using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class SingleEntryViewModel : BaseViewModel
+    public class SingleLineEntryViewModel : BaseViewModel
     {
-        private const string _entityName = "SingleEntry";
+        private const string _entityName = "SingleLineEntry";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
         SingleLineEntriesBLL _singleLineEntriesBLL = new SingleLineEntriesBLL();
@@ -27,7 +27,7 @@ namespace DiagnosticLabs.ViewModels
         public ICommand RemoveSingleLineEntryCommand { get; set; }
         #endregion
 
-        public SingleEntryViewModel(int? moduleId, string fieldName)
+        public SingleLineEntryViewModel(int? moduleId, string fieldName)
         {
             if (moduleId == null || moduleId == 0)
                 this.Module = new Module() { Id = 0, ModuleName = "General Field" };
