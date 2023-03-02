@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[Patients]
 (
 	[Id] BIGINT NOT NULL IDENTITY,
-    [PatientName] NVARCHAR(200) NOT NULL,
+    [PatientCode] NVARCHAR(200) NOT NULL,
+    [PatientName] NVARCHAR(200) NOT NULL DEFAULT '',
     [DateOfBirth] DATETIME NULL,
     [Age] NVARCHAR(50) NULL,
     [Gender] NVARCHAR(20) NULL,

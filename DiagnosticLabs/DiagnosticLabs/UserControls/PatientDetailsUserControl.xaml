@@ -47,22 +47,25 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="0" Grid.Column="0"></Label>
-        <local:PatientSearchByNameUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" ShowSearchButton="{Binding ShowSearchPatientButton}"></local:PatientSearchByNameUserControl>
-        <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="1" Grid.Column="0"></Label>
-        <DatePicker Name="DateOfBirthDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
-        <Label Name="AgeLabel" Content="Age:" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
-        <TextBox Name="AgeTextBox" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
-        <Label Name="GenderLabel" Content="Gender:" Grid.Row="2" Grid.Column="0"></Label>
-        <ComboBox Name="GenderComboBox" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
-        <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="3" Grid.Column="0"></Label>
-        <ComboBox Name="CivilStatusComboBox" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedValue="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
-        <Label Name="AddressLabel" Content="Address:" Grid.Row="4" Grid.Column="0"></Label>
-        <TextBox Name="AddressTextBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Patient.Address}"
+        <Label Name="PatientCodeLabel" Content="Patient Code:" Grid.Row="0" Grid.Column="0"></Label>
+        <TextBox Name="PatientCodeTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Patient.PatientCode}"></TextBox>
+        <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="1" Grid.Column="0"></Label>
+        <local:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" ShowSearchButton="{Binding ShowSearchPatientButton}"></local:PatientSearchByNameUserControl>
+        <Label Name="DateOfBirthLabel" Content="Date of Birth:" Grid.Row="2" Grid.Column="0"></Label>
+        <DatePicker Name="DateOfBirthDatePicker" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Patient.DateOfBirth}" SelectedDateChanged="DateOfBirthDatePicker_SelectedDateChanged"></DatePicker>
+        <Label Name="AgeLabel" Content="Age:" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0"></Label>
+        <TextBox Name="AgeTextBox" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Patient.Age}" TextChanged="AgeTextBox_TextChanged"></TextBox>
+        <Label Name="GenderLabel" Content="Gender:" Grid.Row="3" Grid.Column="0"></Label>
+        <ComboBox Name="GenderComboBox" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}" SelectionChanged="GenderComboBox_SelectionChanged"></ComboBox>
+        <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="4" Grid.Column="0"></Label>
+        <ComboBox Name="CivilStatusComboBox" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding CivilStatuses}" SelectedValue="{Binding Patient.CivilStatus}" SelectionChanged="CivilStatusComboBox_SelectionChanged"></ComboBox>
+        <Label Name="AddressLabel" Content="Address:" Grid.Row="5" Grid.Column="0"></Label>
+        <TextBox Name="AddressTextBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Patient.Address}"
                      Height="80" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                      VerticalContentAlignment="Top"></TextBox>
-        <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="5" Grid.Column="0"></Label>
-        <TextBox Name="ContactNumbersTextBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Patient.ContactNumbers}"></TextBox>
+        <Label Name="ContactNumbersLabel" Content="Contact Numbers:" Grid.Row="6" Grid.Column="0"></Label>
+        <TextBox Name="ContactNumbersTextBox" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Patient.ContactNumbers}"></TextBox>
     </Grid>
 </UserControl>

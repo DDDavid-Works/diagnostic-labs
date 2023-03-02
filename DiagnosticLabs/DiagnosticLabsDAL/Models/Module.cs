@@ -18,5 +18,6 @@ namespace DiagnosticLabsDAL.Models
         public string Icon { get; set; }
         public int SortOrder { get; set; }
         public bool IsActive { get; set; }
+        public long? ServiceId { get; set; }
     }
 }

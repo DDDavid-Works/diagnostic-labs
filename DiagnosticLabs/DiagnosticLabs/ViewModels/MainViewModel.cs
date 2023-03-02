@@ -17,11 +17,13 @@ namespace DiagnosticLabs.ViewModels
 
         CommonFunctions _commonFunctions = new CommonFunctions();
         UsersBLL _usersBLL = new UsersBLL();
+        ServicesBLL _servicesBLL = new ServicesBLL();
         CompanySetupBLL _companySetupBLL = new CompanySetupBLL();
         ModulesBLL _modulesBLL = new ModulesBLL();
         ModuleTypesBLL _moduleTypesBLL = new ModuleTypesBLL();
         UserPermissionsBLL _userPermissionsBLL = new UserPermissionsBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        PatientRegistrationServicesBLL _patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
@@ -108,6 +110,17 @@ namespace DiagnosticLabs.ViewModels
         private void SearchPatientRegistrationDetails()
         {
             List<PatientRegistrationDetail> patientRegistrationDetails = _patientRegistrationsBLL.GetPatientRegistrationDetails(this.PatientNameFilter, this.SelectedCompany.Id, this.InputDateFilter);
+            foreach (var patientRegistrationDetail in patientRegistrationDetails)
+            {
+                List<PatientRegistrationService> patientRegistrationServices = _patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(patientRegistrationDetail.PatientRegistrationId);
+                foreach (var patientRegistrationService in patientRegistrationServices)
+                {
+                    Service service = _servicesBLL.GetService(patientRegistrationService.ServiceId);
+                    if (service != null)
+                        patientRegistrationService.PatientRegistrationServiceName = service.ServiceName;
+                }
+                patientRegistrationDetail.PatientRegistrationServices = patientRegistrationServices;
+            }
 
             this.PatientRegistrationDetails = new ObservableCollection<PatientRegistrationDetail>(patientRegistrationDetails);
         }

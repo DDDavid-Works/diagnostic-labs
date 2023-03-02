@@ -6,6 +6,7 @@ using DiagnosticLabs.SettingsWindows;
 using DiagnosticLabs.UserControls;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
+using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Linq;
@@ -223,10 +224,7 @@ namespace DiagnosticLabs
             else if (sender.GetType() == typeof(PatientsWindow))
                 _patientsWindow = null;
             else if (sender.GetType() == typeof(PaymentsWindow))
-            {
-                Globals.PATIENTREGISTRATIONIDTOPAY = 0;
                 _paymentsWindow = null;
-            }
             else if (sender.GetType() == typeof(CompanySetupWindow))
                 _companySetupWindow = null;
             else if (sender.GetType() == typeof(UsersWindow))
@@ -247,6 +245,9 @@ namespace DiagnosticLabs
                 _packagesWindow = null;
             else if (sender.GetType() == typeof(StoolFecalysisWindow))
                 _stoolFecalysisWindow = null;
+
+            Globals.PATIENTREGISTRATIONIDTOPAY = 0;
+            Globals.PATIENTREGISTRATIONIDTOINPUT = 0;
         }
         #endregion Private Methods
 
@@ -282,6 +283,16 @@ namespace DiagnosticLabs
             MenuItem paymentMenuItem = Globals.MENUITEMS.Where(m => m.Module.ModuleName == Modules.Payments).FirstOrDefault();
             Globals.PATIENTREGISTRATIONIDTOPAY = prd.PatientRegistrationId;
             LaunchModuleWindow(paymentMenuItem);
+        }
+
+        private void InputLabResultsButton_Click(object sender, RoutedEventArgs e)
+        {
+            PatientRegistrationService prs = (PatientRegistrationService)((Button)sender).CommandParameter;
+            string serviceName = prs.PatientRegistrationServiceName;
+            
+            MenuItem menuItem = Globals.MENUITEMS.Where(m => m.Module.ModuleName == serviceName).FirstOrDefault();
+            Globals.PATIENTREGISTRATIONIDTOINPUT = prs.PatientRegistrationId;
+            LaunchModuleWindow(menuItem);
         }
         #endregion UI Events
 

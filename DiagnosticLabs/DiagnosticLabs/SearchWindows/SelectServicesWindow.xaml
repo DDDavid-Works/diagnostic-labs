@@ -46,6 +46,5 @@
             </ItemsControl>
         </Border>
         <okc:OkCancelUserControl OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></okc:OkCancelUserControl>
-        <!---->
     </StackPanel>
 </Window>

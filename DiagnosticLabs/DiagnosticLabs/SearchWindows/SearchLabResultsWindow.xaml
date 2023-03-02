@@ -56,7 +56,7 @@
         <TextBox Name="NameFilterTextBox" Grid.Row="1" Grid.Column="1"
                  Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewKeyDown="NameFilterTextBox_PreviewKeyDown"></TextBox>
         <Label Name="InputDateFilterLabel" Content="Date:" Grid.Row="2" Grid.Column="0"></Label>
-        <uc:DatePickerWithRemoveUserControl Grid.Row="2" Grid.Column="1" x:Name="InputDateDatePicker" SelectedDateTime="{Binding InputDate, Mode=TwoWay}"></uc:DatePickerWithRemoveUserControl>
+        <uc:DatePickerWithRemoveUserControl Grid.Row="2" Grid.Column="1" x:Name="InputDateDatePicker" SelectedDateTime="{Binding DateRequested, Mode=TwoWay}"></uc:DatePickerWithRemoveUserControl>
         <Button Name="SearchButton" Content="Search" Grid.Row="3" Grid.Column="1" Width="60" Click="SearchButton_Click"></Button>
         <DataGrid Name="LabReultsDataGrid" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Background="#d0e2d0"
                   AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="22"

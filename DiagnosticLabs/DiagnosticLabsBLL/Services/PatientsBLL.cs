@@ -1,9 +1,12 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
+using Microsoft.Data.SqlClient.DataClassification;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace DiagnosticLabsBLL.Services
 {
@@ -25,6 +28,7 @@ namespace DiagnosticLabsBLL.Services
             return new Patient()
             {
                 Id = 0,
+                PatientCode = NewPatientCode(),
                 PatientName = string.Empty,
                 DateOfBirth = null,
                 Age = null,
@@ -123,5 +127,33 @@ namespace DiagnosticLabsBLL.Services
                 return false;
             }
         }
+
+        public string NewPatientCode()
+        {
+            try
+            {
+                string currentYear = DateTime.Now.Year.ToString();
+
+                List<string> currentYearNumbers = _dbContext.Patients.Where(p => p.PatientCode.StartsWith(currentYear + '-')).Select(p => p.PatientCode).ToList();
+                List<string> numbers = currentYearNumbers.Select(p => p.Split('-')[1]).ToList();
+
+                int nextNum = 1;
+                if (numbers.Count > 0)
+                {
+                    int num = 0;
+                    int maxNum = numbers.Where(n => Int32.TryParse(n, out num)).Select(n => Convert.ToInt32(n)).Max();
+                    nextNum = maxNum + 1;
+                }
+
+                return $"{currentYear}-{nextNum.ToString("00000000")}";
+
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return string.Empty;
+            }
+        }
+
     }
 }

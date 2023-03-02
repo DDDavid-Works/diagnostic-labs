@@ -16,6 +16,7 @@ namespace DiagnosticLabsBLL.Globals
         public static Dictionary<int, string> ModuleIcons = new Dictionary<int, string>();
 
         public static long PATIENTREGISTRATIONIDTOPAY = 0;
+        public static long PATIENTREGISTRATIONIDTOINPUT = 0;
     }
 
     public enum ListEntry

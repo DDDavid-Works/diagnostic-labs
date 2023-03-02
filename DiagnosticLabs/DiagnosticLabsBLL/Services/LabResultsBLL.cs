@@ -77,7 +77,7 @@ namespace DiagnosticLabsBLL.Services
                                                         (patientName != string.Empty ? l.PatientName.ToUpper().Contains(patientName.ToUpper()) : true) &&
                                                         (dateRequested != null ? ((DateTime)l.DateRequested).Date == ((DateTime)dateRequested).Date : true) &&
                                                         ((companyId != -1 && companyId != null ? l.CompanyId == companyId : true) ||
-                                                         (string.IsNullOrEmpty(companyName) ? l.Company == companyName : true))).ToList();
+                                                         (string.IsNullOrEmpty(companyName) && companyName != "--ALL--" ? l.Company == companyName : true))).ToList();
             }
             catch (Exception ex)
             {

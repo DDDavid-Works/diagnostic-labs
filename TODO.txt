@@ -1,0 +1,3 @@
+-show IDs on UI
+-Patient Code
+-Defaults on Single and Multiline Entries

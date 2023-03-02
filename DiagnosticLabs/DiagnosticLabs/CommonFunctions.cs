@@ -52,7 +52,7 @@ namespace DiagnosticLabs
             companies = _companiesBLL.GetAllCompanies(includeSystemRecord);
 
             if (includeAllSelection)
-                companies.Insert(0, new Company() { Id = -1, CompanyName = "ALL", Address = "ALL", ContactNumbers = "ALL", ContactPerson = "ALL", IsActive = true });
+                companies.Insert(0, new Company() { Id = -1, CompanyName = "--ALL--", Address = "--ALL--", ContactNumbers = "--ALL--", ContactPerson = "--ALL--", IsActive = true });
 
             return companies;
         }
@@ -62,7 +62,7 @@ namespace DiagnosticLabs
             List<Package> packages = _packagesBLL.GetAllPackages();
 
             if (addNone)
-                packages.Insert(0, new Package() { Id = 0, PackageName = "None" });
+                packages.Insert(0, new Package() { Id = 0, PackageName = "--NONE--" });
 
             return packages;
         }

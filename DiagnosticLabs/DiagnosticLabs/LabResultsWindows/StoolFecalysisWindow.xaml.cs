@@ -104,6 +104,13 @@ namespace DiagnosticLabs.LabResultsWindows
             ShowSelectMNultiLineEntryWindow(MultiLineEntries.StoolFecalysisRemarks);
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.GetPatientRegistrationCommand.CanExecute(null))
+                vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOINPUT);
+        }
         #region Private Methods
         private void ShowSelectMNultiLineEntryWindow(string fieldName)
         {

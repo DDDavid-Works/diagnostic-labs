@@ -20,3 +20,5 @@ Post-Deployment Script Template
 :r Data\Services.sql
 :r Data\Departments.sql
 :r Data\SingleLineEntries.sql
+
+:r Data\ModuleServices_Update.sql

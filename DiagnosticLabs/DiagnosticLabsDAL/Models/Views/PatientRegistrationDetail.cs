@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models.Views
 {
@@ -13,5 +15,8 @@ namespace DiagnosticLabsDAL.Models.Views
         public string PatientName { get; set; }
         public long? CompanyId { get; set; }
         public string CompanyName { get; set; }
+
+        [NotMapped]
+        public List<PatientRegistrationService> PatientRegistrationServices { get; set; }
     }
 }

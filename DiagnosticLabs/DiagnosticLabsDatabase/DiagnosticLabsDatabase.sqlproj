@@ -102,8 +102,9 @@
     <Build Include="Tables\MultiLineEntries.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DiagnosticLabsDatabase.publish.xml" />
     <None Include="Scripts\Data\SingleLineEntries.sql" />
+    <None Include="Scripts\Data\ModuleServices_Update.sql" />
+    <None Include="DiagnosticLabsDatabase.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

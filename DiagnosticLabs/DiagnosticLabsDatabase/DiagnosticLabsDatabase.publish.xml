@@ -4,8 +4,8 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseName>DiagnosticLabsDB</TargetDatabaseName>
     <DeployScriptFileName>DiagnosticLabsDatabase.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=.\SQLEXPRESS;Persist Security Info=True;User ID=sa;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
+    <TargetConnectionString>Data Source=DARREL-D-DAVID\SQLEXPRESS;Persist Security Info=False;User ID=sa;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False</TargetConnectionString>
     <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
     <CreateNewDatabase>True</CreateNewDatabase>
   </PropertyGroup>

@@ -200,6 +200,7 @@
     <Compile Include="Constants\SingleLineEntries.cs" />
     <Compile Include="Constants\Texts.cs" />
     <Compile Include="Converters\ItemNameConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="EntryBuilderWindows\MultiLineEntryWindow.xaml.cs">
       <DependentUpon>MultiLineEntryWindow.xaml</DependentUpon>
     </Compile>

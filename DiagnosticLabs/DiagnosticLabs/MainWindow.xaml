@@ -113,9 +113,9 @@
 
             <Label Name="PatientNameFilterLabel" Content="Patient Name:" Grid.Row="0" Grid.Column="0"></Label>
             <TextBox Name="PatientNameFilterTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding PatientNameFilter}"></TextBox>
-            <Label Name="CompanyLabel" Content="Company:" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"></Label>
+            <Label Name="CompanyFilterLabel" Content="Company:" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"></Label>
             <menu:CompanyDetailsUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="0,4,0,0"></menu:CompanyDetailsUserControl>
-            <Label Name="DateLabel" Content="Date:" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right"></Label>
+            <Label Name="DateFilterLabel" Content="Date:" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right"></Label>
             <menu:DatePickerWithRemoveUserControl x:Name="InputDateDatePicker" Grid.Row="0" Grid.Column="5"
                                                   SelectedDateTime="{Binding InputDateFilter, Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"></menu:DatePickerWithRemoveUserControl>
             <Button Name="SearchButton" Grid.Row="1" Grid.Column="5" Width="100" HorizontalAlignment="Right" Background="#d0e2d0" Click="SearchButton_Click">
@@ -125,28 +125,69 @@
                 </StackPanel>
             </Button>
 
-            <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7"  LastChildFill="True">
-                <DataGrid Margin="5" FontSize="16" DockPanel.Dock="Bottom"
-                          AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" RowHeaderWidth="0" RowHeight="35"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding PatientRegistrationDetails}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding PatientName}" Width="40*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" Width="40*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Input Date" Binding="{Binding InputDate, StringFormat=\{0:MM/dd/yyyy\}}" Width="20*"></DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Details" Width="180*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Name="PayButton" Width="70" Height="30" HorizontalAlignment="Left" Click="PayButton_Click" CommandParameter="{Binding}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="../Images/24x24/add.png" Height="20"></Image>
-                                            <TextBlock Margin="3,-2,0,0">Pay</TextBlock>
-                                        </StackPanel>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" BorderBrush="Black" BorderThickness="1" Margin="10"></Border>
+            <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" LastChildFill="True" Margin="10">
+                <ScrollViewer Margin="0,1,1,1" VerticalScrollBarVisibility="Visible" DockPanel.Dock="Top">
+                    <ItemsControl ItemsSource="{Binding PatientRegistrationDetails}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10,10,10,0" Background="#d0e2d0">
+                                    <Grid.Resources>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Width" Value="150" />
+                                            <Setter Property="Height" Value="30" />
+                                            <Setter Property="Margin" Value="0,0,5,5" />
+                                            <Setter Property="Padding" Value="10,0,0,0" />
+                                            <Setter Property="HorizontalAlignment" Value="Left" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            <Setter Property="Background" Value="#dfecdf" />
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="400"></ColumnDefinition>
+                                        <ColumnDefinition Width="130"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" Margin="0"></Border>
+                                    <Label Name="PatientNameLabel" Content="{Binding PatientName}" Grid.Row="0" Grid.Column="0" Margin="10,0,10,0" FontSize="22" VerticalContentAlignment="Bottom"></Label>
+                                    <Label Name="InputDateLabel" Content="{Binding InputDate}" ContentStringFormat="MM/dd/yyy" Grid.Row="0" Grid.Column="1" Margin="10,10,10,0" FontSize="16" VerticalAlignment="Top"></Label>
+                                    <Label Name="CompanyLabel" Content="{Binding CompanyName}" Grid.Row="1" Grid.Column="0" Margin="10,0,0,10" FontSize="16" VerticalAlignment="Top"></Label>
+                                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Orientation="Horizontal" Height="70" VerticalAlignment="Top" Margin="0,10,0,0">
+                                        <Button Name="PayButton2" Grid.Row="0" Grid.Column="2" Width="90" Height="65" Click="PayButton_Click" CommandParameter="{Binding}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="../Images/32x32/sales.png" Height="20"></Image>
+                                                <TextBlock FontSize="20" Margin="3,-2,0,0">Pay</TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                        <WrapPanel Orientation="Vertical">
+                                            <ItemsControl ItemsSource="{Binding PatientRegistrationServices}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Button Name="InputLabResultsButton" Click="InputLabResultsButton_Click" CommandParameter="{Binding}">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="../Images/24x24/edit.png" Height="20"></Image>
+                                                                <TextBlock Text="{Binding PatientRegistrationServiceName}" FontSize="10" Width="100" TextWrapping="Wrap" Margin="3,-2,0,0"></TextBlock>
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </DockPanel>
         </Grid>
     </Grid>

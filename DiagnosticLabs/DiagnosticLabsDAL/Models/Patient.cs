@@ -9,6 +9,7 @@ namespace DiagnosticLabsDAL.Models
     public class Patient : BaseModel, IDataErrorInfo
     {
         private long il_Id;
+        private string il_PatientCode;
         private string il_PatientName;
         private DateTime? il_DateOfBirth;
         private string il_Age;
@@ -27,6 +28,12 @@ namespace DiagnosticLabsDAL.Models
         {
             get { return il_Id; }
             set { il_Id = value; OnPropertyChanged("Id"); }
+        }
+
+        public string PatientCode
+        {
+            get { return il_PatientCode; }
+            set { il_PatientCode = value; OnPropertyChanged("PatientCode"); }
         }
 
         public string PatientName
@@ -100,9 +107,6 @@ namespace DiagnosticLabsDAL.Models
             get { return il_UpdatedDate; }
             set { il_UpdatedDate = value; OnPropertyChanged("UpdatedDate"); }
         }
-
-        [NotMapped]
-        public string PatientCode { get; set; } = string.Empty;
 
         [NotMapped]
         public bool IsAgeEdited { get; set; } = false;
