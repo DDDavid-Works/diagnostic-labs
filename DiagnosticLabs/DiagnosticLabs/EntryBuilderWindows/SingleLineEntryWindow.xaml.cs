@@ -1,6 +1,8 @@
 ﻿using DiagnosticLabs.ViewModels;
 using DiagnosticLabs.Constants;
 using System.Windows;
+using System.Windows.Controls;
+using DiagnosticLabsDAL.Models;
 
 namespace DiagnosticLabs.EntryBuilderWindows
 {
@@ -9,10 +11,10 @@ namespace DiagnosticLabs.EntryBuilderWindows
     /// </summary>
     public partial class SingleLineEntryWindow : Window
     {
-        public SingleLineEntryWindow(int? moduleId, string fieldName)
+        public SingleLineEntryWindow(int moduleId, string fieldName, bool isGeneralField)
         {
             InitializeComponent();
-            this.DataContext = new SingleLineEntryViewModel(moduleId, fieldName);
+            this.DataContext = new SingleLineEntryViewModel(moduleId, fieldName, isGeneralField);
         }
 
         private void AddSingleLineEntryButton_Click(object sender, RoutedEventArgs e)
@@ -35,6 +37,25 @@ namespace DiagnosticLabs.EntryBuilderWindows
         private void OkCancelUserControl_CancelCommand(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void IsDefaultRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (SingleLineEntryViewModel)DataContext;
+            if (vm.SetDefaultValueCommmand.CanExecute(null))
+            {
+                SingleLineEntry sle = (SingleLineEntry)((RadioButton)sender).CommandParameter;
+                vm.SetDefaultValueCommmand.Execute(sle);
+            }
+        }
+
+        private void NoDefaultRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (SingleLineEntryViewModel)DataContext;
+            if (vm.SetDefaultValueCommmand.CanExecute(null))
+            {
+                vm.SetDefaultValueCommmand.Execute(null);
+            }
         }
     }
 }

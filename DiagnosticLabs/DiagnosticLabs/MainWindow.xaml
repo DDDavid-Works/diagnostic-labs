@@ -131,16 +131,18 @@
                     <ItemsControl ItemsSource="{Binding PatientRegistrationDetails}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="10,10,10,0" Background="#d0e2d0">
+                                <Grid Margin="10,10,10,0" Height="100" Background="#ffffcc">
                                     <Grid.Resources>
                                         <Style TargetType="Button">
                                             <Setter Property="Width" Value="150" />
-                                            <Setter Property="Height" Value="30" />
-                                            <Setter Property="Margin" Value="0,0,5,5" />
-                                            <Setter Property="Padding" Value="10,0,0,0" />
+                                            <Setter Property="Height" Value="37" />
+                                            <Setter Property="Margin" Value="0,0,5,0" />
+                                            <Setter Property="Padding" Value="5,0,0,0" />
                                             <Setter Property="HorizontalAlignment" Value="Left" />
                                             <Setter Property="HorizontalContentAlignment" Value="Left" />
                                             <Setter Property="Background" Value="#dfecdf" />
+                                            <Setter Property="BorderBrush" Value="#ffbd80" />
+                                            <Setter Property="BorderThickness" Value="1" />
                                         </Style>
                                     </Grid.Resources>
                                     <Grid.ColumnDefinitions>
@@ -152,18 +154,18 @@
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" Margin="0"></Border>
+                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderBrush="#ffbd80" BorderThickness="0,1,0,1" Margin="0"></Border>
                                     <Label Name="PatientNameLabel" Content="{Binding PatientName}" Grid.Row="0" Grid.Column="0" Margin="10,0,10,0" FontSize="22" VerticalContentAlignment="Bottom"></Label>
                                     <Label Name="InputDateLabel" Content="{Binding InputDate}" ContentStringFormat="MM/dd/yyy" Grid.Row="0" Grid.Column="1" Margin="10,10,10,0" FontSize="16" VerticalAlignment="Top"></Label>
                                     <Label Name="CompanyLabel" Content="{Binding CompanyName}" Grid.Row="1" Grid.Column="0" Margin="10,0,0,10" FontSize="16" VerticalAlignment="Top"></Label>
-                                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Orientation="Horizontal" Height="70" VerticalAlignment="Top" Margin="0,10,0,0">
-                                        <Button Name="PayButton2" Grid.Row="0" Grid.Column="2" Width="90" Height="65" Click="PayButton_Click" CommandParameter="{Binding}">
-                                            <StackPanel Orientation="Horizontal">
+                                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Orientation="Horizontal" Height="90" VerticalAlignment="Top" Margin="0,5,0,0">
+                                        <Button Name="PayButton2" Grid.Row="0" Grid.Column="2" Width="90" Height="79" Click="PayButton_Click" CommandParameter="{Binding}">
+                                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
                                                 <Image Source="../Images/32x32/sales.png" Height="20"></Image>
-                                                <TextBlock FontSize="20" Margin="3,-2,0,0">Pay</TextBlock>
+                                                <TextBlock FontSize="20" Margin="3,-5,0,0">Pay</TextBlock>
                                             </StackPanel>
                                         </Button>
-                                        <WrapPanel Orientation="Vertical">
+                                        <WrapPanel Orientation="Vertical" Margin="0,5,0,0">
                                             <ItemsControl ItemsSource="{Binding PatientRegistrationServices}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -172,10 +174,10 @@
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Button Name="InputLabResultsButton" Click="InputLabResultsButton_Click" CommandParameter="{Binding}">
+                                                        <Button Name="InputLabResultsButton2" Click="InputLabResultsButton_Click" Margin="0,0,5,5" CommandParameter="{Binding}">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <Image Source="../Images/24x24/edit.png" Height="20"></Image>
-                                                                <TextBlock Text="{Binding PatientRegistrationServiceName}" FontSize="10" Width="100" TextWrapping="Wrap" Margin="3,-2,0,0"></TextBlock>
+                                                                <Image Source="../Images/24x24/lab-result.png" Height="20"></Image>
+                                                                <TextBlock Text="{Binding PatientRegistrationServiceName}" Width="125" Margin="5,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="12"></TextBlock>
                                                             </StackPanel>
                                                         </Button>
                                                     </DataTemplate>

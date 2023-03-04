@@ -6,8 +6,9 @@ namespace DiagnosticLabs.ViewModels
 {
     public class PatientRegistrationServiceViewModel : BaseViewModel
     {
-        private Service _service;
         public PatientRegistrationService PatientRegistrationService { get; set; }
+ 
+        private Service _service;
         public Service Service
         {
             get { return _service; }

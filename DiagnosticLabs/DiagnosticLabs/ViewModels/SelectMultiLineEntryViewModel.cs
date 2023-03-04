@@ -45,7 +45,7 @@ namespace DiagnosticLabs.ViewModels
         {
             this.MultiLineEntries = new ObservableCollection<MultiLineEntry>(_MultiLineEntriesBLL.GetMultiLineEntries(this.Module.Id, this.FieldName));
 
-            if (updateSelectedMultiLineEntry)
+            if (updateSelectedMultiLineEntry && this.SelectedMultiLineEntry != null)
             {
                 MultiLineEntry selectedMultiLineEntry = this.MultiLineEntries.Where(m => m.Id == this.SelectedMultiLineEntry.Id).FirstOrDefault();
 

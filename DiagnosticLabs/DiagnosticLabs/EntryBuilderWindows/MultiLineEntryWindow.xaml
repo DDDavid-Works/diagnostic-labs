@@ -26,6 +26,11 @@
                     <Setter Property="BorderThickness" Value="1" />
                     <Setter Property="FontSize" Value="14" />
                 </Style>
+                <Style TargetType="RadioButton">
+                    <Setter Property="Margin" Value="0,10,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
@@ -52,7 +57,7 @@
                 </StackPanel>
             </Button>
             <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="218" Margin="0,0,0,5" Padding="0,5,0,0">
-                <ItemsControl Name="Entries" ItemsSource="{Binding MultiLineEntries}">
+                <ItemsControl Name="Entries" ItemsSource="{Binding MultiLineEntriesAndDefaultValue.MultiLineEntries}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0">
@@ -60,7 +65,7 @@
                                     <Style TargetType="TextBox">
                                         <Setter Property="VerticalContentAlignment" Value="Center" />
                                         <Setter Property="Height" Value="20" />
-                                        <Setter Property="Margin" Value="20,2,5,5" />
+                                        <Setter Property="Margin" Value="5,2,5,5" />
                                         <Setter Property="BorderThickness" Value="1" />
                                         <Setter Property="FontSize" Value="12" />
                                         <Style.Triggers>
@@ -71,15 +76,17 @@
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"></ColumnDefinition>
                                     <ColumnDefinition Width="90*"></ColumnDefinition>
                                     <ColumnDefinition Width="10*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <TextBox Name="FieldValueTitleTextBox" Grid.Row="0" Grid.Column="0" Text="{Binding FieldValueTitle}" GotFocus="FieldValueTitleTextBox_GotFocus"></TextBox>
+                                <RadioButton Name="IsDefaultRadioButton" GroupName="IsDefault" IsChecked="{Binding IsDefault}" Grid.Row="0" Grid.Column="0" Margin="5,5,0,0" CommandParameter="{Binding}" Click="IsDefaultRadioButton_Click" />
+                                <TextBox Name="FieldValueTitleTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding FieldValueTitle}" GotFocus="FieldValueTitleTextBox_GotFocus"></TextBox>
                                 <Button Name="EditFieldValueButton" Visibility="Collapsed" CommandParameter="{Binding}" Click="EditFieldValueButton_Click"></Button>
-                                <Button Name="RemoveServiceButton" Grid.Row="0" Grid.Column="1" Width="18" Height="18" Margin="0,2,2,0" VerticalAlignment="Top"
+                                <Button Name="RemoveServiceButton" Grid.Row="0" Grid.Column="2" Width="18" Height="18" Margin="0,2,2,0" VerticalAlignment="Top"
                                         Command="{Binding Path=DataContext.RemoveMultiLineEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}">
                                     <StackPanel>
                                         <Image Source="/Images/16x16/cancel.png" />
@@ -93,6 +100,9 @@
             <TextBox Name="SelectedFieldValueTextBox" Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" Height="224" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"
                      Text="{Binding SelectedMultiLineEntry.FieldValue}" TextChanged="SelectedFieldValueTextBox_TextChanged"></TextBox>
             <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="1" />
+            <RadioButton Name="NoDefaultRadioButton" GroupName="IsDefault" IsChecked="{Binding HasNoDefault}" Grid.Row="4" Grid.Column="0" Click="NoDefaultRadioButton_Click">
+                <TextBlock Text="No default" Margin="-2,-4,0,0" FontSize="16"></TextBlock>
+            </RadioButton>
             <okc:OkCancelUserControl Grid.Row="4" Grid.Column="2" OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></okc:OkCancelUserControl>
         </Grid>
     </StackPanel>

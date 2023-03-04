@@ -34,7 +34,7 @@ namespace DiagnosticLabs.LabResultsWindows
             {
                 var vm = (StoolFecalysisViewModel)DataContext;
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisColor);
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisColor, false);
                 singleLineEntryWindow.ShowDialog();
 
                 if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
@@ -48,7 +48,7 @@ namespace DiagnosticLabs.LabResultsWindows
             {
                 var vm = (StoolFecalysisViewModel)DataContext;
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisConsistency);
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisConsistency, false);
                 singleLineEntryWindow.ShowDialog();
 
                 if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
@@ -62,7 +62,7 @@ namespace DiagnosticLabs.LabResultsWindows
             {
                 var vm = (StoolFecalysisViewModel)DataContext;
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(null, SingleLineEntries.MedicalTechnologist);
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.MedicalTechnologist, true);
                 singleLineEntryWindow.ShowDialog();
 
                 if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
@@ -76,7 +76,7 @@ namespace DiagnosticLabs.LabResultsWindows
             {
                 var vm = (StoolFecalysisViewModel)DataContext;
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(null, SingleLineEntries.Pathologist);
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.Pathologist, true);
                 singleLineEntryWindow.ShowDialog();
 
                 if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))

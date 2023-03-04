@@ -11,6 +11,7 @@ namespace DiagnosticLabsBLL.Services
         private const string _logFileName = "SingleLineEntriesBLL";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
+        DefaultValuesBLL _defaultValuesBLL = new DefaultValuesBLL();
 
         private static DatabaseContext _dbContext;
 
@@ -19,11 +20,24 @@ namespace DiagnosticLabsBLL.Services
             _dbContext = new DatabaseContext();
         }
 
-        public List<SingleLineEntry> GetSingleLineEntries(int? moduleId, string fieldName)
+        public List<SingleLineEntry> GetSingleLineEntries(int? moduleId, string fieldName, int openModuleId = 0)
         {
             try
             {
-                return _dbContext.SingleLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
+                List<SingleLineEntry> singleLineEntries = _dbContext.SingleLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
+
+                if (openModuleId != 0)
+                {
+                    DefaultValue defaultValue = _defaultValuesBLL.GetDefaultValuesByModuleIdAndFieldName(openModuleId, fieldName);
+
+                    if (defaultValue != null)
+                    {
+                        foreach (var singleLineEntry in singleLineEntries)
+                            singleLineEntry.IsDefault = singleLineEntry.FieldValue == defaultValue.FieldValue;
+                    }
+                }
+
+                return singleLineEntries;
             }
             catch (Exception ex)
             {
@@ -89,6 +103,28 @@ namespace DiagnosticLabsBLL.Services
                 }
 
                 return true;
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return false;
+            }
+        }
+
+        public bool SaveSingleLineEntryListAndDefault(List<SingleLineEntry> singleLineEntries, DefaultValue defaultValue, DefaultValue originalDefaultValue, bool hasNoDefault)
+        {
+            try
+            {
+                long defaultValueId = 0;
+                if (_defaultValuesBLL.SaveDefaultValue(defaultValue, originalDefaultValue, hasNoDefault, ref defaultValueId))
+                {
+                    if (SaveSingleLineEntryList(singleLineEntries))
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {

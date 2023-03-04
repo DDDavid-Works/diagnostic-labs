@@ -13,10 +13,10 @@ namespace DiagnosticLabs.EntryBuilderWindows
     /// </summary>
     public partial class MultiLineEntryWindow : Window
     {
-        public MultiLineEntryWindow(int? moduleId, string fieldName, long? selectedMultiLineEntryId)
+        public MultiLineEntryWindow(int moduleId, string fieldName, long? selectedMultiLineEntryId, bool isGeneralField)
         {
             InitializeComponent();
-            this.DataContext = new MultiLineEntryViewModel(moduleId, fieldName, selectedMultiLineEntryId);
+            this.DataContext = new MultiLineEntryViewModel(moduleId, fieldName, selectedMultiLineEntryId, isGeneralField);
         }
 
         private void AddMultiLineEntryButton_Click(object sender, RoutedEventArgs e)
@@ -74,6 +74,25 @@ namespace DiagnosticLabs.EntryBuilderWindows
             var vm = (MultiLineEntryViewModel)DataContext;
             if (vm.UpdateMultiLineEntryCommand.CanExecute(null))
                 vm.UpdateMultiLineEntryCommand.Execute(null);
+        }
+
+        private void IsDefaultRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (MultiLineEntryViewModel)DataContext;
+            if (vm.SetDefaultValueCommmand.CanExecute(null))
+            {
+                MultiLineEntry mle = (MultiLineEntry)((RadioButton)sender).CommandParameter;
+                vm.SetDefaultValueCommmand.Execute(mle);
+            }
+        }
+
+        private void NoDefaultRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (MultiLineEntryViewModel)DataContext;
+            if (vm.SetDefaultValueCommmand.CanExecute(null))
+            {
+                vm.SetDefaultValueCommmand.Execute(null);
+            }
         }
     }
 }

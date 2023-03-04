@@ -64,7 +64,7 @@ namespace DiagnosticLabs.SearchWindows
         {
             var vm = (SelectMultiLineEntryViewModel)DataContext;
 
-            MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.Module.Id, vm.FieldName, vm.SelectedMultiLineEntry?.Id);
+            MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.Module.Id, vm.FieldName, vm.SelectedMultiLineEntry?.Id, false);
             mlew.ShowDialog();
 
             vm.LoadMultiLineEntries(true);

@@ -3,7 +3,6 @@ using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -39,9 +38,7 @@ namespace DiagnosticLabs.ViewModels
             if (id == 0)
                 NewStoolFecalysis();
             else
-            {
                 LoadStoolFecalysis(id);
-            }
 
             LoadAllSingleLineEntryLists();
 
@@ -74,7 +71,7 @@ namespace DiagnosticLabs.ViewModels
 
         private void NewStoolFecalysis()
         {
-            this.StoolFecalysis = _labResults.NewRecord<StoolFecalysis>();
+            this.StoolFecalysis = _labResults.NewRecord<StoolFecalysis>(this.ModuleId);
             this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration(false);
             this.Patient = _patientsBLL.NewPatient();
             this.SelectedCompany = null;

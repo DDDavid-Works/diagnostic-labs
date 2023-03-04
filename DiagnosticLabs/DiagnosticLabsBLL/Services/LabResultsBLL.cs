@@ -1,10 +1,10 @@
-﻿using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsBLL.Constants;
+using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DiagnosticLabsBLL.Services
 {
@@ -13,8 +13,7 @@ namespace DiagnosticLabsBLL.Services
         private const string _logFileName = "PackagesBLL";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
-        PatientsBLL _patientsBLL = new PatientsBLL();
-        PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        DefaultValuesBLL _defaultValuesBLL = new DefaultValuesBLL(); 
 
         private static DatabaseContext _dbContext;
 
@@ -23,7 +22,7 @@ namespace DiagnosticLabsBLL.Services
             _dbContext = new DatabaseContext();
         }
 
-        public T NewRecord<T>()
+        public T NewRecord<T>(int moduleId)
         {
             if (typeof(T) == typeof(StoolFecalysis))
             {
@@ -39,12 +38,12 @@ namespace DiagnosticLabsBLL.Services
                     Sex = string.Empty,
                     DateRequested = DateTime.Now,
                     Photo = null,
-                    Color = string.Empty,
-                    Consistency = string.Empty,
-                    Result = string.Empty,
-                    Remarks = string.Empty,
-                    MedicalTechnologist = string.Empty,
-                    Pathologist = string.Empty,
+                    Color = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.StoolFecalysisColor),
+                    Consistency = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.StoolFecalysisConsistency),
+                    Result = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.StoolFecalysisResult),
+                    Remarks = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.StoolFecalysisRemarks),
+                    MedicalTechnologist = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.MedicalTechnologist),
+                    Pathologist = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.Pathologist),
                     IsActive = true
                 };
                 return (T)Convert.ChangeType(stoolFecalysis, typeof(T));

@@ -78,10 +78,11 @@ namespace DiagnosticLabs.UserControls
         {
             if (GenderComboBox.SelectedItem != null && GenderComboBox.SelectedItem.ToString() == Texts.NewEntry)
             {
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(null, SingleLineEntries.Gender);
+                var vm = (BasePatientViewModel)DataContext;
+
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.Gender, true);
                 singleLineEntryWindow.ShowDialog();
 
-                var vm = (BasePatientViewModel)DataContext;
                 if (vm.RefreshSingleLineEntryListCommand.CanExecute(null))
                     vm.RefreshSingleLineEntryListCommand.Execute(SingleLineEntries.Gender);
             }
@@ -91,10 +92,11 @@ namespace DiagnosticLabs.UserControls
         {
             if (CivilStatusComboBox.SelectedItem != null && CivilStatusComboBox.SelectedItem.ToString() == Texts.NewEntry)
             {
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(null, SingleLineEntries.CivilStatus);
+                var vm = (BasePatientViewModel)DataContext;
+
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.CivilStatus, true);
                 singleLineEntryWindow.ShowDialog();
 
-                var vm = (BasePatientViewModel)DataContext;
                 if (vm.RefreshSingleLineEntryListCommand.CanExecute(null))
                     vm.RefreshSingleLineEntryListCommand.Execute(SingleLineEntries.CivilStatus);
             }

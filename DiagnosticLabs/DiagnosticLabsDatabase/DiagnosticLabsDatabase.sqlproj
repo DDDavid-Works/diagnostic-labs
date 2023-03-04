@@ -100,6 +100,7 @@
     <Build Include="Tables\StoolFecalyses.sql" />
     <Build Include="Views\LabResults.sql" />
     <Build Include="Tables\MultiLineEntries.sql" />
+    <Build Include="Tables\DefaultValues.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />

@@ -82,7 +82,7 @@ namespace DiagnosticLabs
             };
         }
 
-        public int? GetModuleId(string moduleName)
+        public int GetModuleId(string moduleName)
         {
             return Globals.MODULES.Where(m => m.ModuleName == moduleName).Select(m => m.Id).FirstOrDefault();
         }

@@ -83,6 +83,9 @@ namespace DiagnosticLabsDAL.Models
         [NotMapped]
         public bool IsSelected { get; set; } = false;
 
+        [NotMapped]
+        public bool IsDefault { get; set; }
+
         #region Validation
         private static readonly string[] _propertiesToValidate = { "FieldValueTitle" ,"FieldValue" };
 

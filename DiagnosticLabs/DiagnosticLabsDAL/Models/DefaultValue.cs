@@ -2,15 +2,15 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class SingleLineEntry : BaseModel, IDataErrorInfo
+    public class DefaultValue : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private int? il_ModuleId;
+        private int il_ModuleId;
         private string il_FieldName;
+        private string il_FieldValueTitle;
         private string il_FieldValue;
         private bool il_IsActive;
         private long il_CreatedByUserId;
@@ -25,7 +25,7 @@ namespace DiagnosticLabsDAL.Models
             set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public int? ModuleId
+        public int ModuleId
         {
             get { return il_ModuleId; }
             set { il_ModuleId = value; OnPropertyChanged("ModuleId"); }
@@ -35,6 +35,12 @@ namespace DiagnosticLabsDAL.Models
         {
             get { return il_FieldName; }
             set { il_FieldName = value; OnPropertyChanged("FieldName"); }
+        }
+
+        public string FieldValueTitle
+        {
+            get { return il_FieldValueTitle; }
+            set { il_FieldValueTitle = value; OnPropertyChanged("FieldValueTitle"); }
         }
 
         public string FieldValue
@@ -72,9 +78,6 @@ namespace DiagnosticLabsDAL.Models
             get { return il_UpdatedDate; }
             set { il_UpdatedDate = value; OnPropertyChanged("UpdatedDate"); }
         }
-
-        [NotMapped]
-        public bool IsDefault { get; set; }
 
         #region Validation
         private static readonly string[] _propertiesToValidate = { "FieldValue" };
@@ -116,5 +119,6 @@ namespace DiagnosticLabsDAL.Models
             return result;
         }
         #endregion
+
     }
 }

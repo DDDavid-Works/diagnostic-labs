@@ -22,6 +22,11 @@ namespace DiagnosticLabs.ViewModels.Base
             this.GetPatientRegistrationByCodeCommand = new RelayCommand(param => GetPatientRegistrationByCode((string)param));
         }
 
+        public void LoadDefaultValues()
+        {
+
+        }
+
         #region Private Methods
         private void GetPatientRegistrationByCode(string code)
         {

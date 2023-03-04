@@ -1,4 +1,5 @@
-﻿using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsBLL.Constants;
+using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DiagnosticLabsBLL.Services
         private const string _logFileName = "MultiLineEntriesBLL";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
+        DefaultValuesBLL _defaultValuesBLL = new DefaultValuesBLL();
 
         private static DatabaseContext _dbContext;
 
@@ -19,11 +21,24 @@ namespace DiagnosticLabsBLL.Services
             _dbContext = new DatabaseContext();
         }
 
-        public List<MultiLineEntry> GetMultiLineEntries(int? moduleId, string fieldName)
+        public List<MultiLineEntry> GetMultiLineEntries(int? moduleId, string fieldName, int openModuleId = 0)
         {
             try
             {
-                return _dbContext.MultiLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
+                List<MultiLineEntry> multiLineEntries = _dbContext.MultiLineEntries.Where(s => s.ModuleId == moduleId && s.FieldName == fieldName && s.IsActive).ToList();
+
+                if (openModuleId != 0)
+                {
+                    DefaultValue defaultValue = _defaultValuesBLL.GetDefaultValuesByModuleIdAndFieldName(openModuleId, fieldName);
+
+                    if (defaultValue != null)
+                    {
+                        foreach (var multiLineEntry in multiLineEntries)
+                            multiLineEntry.IsDefault = multiLineEntry.FieldValue == defaultValue.FieldValue;
+                    }
+                }
+
+                return multiLineEntries;
             }
             catch (Exception ex)
             {
@@ -89,6 +104,28 @@ namespace DiagnosticLabsBLL.Services
                 }
 
                 return true;
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return false;
+            }
+        }
+
+        public bool SaveMultiLineEntryListAndDefault(List<MultiLineEntry> multiLineEntries, DefaultValue defaultValue, DefaultValue originalDefaultValue, bool hasNoDefault)
+        {
+            try
+            {
+                long defaultValueId = 0;
+                if (_defaultValuesBLL.SaveDefaultValue(defaultValue, originalDefaultValue, hasNoDefault, ref defaultValueId))
+                {
+                    if (SaveMultiLineEntryList(multiLineEntries))
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {

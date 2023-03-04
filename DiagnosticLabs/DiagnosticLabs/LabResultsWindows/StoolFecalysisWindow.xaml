@@ -145,6 +145,8 @@
                     <Setter Property="Margin" Value="5,5,5,5" />
                     <Setter Property="Height" Value="22" />
                     <Setter Property="FontSize" Value="14" />
+                    <Setter Property="AcceptsReturn" Value="True" />
+                    <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
                 </Style>
                 <Style TargetType="ComboBox">
                     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -152,6 +154,8 @@
                     <Setter Property="Padding" Value="2,0,0,0" />
                     <Setter Property="Margin" Value="5" />
                     <Setter Property="FontSize" Value="14" />
+                    <Setter Property="IsEditable" Value="True" />
+                    <Setter Property="IsTextSearchEnabled" Value="True" />
                 </Style>
                 <Style TargetType="DatePicker">
                     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -166,7 +170,7 @@
                 </Style>
                 <Style TargetType="Button">
                     <Setter Property="VerticalAlignment" Value="Bottom" />
-                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
                     <Setter Property="Height" Value="18" />
                     <Setter Property="Width" Value="18" />
                 </Style>
@@ -194,16 +198,17 @@
             <ComboBox Name="ConsistencyComboBox" Grid.Row="0" Grid.Column="4" IsEditable="True" IsTextSearchEnabled="True"
                       ItemsSource="{Binding Consistencies}" SelectedValue="{Binding StoolFecalysis.Consistency}" SelectionChanged="ConsistencyComboBox_SelectionChanged"></ComboBox>
             <Label Name="ResultLabel" Content="Result:" Grid.Row="1" Grid.Column="0"></Label>
-            <TextBox Name="ResultTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding StoolFecalysis.Result}" Height="100" MouseDoubleClick="ResultTextBox_MouseDoubleClick"></TextBox>
-            <Button Name="SelectResultButton" Grid.Row="1" Grid.Column="4" Margin="7" Click="SelectResultButton_Click">
+            <TextBox Name="ResultTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding StoolFecalysis.Result}"
+                     Height="100" MouseDoubleClick="ResultTextBox_MouseDoubleClick"></TextBox>
+            <Button Name="SelectResultButton" Grid.Row="1" Grid.Column="1" Margin="7" Click="SelectResultButton_Click">
                 <StackPanel>
                     <Image Source="/Images/16x16/edit.png" />
                 </StackPanel>
             </Button>
             <Label Name="RemarksLabel" Content="Remarks:" Grid.Row="2" Grid.Column="0"></Label>
-            <TextBox Name="RemarksTextBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Text="{Binding StoolFecalysis.Remarks}" MouseDoubleClick="RemarksTextBox_MouseDoubleClick"
-                     Height="40" Margin="5,0,5,5"></TextBox>
-            <Button Name="SelectRemarksButton" Grid.Row="3" Grid.Column="4" Margin="7" Click="SelectRemarksButton_Click">
+            <TextBox Name="RemarksTextBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Text="{Binding StoolFecalysis.Remarks}"
+                     Height="40" Margin="5,0,5,5" MouseDoubleClick="RemarksTextBox_MouseDoubleClick"></TextBox>
+            <Button Name="SelectRemarksButton" Grid.Row="3" Grid.Column="0" Margin="7" Click="SelectRemarksButton_Click">
                 <StackPanel>
                     <Image Source="/Images/16x16/edit.png" />
                 </StackPanel>

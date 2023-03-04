@@ -352,6 +352,8 @@
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\MultiLineEntryViewModel.cs" />
+    <Compile Include="ViewModels\MultiLineEntriesAndDefaultValueViewModel.cs" />
+    <Compile Include="ViewModels\SingleLineEntriesAndDefaultValueViewModel.cs" />
     <Compile Include="ViewModels\SingleLineEntryViewModel.cs" />
     <Compile Include="ViewModels\StoolFecalysisViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />

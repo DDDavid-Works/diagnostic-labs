@@ -22,6 +22,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<ModuleType> ModuleTypes { get; set; }
         public DbSet<SingleLineEntry> SingleLineEntries { get; set; }
         public DbSet<MultiLineEntry> MultiLineEntries{ get; set; }
+        public DbSet<DefaultValue> DefaultValues { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<PatientRegistration> PatientRegistrations { get; set; }
         public DbSet<PatientRegistrationService> PatientRegistrationServices { get; set; }
