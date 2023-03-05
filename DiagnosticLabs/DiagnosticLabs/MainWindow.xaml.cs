@@ -213,6 +213,7 @@ namespace DiagnosticLabs
             actionToolbarUserControl.NewButtonVisible = menuItem.Module.HasCreate && menuItem.UserPermission.AllowCreate;
             actionToolbarUserControl.SaveButtonVisible = menuItem.Module.HasEdit && (menuItem.UserPermission.AllowCreate || menuItem.UserPermission.AllowEdit);
             actionToolbarUserControl.DeleteButtonVisible = menuItem.Module.HasDelete && menuItem.UserPermission.AllowDelete;
+            actionToolbarUserControl.PrintButtonVisible = menuItem.Module.HasPrint && menuItem.UserPermission.AllowPrint;
             actionToolbarUserControl.SearchButtonVisible = menuItem.Module.HasSearch;
             actionToolbarUserControl.ShowListButtonVisible = menuItem.Module.HasShowList;
         }

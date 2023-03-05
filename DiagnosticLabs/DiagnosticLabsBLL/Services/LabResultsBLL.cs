@@ -68,6 +68,23 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public T GetByPatientRegistrationId<T>(long patientRegistrationId)
+        {
+            try
+            {
+                if (typeof(T) == typeof(StoolFecalysis))
+                    return (T)Convert.ChangeType(_dbContext.StoolFecalyses.Where(s => s.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+
+                return (T)Convert.ChangeType(null, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return (T)Convert.ChangeType(null, typeof(T));
+            }
+        }
+
+
         public List<LabResult> GetLabResults(string service, string patientName, long? companyId, string companyName, DateTime? dateRequested)
         {
             try

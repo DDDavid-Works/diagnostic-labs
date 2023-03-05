@@ -126,11 +126,20 @@ namespace DiagnosticLabs.ViewModels
         {
             base.GetPatientRegistration(patientRegistrationId);
 
-            this.StoolFecalysis.PatientRegistrationId = patientRegistrationId;
-            this.StoolFecalysis.PatientCode = this.Patient.PatientCode;
-            this.StoolFecalysis.PatientName = this.Patient.PatientName;
-            this.StoolFecalysis.Sex = this.Patient.Gender;
-            this.StoolFecalysis.Age = this.Patient.Age;
+            StoolFecalysis stoolFecalysis = _labResults.GetByPatientRegistrationId<StoolFecalysis>(patientRegistrationId);
+
+            if (stoolFecalysis != null)
+            {
+                this.StoolFecalysis = stoolFecalysis;
+            }
+            else
+            {
+                this.StoolFecalysis.PatientRegistrationId = patientRegistrationId;
+                this.StoolFecalysis.PatientCode = this.Patient.PatientCode;
+                this.StoolFecalysis.PatientName = this.Patient.PatientName;
+                this.StoolFecalysis.Sex = this.Patient.Gender;
+                this.StoolFecalysis.Age = this.Patient.Age;
+            }
         }
         #endregion
 

@@ -32,6 +32,7 @@ namespace DiagnosticLabs.UserControls
         }
 
         public event RoutedEventHandler SearchCommand;
+        public event RoutedEventHandler PrintCommand;
         public event RoutedEventHandler ShowListCommand;
 
         public bool NewButtonVisible { get; set; }
@@ -69,6 +70,14 @@ namespace DiagnosticLabs.UserControls
             if (this.ShowListCommand != null)
             {
                 this.ShowListCommand(this, e);
+            }
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.PrintCommand != null)
+            {
+                this.PrintCommand(this, e);
             }
         }
     }

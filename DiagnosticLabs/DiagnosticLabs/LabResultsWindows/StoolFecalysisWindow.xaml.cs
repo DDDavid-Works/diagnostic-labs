@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabs.Constants;
 using DiagnosticLabs.EntryBuilderWindows;
+using DiagnosticLabs.PrintWindows;
 using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
@@ -26,6 +27,17 @@ namespace DiagnosticLabs.LabResultsWindows
             if (search.SelectedLabResult == null) return;
 
             this.DataContext = new StoolFecalysisViewModel(search.SelectedLabResult.Id);
+        }
+
+        private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.StoolFecalysis != null)
+            {
+                PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
+                print.ShowDialog();
+            }
         }
 
         private void ColorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -111,6 +123,7 @@ namespace DiagnosticLabs.LabResultsWindows
             if (vm.GetPatientRegistrationCommand.CanExecute(null))
                 vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOINPUT);
         }
+
         #region Private Methods
         private void ShowSelectMNultiLineEntryWindow(string fieldName)
         {
