@@ -79,6 +79,9 @@ namespace DiagnosticLabsDAL.Models
         [NotMapped]
         public string PatientRegistrationServicePrice { get; set; }
 
+        [NotMapped]
+        public bool HasLabResultInput { get; set; }
+
         #region Validation
         private static readonly string[] _propertiesToValidate = { "PackageServicePrice" };
 

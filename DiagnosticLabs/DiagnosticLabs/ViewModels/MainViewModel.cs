@@ -24,6 +24,7 @@ namespace DiagnosticLabs.ViewModels
         UserPermissionsBLL _userPermissionsBLL = new UserPermissionsBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
         PatientRegistrationServicesBLL _patientRegistrationServicesBLL = new PatientRegistrationServicesBLL();
+        LabResultsBLL _labResultsBLL = new LabResultsBLL();
 
         #region Public Properties
         public CompanySetup CompanySetup { get; set; }
@@ -113,11 +114,14 @@ namespace DiagnosticLabs.ViewModels
             foreach (var patientRegistrationDetail in patientRegistrationDetails)
             {
                 List<PatientRegistrationService> patientRegistrationServices = _patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(patientRegistrationDetail.PatientRegistrationId);
+                List<LabResult> labResults = _labResultsBLL.GetLabResultsByPatientRegistrationId(patientRegistrationDetail.PatientRegistrationId);
                 foreach (var patientRegistrationService in patientRegistrationServices)
                 {
                     Service service = _servicesBLL.GetService(patientRegistrationService.ServiceId);
                     if (service != null)
                         patientRegistrationService.PatientRegistrationServiceName = service.ServiceName;
+
+                    patientRegistrationService.HasLabResultInput = labResults.Any(l => l.Service == service.ServiceName);
                 }
                 patientRegistrationDetail.PatientRegistrationServices = patientRegistrationServices;
             }

@@ -102,6 +102,18 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        public List<LabResult> GetLabResultsByPatientRegistrationId(long patientRegistrationId)
+        {
+            try
+            {
+                return _dbContext.LabResults.Where(l => l.PatientRegistrationId == patientRegistrationId && l.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return null;
+            }
+        }
 
         public bool Save<T>(T record, ref long id)
         {
