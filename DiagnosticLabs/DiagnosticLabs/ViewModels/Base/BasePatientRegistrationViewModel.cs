@@ -163,6 +163,7 @@ namespace DiagnosticLabs.ViewModels.Base
             this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
             this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
             this.SelectedBatchName = this.PatientRegistration.BatchName;
+            this.Patient.CompanyName = this.SelectedCompany.CompanyName;
 
             this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(_patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
             this.isLoading = false;

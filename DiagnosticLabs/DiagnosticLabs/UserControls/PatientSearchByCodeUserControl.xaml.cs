@@ -24,6 +24,9 @@ namespace DiagnosticLabs.UserControls
             if (search.SelectedPatientCompany == null) return;
 
             ((BasePatientViewModel)DataContext).Patient = (new PatientsBLL()).GetPatient(search.SelectedPatientCompany.PatientId);
+
+            if (((BasePatientViewModel)DataContext).Patient != null)
+                ((BasePatientViewModel)DataContext).Patient.CompanyName = search.SelectedPatientCompany.CompanyName;
         }
     }
 }

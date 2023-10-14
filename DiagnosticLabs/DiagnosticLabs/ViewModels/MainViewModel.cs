@@ -62,9 +62,9 @@ namespace DiagnosticLabs.ViewModels
             Globals.COMPANYSETUPCODE = this.CompanySetup.Code;
 
             this.MenuItems = MenuItemsList();
-            this.PatientRegistrationDetails = PatientRegistrationDetailList();
-
             this.SearchCommand = new RelayCommand(param => SearchPatientRegistrationDetails());
+
+            SearchPatientRegistrationDetails();
         }
 
         #region Private Methods

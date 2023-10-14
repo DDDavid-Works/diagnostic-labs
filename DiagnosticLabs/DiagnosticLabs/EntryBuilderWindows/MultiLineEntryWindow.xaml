@@ -84,7 +84,7 @@
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <RadioButton Name="IsDefaultRadioButton" GroupName="IsDefault" IsChecked="{Binding IsDefault}" Grid.Row="0" Grid.Column="0" Margin="5,5,0,0" CommandParameter="{Binding}" Click="IsDefaultRadioButton_Click" />
-                                <TextBox Name="FieldValueTitleTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding FieldValueTitle}" GotFocus="FieldValueTitleTextBox_GotFocus"></TextBox>
+                                <TextBox Name="FieldValueTitleTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding FieldValueTitle}" GotFocus="FieldValueTitleTextBox_GotFocus" MouseDoubleClick="FieldValueTitleTextBox_MouseDoubleClick"></TextBox>
                                 <Button Name="EditFieldValueButton" Visibility="Collapsed" CommandParameter="{Binding}" Click="EditFieldValueButton_Click"></Button>
                                 <Button Name="RemoveServiceButton" Grid.Row="0" Grid.Column="2" Width="18" Height="18" Margin="0,2,2,0" VerticalAlignment="Top"
                                         Command="{Binding Path=DataContext.RemoveMultiLineEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}">

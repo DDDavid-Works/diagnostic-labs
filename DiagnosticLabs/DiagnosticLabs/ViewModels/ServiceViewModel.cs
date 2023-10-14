@@ -30,7 +30,6 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.Service = _servicesBLL.GetService(id);
                 this.Service.ServicePrice = String.Format("{0:N}", this.Service.Price);
-
             }
 
             this.NewCommand = new RelayCommand(param => NewService());

@@ -118,7 +118,11 @@ namespace DiagnosticLabsDAL.Models
 
             return result;
         }
-        #endregion
 
+        public object Where(Func<object, object> value)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

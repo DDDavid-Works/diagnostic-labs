@@ -37,7 +37,8 @@ namespace DiagnosticLabsBLL.Services
                 Address = string.Empty,
                 ContactNumbers = string.Empty,
                 IsActive = true,
-                IsAgeEdited = false
+                IsAgeEdited = false,
+                CompanyName = string.Empty
             };
         }
 

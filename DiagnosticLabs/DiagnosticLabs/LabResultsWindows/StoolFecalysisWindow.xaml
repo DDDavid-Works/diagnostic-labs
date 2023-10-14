@@ -12,6 +12,39 @@
         <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
                                        SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand"></menu:ActionToolbarUserControl>
+        <Grid Margin="0" VerticalAlignment="Top" Background="#ffffcc">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Width" Value="90" />
+                    <Setter Property="FontSize" Value="14"  />
+                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="IdLabel" Content="Record Number:" Grid.Row="0" Grid.Column="1"></Label>
+            <TextBox Name="IdTextBox" Grid.Row="0" Grid.Column="2" Text="{Binding StoolFecalysis.Id}" IsReadOnly="True" Margin="0,0,10,0"></TextBox>
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+        </Grid>
         <Grid Margin="10" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"></ColumnDefinition>
@@ -21,7 +54,6 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Background="#efffef">
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="Margin" Value="5,5,0,5" />
@@ -46,6 +78,7 @@
                         <Setter Property="Margin" Value="0" />
                     </Style>
                 </Grid.Resources>
+            <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Background="#efffef">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="11*"></ColumnDefinition>
                     <ColumnDefinition Width="15*"></ColumnDefinition>
@@ -68,9 +101,9 @@
                 <TextBox Name="BatchNameTextBox" Grid.Row="1" Grid.Column="4" Text="{Binding SelectedBatchName}" IsReadOnly="True"></TextBox>
             </Grid>
             <Label Name="StoolFecalysisLabel" Content="STOOL/FECALYSIS" Grid.Row="1" Grid.Column="0" FontSize="16" Margin="0,22,0,0"
-                   FontWeight="SemiBold" Padding="0,5,5,5" BorderThickness="0,0,0,2" BorderBrush="Black" VerticalAlignment="Top"></Label>
+                   FontWeight="SemiBold" Padding="0,5,5,5" BorderThickness="0,0,0,2" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Stretch"></Label>
 
-            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0">
                 <Border BorderThickness="2" BorderBrush="Black" Margin="0" Height="120" Width="120" Padding="2">
                     <Image Name="Photo" Source="{Binding LogoImageSource}"></Image>
                 </Border>
@@ -100,7 +133,7 @@
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="Height" Value="22" />
                     <Setter Property="Margin" Value="0,0,0,5" />
-                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="Padding" Value="0" />
                     <Setter Property="FontSize" Value="14" />
                 </Style>
             </Grid.Resources>
@@ -125,7 +158,7 @@
             <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="1" Grid.Column="0"></Label>
             <menu:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1"></menu:PatientSearchByNameUserControl>
             <Label Name="CompanyOrPhysicianLabel" Content="Company/Physician:" Grid.Row="2" Grid.Column="0"></Label>
-            <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" Text="" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" SelectedValue="{Binding StoolFecalysis.CompanyOrPhysician}"></ComboBox>
+            <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" Text="" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" SelectedValue="{Binding Patient.CompanyName}"></ComboBox>
             <Label Name="AgeLabel" Content="Age:" Grid.Row="0" Grid.Column="3"></Label>
             <TextBox Name="AgeTextBox" Grid.Row="0" Grid.Column="4" Text="{Binding Patient.Age}"></TextBox>
             <Label Name="SexLabel" Content="Sex:" Grid.Row="0" Grid.Column="6"></Label>

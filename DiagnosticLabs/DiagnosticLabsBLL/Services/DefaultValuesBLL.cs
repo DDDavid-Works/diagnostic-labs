@@ -49,10 +49,10 @@ namespace DiagnosticLabsBLL.Services
             {
                 DefaultValue defaultValue = this.GetDefaultValuesByModuleIdAndFieldName(moduleId, fieldName);
 
-                if (defaultValue == null)
-                    return string.Empty;
+                if (defaultValue != null)
+                    return defaultValue.FieldValue;
                 else
-                    return defaultValue.FieldValue.ToString();
+                    return string.Empty;
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace DiagnosticLabsBLL.Services
                     {
                         oldDefaultValue.IsActive = false;
                         oldDefaultValue.UpdatedByUserId = Globals.Globals.LOGGEDINUSERID;
-                        newDefaultValue.UpdatedDate = DateTime.Now;
+                        oldDefaultValue.UpdatedDate = DateTime.Now;
                         _dbContext.SaveChanges();
 
                         id = oldDefaultValue.Id;

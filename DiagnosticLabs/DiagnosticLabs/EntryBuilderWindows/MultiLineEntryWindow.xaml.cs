@@ -13,6 +13,8 @@ namespace DiagnosticLabs.EntryBuilderWindows
     /// </summary>
     public partial class MultiLineEntryWindow : Window
     {
+        public MultiLineEntry SelectedMultiLineEntry { get; set; }
+
         public MultiLineEntryWindow(int moduleId, string fieldName, long? selectedMultiLineEntryId, bool isGeneralField)
         {
             InitializeComponent();
@@ -28,16 +30,12 @@ namespace DiagnosticLabs.EntryBuilderWindows
 
         private void OkCancelUserControl_OkCommand(object sender, RoutedEventArgs e)
         {
-            var vm = (MultiLineEntryViewModel)DataContext;
-            if (vm.SaveCommand.CanExecute(null))
-                vm.SaveCommand.Execute(null);
-
-            if (vm.NotificationMessage == Messages.SavedSuccessfully)
-                this.Close();
+            SaveAndSelectFieldValue();
         }
 
         private void OkCancelUserControl_CancelCommand(object sender, RoutedEventArgs e)
         {
+            this.SelectedMultiLineEntry = null;
             this.Close();
         }
 
@@ -58,6 +56,11 @@ namespace DiagnosticLabs.EntryBuilderWindows
                     }
                 }
             }
+        }
+
+        private void FieldValueTitleTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SaveAndSelectFieldValue();
         }
 
         private void EditFieldValueButton_Click(object sender, RoutedEventArgs e)
@@ -94,5 +97,20 @@ namespace DiagnosticLabs.EntryBuilderWindows
                 vm.SetDefaultValueCommmand.Execute(null);
             }
         }
+
+        #region Private Methods
+        private void SaveAndSelectFieldValue()
+        {
+            var vm = (MultiLineEntryViewModel)DataContext;
+            if (vm.SaveCommand.CanExecute(null))
+                vm.SaveCommand.Execute(null);
+
+            if (vm.NotificationMessage == Messages.SavedSuccessfully)
+            {
+                this.SelectedMultiLineEntry = vm.SelectedMultiLineEntry;
+                this.Close();
+            }
+        }
+        #endregion
     }
 }

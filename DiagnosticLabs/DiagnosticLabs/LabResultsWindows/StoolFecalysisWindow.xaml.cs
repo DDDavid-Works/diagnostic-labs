@@ -129,18 +129,18 @@ namespace DiagnosticLabs.LabResultsWindows
         {
             var vm = (StoolFecalysisViewModel)DataContext;
 
-            SelectMultiLineEntryWindow smlew = new SelectMultiLineEntryWindow(vm.ModuleId, fieldName);
-            smlew.ShowDialog();
+            MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.ModuleId, fieldName, null, false);
+            mlew.ShowDialog();
 
-            if (smlew.SelectedMultiLineEntry == null) return;
+            if (mlew.SelectedMultiLineEntry == null) return;
 
             switch (fieldName)
             {
                 case MultiLineEntries.StoolFecalysisResult:
-                    ResultTextBox.Text = smlew.SelectedMultiLineEntry.FieldValue;
+                    ResultTextBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
                     break;
                 case MultiLineEntries.StoolFecalysisRemarks:
-                    RemarksTextBox.Text = smlew.SelectedMultiLineEntry.FieldValue;
+                    RemarksTextBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
                     break;
                 default:
                     break;

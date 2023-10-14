@@ -200,17 +200,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CommonFunctions.cs" />
+    <Compile Include="Constants\ChoiceEntries.cs" />
+    <Compile Include="Constants\DefaultSetters.cs" />
     <Compile Include="Constants\Messages.cs" />
     <Compile Include="Constants\MultiLineEntries.cs" />
     <Compile Include="Constants\SingleLineEntries.cs" />
     <Compile Include="Constants\Texts.cs" />
     <Compile Include="Converters\ItemNameConverter.cs" />
+    <Compile Include="Converters\RadioButtonStringConverter.cs" />
+    <Compile Include="Converters\RadioButtonBooleanConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="DefaultSetterWindow.xaml.cs">
+      <DependentUpon>DefaultSetterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EntryBuilderWindows\MultiLineEntryWindow.xaml.cs">
       <DependentUpon>MultiLineEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EntryBuilderWindows\SingleLineEntryWindow.xaml.cs">
       <DependentUpon>SingleLineEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LabResultsWindows\AnnualPhysicalExamWindow.xaml.cs">
+      <DependentUpon>AnnualPhysicalExamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LabResultsWindows\StoolFecalysisWindow.xaml.cs">
       <DependentUpon>StoolFecalysisWindow.xaml</DependentUpon>
@@ -231,6 +241,7 @@
       <DependentUpon>PackagesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\NotificationMessage.cs" />
+    <Compile Include="Models\Reports\APEReport.cs" />
     <Compile Include="Models\Reports\StoolFecalysisReport.cs" />
     <Compile Include="PrintWindows\PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
@@ -243,6 +254,13 @@
     </Compile>
     <Compile Include="RegistrationWindows\PatientsWindow.xaml.cs">
       <DependentUpon>PatientsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\LabResults\APEReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APEReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\LabResults\CompanySetup.cs">
       <AutoGen>True</AutoGen>
@@ -293,9 +311,6 @@
     </Compile>
     <Compile Include="SearchWindows\SearchUsersWindow.xaml.cs">
       <DependentUpon>SearchUsersWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchWindows\SelectMultiLineEntryWindow.xaml.cs">
-      <DependentUpon>SelectMultiLineEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchWindows\SelectServicesWindow.xaml.cs">
       <DependentUpon>SelectServicesWindow.xaml</DependentUpon>
@@ -350,6 +365,7 @@
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\CompanySetupViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\DefaultSetterViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ItemLocationViewModel.cs" />
@@ -379,16 +395,25 @@
     <Compile Include="ViewModels\MultiLineEntriesAndDefaultValueViewModel.cs" />
     <Compile Include="ViewModels\SingleLineEntriesAndDefaultValueViewModel.cs" />
     <Compile Include="ViewModels\SingleLineEntryViewModel.cs" />
+    <Compile Include="ViewModels\APEViewModel.cs" />
     <Compile Include="ViewModels\StoolFecalysisViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="WindowsBaseClass.cs" />
+    <Page Include="DefaultSetterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EntryBuilderWindows\MultiLineEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EntryBuilderWindows\SingleLineEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LabResultsWindows\AnnualPhysicalExamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -496,10 +521,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchWindows\SelectMultiLineEntryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SearchWindows\SelectServicesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -581,6 +602,11 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\APEReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>APEReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LabResults\CompanySetup.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

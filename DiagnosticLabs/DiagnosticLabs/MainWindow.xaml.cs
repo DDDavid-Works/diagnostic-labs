@@ -35,6 +35,7 @@ namespace DiagnosticLabs
         CompaniesWindow _companiesWindow = null;
         PackagesWindow _packagesWindow = null;
         StoolFecalysisWindow _stoolFecalysisWindow = null;
+        AnnualPhysicalExamWindow _annualPhysicalExamWindow = null;
 
         public MainWindow(long userId)
         {
@@ -196,6 +197,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _stoolFecalysisWindow.Activate();
+                case Modules.AnnualPhysicalExam:
+                    if (_annualPhysicalExamWindow == null)
+                    {
+                        _annualPhysicalExamWindow = LoadWindow<AnnualPhysicalExamWindow>();
+                        SetActionToolbarUserControl(_annualPhysicalExamWindow.ActionToolbar, menuItem);
+                        _annualPhysicalExamWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _annualPhysicalExamWindow.Show();
+                    }
+                    else
+                        return () => _annualPhysicalExamWindow.Activate();
                 #endregion
                 default:
                     return null;
@@ -246,6 +257,8 @@ namespace DiagnosticLabs
                 _packagesWindow = null;
             else if (sender.GetType() == typeof(StoolFecalysisWindow))
                 _stoolFecalysisWindow = null;
+            else if (sender.GetType() == typeof(AnnualPhysicalExamWindow))
+                _annualPhysicalExamWindow = null;
 
             Globals.PATIENTREGISTRATIONIDTOPAY = 0;
             Globals.PATIENTREGISTRATIONIDTOINPUT = 0;

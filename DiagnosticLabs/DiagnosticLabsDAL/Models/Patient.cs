@@ -111,6 +111,9 @@ namespace DiagnosticLabsDAL.Models
         [NotMapped]
         public bool IsAgeEdited { get; set; } = false;
 
+        [NotMapped]
+        public string CompanyName { get; set; }
+
         #region Validation
         private static readonly string[] _propertiesToValidate = { "PatientName" };
 

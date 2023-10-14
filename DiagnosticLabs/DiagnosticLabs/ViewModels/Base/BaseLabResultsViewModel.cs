@@ -2,7 +2,6 @@
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace DiagnosticLabs.ViewModels.Base
