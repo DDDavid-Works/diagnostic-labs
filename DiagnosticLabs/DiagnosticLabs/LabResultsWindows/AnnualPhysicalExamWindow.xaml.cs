@@ -122,5 +122,19 @@ namespace DiagnosticLabs.LabResultsWindows
                 textBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
         }
         #endregion
+
+        private void PECheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            string field = checkBox.Name.Replace("NCheckBox", string.Empty).Replace("FCheckBox", string.Empty);
+            string value = checkBox.Name.Replace(field, string.Empty).Replace("CheckBox", string.Empty);
+
+            if (checkBox.IsChecked != null && checkBox.IsChecked == true)
+            {
+                string reverseValue = value == "F" ? "N" : "F";
+                CheckBox reverseCheckBox = this.FindName(field + reverseValue + "CheckBox") as CheckBox;
+                reverseCheckBox.IsChecked = false;
+            }
+        }
     }
 }

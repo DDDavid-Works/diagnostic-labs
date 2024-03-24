@@ -538,11 +538,104 @@ namespace DiagnosticLabsDAL.Models
 
         [NotMapped]
         public bool VisualAcuityNormal { get; set; }
-        [NotMapped]
 
+        [NotMapped]
         public bool VisualAcuityEOR { get; set; }
+
         [NotMapped]
         public bool VisualAcuityCorrected { get; set; }
+
+        #region Physical Examination
+        [NotMapped]
+        public bool SkinNValue { get; set; }
+
+        [NotMapped]
+        public bool SkinFValue { get; set; }
+
+        [NotMapped]
+        public bool HeadScalpNValue { get; set; }
+
+        [NotMapped]
+        public bool HeadScalpFValue { get; set; }
+
+        [NotMapped]
+        public bool EyesNValue { get; set; }
+
+        [NotMapped]
+        public bool EyesFValue { get; set; }
+
+        [NotMapped]
+        public bool EarsNValue { get; set; }
+
+        [NotMapped]
+        public bool EarsFValue { get; set; }
+
+        [NotMapped]
+        public bool NoseNValue { get; set; }
+
+        [NotMapped]
+        public bool NoseFValue { get; set; }
+
+        [NotMapped]
+        public bool TTTPNValue { get; set; }
+
+        [NotMapped]
+        public bool TTTPFValue { get; set; }
+
+        [NotMapped]
+        public bool NLNTNValue { get; set; }
+
+        [NotMapped]
+        public bool NLNTFValue { get; set; }
+
+        [NotMapped]
+        public bool TBNValue { get; set; }
+
+        [NotMapped]
+        public bool TBFValue { get; set; }
+
+        [NotMapped]
+        public bool HLNValue { get; set; }
+
+        [NotMapped]
+        public bool HLFValue { get; set; }
+
+        [NotMapped]
+        public bool ALSNValue { get; set; }
+
+        [NotMapped]
+        public bool ALSFValue { get; set; }
+
+        [NotMapped]
+        public bool IAGANValue { get; set; }
+
+        [NotMapped]
+        public bool IAGAFValue { get; set; }
+
+        [NotMapped]
+        public bool ExSNValue { get; set; }
+
+        [NotMapped]
+        public bool ExSFValue { get; set; }
+
+        [NotMapped]
+        public bool TattooNValue { get; set; }
+
+        [NotMapped]
+        public bool TattooFValue { get; set; }
+
+        [NotMapped]
+        public bool MassCystNValue { get; set; }
+
+        [NotMapped]
+        public bool MassCystFValue { get; set; }
+
+        [NotMapped]
+        public bool OthersPENValue { get; set; }
+
+        [NotMapped]
+        public bool OthersPEFValue { get; set; }
+        #endregion
         #endregion
 
         #region Validation

@@ -292,18 +292,18 @@
                     <Label Name="SurgicalLabel" Content="SURGICAL:" Grid.Row="5" Grid.Column="3"></Label>
                     <Label Name="OthersLabel" Content="OTHERS:" Grid.Row="6" Grid.Column="0"></Label>
 
-                    <ComboBox Name="EarsNoseThroatComboBox" Grid.Row="0" Grid.Column="2" Tag="{Binding ENTField}" ItemsSource="{Binding ENTs}" SelectedValue="{Binding APE.ENT}"></ComboBox>
-                    <ComboBox Name="RespiratoryComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" SelectedValue="{Binding APE.Gastroenterology}"></ComboBox>
-                    <ComboBox Name="CardiologyComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiologyField}" ItemsSource="{Binding Cardiologys}" SelectedValue="{Binding APE.Cardiology}"></ComboBox>
-                    <ComboBox Name="EndocrinologyComboBox" Grid.Row="3" Grid.Column="2" Tag="{Binding EndocrinologyField}" ItemsSource="{Binding Endocrinologies}" SelectedValue="{Binding APE.Endocrinology}"></ComboBox>
-                    <ComboBox Name="MuscoloSkeletalComboBox" Grid.Row="4" Grid.Column="2" Tag="{Binding MuscoloSkeletalField}" ItemsSource="{Binding MuscoloSkeletals}" SelectedValue="{Binding APE.MuscoloSkeletal}"></ComboBox>
-                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologyField}" ItemsSource="{Binding Neurologies}" SelectedValue="{Binding APE.Neurology}"></ComboBox>
-                    <ComboBox Name="GastroenterologyComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" SelectedValue="{Binding APE.Gastroenterology}"></ComboBox>
-                    <ComboBox Name="IntegumentarySkinComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding IntegumentarySkinField}" ItemsSource="{Binding IntegumentarySkins}" SelectedValue="{Binding APE.IntegumentarySkin}"></ComboBox>
-                    <ComboBox Name="PsychologyComboBox" Grid.Row="2" Grid.Column="4" Tag="{Binding PsychologyField}" ItemsSource="{Binding Psychologies}" SelectedValue="{Binding APE.Psychology}"></ComboBox>
-                    <ComboBox Name="ObGyneUrologyComboBox" Grid.Row="3" Grid.Column="4" Tag="{Binding ObGyneUrologyField}" ItemsSource="{Binding OBGyneUrologies}" SelectedValue="{Binding APE.ObGyneUrology}"></ComboBox>
-                    <ComboBox Name="InfectiousCommunicableComboBox" Grid.Row="4" Grid.Column="4" Tag="{Binding InfectiousCommunicableField}" ItemsSource="{Binding InfectiousCommunicables}" SelectedValue="{Binding APE.InfectiousCommunicable}"></ComboBox>
-                    <ComboBox Name="SurgicalComboBox" Grid.Row="5" Grid.Column="4" Tag="{Binding SurgicalField}" ItemsSource="{Binding Surgicals}" SelectedValue="{Binding APE.Surgical}"></ComboBox>
+                    <ComboBox Name="EarsNoseThroatComboBox" Grid.Row="0" Grid.Column="2" Tag="{Binding ENTField}" ItemsSource="{Binding ENTs}" Text="{Binding APE.ENT}"></ComboBox>
+                    <ComboBox Name="RespiratoryComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" Text="{Binding APE.Gastroenterology}"></ComboBox>
+                    <ComboBox Name="CardiologyComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiologyField}" ItemsSource="{Binding Cardiologys}" Text="{Binding APE.Cardiology}"></ComboBox>
+                    <ComboBox Name="EndocrinologyComboBox" Grid.Row="3" Grid.Column="2" Tag="{Binding EndocrinologyField}" ItemsSource="{Binding Endocrinologies}" Text="{Binding APE.Endocrinology}"></ComboBox>
+                    <ComboBox Name="MuscoloSkeletalComboBox" Grid.Row="4" Grid.Column="2" Tag="{Binding MuscoloSkeletalField}" ItemsSource="{Binding MuscoloSkeletals}" Text="{Binding APE.MuscoloSkeletal}"></ComboBox>
+                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologyField}" ItemsSource="{Binding Neurologies}" Text="{Binding APE.Neurology}"></ComboBox>
+                    <ComboBox Name="GastroenterologyComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" Text="{Binding APE.Gastroenterology}"></ComboBox>
+                    <ComboBox Name="IntegumentarySkinComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding IntegumentarySkinField}" ItemsSource="{Binding IntegumentarySkins}" Text="{Binding APE.IntegumentarySkin}"></ComboBox>
+                    <ComboBox Name="PsychologyComboBox" Grid.Row="2" Grid.Column="4" Tag="{Binding PsychologyField}" ItemsSource="{Binding Psychologies}" Text="{Binding APE.Psychology}"></ComboBox>
+                    <ComboBox Name="ObGyneUrologyComboBox" Grid.Row="3" Grid.Column="4" Tag="{Binding ObGyneUrologyField}" ItemsSource="{Binding OBGyneUrologies}" Text="{Binding APE.ObGyneUrology}"></ComboBox>
+                    <ComboBox Name="InfectiousCommunicableComboBox" Grid.Row="4" Grid.Column="4" Tag="{Binding InfectiousCommunicableField}" ItemsSource="{Binding InfectiousCommunicables}" Text="{Binding APE.InfectiousCommunicable}"></ComboBox>
+                    <ComboBox Name="SurgicalComboBox" Grid.Row="5" Grid.Column="4" Tag="{Binding SurgicalField}" ItemsSource="{Binding Surgicals}" Text="{Binding APE.Surgical}"></ComboBox>
                     <TextBox Name="OthersTextBox" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Height="42" AcceptsReturn="True" Tag="{Binding OthersPastField}" Text="{Binding APE.OthersPast}" MouseDoubleClick="MultiLineTextBox_MouseDoubleClick"></TextBox>
 
                     <Button Name="SelectOthersPastButton" Grid.Row="6" Grid.Column="1" Tag="{Binding OthersPastField}" Click="SelectMultiLineEntryButton_Click">
@@ -665,10 +665,11 @@
                             <Setter Property="Padding" Value="0,2,0,0" />
                             <Setter Property="HorizontalAlignment" Value="Center" />
                         </Style>
-                        <Style TargetType="RadioButton">
+                        <Style TargetType="CheckBox">
                             <Setter Property="Margin" Value="0,5" />
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="VerticalAlignment" Value="Top" />
+                            <EventSetter Event="Checked" Handler="PECheckBox_Checked"/>
                         </Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderBrush" Value="Black" />
@@ -725,36 +726,36 @@
                     <Label Name="MCLabel" Content="Mass, Cyst" Grid.Row="4" Grid.Column="6"></Label>
                     <Label Name="Others2Label" Content="Others" Grid.Row="5" Grid.Column="6"></Label>
 
-                    <RadioButton GroupName="Skin" Name="SkinNRadioButton" Grid.Row="1" Grid.Column="1" IsChecked="{Binding APE.Skin, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Skin" Name="SkinFRadioButton" Grid.Row="1" Grid.Column="2" IsChecked="{Binding APE.Skin, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="HeadScalp" Name="HeadScalpNRadioButton" Grid.Row="2" Grid.Column="1" IsChecked="{Binding APE.HeadScalp, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="HeadScalp" Name="HeadScalpFRadioButton" Grid.Row="2" Grid.Column="2" IsChecked="{Binding APE.HeadScalp, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Eyes" Name="EyesNRadioButton" Grid.Row="3" Grid.Column="1" IsChecked="{Binding APE.Eyes, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Eyes" Name="EyesFRadioButton" Grid.Row="3" Grid.Column="2" IsChecked="{Binding APE.Eyes, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Ears" Name="EarsNRadioButton" Grid.Row="4" Grid.Column="1" IsChecked="{Binding APE.Ears, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Ears" Name="EarsFRadioButton" Grid.Row="4" Grid.Column="2" IsChecked="{Binding APE.Ears, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Nose" Name="NoseNRadioButton" Grid.Row="5" Grid.Column="1" IsChecked="{Binding APE.Nose, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Nose" Name="NoseFRadioButton" Grid.Row="5" Grid.Column="2" IsChecked="{Binding APE.Nose, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="TTTP" Name="TTTPNRadioButton" Grid.Row="1" Grid.Column="4" IsChecked="{Binding APE.TeethTonsilsThroatPharynx, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="TTTP" Name="TTTPFRadioButton" Grid.Row="1" Grid.Column="5" IsChecked="{Binding APE.TeethTonsilsThroatPharynx, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="NLNT" Name="NLNTNRadioButton" Grid.Row="2" Grid.Column="4" IsChecked="{Binding APE.NeckLymphNodesThyroid, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="NLNT" Name="NLNTFRadioButton" Grid.Row="2" Grid.Column="5" IsChecked="{Binding APE.NeckLymphNodesThyroid, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="TB" Name="TBNRadioButton" Grid.Row="3" Grid.Column="4" IsChecked="{Binding APE.ThoraxBreast, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="TB" Name="TBFRadioButton" Grid.Row="3" Grid.Column="5" IsChecked="{Binding APE.ThoraxBreast, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="HL" Name="HLNRadioButton" Grid.Row="4" Grid.Column="4" IsChecked="{Binding APE.HeartLungs, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="HL" Name="HLFRadioButton" Grid.Row="4" Grid.Column="5" IsChecked="{Binding APE.HeartLungs, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="ALS" Name="ALSNRadioButton" Grid.Row="5" Grid.Column="4" IsChecked="{Binding APE.AbdomenLiverSpleen, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="ALS" Name="ALSFRadioButton" Grid.Row="5" Grid.Column="5" IsChecked="{Binding APE.AbdomenLiverSpleen, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="IAGA" Name="IAGANRadioButton" Grid.Row="1" Grid.Column="7" IsChecked="{Binding APE.InguinalAreaGenitalsAnus, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="IAGA" Name="IAGAFRadioButton" Grid.Row="1" Grid.Column="8" IsChecked="{Binding APE.InguinalAreaGenitalsAnus, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="ExS" Name="ExSNRadioButton" Grid.Row="2" Grid.Column="7" IsChecked="{Binding APE.ExtremetiesSpine, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="ExS" Name="ExSFRadioButton" Grid.Row="2" Grid.Column="8" IsChecked="{Binding APE.ExtremetiesSpine, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Tattoo" Name="TattooNRadioButton" Grid.Row="3" Grid.Column="7" IsChecked="{Binding APE.Tattoo, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Tattoo" Name="TattooFRadioButton" Grid.Row="3" Grid.Column="8" IsChecked="{Binding APE.Tattoo, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="MassCyst" Name="MassCystNRadioButton" Grid.Row="4" Grid.Column="7" IsChecked="{Binding APE.MassCyst, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="MassCyst" Name="MassCystFRadioButton" Grid.Row="4" Grid.Column="8" IsChecked="{Binding APE.MassCyst, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Others" Name="OthersNRadioButton" Grid.Row="5" Grid.Column="7" IsChecked="{Binding APE.OthersPE, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=N, Mode=TwoWay}"></RadioButton>
-                    <RadioButton GroupName="Others" Name="OthersFRadioButton" Grid.Row="5" Grid.Column="8" IsChecked="{Binding APE.OthersPE, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=F, Mode=TwoWay}"></RadioButton>
+                    <CheckBox Name="SkinNCheckBox" Grid.Row="1" Grid.Column="1" IsChecked="{Binding APE.SkinNValue}" />
+                    <CheckBox Name="SkinFCheckBox" Grid.Row="1" Grid.Column="2" IsChecked="{Binding APE.SkinFValue}" />
+                    <CheckBox Name="HeadScalpNCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding APE.HeadScalpNValue}" />
+                    <CheckBox Name="HeadScalpFCheckBox" Grid.Row="2" Grid.Column="2" IsChecked="{Binding APE.HeadScalpFValue}" />
+                    <CheckBox Name="EyesNCheckBox" Grid.Row="3" Grid.Column="1" IsChecked="{Binding APE.EyesNValue}" />
+                    <CheckBox Name="EyesFCheckBox" Grid.Row="3" Grid.Column="2" IsChecked="{Binding APE.EyesFValue}" />
+                    <CheckBox Name="EarsNCheckBox" Grid.Row="4" Grid.Column="1" IsChecked="{Binding APE.EarsNValue}" />
+                    <CheckBox Name="EarsFCheckBox" Grid.Row="4" Grid.Column="2" IsChecked="{Binding APE.EarsFValue}" />
+                    <CheckBox Name="NoseNCheckBox" Grid.Row="5" Grid.Column="1" IsChecked="{Binding APE.NoseNValue}" />
+                    <CheckBox Name="NoseFCheckBox" Grid.Row="5" Grid.Column="2" IsChecked="{Binding APE.NoseFValue}" />
+                    <CheckBox Name="TTTPNCheckBox" Grid.Row="1" Grid.Column="4" IsChecked="{Binding APE.TTTPNValue}" />
+                    <CheckBox Name="TTTPFCheckBox" Grid.Row="1" Grid.Column="5" IsChecked="{Binding APE.TTTPFValue}" />
+                    <CheckBox Name="NLNTNCheckBox" Grid.Row="2" Grid.Column="4" IsChecked="{Binding APE.NLNTNValue}" />
+                    <CheckBox Name="NLNTFCheckBox" Grid.Row="2" Grid.Column="5" IsChecked="{Binding APE.NLNTFValue}" />
+                    <CheckBox Name="TBNCheckBox" Grid.Row="3" Grid.Column="4" IsChecked="{Binding APE.TBNValue}" />
+                    <CheckBox Name="TBFCheckBox" Grid.Row="3" Grid.Column="5" IsChecked="{Binding APE.TBFValue}" />
+                    <CheckBox Name="HLNCheckBox" Grid.Row="4" Grid.Column="4" IsChecked="{Binding APE.HLNValue}" />
+                    <CheckBox Name="HLFCheckBox" Grid.Row="4" Grid.Column="5" IsChecked="{Binding APE.HLFValue}" />
+                    <CheckBox Name="ALSNCheckBox" Grid.Row="5" Grid.Column="4" IsChecked="{Binding APE.ALSNValue}" />
+                    <CheckBox Name="ALSFCheckBox" Grid.Row="5" Grid.Column="5" IsChecked="{Binding APE.ALSFValue}" />
+                    <CheckBox Name="IAGANCheckBox" Grid.Row="1" Grid.Column="7" IsChecked="{Binding APE.IAGANValue}" />
+                    <CheckBox Name="IAGAFCheckBox" Grid.Row="1" Grid.Column="8" IsChecked="{Binding APE.IAGAFValue}" />
+                    <CheckBox Name="ExSNCheckBox" Grid.Row="2" Grid.Column="7" IsChecked="{Binding APE.ExSNValue}" />
+                    <CheckBox Name="ExSFCheckBox" Grid.Row="2" Grid.Column="8" IsChecked="{Binding APE.ExSFValue}" />
+                    <CheckBox Name="TattooNCheckBox" Grid.Row="3" Grid.Column="7" IsChecked="{Binding APE.TattooNValue}" />
+                    <CheckBox Name="TattooFCheckBox" Grid.Row="3" Grid.Column="8" IsChecked="{Binding APE.TattooFValue}" />
+                    <CheckBox Name="MassCystNCheckBox" Grid.Row="4" Grid.Column="7" IsChecked="{Binding APE.MassCystNValue}" />
+                    <CheckBox Name="MassCystFCheckBox" Grid.Row="4" Grid.Column="8" IsChecked="{Binding APE.MassCystFValue}" />
+                    <CheckBox Name="OthersNCheckBox" Grid.Row="5" Grid.Column="7" IsChecked="{Binding APE.OthersPENValue}" />
+                    <CheckBox Name="OthersFCheckBox" Grid.Row="5" Grid.Column="8" IsChecked="{Binding APE.OthersPEFValue}" />
                 </Grid>
                 <Grid Margin="10,10,2,0">
                     <Grid.Resources>

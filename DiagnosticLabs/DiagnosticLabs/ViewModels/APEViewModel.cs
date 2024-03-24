@@ -166,6 +166,22 @@ namespace DiagnosticLabs.ViewModels
             else if (this.APE.VisualAcuityCorrected)
                 this.APE.VisualAcuity = "Corrected";
 
+            this.APE.Skin = PEStringValue(this.APE.SkinNValue, this.APE.SkinFValue);
+            this.APE.HeadScalp = PEStringValue(this.APE.HeadScalpNValue, this.APE.HeadScalpFValue);
+            this.APE.Eyes = PEStringValue(this.APE.EyesNValue, this.APE.EyesFValue);
+            this.APE.Ears = PEStringValue(this.APE.EarsNValue, this.APE.EarsFValue);
+            this.APE.Nose = PEStringValue(this.APE.NoseNValue, this.APE.NoseFValue);
+            this.APE.TeethTonsilsThroatPharynx = PEStringValue(this.APE.TTTPNValue, this.APE.TTTPFValue);
+            this.APE.NeckLymphNodesThyroid = PEStringValue(this.APE.NLNTNValue, this.APE.NLNTFValue);
+            this.APE.ThoraxBreast = PEStringValue(this.APE.TBNValue, this.APE.TBFValue);
+            this.APE.HeartLungs = PEStringValue(this.APE.HLNValue, this.APE.HLFValue);
+            this.APE.AbdomenLiverSpleen = PEStringValue(this.APE.ALSNValue, this.APE.ALSFValue);
+            this.APE.InguinalAreaGenitalsAnus = PEStringValue(this.APE.IAGANValue, this.APE.IAGAFValue);
+            this.APE.ExtremetiesSpine = PEStringValue(this.APE.ExSNValue, this.APE.ExSFValue);
+            this.APE.Tattoo = PEStringValue(this.APE.TattooNValue, this.APE.TattooFValue);
+            this.APE.MassCyst = PEStringValue(this.APE.MassCystNValue, this.APE.MassCystFValue);
+            this.APE.OthersPE = PEStringValue(this.APE.OthersPENValue, this.APE.OthersPEFValue);
+
             if (_labResults.SaveLabResultWithPatientRegistrationAndPatient(this.APE, this.PatientRegistration, this.Patient, ref id))
             {
                 this.APE.Id = id;
@@ -215,46 +231,6 @@ namespace DiagnosticLabs.ViewModels
                 this.APE.Gender = this.Patient.Gender;
                 this.APE.Age = this.Patient.Age;
             }
-        }
-        #endregion
-
-        #region Private Methods
-        private void AddSetDefaultOptions()
-        {
-            this.TextFields = new ObservableCollection<string>(new List<string>() { Texts.SetDefault });
-        }
-
-        private void LoadAllSingleLineEntryLists()
-        {
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.Gender);
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.CivilStatus);
-
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEENT);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEGastroenterology);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APERespiratory);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEIntegumentarySkin);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APECardiology);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEPsychology);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEEndocrinology);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEOBGyneUrology);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEMuscoloskeletal);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEInfectiousCommunicable);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APENeurological);
-            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APESurgical);
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.VitalSignsBy);
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.HeightWeightBy);
-        }
-
-        private void SetBooleans(APE ape)
-        {
-            ape.DrinkingDaily = ape.DrinkingFrequency == "Daily";
-            ape.DrinkingWeekly = ape.DrinkingFrequency == "Weekly";
-            ape.DrinkingOccasional = ape.DrinkingFrequency == "Occasional";
-            ape.LMPTypeRegular = ape.LMPType == "Regular";
-            ape.LMPTypeIrregular = ape.LMPType == "Irregular";
-            ape.VisualAcuityNormal = ape.VisualAcuity == "Normal";
-            ape.VisualAcuityEOR = ape.VisualAcuity == "EOR";
-            ape.VisualAcuityCorrected = ape.VisualAcuity == "Corrected";
         }
 
         public override void RefreshLabResultsSingleLineEntryList(string listName)
@@ -334,6 +310,100 @@ namespace DiagnosticLabs.ViewModels
                 default:
                     break;
             }
+        }
+        #endregion
+
+        #region Private Methods
+        private void AddSetDefaultOptions()
+        {
+            this.TextFields = new ObservableCollection<string>(new List<string>() { Texts.SetDefault });
+        }
+
+        private void LoadAllSingleLineEntryLists()
+        {
+            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.Gender);
+            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.CivilStatus);
+
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEENT);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEGastroenterology);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APERespiratory);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEIntegumentarySkin);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APECardiology);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEPsychology);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEEndocrinology);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEOBGyneUrology);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEMuscoloskeletal);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEInfectiousCommunicable);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APENeurological);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.APESurgical);
+            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.VitalSignsBy);
+            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.HeightWeightBy);
+        }
+
+        private void SetBooleans(APE ape)
+        {
+            ape.DrinkingDaily = ape.DrinkingFrequency == "Daily";
+            ape.DrinkingWeekly = ape.DrinkingFrequency == "Weekly";
+            ape.DrinkingOccasional = ape.DrinkingFrequency == "Occasional";
+            ape.LMPTypeRegular = ape.LMPType == "Regular";
+            ape.LMPTypeIrregular = ape.LMPType == "Irregular";
+            ape.VisualAcuityNormal = ape.VisualAcuity == "Normal";
+            ape.VisualAcuityEOR = ape.VisualAcuity == "EOR";
+            ape.VisualAcuityCorrected = ape.VisualAcuity == "Corrected";
+
+            ape.SkinFValue = PEBooleanValue(ape.Skin, "F");
+            ape.SkinNValue = PEBooleanValue(ape.Skin, "N");
+            ape.HeadScalpFValue = PEBooleanValue(ape.HeadScalp, "F"); ;
+            ape.HeadScalpNValue = PEBooleanValue(ape.HeadScalp, "N");
+            ape.EyesFValue = PEBooleanValue(ape.Eyes, "F");
+            ape.EyesNValue = PEBooleanValue(ape.Eyes, "N");
+            ape.EarsFValue = PEBooleanValue(ape.Ears, "F");
+            ape.EarsNValue = PEBooleanValue(ape.Ears, "N");
+            ape.NoseFValue = PEBooleanValue(ape.Nose, "F");
+            ape.NoseNValue = PEBooleanValue(ape.Nose, "N");
+            ape.TTTPFValue = PEBooleanValue(ape.TeethTonsilsThroatPharynx, "F");
+            ape.TTTPNValue = PEBooleanValue(ape.TeethTonsilsThroatPharynx, "N");
+            ape.NLNTFValue = PEBooleanValue(ape.NeckLymphNodesThyroid, "F");
+            ape.NLNTNValue = PEBooleanValue(ape.NeckLymphNodesThyroid, "N");
+            ape.TBFValue = PEBooleanValue(ape.ThoraxBreast, "F");
+            ape.TBNValue = PEBooleanValue(ape.ThoraxBreast, "N");
+            ape.HLFValue = PEBooleanValue(ape.HeartLungs, "F");
+            ape.HLNValue = PEBooleanValue(ape.HeartLungs, "N");
+            ape.ALSFValue = PEBooleanValue(ape.AbdomenLiverSpleen, "F");
+            ape.ALSNValue = PEBooleanValue(ape.AbdomenLiverSpleen, "N");
+            ape.IAGAFValue = PEBooleanValue(ape.InguinalAreaGenitalsAnus, "F");
+            ape.IAGANValue = PEBooleanValue(ape.InguinalAreaGenitalsAnus, "N");
+            ape.ExSFValue = PEBooleanValue(ape.ExtremetiesSpine, "F");
+            ape.ExSNValue = PEBooleanValue(ape.ExtremetiesSpine, "N");
+            ape.TattooFValue = PEBooleanValue(ape.Tattoo, "F");
+            ape.TattooNValue = PEBooleanValue(ape.Tattoo, "N");
+            ape.MassCystFValue = PEBooleanValue(ape.MassCyst, "F");
+            ape.MassCystNValue = PEBooleanValue(ape.MassCyst, "N");
+            ape.OthersPEFValue = PEBooleanValue(ape.OthersPE, "F");
+            ape.OthersPENValue = PEBooleanValue(ape.OthersPE, "N");
+        }
+
+        private string PEStringValue(bool? nValue, bool? fValue)
+        {
+            if (nValue == false && fValue == false)
+                return null;
+            else
+            {
+                if ((nValue != null && nValue == true) && (fValue == null || fValue == false))
+                {
+                    return "N";
+                }
+                else if ((fValue != null && fValue == true) && (nValue == null || nValue == false))
+                {
+                    return "F";
+                }
+                return null;
+            }
+        }
+
+        private bool PEBooleanValue(string value, string reverseValue)
+        {
+            return value == null ? false : value.Trim() == reverseValue;
         }
         #endregion
     }

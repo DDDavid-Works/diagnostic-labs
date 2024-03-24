@@ -220,7 +220,7 @@ namespace DiagnosticLabsBLL.Services
                     if (stoolFecalysis.Id == 0)
                         _dbContext.StoolFecalyses.Add(stoolFecalysis);
                     
-                    _dbContext.SaveChanges();
+                    _dbContext.SaveChangesAsync();
                     id = stoolFecalysis.Id;
                 }
                 else if (typeof(T) == typeof(APE))
@@ -229,7 +229,7 @@ namespace DiagnosticLabsBLL.Services
                     if (ape.Id == 0)
                         _dbContext.APEs.Add(ape);
 
-                    _dbContext.SaveChanges();
+                    _dbContext.SaveChangesAsync();
                     id = ape.Id;
                 }
 
