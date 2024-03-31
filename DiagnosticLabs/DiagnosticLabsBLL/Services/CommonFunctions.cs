@@ -72,5 +72,16 @@ namespace DiagnosticLabsBLL.Services
 
             return (a - b) / 10000;
         }
+
+        public decimal? NumbericValue(string value)
+        {
+            decimal decimalValue = 0;
+            bool isDecimal = decimal.TryParse(value, out decimalValue);
+
+            if (isDecimal)
+                return decimalValue;
+            else
+                return null;
+        }
     }
 }

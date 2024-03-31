@@ -2,6 +2,7 @@
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,7 +49,7 @@ namespace DiagnosticLabs.ViewModels
             {
                 this.Payment = _paymentsBLL.GetPayment(id);
                 this.PatientRegistration = _patientRegistrationsBLL.GetPatientRegistration((long)this.Payment.PatientRegistrationId);
-                this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment(id);
+                this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment((long)this.Payment.PatientRegistrationId, this.Payment.PaymentAmount);
                 this.Patient = _patientsBLL.GetPatient((long)this.PatientRegistration.PatientId);
 
                 this.PatientRegistrationServices = this.PatientRegistrationServiceViewModelList(_patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(this.PatientRegistration.Id));
@@ -166,13 +167,11 @@ namespace DiagnosticLabs.ViewModels
         #region Private Methods
         private void ComputeTotals(string paymentAmount)
         {
-            decimal amount = 0;
-            bool isDecimal = decimal.TryParse(paymentAmount, out amount);
-            if (isDecimal)
-            {
-                this.Payment.PaymentAmount = amount;
-                this.Payment.PaymentPaymentBalance = String.Format("{0:N}", (this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid) - amount);
-            }
+            decimal currentAmount = _commonFunctions.NumbericValue(paymentAmount);
+            decimal oldPaymentAmounts = _commonFunctions.NumbericValue(this.PatientRegistrationPayment.PatientRegistrationPaymentAmountPaid);
+
+            this.Payment.PaymentAmount = currentAmount;
+            this.Payment.PaymentPaymentBalance = String.Format("{0:N}", (this.PatientRegistration.AmountDue - oldPaymentAmounts) - currentAmount);
         }
         #endregion
     }

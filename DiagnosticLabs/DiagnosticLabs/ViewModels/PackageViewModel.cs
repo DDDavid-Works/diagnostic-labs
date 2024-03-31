@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -126,7 +127,15 @@ namespace DiagnosticLabs.ViewModels
         {
             List<PackageServiceViewModel> packageServicesList = new List<PackageServiceViewModel>();
             foreach (PackageService packageService in packageServices)
-                packageServicesList.Add(new PackageServiceViewModel() { PackageService = packageService, Service = _servicesBLL.GetService(packageService.ServiceId) });
+            {
+                packageServicesList.Add(new PackageServiceViewModel() { 
+                    PackageService = packageService,
+                    Service = _servicesBLL.GetService(packageService.ServiceId)
+                });
+                packageService.PackageServicePrice = String.Format("{0:N}", packageService.Price);
+                Service service = _servicesBLL.GetService(packageService.ServiceId);
+                packageService.PackageServiceName = service.ServiceName;
+            }
 
             return new ObservableCollection<PackageServiceViewModel>(packageServicesList);
         }
@@ -136,6 +145,9 @@ namespace DiagnosticLabs.ViewModels
             if (packageServiceVM == null)
             {
                 PackageServiceViewModel psvm = new PackageServiceViewModel();
+                psvm.PackageService.PackageServicePrice = String.Format("{0:N}", psvm.Service.Price);
+                psvm.PackageService.PackageServiceName = psvm.Service.ServiceName;
+
                 this.PackageServices.Add(psvm);
             }
             else

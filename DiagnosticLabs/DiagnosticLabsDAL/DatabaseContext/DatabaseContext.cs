@@ -34,6 +34,8 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<Service> Services { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<PackageService> PackageServices { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<DiscountDetail> DiscountDetails { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanySetup> CompanySetups { get; set; }
         public DbSet<StoolFecalysis> StoolFecalyses { get; set; }

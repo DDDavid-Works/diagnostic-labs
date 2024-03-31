@@ -82,6 +82,8 @@ namespace DiagnosticLabsBLL.Services
                         packageService.PackageId = packageId;
 
                     long packageServiceId = 0;
+                    packageService.Price = Convert.ToDecimal(_commonFunctions.NumbericValue(packageService.PackageServicePrice));
+
                     SavePackageService(packageService, ref packageServiceId);
                 }
 

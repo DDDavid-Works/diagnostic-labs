@@ -12,12 +12,7 @@ namespace DiagnosticLabs.ViewModels
         public Service Service
         {
             get { return _service; }
-            set
-            {
-                this.PatientRegistrationService.PatientRegistrationServicePrice = String.Format("{0:N}", value.Price);
-                this.PatientRegistrationService.PatientRegistrationServiceName = value.ServiceName;
-                _service = value;
-            }
+            set { _service = value; }
         }
     }
 }

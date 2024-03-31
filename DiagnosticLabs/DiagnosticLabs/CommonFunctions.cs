@@ -76,7 +76,7 @@ namespace DiagnosticLabs
         {
             return new NotificationMessage()
             {
-                Message = message,
+                Message = message.Trim('\r', '\n'),
                 MessageType = messageType,
                 IsAutoCloseMessage = isAutoCloseMessage
             };
@@ -87,6 +87,16 @@ namespace DiagnosticLabs
             return Globals.MODULES.Where(m => m.ModuleName == moduleName).Select(m => m.Id).FirstOrDefault();
         }
 
+        public decimal NumbericValue(string value)
+        {
+            decimal decimalValue = 0;
+            bool isDecimal = decimal.TryParse(value, out decimalValue);
+
+            if (isDecimal)
+                return decimalValue;
+            else
+                return 0;
+        }
         #endregion
 
         #region Lab Results

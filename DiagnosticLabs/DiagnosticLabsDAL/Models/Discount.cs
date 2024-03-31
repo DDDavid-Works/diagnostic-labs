@@ -2,16 +2,14 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiagnosticLabsDAL.Models
 {
-    public class PatientRegistrationService : BaseModel, IDataErrorInfo
+    public class Discount : BaseModel, IDataErrorInfo
     {
         private long il_Id;
-        private long il_PatientRegistrationId;
-        private long il_ServiceId;
-        private decimal il_Price;
+        private string il_DiscountName;
+        private string il_DiscountDescription;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -25,26 +23,16 @@ namespace DiagnosticLabsDAL.Models
             set { il_Id = value; OnPropertyChanged("Id"); }
         }
 
-        public long PatientRegistrationId
+        public string DiscountName
         {
-            get { return il_PatientRegistrationId; }
-            set { il_PatientRegistrationId = value; OnPropertyChanged("PatientRegistrationId"); }
+            get { return il_DiscountName; }
+            set { il_DiscountName = value; OnPropertyChanged("DiscountName"); }
         }
 
-        public long ServiceId
+        public string DiscountDescription
         {
-            get { return il_ServiceId; }
-            set { il_ServiceId = value; OnPropertyChanged("ServiceId"); }
-        }
-
-        public decimal Price
-        {
-            get { return il_Price; }
-            set { 
-                il_Price = value;
-                OnPropertyChanged("Price");
-                PatientRegistrationServicePrice = String.Format("{0:N}", value);
-            }
+            get { return il_DiscountDescription; }
+            set { il_DiscountDescription = value; OnPropertyChanged("DiscountDescription"); }
         }
 
         public bool IsActive
@@ -62,7 +50,7 @@ namespace DiagnosticLabsDAL.Models
         public DateTime CreatedDate
         {
             get { return il_CreatedDate; }
-            set { il_CreatedDate = value; OnPropertyChanged("CreatedDate"); }
+            set { il_CreatedDate = value; OnPropertyChanged("CreatedDate");}
         }
 
         public long UpdatedByUserId
@@ -77,17 +65,8 @@ namespace DiagnosticLabsDAL.Models
             set { il_UpdatedDate = value; OnPropertyChanged("UpdatedDate"); }
         }
 
-        [NotMapped]
-        public string PatientRegistrationServiceName { get; set; }
-
-        [NotMapped]
-        public string PatientRegistrationServicePrice { get; set; }
-
-        [NotMapped]
-        public bool HasLabResultInput { get; set; }
-
         #region Validation
-        private static readonly string[] _propertiesToValidate = { "PackageServicePrice" };
+        private static readonly string[] _propertiesToValidate = { "DiscountName", "DiscountDescription", "DiscountPrice" };
 
         public string Error
         {
@@ -117,13 +96,10 @@ namespace DiagnosticLabsDAL.Models
         private string GetValidationError(string columnName)
         {
             string result = string.Empty;
-            if (columnName == "PackageServicePrice")
-            {
-                decimal packageServicePrice = 0;
-                bool isDecimal = decimal.TryParse(this.PatientRegistrationServicePrice, out packageServicePrice);
-                if (!isDecimal)
-                    result = $"\r\nPackage Service Price of {this.PatientRegistrationServiceName} is invalid.";
-            }
+            if (columnName == "DiscountName" && this.DiscountName.Trim() == string.Empty)
+                result = "Name can not be empty.";
+            else if (columnName == "DiscountDescription" && this.DiscountDescription.Trim() == string.Empty)
+                result = "\r\nDescription can not be empty.";
 
             ErrorMessages += result;
             ErrorMessages = ErrorMessages.Trim('\r', '\n');

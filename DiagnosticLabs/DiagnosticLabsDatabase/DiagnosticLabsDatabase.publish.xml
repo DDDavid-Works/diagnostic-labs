@@ -5,7 +5,7 @@
     <TargetDatabaseName>DiagnosticLabsDB</TargetDatabaseName>
     <DeployScriptFileName>DiagnosticLabsDatabase.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <TargetConnectionString>Data Source=DARREL-D-DAVID\SQLEXPRESS;Persist Security Info=False;User ID=sa;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=DARREL-DAVID\SQLEXPRESS;Persist Security Info=False;User ID=sa;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Command Timeout=0</TargetConnectionString>
     <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
     <CreateNewDatabase>True</CreateNewDatabase>
   </PropertyGroup>

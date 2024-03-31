@@ -83,6 +83,8 @@ namespace DiagnosticLabsBLL.Services
                         patientRegistrationService.PatientRegistrationId = patientRegistrationId;
 
                     long patientRegistrationServiceId = 0;
+                    patientRegistrationService.Price = Convert.ToDecimal(_commonFunctions.NumbericValue(patientRegistrationService.PatientRegistrationServicePrice));
+
                     SavePatientRegistrationService(patientRegistrationService, ref patientRegistrationServiceId);
                 }
 

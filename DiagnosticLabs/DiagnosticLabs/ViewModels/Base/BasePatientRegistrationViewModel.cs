@@ -1,6 +1,7 @@
 ﻿using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -196,14 +197,15 @@ namespace DiagnosticLabs.ViewModels.Base
             {
                 PatientRegistrationServiceViewModel prsvm = new PatientRegistrationServiceViewModel()
                 {
+                    Service = _servicesBLL.GetService(packageService.ServiceId),
                     PatientRegistrationService = new PatientRegistrationService()
                     {
                         PatientRegistrationId = this.PatientRegistration.Id,
                         ServiceId = packageService.ServiceId,
                         Price = packageService.Price,
-                        IsActive = true
-                    },
-                    Service = _servicesBLL.GetService(packageService.ServiceId)
+                        IsActive = true,
+                        PatientRegistrationServicePrice = String.Format("{0:N}", packageService.Price)
+                    }
                 };
                 this.PatientRegistrationServices.Add(prsvm);
             }
@@ -215,11 +217,15 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             List<PatientRegistrationServiceViewModel> packageServicesList = new List<PatientRegistrationServiceViewModel>();
             foreach (PatientRegistrationService patientRegistrationService in patientRegistrationServices)
+            {
+                patientRegistrationService.PatientRegistrationServicePrice = String.Format("{0:N}", patientRegistrationService.Price);
+
                 packageServicesList.Add(new PatientRegistrationServiceViewModel()
                 {
                     PatientRegistrationService = patientRegistrationService,
                     Service = _servicesBLL.GetService(patientRegistrationService.ServiceId)
                 });
+            }
 
             return new ObservableCollection<PatientRegistrationServiceViewModel>(packageServicesList);
         }

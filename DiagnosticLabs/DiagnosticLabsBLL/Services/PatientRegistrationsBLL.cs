@@ -135,7 +135,7 @@ namespace DiagnosticLabsBLL.Services
             };
         }
 
-        public PatientRegistrationPayment GetPatientRegistrationPayment(long? patientRegistrationId)
+        public PatientRegistrationPayment GetPatientRegistrationPayment(long? patientRegistrationId, decimal? currentPaymentAmount = null)
         {
             try
             {
@@ -143,9 +143,18 @@ namespace DiagnosticLabsBLL.Services
 
                 if (patientRegistrationPayment != null)
                 {
-                    patientRegistrationPayment.PatientRegistrationPaymentAmountDue = String.Format("{0:N}", patientRegistrationPayment.AmountDue);
-                    patientRegistrationPayment.PatientRegistrationPaymentAmountPaid = String.Format("{0:N}", patientRegistrationPayment.AmountPaid);
-                    patientRegistrationPayment.PatientRegistrationPaymentBalance = String.Format("{0:N}", patientRegistrationPayment.Balance);
+                    if (currentPaymentAmount != null)
+                    {
+                        patientRegistrationPayment.PatientRegistrationPaymentAmountDue = String.Format("{0:N}", patientRegistrationPayment.AmountDue);
+                        patientRegistrationPayment.PatientRegistrationPaymentAmountPaid = String.Format("{0:N}", patientRegistrationPayment.AmountPaid - currentPaymentAmount);
+                        patientRegistrationPayment.PatientRegistrationPaymentBalance = String.Format("{0:N}", patientRegistrationPayment.Balance);
+                    }
+                    else
+                    {
+                        patientRegistrationPayment.PatientRegistrationPaymentAmountDue = String.Format("{0:N}", patientRegistrationPayment.AmountDue);
+                        patientRegistrationPayment.PatientRegistrationPaymentAmountPaid = String.Format("{0:N}", patientRegistrationPayment.AmountPaid);
+                        patientRegistrationPayment.PatientRegistrationPaymentBalance = String.Format("{0:N}", patientRegistrationPayment.Balance);
+                    }
                 }
 
                 return patientRegistrationPayment;

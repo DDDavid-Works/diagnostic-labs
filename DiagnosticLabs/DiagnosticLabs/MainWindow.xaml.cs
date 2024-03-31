@@ -34,6 +34,7 @@ namespace DiagnosticLabs
         ItemLocationsWindow _itemLocationsWindow = null;
         CompaniesWindow _companiesWindow = null;
         PackagesWindow _packagesWindow = null;
+        DiscountsWindow _discountsWindow = null;
         StoolFecalysisWindow _stoolFecalysisWindow = null;
         AnnualPhysicalExamWindow _annualPhysicalExamWindow = null;
 
@@ -185,6 +186,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _packagesWindow.Activate();
+                case Modules.Discounts:
+                    if (_discountsWindow == null)
+                    {
+                        _discountsWindow = LoadWindow<DiscountsWindow>();
+                        SetActionToolbarUserControl(_discountsWindow.ActionToolbar, menuItem);
+                        _discountsWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _discountsWindow.Show();
+                    }
+                    else
+                        return () => _discountsWindow.Activate();
                 #endregion
                 #region Lab Results
                 case Modules.StoolFecalysis:
@@ -255,6 +266,8 @@ namespace DiagnosticLabs
                 _companiesWindow = null;
             else if (sender.GetType() == typeof(PackagesWindow))
                 _packagesWindow = null;
+            else if (sender.GetType() == typeof(DiscountsWindow))
+                _discountsWindow = null;
             else if (sender.GetType() == typeof(StoolFecalysisWindow))
                 _stoolFecalysisWindow = null;
             else if (sender.GetType() == typeof(AnnualPhysicalExamWindow))

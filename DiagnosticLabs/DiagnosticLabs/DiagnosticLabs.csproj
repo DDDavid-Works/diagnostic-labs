@@ -231,6 +231,9 @@
     <Compile Include="ManagementWindows\DepartmentsWindow.xaml.cs">
       <DependentUpon>DepartmentsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagementWindows\DiscountsWindow.xaml.cs">
+      <DependentUpon>DiscountsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagementWindows\ItemLocationsWindow.xaml.cs">
       <DependentUpon>ItemLocationsWindow.xaml</DependentUpon>
     </Compile>
@@ -284,6 +287,9 @@
     </Compile>
     <Compile Include="SearchWindows\SearchDepartmentsWindow.xaml.cs">
       <DependentUpon>SearchDepartmentsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchWindows\SearchDiscountsWindow.xaml.cs">
+      <DependentUpon>SearchDiscountsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchWindows\SearchItemLocationsWindow.xaml.cs">
       <DependentUpon>SearchItemLocationsWindow.xaml</DependentUpon>
@@ -371,7 +377,9 @@
     <Compile Include="ViewModels\ItemLocationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\DiscountDetailViewModel.cs" />
     <Compile Include="ViewModels\PackageServiceViewModel.cs" />
+    <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\PatientRegistrationServiceViewModel.cs" />
     <Compile Include="ViewModels\PatientRegistrationViewModel.cs" />
@@ -380,6 +388,7 @@
     <Compile Include="ViewModels\PrintViewModel.cs" />
     <Compile Include="ViewModels\SearchCompanyViewModel.cs" />
     <Compile Include="ViewModels\SearchDepartmentViewModel.cs" />
+    <Compile Include="ViewModels\SearchDiscountViewModel .cs" />
     <Compile Include="ViewModels\SearchPackageViewModel.cs" />
     <Compile Include="ViewModels\SearchLabResultViewModel.cs" />
     <Compile Include="ViewModels\SearchPatientRegistrationViewModel.cs" />
@@ -441,6 +450,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ManagementWindows\DiscountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ManagementWindows\ItemLocationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -484,6 +497,10 @@
     <Page Include="SearchWindows\SearchDepartmentsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchWindows\SearchDiscountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchWindows\SearchItemLocationsWindow.xaml">
       <SubType>Designer</SubType>

@@ -16,12 +16,13 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -102,6 +103,8 @@
     <Build Include="Tables\MultiLineEntries.sql" />
     <Build Include="Tables\DefaultValues.sql" />
     <Build Include="Tables\APEs.sql" />
+    <Build Include="Tables\Discounts.sql" />
+    <Build Include="Tables\DiscountDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />
