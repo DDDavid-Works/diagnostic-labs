@@ -318,9 +318,6 @@
     <Compile Include="SearchWindows\SearchUsersWindow.xaml.cs">
       <DependentUpon>SearchUsersWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchWindows\SelectMultiLineEntryWindow.xaml.cs">
-      <DependentUpon>SelectMultiLineEntryWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SearchWindows\SelectServicesWindow.xaml.cs">
       <DependentUpon>SelectServicesWindow.xaml</DependentUpon>
     </Compile>
@@ -540,10 +537,6 @@
     <Page Include="SearchWindows\SearchUsersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SearchWindows\SelectMultiLineEntryWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="SearchWindows\SelectServicesWindow.xaml">
       <SubType>Designer</SubType>

@@ -97,6 +97,17 @@ namespace DiagnosticLabs
             else
                 return 0;
         }
+
+        public int? NumbericNullOrIntValue(string value)
+        {
+            Int32 intValue = 0;
+            bool isInteger = Int32.TryParse(value, out intValue);
+
+            if (isInteger)
+                return intValue;
+            else
+                return null;
+        }
         #endregion
 
         #region Lab Results

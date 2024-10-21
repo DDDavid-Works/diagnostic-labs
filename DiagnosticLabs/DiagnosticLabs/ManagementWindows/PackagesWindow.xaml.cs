@@ -46,7 +46,7 @@ namespace DiagnosticLabs.ManagementWindows
                 {
                     PackageServiceViewModel psvm = new PackageServiceViewModel()
                     {
-                        PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = service.Id, Price = service.Price, IsActive = true },
+                        PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = service.Id, Price = service.Price, IsActive = true},
                         Service = service
                     };
                     list.Add(psvm);
