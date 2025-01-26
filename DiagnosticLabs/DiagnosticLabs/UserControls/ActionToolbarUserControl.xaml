@@ -28,7 +28,7 @@
     </UserControl.Resources>
     <Border>
         <StackPanel Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="NewButtonBox">
                 <Button Name="NewButton" Command="{Binding NewCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/add.png"></Image>
@@ -36,7 +36,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="SaveButtonBox">
                 <Button Name="SaveButton" Command="{Binding SaveCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/save.png"></Image>
@@ -44,7 +44,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="DeleteButtonBox">
                 <Button Name="DeleteButton" Command="{Binding DeleteCommand}">
                     <StackPanel>
                         <Image Source="../Images/48x48/delete.png"></Image>
@@ -52,7 +52,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="PrintButtonBox">
                 <Button Name="PrintButton" Click="PrintButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/print.png"></Image>
@@ -60,7 +60,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="SearchButtonBox">
                 <Button Name="SearchButton" Click="SearchButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/search.png"></Image>
@@ -68,11 +68,27 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="ShowListButtonBox">
                 <Button Name="ShowListButton" Click="ShowListButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/list2.png"></Image>
                         <TextBlock>List</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="SetDefaultsButtonBox">
+                <Button Name="SetDefaultsButton" Click="SetDefaultsButton_Click">
+                    <StackPanel>
+                        <Image Source="../Images/48x48/lab-result.png"></Image>
+                        <TextBlock>Dflts</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="CancelSetDefaultsButtonBox" Visibility="Collapsed">
+                <Button Name="CancelSetDefaultsButton" Click="CancelSetDefaultsButton_Click">
+                    <StackPanel>
+                        <Image Source="../Images/48x48/cancel.png"></Image>
+                        <TextBlock>Cancel</TextBlock>
                     </StackPanel>
                 </Button>
             </Border>

@@ -6,6 +6,7 @@ using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -111,6 +112,33 @@ namespace DiagnosticLabs
         #endregion
 
         #region Lab Results
+        public void SaveDefaults(string labResultModule, string defaultValuesJson)
+        {
+            string docPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\_DATA\\Defaults";
+
+            bool exists = Directory.Exists(docPath);
+
+            if (!exists)
+                Directory.CreateDirectory(docPath);
+
+            using (StreamWriter file = File.AppendText($"{docPath}\\{labResultModule}.json"))
+            {
+                file.WriteLine(defaultValuesJson);
+            }
+        }
+
+        public string GetDefaults(string labResultModule)
+        {
+            string docPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\_DATA\\Defaults",
+                defaultsFile = $"{docPath}\\{labResultModule}.json",
+                defaultsJson = string.Empty;
+
+            if (File.Exists(defaultsFile))
+                defaultsJson = File.ReadAllText(defaultsFile);
+
+            return defaultsJson;
+        }
+
         public List<string> LabResultsGeneralSingleLineEntryList(string fieldName, bool addNewEntryOption = false)
         {
             List<string> values = _singleLineEntriesBLL.GetSingleLineEntries(null, fieldName).Select(s => s.FieldValue).ToList();

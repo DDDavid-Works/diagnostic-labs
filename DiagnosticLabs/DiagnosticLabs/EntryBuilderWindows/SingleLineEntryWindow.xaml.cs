@@ -38,24 +38,5 @@ namespace DiagnosticLabs.EntryBuilderWindows
         {
             this.Close();
         }
-
-        private void IsDefaultRadioButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = (SingleLineEntryViewModel)DataContext;
-            if (vm.SetDefaultValueCommmand.CanExecute(null))
-            {
-                SingleLineEntry sle = (SingleLineEntry)((RadioButton)sender).CommandParameter;
-                vm.SetDefaultValueCommmand.Execute(sle);
-            }
-        }
-
-        private void NoDefaultRadioButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = (SingleLineEntryViewModel)DataContext;
-            if (vm.SetDefaultValueCommmand.CanExecute(null))
-            {
-                vm.SetDefaultValueCommmand.Execute(null);
-            }
-        }
     }
 }

@@ -161,7 +161,13 @@ namespace DiagnosticLabsDAL.Models
 
         public string Error
         {
-            get { return ErrorMessages.Trim(); }
+            get
+            {
+                if (ErrorMessages != null)
+                    return ErrorMessages.Trim();
+                else
+                    return string.Empty;
+            }
         }
 
         public string this[string columnName]

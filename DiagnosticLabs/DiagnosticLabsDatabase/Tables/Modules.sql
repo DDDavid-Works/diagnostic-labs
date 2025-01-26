@@ -10,6 +10,7 @@
     [HasSearch] BIT NOT NULL DEFAULT 0,
     [HasPrint] BIT NOT NULL DEFAULT 0, 
     [HasShowList] BIT NOT NULL DEFAULT 0, 
+    [HasShowSetDefaults] BIT NOT NULL DEFAULT 0, 
     [Icon] NVARCHAR(50) NOT NULL DEFAULT '', 
     [SortOrder] INT NOT NULL DEFAULT 0, 
     [IsActive] BIT NOT NULL DEFAULT 1, 

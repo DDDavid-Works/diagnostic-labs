@@ -5,6 +5,7 @@ using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DiagnosticLabs.LabResultsWindows
 {
@@ -38,6 +39,26 @@ namespace DiagnosticLabs.LabResultsWindows
                 PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
                 print.ShowDialog();
             }
+        }
+        
+        private void ActionToolbar_SetDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.ClearAllValuesCommand.CanExecute(null))
+                vm.ClearAllValuesCommand.Execute(null);
+
+            ToggleSetDefaultsUI(true);
+        }
+
+        private void ActionToolbar_CancelSetDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.NewCommand.CanExecute(null))
+                vm.NewCommand.Execute(null);
+
+            ToggleSetDefaultsUI(false);
         }
 
         private void ColorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -145,6 +166,35 @@ namespace DiagnosticLabs.LabResultsWindows
                 default:
                     break;
             }
+        }
+
+        private void ToggleSetDefaultsUI(bool isSetDefaults)
+        {
+            this.Title = isSetDefaults ? "Stool/Fecalysis [SET DEFAULT MODE]" : "Stool/Fecalysis";
+
+            var bc = new BrushConverter();
+            this.Background = (Brush)bc.ConvertFrom(isSetDefaults ? "#F0E495" : "#DFECDF");
+
+            Visibility isVisible = isSetDefaults ? Visibility.Collapsed : Visibility.Visible,
+                isHidden = isSetDefaults ? Visibility.Visible : Visibility.Hidden;
+
+            ActionToolbar.NewButtonBox.Visibility = isVisible;
+            ActionToolbar.DeleteButtonBox.Visibility = isVisible;
+            ActionToolbar.PrintButtonBox.Visibility = isVisible;
+            ActionToolbar.SearchButtonBox.Visibility = isVisible;
+            ActionToolbar.SetDefaultsButtonBox.Visibility = isVisible;
+            ActionToolbar.CancelSetDefaultsButtonBox.Visibility = isHidden;
+
+            PatientRegistrationSearchByCode.IsEnabled = !isSetDefaults;
+            InputDateDatePicker.IsEnabled = !isSetDefaults;
+            CompanyNameTextBox.IsEnabled = !isSetDefaults;
+            BatchNameTextBox.IsEnabled = !isSetDefaults;
+            PatientSearchByCode.IsEnabled = !isSetDefaults;
+            PatientSearchByName.IsEnabled = !isSetDefaults;
+            CompanyOrPhysicianTextBox.IsEnabled = !isSetDefaults;
+            AgeTextBox.IsEnabled = !isSetDefaults;
+            SexTextBox.IsEnabled = !isSetDefaults;
+            DateRequestedTextBox.IsEnabled = !isSetDefaults;
         }
         #endregion
     }

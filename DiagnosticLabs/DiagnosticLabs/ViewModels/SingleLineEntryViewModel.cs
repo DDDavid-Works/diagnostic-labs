@@ -24,9 +24,7 @@ namespace DiagnosticLabs.ViewModels
         public Module OpenModule { get; set; }
         public string FieldName { get; set; }
         public bool IsGeneralField { get; set; }
-        public bool HasNoDefault { get; set; }
-        public DefaultValue OriginalDefaultValue { get; set; }
-        public SingleLineEntriesAndDefaultValueViewModel SingleLineEntriesAndDefaultValue { get; set; }
+        public SingleLineEntriesViewModel SingleLineEntries { get; set; }
 
         public ICommand SaveCommand { get; set; }
         public ICommand AddSingleLineEntryCommand { get; set; }
@@ -51,32 +49,25 @@ namespace DiagnosticLabs.ViewModels
             this.OpenModule = _modulesBLL.GetModule((long)moduleId);
 
             this.FieldName = fieldName;
-            this.SingleLineEntriesAndDefaultValue = new SingleLineEntriesAndDefaultValueViewModel()
-            {
-                SingleLineEntries = new ObservableCollection<SingleLineEntry>(singleLineEntries),
-                DefaultValue = _defaultValuesBLL.GetDefaultValuesByModuleIdAndFieldName(moduleId, fieldName)
-            };
+            this.SingleLineEntries = new SingleLineEntriesViewModel() { SingleLineEntries = new ObservableCollection<SingleLineEntry>(singleLineEntries) };
             this.IsGeneralField = isGeneralField;
-            this.HasNoDefault = this.SingleLineEntriesAndDefaultValue.DefaultValue == null;
-            this.OriginalDefaultValue = this.SingleLineEntriesAndDefaultValue.DefaultValue;
 
             this.SaveCommand = new RelayCommand(param => SaveSingleLineEntries());
             this.AddSingleLineEntryCommand = new RelayCommand(param => AddSingleLineEntry());
             this.RemoveSingleLineEntryCommand = new RelayCommand(param => RemoveSingleLineEntry((SingleLineEntry)param));
-            this.SetDefaultValueCommmand = new RelayCommand(param => SetDefaultValue((SingleLineEntry)param));
         }
 
         #region Data Actions
         private void SaveSingleLineEntries()
         {
-            if (this.SingleLineEntriesAndDefaultValue.SingleLineEntries.Where(s => !s.IsValid).Any())
+            if (this.SingleLineEntries.SingleLineEntries.Where(s => !s.IsValid).Any())
             {
-                string errorMessages = string.Join("", this.SingleLineEntriesAndDefaultValue.SingleLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
+                string errorMessages = string.Join("", this.SingleLineEntries.SingleLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
                 this.NotificationMessage = _commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
-            if (_singleLineEntriesBLL.SaveSingleLineEntryListAndDefault(this.SingleLineEntriesAndDefaultValue.SingleLineEntries.ToList(), this.SingleLineEntriesAndDefaultValue.DefaultValue, this.OriginalDefaultValue, this.HasNoDefault))
+            if (_singleLineEntriesBLL.SaveSingleLineEntryList(this.SingleLineEntries.SingleLineEntries.ToList()))
                 this.NotificationMessage = Messages.SavedSuccessfully;
             else
                 this.NotificationMessage = Messages.SaveFailed;
@@ -98,28 +89,12 @@ namespace DiagnosticLabs.ViewModels
                 FieldValue = String.Empty,
                 IsActive = true
             };
-            this.SingleLineEntriesAndDefaultValue.SingleLineEntries.Add(singleLineEntry);
+            this.SingleLineEntries.SingleLineEntries.Add(singleLineEntry);
         }
 
         private void RemoveSingleLineEntry(SingleLineEntry singleLineEntry)
         {
-            if (singleLineEntry.IsDefault)
-                this.HasNoDefault = true;
-
-            this.SingleLineEntriesAndDefaultValue.SingleLineEntries.Remove(singleLineEntry);
-        }
-
-        private void SetDefaultValue(SingleLineEntry singleLineEntry)
-        {
-            this.HasNoDefault = singleLineEntry == null;
-
-            if (singleLineEntry != null)
-            {
-                if (this.SingleLineEntriesAndDefaultValue.DefaultValue != null)
-                    this.SingleLineEntriesAndDefaultValue.DefaultValue.FieldValue = singleLineEntry.FieldValue;
-                else
-                    this.SingleLineEntriesAndDefaultValue.DefaultValue = _defaultValuesBLL.NewDefaultValue(this.OpenModule.Id, this.FieldName, string.Empty, singleLineEntry.FieldValue);
-            }
+            this.SingleLineEntries.SingleLineEntries.Remove(singleLineEntry);
         }
         #endregion
     }

@@ -1,7 +1,7 @@
 ﻿CREATE VIEW [dbo].[LatestCodeNumbers]
 AS
 WITH CompanyCodes (Code)
-AS (SELECT TOP 1 CODE FROM CompanySetups ORDER BY UpdatedDate DESC)
+AS (SELECT TOP 1 Code FROM CompanySetups ORDER BY UpdatedDate DESC)
 
 SELECT T1.v2 AS Prefix, MAX(CAST(value AS INT)) AS MaxNumber  
 FROM PatientRegistrations p CROSS APPLY string_split(RegistrationCode, '-')  
