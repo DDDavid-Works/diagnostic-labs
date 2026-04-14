@@ -49,6 +49,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<LatestCodeNumber> LatestCodeNumbers { get; set; }
         public DbSet<LabResult> LabResults { get; set; }
+        public DbSet<LabResultsDefault> LabResultsDefaults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Height" Value="50" />
-            <Setter Property="Width" Value="45" />
+            <Setter Property="Width" Value="50" />
             <Setter Property="Margin" Value="2" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -73,6 +73,14 @@
                     <StackPanel>
                         <Image Source="../Images/48x48/list2.png"></Image>
                         <TextBlock>List</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
+                <Button Name="ShowSetDefaultButton" Click="ShowSetDefaultButton_Click">
+                    <StackPanel>
+                        <Image Source="../Images/48x48/default.png"></Image>
+                        <TextBlock>Set Dflt</TextBlock>
                     </StackPanel>
                 </Button>
             </Border>

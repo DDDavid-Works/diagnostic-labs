@@ -238,6 +238,7 @@ namespace DiagnosticLabs
             actionToolbarUserControl.PrintButtonVisible = menuItem.Module.HasPrint && menuItem.UserPermission.AllowPrint;
             actionToolbarUserControl.SearchButtonVisible = menuItem.Module.HasSearch;
             actionToolbarUserControl.ShowListButtonVisible = menuItem.Module.HasShowList;
+            actionToolbarUserControl.ShowSetDefaultButtonVisible = menuItem.Module.HasSetDefault;
         }
 
         private void ClearWindow(object sender, EventArgs e)

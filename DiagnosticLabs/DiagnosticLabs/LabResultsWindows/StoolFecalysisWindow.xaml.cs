@@ -5,6 +5,7 @@ using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DiagnosticLabs.LabResultsWindows
 {
@@ -37,6 +38,18 @@ namespace DiagnosticLabs.LabResultsWindows
             {
                 PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
                 print.ShowDialog();
+            }
+        }
+
+        private void ActionToolbar_ShowSetDefaultCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.StoolFecalysis != null)
+            {
+                var bc = new BrushConverter();
+                this.Background = (Brush)bc.ConvertFrom("#FFC14D");
+                this.Title = "Stool/Fecalysis [SET DEFAULTS]";
             }
         }
 

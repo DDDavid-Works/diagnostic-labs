@@ -34,6 +34,7 @@ namespace DiagnosticLabs.UserControls
         public event RoutedEventHandler SearchCommand;
         public event RoutedEventHandler PrintCommand;
         public event RoutedEventHandler ShowListCommand;
+        public event RoutedEventHandler ShowSetDefaultCommand;
 
         public bool NewButtonVisible { get; set; }
         public bool SaveButtonVisible { get; set; }
@@ -41,6 +42,7 @@ namespace DiagnosticLabs.UserControls
         public bool PrintButtonVisible { get; set; }
         public bool SearchButtonVisible { get; set; }
         public bool ShowListButtonVisible { get; set; }
+        public bool ShowSetDefaultButtonVisible { get; set; }
 
         public ActionToolbarUserControl()
         {
@@ -55,6 +57,7 @@ namespace DiagnosticLabs.UserControls
             ((Border)PrintButton.Parent).Visibility = PrintButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)SearchButton.Parent).Visibility = SearchButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)ShowListButton.Parent).Visibility = ShowListButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            ((Border)ShowSetDefaultButton.Parent).Visibility = ShowSetDefaultButtonVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -78,6 +81,14 @@ namespace DiagnosticLabs.UserControls
             if (this.PrintCommand != null)
             {
                 this.PrintCommand(this, e);
+            }
+        }
+
+        private void ShowSetDefaultButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ShowSetDefaultCommand != null)
+            {
+                this.ShowSetDefaultCommand(this, e);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsDAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -44,9 +45,10 @@ namespace DiagnosticLabs.ManagementWindows
                 List<PackageServiceViewModel> list = new List<PackageServiceViewModel>();
                 foreach (Service service in select.SelectedServices)
                 {
+                    string packageServicePrice = String.Format("{0:N}", service.Price);
                     PackageServiceViewModel psvm = new PackageServiceViewModel()
                     {
-                        PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = service.Id, Price = service.Price, IsActive = true },
+                        PackageService = new PackageService() { PackageId = vm.Package.Id, ServiceId = service.Id, Price = service.Price, PackageServicePrice = packageServicePrice, IsActive = true },
                         Service = service
                     };
                     list.Add(psvm);

@@ -105,6 +105,10 @@
     <Build Include="Tables\APEs.sql" />
     <Build Include="Tables\Discounts.sql" />
     <Build Include="Tables\DiscountDetails.sql" />
+    <Build Include="Tables\LabResultsDefaults.sql" />
+    <None Include="Scripts\Data\Patients.sql" />
+    <None Include="Scripts\Data\PatientRegistrations.sql" />
+    <None Include="Scripts\Data\StoolFecalyses.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />

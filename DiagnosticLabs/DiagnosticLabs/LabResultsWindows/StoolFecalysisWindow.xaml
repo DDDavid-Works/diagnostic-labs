@@ -11,7 +11,7 @@
     <StackPanel Orientation="Vertical">
         <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
-                                       SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand"></menu:ActionToolbarUserControl>
+                                       SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand" ShowSetDefaultCommand="ActionToolbar_ShowSetDefaultCommand"></menu:ActionToolbarUserControl>
         <Grid Margin="0" VerticalAlignment="Top" Background="#ffffcc">
             <Grid.Resources>
                 <Style TargetType="Label">
