@@ -116,5 +116,22 @@ namespace DiagnosticLabs.SalesWindows
             if (vm.ComputeTotalsCommand.CanExecute(null))
                 vm.ComputeTotalsCommand.Execute(((TextBox)sender).Text);
         }
+
+        private void DiscountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var vm = (PaymentViewModel)DataContext;
+
+            if (vm.ComputeDiscountsCommand.CanExecute(null))
+                vm.ComputeDiscountsCommand.Execute(null);
+        }
+
+        private void DiscountRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (PaymentViewModel)DataContext;
+
+            if (vm.ComputeDiscountsCommand.CanExecute(null))
+                vm.ComputeDiscountsCommand.Execute(null);
+
+        }
     }
 }

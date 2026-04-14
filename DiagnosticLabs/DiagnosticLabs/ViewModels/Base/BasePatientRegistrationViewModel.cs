@@ -1,7 +1,6 @@
 ﻿using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -156,7 +155,6 @@ namespace DiagnosticLabs.ViewModels.Base
         {
             this.isLoading = true;
             this.PatientRegistration = _patientRegistrationsBLL.GetPatientRegistration(id);
-            this.PatientRegistration.IsPriceEdited = true;
             this.Patient = _patientsBLL.GetPatient((long)PatientRegistration.PatientId);
             this.Patient.IsAgeEdited = true;
             this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment(id);
@@ -167,6 +165,10 @@ namespace DiagnosticLabs.ViewModels.Base
             this.Patient.CompanyName = this.SelectedCompany.CompanyName;
 
             this.PatientRegistrationServices = PatientRegistrationServiceViewModelList(_patientRegistrationServicesBLL.GetPatientRegistrationServicesByPatientRegistrationId(id));
+
+            decimal totalServicesPrice = this.PatientRegistrationServices.Select(prs => (_servicesBLL.GetService(prs.PatientRegistrationService.ServiceId)).Price).Sum();
+            this.PatientRegistration.IsPriceEdited = totalServicesPrice != this.PatientRegistration.AmountDue;
+
             this.isLoading = false;
         }
 

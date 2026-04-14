@@ -26,14 +26,13 @@ namespace DiagnosticLabs.ViewModels
         public bool HasNoDefault { get; set; }
         public DefaultValue OriginalDefaultValue { get; set; }
         public MultiLineEntry SelectedMultiLineEntry { get; set; }
-        public MultiLineEntriesAndDefaultValueViewModel MultiLineEntriesAndDefaultValue { get; set; }
+        public MultiLineEntriesViewModel MultiLineEntries { get; set; }
 
         public ICommand SaveCommand { get; set; }
         public ICommand AddMultiLineEntryCommand { get; set; }
         public ICommand RemoveMultiLineEntryCommand { get; set; }
         public ICommand SetSelectedMultiLineEntryCommand { get; set; }
         public ICommand UpdateMultiLineEntryCommand { get; set; }
-        public ICommand SetDefaultValueCommmand { get; set; }
         #endregion
 
         public MultiLineEntryViewModel(int moduleId, string fieldName, long? selectedMultiLineEntryId, bool isGeneralField)
@@ -52,20 +51,13 @@ namespace DiagnosticLabs.ViewModels
             }
             this.OpenModule = _modulesBLL.GetModule((long)moduleId);
 
-
             this.FieldName = fieldName;
-            this.MultiLineEntriesAndDefaultValue = new MultiLineEntriesAndDefaultValueViewModel()
-            {
-                MultiLineEntries = new ObservableCollection<MultiLineEntry>(multiLineEntries),
-                DefaultValue = _defaultValuesBLL.GetDefaultValuesByModuleIdAndFieldName(moduleId, fieldName)
-            };
+            this.MultiLineEntries = new MultiLineEntriesViewModel() { MultiLineEntries = new ObservableCollection<MultiLineEntry>(multiLineEntries) };
             this.IsGeneralField = isGeneralField;
-            this.HasNoDefault = this.MultiLineEntriesAndDefaultValue.DefaultValue == null;
-            this.OriginalDefaultValue = this.MultiLineEntriesAndDefaultValue.DefaultValue;
 
             if (selectedMultiLineEntryId != null)
             {
-                MultiLineEntry multiLineEntry = this.MultiLineEntriesAndDefaultValue.MultiLineEntries.Where(m => m.Id == selectedMultiLineEntryId).FirstOrDefault();
+                MultiLineEntry multiLineEntry = this.MultiLineEntries.MultiLineEntries.Where(m => m.Id == selectedMultiLineEntryId).FirstOrDefault();
                 if (multiLineEntry != null)
                     this.SetSelectedMultiLineEntry(multiLineEntry);
             }
@@ -75,20 +67,19 @@ namespace DiagnosticLabs.ViewModels
             this.RemoveMultiLineEntryCommand = new RelayCommand(param => RemoveMultiLineEntry((MultiLineEntry)param));
             this.SetSelectedMultiLineEntryCommand = new RelayCommand(param => SetSelectedMultiLineEntry((MultiLineEntry)param));
             this.UpdateMultiLineEntryCommand = new RelayCommand(param => UpdateMultiLineEntry());
-            this.SetDefaultValueCommmand = new RelayCommand(param => SetDefaultValue((MultiLineEntry)param));
         }
 
         #region Data Actions
         private void SaveMultiLineEntries()
         {
-            if (this.MultiLineEntriesAndDefaultValue.MultiLineEntries.Where(s => !s.IsValid).Any())
+            if (this.MultiLineEntries.MultiLineEntries.Where(s => !s.IsValid).Any())
             {
-                string errorMessages = string.Join("", this.MultiLineEntriesAndDefaultValue.MultiLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
+                string errorMessages = string.Join("", this.MultiLineEntries.MultiLineEntries.Where(p => !p.IsValid).Select(p => p.ErrorMessages).ToList());
                 this.NotificationMessage = _commonFunctions.CustomNotificationMessage(errorMessages, Messages.MessageType.Error, false);
                 return;
             }
 
-            if (_multiLineEntriesBLL.SaveMultiLineEntryListAndDefault(this.MultiLineEntriesAndDefaultValue.MultiLineEntries.ToList(), this.MultiLineEntriesAndDefaultValue.DefaultValue, this.OriginalDefaultValue, this.HasNoDefault))
+            if (_multiLineEntriesBLL.SaveMultiLineEntryList(this.MultiLineEntries.MultiLineEntries.ToList()))
                 this.NotificationMessage = Messages.SavedSuccessfully;
             else
                 this.NotificationMessage = Messages.SaveFailed;
@@ -111,7 +102,7 @@ namespace DiagnosticLabs.ViewModels
                 FieldValue = string.Empty,
                 IsActive = true
             };
-            this.MultiLineEntriesAndDefaultValue.MultiLineEntries.Add(multiLineEntry);
+            this.MultiLineEntries.MultiLineEntries.Add(multiLineEntry);
         }
 
         private void RemoveMultiLineEntry(MultiLineEntry multiLineEntry)
@@ -119,36 +110,20 @@ namespace DiagnosticLabs.ViewModels
             if (multiLineEntry.IsDefault)
                 this.HasNoDefault = true;
 
-            this.MultiLineEntriesAndDefaultValue.MultiLineEntries.Remove(multiLineEntry);
+            this.MultiLineEntries.MultiLineEntries.Remove(multiLineEntry);
         }
 
         private void SetSelectedMultiLineEntry(MultiLineEntry multiLineEntry)
         {
             this.SelectedMultiLineEntry = multiLineEntry;
-            foreach (MultiLineEntry mle in this.MultiLineEntriesAndDefaultValue.MultiLineEntries)
+            foreach (MultiLineEntry mle in this.MultiLineEntries.MultiLineEntries)
                 mle.IsSelected = mle == multiLineEntry;
         }
 
         private void UpdateMultiLineEntry()
         {
-            int index = this.MultiLineEntriesAndDefaultValue.MultiLineEntries.IndexOf(this.SelectedMultiLineEntry);
-            this.MultiLineEntriesAndDefaultValue.MultiLineEntries[index] = this.SelectedMultiLineEntry;
-        }
-
-        private void SetDefaultValue(MultiLineEntry multiLineEntry)
-        {
-            this.HasNoDefault = multiLineEntry == null;
-
-            if (multiLineEntry != null)
-            {
-                if (this.MultiLineEntriesAndDefaultValue.DefaultValue != null)
-                {
-                    this.MultiLineEntriesAndDefaultValue.DefaultValue.FieldValueTitle = multiLineEntry.FieldValueTitle;
-                    this.MultiLineEntriesAndDefaultValue.DefaultValue.FieldValue = multiLineEntry.FieldValue;
-                }
-                else
-                    this.MultiLineEntriesAndDefaultValue.DefaultValue = _defaultValuesBLL.NewDefaultValue(this.OpenModule.Id, this.FieldName, multiLineEntry.FieldValueTitle, multiLineEntry.FieldValue);
-            }
+            int index = this.MultiLineEntries.MultiLineEntries.IndexOf(this.SelectedMultiLineEntry);
+            this.MultiLineEntries.MultiLineEntries[index] = this.SelectedMultiLineEntry;
         }
         #endregion
     }

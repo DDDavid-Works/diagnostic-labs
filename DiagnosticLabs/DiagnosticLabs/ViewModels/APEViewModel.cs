@@ -3,6 +3,7 @@ using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -181,6 +182,9 @@ namespace DiagnosticLabs.ViewModels
             this.APE.Tattoo = PEStringValue(this.APE.TattooNValue, this.APE.TattooFValue);
             this.APE.MassCyst = PEStringValue(this.APE.MassCystNValue, this.APE.MassCystFValue);
             this.APE.OthersPE = PEStringValue(this.APE.OthersPENValue, this.APE.OthersPEFValue);
+
+            this.APE.NumberOfSticksPerDay = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfSticksPerDay);
+            this.APE.NumberOfBottles = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfBottles);
 
             if (_labResults.SaveLabResultWithPatientRegistrationAndPatient(this.APE, this.PatientRegistration, this.Patient, ref id))
             {

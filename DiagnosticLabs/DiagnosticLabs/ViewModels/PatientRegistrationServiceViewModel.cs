@@ -1,6 +1,5 @@
 ﻿using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsDAL.Models;
-using System;
 
 namespace DiagnosticLabs.ViewModels
 {

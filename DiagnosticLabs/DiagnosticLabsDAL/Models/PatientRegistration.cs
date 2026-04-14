@@ -16,6 +16,9 @@ namespace DiagnosticLabsDAL.Models
         private long? il_PackageId;
         private string il_BatchName;
         private decimal il_AmountDue;
+        private decimal? il_DiscountAmount;
+        private decimal? il_DiscountPercentage;
+        private decimal il_DiscountTotal;
         private bool il_IsActive;
         private long il_CreatedByUserId;
         private DateTime il_CreatedDate;
@@ -71,6 +74,24 @@ namespace DiagnosticLabsDAL.Models
             set { il_AmountDue = value; OnPropertyChanged("AmountDue"); }
         }
 
+        public decimal? DiscountAmount
+        {
+            get { return il_DiscountAmount; }
+            set { il_DiscountAmount = value; OnPropertyChanged("DiscountAmount"); }
+        }
+
+        public decimal? DiscountPercentage
+        {
+            get { return il_DiscountPercentage; }
+            set { il_DiscountPercentage = value; OnPropertyChanged("DiscountPercentage"); }
+        }
+
+        public decimal DiscountTotal
+        {
+            get { return il_DiscountTotal; }
+            set { il_DiscountTotal = value; OnPropertyChanged("DiscountTotal"); }
+        }
+
         public bool IsActive
         {
             get { return il_IsActive; }
@@ -106,6 +127,12 @@ namespace DiagnosticLabsDAL.Models
 
         [NotMapped]
         public bool IsPriceEdited { get; set; }
+
+        [NotMapped]
+        public decimal? Discount { get; set; }
+
+        [NotMapped]
+        public string DiscountType { get; set; } = "Amount";
 
         #region Validation
         private static readonly string[] _propertiesToValidate = { "PatientRegistrationAmountDue" };

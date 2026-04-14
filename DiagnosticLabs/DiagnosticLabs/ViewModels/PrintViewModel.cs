@@ -4,7 +4,11 @@ using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System;
+using System.Drawing.Imaging;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Media.Media3D;
+using CrystalDecisions.CrystalReports.ViewerObjectModel;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -105,6 +109,75 @@ namespace DiagnosticLabs.ViewModels
             }
             else if (typeof(T) == typeof(APE))
             {
+                string DateInputted2 = ((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy");
+
+                string DateInputted = GetDataFromRecord<string>(record, "DateInputted", "MM/dd/yyyy");
+                string PatientName = GetDataFromRecord<string>(record, "PatientName");
+
+                string CompanyName = (string)type.GetProperty("CompanyName").GetValue(record);
+                string DepartmentOrAgency = (string)type.GetProperty("DepartmentOrAgency").GetValue(record);
+                string Age = (string)type.GetProperty("Age").GetValue(record);
+                string BirthDate = ((DateTime)type.GetProperty("BirthDate").GetValue(record)).ToString("MM/dd/yyyy");
+                string Gender = (string)type.GetProperty("Gender").GetValue(record);
+                string CivilStatus = (string)type.GetProperty("CivilStatus").GetValue(record);
+                string ContactNo = (string)type.GetProperty("ContactNo").GetValue(record);
+                string ENT = (string)type.GetProperty("ENT").GetValue(record);
+                string Gastroenterology = (string)type.GetProperty("Gastroenterology").GetValue(record);
+                string Respiratory = (string)type.GetProperty("Respiratory").GetValue(record);
+                string IntegumentarySkin = (string)type.GetProperty("IntegumentarySkin").GetValue(record);
+                string Cardiology = (string)type.GetProperty("Cardiology").GetValue(record);
+                string Psychology = (string)type.GetProperty("Psychology").GetValue(record);
+                string Endocrinology = (string)type.GetProperty("Endocrinology").GetValue(record);
+                string OBGyneUrology = (string)type.GetProperty("OBGyneUrology").GetValue(record);
+                string Muscoloskeletal = (string)type.GetProperty("Muscoloskeletal").GetValue(record);
+                string InfectiousCommunicable = (string)type.GetProperty("InfectiousCommunicable").GetValue(record);
+                string Neurological = (string)type.GetProperty("Neurological").GetValue(record);
+                string Surgical = (string)type.GetProperty("Surgical").GetValue(record);
+                string OthersPast = (string)type.GetProperty("OthersPast").GetValue(record);
+                string Medications = (string)type.GetProperty("Medications").GetValue(record);
+                string ReviewOfSystems = (string)type.GetProperty("ReviewOfSystems").GetValue(record);
+                string Allergies = (string)type.GetProperty("Allergies").GetValue(record);
+                bool IsSmoking = (bool)type.GetProperty("IsSmoking").GetValue(record);
+                string SmokingSinceWhen = (string)type.GetProperty("SmokingSinceWhen").GetValue(record);
+                string NumberOfSticksPerDay = (string)type.GetProperty("NumberOfSticksPerDay").GetValue(record);
+                bool IsDrinking = (bool)type.GetProperty("IsDrinking").GetValue(record);
+                string DrinkingSinceWhen = (string)type.GetProperty("DrinkingSinceWhen").GetValue(record);
+                string NumberOfBottles = (string)type.GetProperty("NumberOfBottles").GetValue(record);
+                string DrinkingFrequency = (string)type.GetProperty("DrinkingFrequency").GetValue(record);
+                string LMP = (string)type.GetProperty("LMP").GetValue(record);
+                string LMPType = (string)type.GetProperty("LMPType").GetValue(record);
+                string BP1st = (string)type.GetProperty("BP1st").GetValue(record);
+                string BP2nd = (string)type.GetProperty("BP2nd").GetValue(record);
+                string CardiacRate1st = (string)type.GetProperty("CardiacRate1st").GetValue(record);
+                string CardiacRate2nd = (string)type.GetProperty("CardiacRate2nd").GetValue(record);
+                string Height = (string)type.GetProperty("Height").GetValue(record);
+                string Weight = (string)type.GetProperty("Weight").GetValue(record);
+                string BMICategory = (string)type.GetProperty("BMICategory").GetValue(record);
+                string VARightEyeWGlasses = (string)type.GetProperty("VARightEyeWGlasses").GetValue(record);
+                string VARightEyeWOGlasses = (string)type.GetProperty("VARightEyeWOGlasses").GetValue(record);
+                string VALeftEyeWGlasses = (string)type.GetProperty("VALeftEyeWGlasses").GetValue(record);
+                string VALeftEyeWOGlasses = (string)type.GetProperty("VALeftEyeWOGlasses").GetValue(record);
+                string VisualAcuity = (string)type.GetProperty("VisualAcuity").GetValue(record);
+                string Skin = (string)type.GetProperty("Skin").GetValue(record);
+                string HeadScalp = (string)type.GetProperty("HeadScalp").GetValue(record);
+                string Eyes = (string)type.GetProperty("Eyes").GetValue(record);
+                string Ears = (string)type.GetProperty("Ears").GetValue(record);
+                string Nose = (string)type.GetProperty("Nose").GetValue(record);
+                string TeethTonsilsThroatPharynx = (string)type.GetProperty("TeethTonsilsThroatPharynx").GetValue(record);
+                string NeckLymphNodesThyroid = (string)type.GetProperty("NeckLymphNodesThyroid").GetValue(record);
+                string ThoraxBreast = (string)type.GetProperty("ThoraxBreast").GetValue(record);
+                string HeartLungs = (string)type.GetProperty("HeartLungs").GetValue(record);
+                string AbdomenLiverSpleen = (string)type.GetProperty("AbdomenLiverSpleen").GetValue(record);
+                string InguinalAreaGenitalsAnus = (string)type.GetProperty("InguinalAreaGenitalsAnus").GetValue(record);
+                string ExtremetiesSpine = (string)type.GetProperty("ExtremetiesSpine").GetValue(record);
+                string Tattoo = (string)type.GetProperty("Tattoo").GetValue(record);
+                string MassCyst = (string)type.GetProperty("MassCyst").GetValue(record);
+                string OthersPE = (string)type.GetProperty("OthersPE").GetValue(record);
+                string Findings = (string)type.GetProperty("Findings").GetValue(record);
+                string VitalSignsBy = (string)type.GetProperty("VitalSignsBy").GetValue(record);
+                string HeightWeightBy = (string)type.GetProperty("HeightWeightBy").GetValue(record);
+                //string CompanySetupLogo = companySetup.Logo;
+
                 reportObject = new
                 {
                     DateInputted = ((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy"),
@@ -176,6 +249,29 @@ namespace DiagnosticLabs.ViewModels
             }
 
             return reportObject;
+        }
+
+        private static T GetDataFromRecord<T>(object record, string field, string dateFormat = null)
+        {
+            try
+            {
+                Type type = typeof(T);
+                var value = type.GetProperty(field).GetValue(record);
+
+                if (dateFormat == null)
+                    return (T)value;
+                else
+                {
+                    if (value != null)
+                        return (T)Convert.ChangeType(((DateTime)value).ToString("MM/dd/yyyy"), typeof(T));
+                    else
+                        return (T)Convert.ChangeType(string.Empty, typeof(T));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
         #endregion
     }

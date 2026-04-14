@@ -12,7 +12,7 @@ namespace DiagnosticLabs.UserControls
         public static readonly DependencyProperty NewCommandProperty = DependencyProperty.Register("NewCommand", typeof(ICommand), typeof(ActionToolbarUserControl), new UIPropertyMetadata(null));
         public static readonly DependencyProperty SaveCommandProperty = DependencyProperty.Register("SaveCommand", typeof(ICommand), typeof(ActionToolbarUserControl), new UIPropertyMetadata(null));
         public static readonly DependencyProperty DeleteCommandProperty = DependencyProperty.Register("DeleteCommand", typeof(ICommand), typeof(ActionToolbarUserControl), new UIPropertyMetadata(null));
-        
+
         public ICommand NewCommand
         { 
             get { return (ICommand)GetValue(NewCommandProperty); }
@@ -26,7 +26,7 @@ namespace DiagnosticLabs.UserControls
         }
 
         public ICommand DeleteCommand
-        { 
+        {
             get { return (ICommand)GetValue(DeleteCommandProperty); }
             set { SetValue(DeleteCommandProperty, value); }
         }

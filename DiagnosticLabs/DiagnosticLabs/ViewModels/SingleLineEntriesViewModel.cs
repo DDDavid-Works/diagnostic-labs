@@ -5,10 +5,8 @@ using System.Collections.ObjectModel;
 
 namespace DiagnosticLabs.ViewModels
 {
-    public class SingleLineEntriesAndDefaultValueViewModel : BaseViewModel
+    public class SingleLineEntriesViewModel : BaseViewModel
     {
-        public DefaultValue DefaultValue { get; set; }
-
         private ObservableCollection<SingleLineEntry> _singleLineEntries;
         public ObservableCollection<SingleLineEntry> SingleLineEntries
         {

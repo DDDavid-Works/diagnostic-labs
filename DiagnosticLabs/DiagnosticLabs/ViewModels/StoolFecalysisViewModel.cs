@@ -3,7 +3,10 @@ using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -22,9 +25,12 @@ namespace DiagnosticLabs.ViewModels
         #region Public Properties
         public StoolFecalysis StoolFecalysis { get; set; }
 
+        public bool IsSetDefaultMode { get; set; } = false;
+
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand ClearAllValuesCommand { get; set; }
         public ICommand RefreshLabResultsSingleLineEntryListCommand { get; set; }
 
         public ObservableCollection<string> Colors { get; set; }
@@ -45,6 +51,7 @@ namespace DiagnosticLabs.ViewModels
             this.NewCommand = new RelayCommand(param => NewStoolFecalysis());
             this.SaveCommand = new RelayCommand(param => SaveStoolFecalysis());
             this.DeleteCommand = new RelayCommand(param => DeleteStoolFecalysis());
+            this.ClearAllValuesCommand = new RelayCommand(param => ClearAllValues());
             this.GetPatientRegistrationCommand = new RelayCommand(param => GetPatientRegistration((long)param));
             this.RefreshLabResultsSingleLineEntryListCommand = new RelayCommand(param => RefreshLabResultsSingleLineEntryList((string)param));
         }
@@ -71,7 +78,9 @@ namespace DiagnosticLabs.ViewModels
 
         private void NewStoolFecalysis()
         {
-            this.StoolFecalysis = _labResults.NewRecord<StoolFecalysis>(this.ModuleId);
+            string defaults = _commonFunctions.GetDefaults(_entityName);
+
+            this.StoolFecalysis = _labResults.NewRecord<StoolFecalysis>(this.ModuleId, defaults);
             this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration(false);
             this.Patient = _patientsBLL.NewPatient();
             this.SelectedCompany = null;
@@ -80,24 +89,46 @@ namespace DiagnosticLabs.ViewModels
             this.ClearNotificationMessages();
         }
 
+        private void ClearAllValues()
+        {
+            this.StoolFecalysis = _labResults.NewRecord<StoolFecalysis>(this.ModuleId, isForSetDefaults: true);
+            this.PatientRegistration = null;
+            this.Patient = null;
+            this.SelectedCompany = null;
+            this.SelectedBatchName = string.Empty;
+
+            this.IsSetDefaultMode = true;
+
+            this.ClearNotificationMessages();
+        }
+
         private void SaveStoolFecalysis()
         {
-            base.SavePatientRegistration();
-
-            if (!this.StoolFecalysis.IsValid)
+            if (IsSetDefaultMode)
             {
-                this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.StoolFecalysis.ErrorMessages, Messages.MessageType.Error, false);
-                return;
-            }
-
-            long id = this.StoolFecalysis.Id;
-            if (_labResults.SaveLabResultWithPatientRegistrationAndPatient(this.StoolFecalysis, this.PatientRegistration, this.Patient, ref id))
-            {
-                this.StoolFecalysis.Id = id;
+                _commonFunctions.SaveDefaults(_entityName, Newtonsoft.Json.JsonConvert.SerializeObject(this.StoolFecalysis));
                 this.NotificationMessage = Messages.SavedSuccessfully;
+                this.NewStoolFecalysis();
             }
             else
-                this.NotificationMessage = Messages.SaveFailed;
+            {
+                base.SavePatientRegistration();
+
+                if (!this.StoolFecalysis.IsValid)
+                {
+                    this.NotificationMessage = _commonFunctions.CustomNotificationMessage(this.StoolFecalysis.ErrorMessages, Messages.MessageType.Error, false);
+                    return;
+                }
+
+                long id = this.StoolFecalysis.Id;
+                if (_labResults.SaveLabResultWithPatientRegistrationAndPatient(this.StoolFecalysis, this.PatientRegistration, this.Patient, ref id))
+                {
+                    this.StoolFecalysis.Id = id;
+                    this.NotificationMessage = Messages.SavedSuccessfully;
+                }
+                else
+                    this.NotificationMessage = Messages.SaveFailed;
+            }
         }
 
         private void DeleteStoolFecalysis()

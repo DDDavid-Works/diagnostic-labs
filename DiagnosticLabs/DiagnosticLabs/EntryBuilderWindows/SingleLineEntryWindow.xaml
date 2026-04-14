@@ -56,7 +56,7 @@
                 </StackPanel>
             </Button>
             <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="200" Margin="0,0,0,5" Padding="0,5,0,0">
-                <ItemsControl Name="Services" ItemsSource="{Binding SingleLineEntriesAndDefaultValue.SingleLineEntries}">
+                <ItemsControl Name="Services" ItemsSource="{Binding SingleLineEntries.SingleLineEntries}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0">
@@ -70,16 +70,14 @@
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"></ColumnDefinition>
                                     <ColumnDefinition Width="90*"></ColumnDefinition>
                                     <ColumnDefinition Width="10*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <RadioButton Name="IsDefaultRadioButton" GroupName="IsDefault" IsChecked="{Binding IsDefault}" Grid.Row="0" Grid.Column="0" Margin="5,5,0,0" CommandParameter="{Binding}" Click="IsDefaultRadioButton_Click" />
-                                <TextBox Name="FieldValue" Grid.Row="0" Grid.Column="1" Text="{Binding Path=FieldValue}" />
-                                <Button Name="RemoveServiceButton" Grid.Row="0" Grid.Column="2" Width="18" Height="18" Margin="0,2,0,0" VerticalAlignment="Top"
+                                <TextBox Name="FieldValue" Grid.Row="0" Grid.Column="0" Text="{Binding Path=FieldValue}" />
+                                <Button Name="RemoveServiceButton" Grid.Row="0" Grid.Column="1" Width="18" Height="18" Margin="0,2,0,0" VerticalAlignment="Top"
                                         Command="{Binding Path=DataContext.RemoveSingleLineEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}">
                                     <StackPanel>
                                         <Image Source="/Images/16x16/cancel.png" />
@@ -91,9 +89,6 @@
                 </ItemsControl>
             </ScrollViewer>
             <Border BorderThickness="1,1,1,1" BorderBrush="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="1" />
-            <RadioButton Name="NoDefaultRadioButton" GroupName="IsDefault" IsChecked="{Binding HasNoDefault}" Grid.Row="4" Grid.Column="0" Click="NoDefaultRadioButton_Click">
-                <TextBlock Text="No default" Margin="-2,-4,0,0" FontSize="16"></TextBlock>
-            </RadioButton>
             <okc:OkCancelUserControl Grid.Row="4" Grid.Column="2" OkCommand="OkCancelUserControl_OkCommand" CancelCommand="OkCancelUserControl_CancelCommand"></okc:OkCancelUserControl>
         </Grid>
     </StackPanel>

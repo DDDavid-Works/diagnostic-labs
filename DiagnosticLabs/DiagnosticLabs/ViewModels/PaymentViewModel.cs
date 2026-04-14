@@ -2,7 +2,6 @@
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
-using DiagnosticLabsDAL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,6 +38,7 @@ namespace DiagnosticLabs.ViewModels
         public ICommand GetPatientRegistrationByCodeCommand { get; set; }
         public ICommand UpdateIsPriceEditedAndAmountDueCommand { get; set; }
         public ICommand ComputeTotalsCommand { get; set; }
+        public ICommand ComputeDiscountsCommand { get; set; }
         #endregion
 
         public PaymentViewModel(long id)
@@ -64,7 +64,8 @@ namespace DiagnosticLabs.ViewModels
             this.GetPatientRegistrationByCodeCommand = new RelayCommand(param => GetPatientRegistrationByCode((string)param));
             this.UpdateIsPriceEditedAndAmountDueCommand = new RelayCommand(param => UpdateIsPriceEditedAndAmountDue((bool)param));
             this.ComputeTotalsCommand = new RelayCommand(param => ComputeTotals((string)param));
-                  
+            this.ComputeDiscountsCommand = new RelayCommand(param => ComputeDiscounts());
+
             this.ShowSearchPatientButton = true;
         }
 
@@ -78,6 +79,7 @@ namespace DiagnosticLabs.ViewModels
             this.PatientRegistrationServices = new ObservableCollection<PatientRegistrationServiceViewModel>();
             this.IsPatientRegistrationCodeReadOnly = false;
 
+            this.ComputeTotals();
             this.LoadPatientRegistrationComboBoxes();
             this.ClearNotificationMessages();
         }
@@ -128,11 +130,8 @@ namespace DiagnosticLabs.ViewModels
         public override void GetPatientRegistration(long patientRegistrationId)
         {
             base.GetPatientRegistration(patientRegistrationId);
-
-            if (this.PatientRegistrationPayment != null)
-                this.Payment.PaymentPaymentBalance = String.Format("{0:N}", this.PatientRegistration.AmountDue - this.PatientRegistrationPayment.AmountPaid);
-            else
-                this.Payment.PaymentPaymentBalance = "0.00";
+            // this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment((long)this.Payment.PatientRegistrationId, this.Payment.PaymentAmount);
+            this.ComputeTotals();
         }
 
         private void GetPatientRegistrationByCode(string code)
@@ -165,13 +164,39 @@ namespace DiagnosticLabs.ViewModels
         #endregion
 
         #region Private Methods
-        private void ComputeTotals(string paymentAmount)
+        private void ComputeTotals(string paymentAmount = "0")
         {
-            decimal currentAmount = _commonFunctions.NumbericValue(paymentAmount);
-            decimal oldPaymentAmounts = _commonFunctions.NumbericValue(this.PatientRegistrationPayment.PatientRegistrationPaymentAmountPaid);
+            this.Payment.PaymentAmount = _commonFunctions.NumbericValue(paymentAmount);
 
-            this.Payment.PaymentAmount = currentAmount;
-            this.Payment.PaymentPaymentBalance = String.Format("{0:N}", (this.PatientRegistration.AmountDue - oldPaymentAmounts) - currentAmount);
+            ComputeDiscounts();
+        }
+
+        private void ComputeDiscounts()
+        {
+            decimal discountTotal = 0;
+
+            if (this.PatientRegistration.DiscountType == "Amount" && this.PatientRegistration.Discount != null)
+            {
+                this.PatientRegistration.DiscountAmount = (decimal)this.PatientRegistration.Discount;
+                discountTotal = (decimal)this.PatientRegistration.Discount;
+                this.PatientRegistration.DiscountPercentage = null;
+            }
+            else if (this.PatientRegistration.DiscountType == "Percentage" && this.PatientRegistration.Discount != null)
+            {
+                this.PatientRegistration.DiscountPercentage = (decimal)this.PatientRegistration.Discount;
+                discountTotal = this.PatientRegistration.AmountDue * ((decimal)this.PatientRegistration.Discount / 100);
+                this.PatientRegistration.DiscountAmount = null;
+            }
+
+            this.PatientRegistration.DiscountTotal = discountTotal;
+            this.Payment.PaymentAmountDue = this.PatientRegistration.AmountDue - discountTotal;
+
+            decimal oldPaymentAmounts = 0;
+
+            if (this.PatientRegistrationPayment != null) 
+                oldPaymentAmounts = _commonFunctions.NumbericValue(this.PatientRegistrationPayment.PatientRegistrationPaymentAmountPaid);
+
+            this.Payment.PaymentPaymentBalance = String.Format("{0:N}", ((this.PatientRegistration.AmountDue - this.PatientRegistration.DiscountTotal) - oldPaymentAmounts) - this.Payment.PaymentAmount);
         }
         #endregion
     }

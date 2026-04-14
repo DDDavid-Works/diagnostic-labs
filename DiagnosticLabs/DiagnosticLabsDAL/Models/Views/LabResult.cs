@@ -5,7 +5,8 @@ namespace DiagnosticLabsDAL.Models.Views
 {
     public class LabResult
     {
-        //[Key]
+        [Key]
+        public long RowNumber { get; set; }
         public string Service { get; set; }
         public long Id { get; set; }
         public long? PatientRegistrationId { get; set; }

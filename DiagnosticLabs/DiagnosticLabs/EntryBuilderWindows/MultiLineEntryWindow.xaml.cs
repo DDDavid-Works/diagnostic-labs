@@ -79,25 +79,6 @@ namespace DiagnosticLabs.EntryBuilderWindows
                 vm.UpdateMultiLineEntryCommand.Execute(null);
         }
 
-        private void IsDefaultRadioButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = (MultiLineEntryViewModel)DataContext;
-            if (vm.SetDefaultValueCommmand.CanExecute(null))
-            {
-                MultiLineEntry mle = (MultiLineEntry)((RadioButton)sender).CommandParameter;
-                vm.SetDefaultValueCommmand.Execute(mle);
-            }
-        }
-
-        private void NoDefaultRadioButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = (MultiLineEntryViewModel)DataContext;
-            if (vm.SetDefaultValueCommmand.CanExecute(null))
-            {
-                vm.SetDefaultValueCommmand.Execute(null);
-            }
-        }
-
         #region Private Methods
         private void SaveAndSelectFieldValue()
         {

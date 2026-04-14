@@ -277,6 +277,16 @@ namespace DiagnosticLabs
             Globals.PATIENTREGISTRATIONIDTOPAY = 0;
             Globals.PATIENTREGISTRATIONIDTOINPUT = 0;
         }
+
+        private void LaunchModuleWindow(MenuItem menuItem)
+        {
+            if (menuItem != null)
+            {
+                Action action = WindowAction(menuItem);
+                if (action != null)
+                    this.Dispatcher.BeginInvoke(action);
+            }
+        }
         #endregion Private Methods
 
         #region UI Events
@@ -323,17 +333,5 @@ namespace DiagnosticLabs
             LaunchModuleWindow(menuItem);
         }
         #endregion UI Events
-
-        #region Private Methods
-        private void LaunchModuleWindow(MenuItem menuItem)
-        {
-            if (menuItem != null)
-            {
-                Action action = WindowAction(menuItem);
-                if (action != null)
-                    this.Dispatcher.BeginInvoke(action);
-            }
-        }
-        #endregion
     }
 }

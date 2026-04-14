@@ -74,6 +74,9 @@ namespace DiagnosticLabsDAL.Models
         }
 
         [NotMapped]
+        public decimal PaymentAmountDue { get; set; }
+
+        [NotMapped]
         public string PaymentPaymentAmount { get; set; }
 
         [NotMapped]

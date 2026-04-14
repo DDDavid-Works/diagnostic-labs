@@ -92,7 +92,7 @@
                 </Grid.RowDefinitions>
                 <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" />
                 <Label Name="PatientRegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
-                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0"></menu:PatientRegistrationSearchByCodeUserControl>
+                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0" x:Name="PatientRegistrationSearchByCode"></menu:PatientRegistrationSearchByCodeUserControl>
                 <Label Name="InputRegDateLabel" Content="Registration Date:" Grid.Row="1" Grid.Column="0"></Label>
                 <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}" IsEnabled="False"></DatePicker>
                 <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="0" Grid.Column="3"></Label>
@@ -154,9 +154,9 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Name="PatientCodeLabel" Content="Patient Code:" Grid.Row="0" Grid.Column="0"></Label>
-            <menu:PatientSearchByCodeUserControl Grid.Row="0" Grid.Column="1"></menu:PatientSearchByCodeUserControl>
+            <menu:PatientSearchByCodeUserControl Grid.Row="0" Grid.Column="1" x:Name="PatientSearchByCode"></menu:PatientSearchByCodeUserControl>
             <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="1" Grid.Column="0"></Label>
-            <menu:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1"></menu:PatientSearchByNameUserControl>
+            <menu:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1" x:Name="PatientSearchByName"></menu:PatientSearchByNameUserControl>
             <Label Name="CompanyOrPhysicianLabel" Content="Company/Physician:" Grid.Row="2" Grid.Column="0"></Label>
             <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" Text="" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" SelectedValue="{Binding Patient.CompanyName}"></ComboBox>
             <Label Name="AgeLabel" Content="Age:" Grid.Row="0" Grid.Column="3"></Label>

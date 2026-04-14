@@ -37,7 +37,10 @@ namespace DiagnosticLabsBLL.Services
                 IsActive = true,
                 PatientRegistrationAmountDue = generateInitValues ? "0.00" : string.Empty,
                 InputDate = DateTime.Now,
-                IsPriceEdited = false
+                IsPriceEdited = false,
+                Discount = 0,
+                DiscountAmount = 0,
+                DiscountTotal = 0
             };
         }
 
@@ -48,6 +51,22 @@ namespace DiagnosticLabsBLL.Services
                 PatientRegistration patientRegistration = _dbContext.PatientRegistrations.Find(id);
                 patientRegistration.PatientRegistrationAmountDue = String.Format("{0:N}", patientRegistration.AmountDue);
                 patientRegistration.IsPriceEdited = true;
+
+                if (patientRegistration.DiscountAmount != null)
+                {
+                    patientRegistration.Discount = patientRegistration.DiscountAmount;
+                    patientRegistration.DiscountType = "Amount";
+                }
+                else if (patientRegistration.DiscountPercentage != null)
+                {
+                    patientRegistration.Discount = patientRegistration.DiscountPercentage;
+                    patientRegistration.DiscountType = "Percentage";
+                }
+                else
+                {
+                    patientRegistration.Discount = 0;
+                    patientRegistration.DiscountType = "Amount";
+                }
 
                 return patientRegistration;
             }
