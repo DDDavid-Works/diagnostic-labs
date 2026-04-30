@@ -20,59 +20,6 @@ namespace DiagnosticLabs.LabResultsWindows
             this.DataContext = new StoolFecalysisViewModel(0);
         }
 
-        private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
-        {
-            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.StoolFecalysis);
-            search.ShowDialog();
-
-            if (search.SelectedLabResult == null) return;
-
-            this.DataContext = new StoolFecalysisViewModel(search.SelectedLabResult.Id);
-        }
-
-        private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
-        {
-            var vm = (StoolFecalysisViewModel)DataContext;
-
-            if (vm.StoolFecalysis != null)
-            {
-                PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
-                print.ShowDialog();
-            }
-        }
-        
-        private void ActionToolbar_SetDefaultsCommand(object sender, RoutedEventArgs e)
-        {
-            var vm = (StoolFecalysisViewModel)DataContext;
-
-            if (vm.ClearAllValuesCommand.CanExecute(null))
-                vm.ClearAllValuesCommand.Execute(null);
-
-            ToggleSetDefaultsUI(true);
-        }
-
-        private void ActionToolbar_CancelSetDefaultsCommand(object sender, RoutedEventArgs e)
-        {
-            var vm = (StoolFecalysisViewModel)DataContext;
-
-            if (vm.NewCommand.CanExecute(null))
-                vm.NewCommand.Execute(null);
-
-            ToggleSetDefaultsUI(false);
-        }
-
-        private void ActionToolbar_ShowSetDefaultCommand(object sender, RoutedEventArgs e)
-        {
-            var vm = (StoolFecalysisViewModel)DataContext;
-
-            if (vm.StoolFecalysis != null)
-            {
-                var bc = new BrushConverter();
-                this.Background = (Brush)bc.ConvertFrom("#FFC14D");
-                this.Title = "Stool/Fecalysis [SET DEFAULTS]";
-            }
-        }
-
         private void ColorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (ColorComboBox.SelectedItem != null && ColorComboBox.SelectedItem.ToString() == Texts.NewEntry)
@@ -191,11 +138,13 @@ namespace DiagnosticLabs.LabResultsWindows
                 isHidden = isSetDefaults ? Visibility.Visible : Visibility.Hidden;
 
             ActionToolbar.NewButtonBox.Visibility = isVisible;
+            ActionToolbar.SaveButtonBox.Visibility = isVisible;
             ActionToolbar.DeleteButtonBox.Visibility = isVisible;
             ActionToolbar.PrintButtonBox.Visibility = isVisible;
             ActionToolbar.SearchButtonBox.Visibility = isVisible;
             ActionToolbar.SetDefaultsButtonBox.Visibility = isVisible;
-            ActionToolbar.CancelSetDefaultsButtonBox.Visibility = isHidden;
+            ActionToolbar.SaveDefaultsButtonBox.Visibility = isHidden;
+            ActionToolbar.CloseDefaultsButtonBox.Visibility = isHidden;
 
             PatientRegistrationSearchByCode.IsEnabled = !isSetDefaults;
             InputDateDatePicker.IsEnabled = !isSetDefaults;
@@ -209,5 +158,59 @@ namespace DiagnosticLabs.LabResultsWindows
             DateRequestedTextBox.IsEnabled = !isSetDefaults;
         }
         #endregion
+
+        #region Action Toolbar Actions
+        private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
+        {
+            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.StoolFecalysis);
+            search.ShowDialog();
+
+            if (search.SelectedLabResult == null) return;
+
+            this.DataContext = new StoolFecalysisViewModel(search.SelectedLabResult.Id);
+        }
+
+        private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.StoolFecalysis != null)
+            {
+                PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
+                print.ShowDialog();
+            }
+        }
+
+        private void ActionToolbar_SetDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(true);
+
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.SetDefaultsCommand.CanExecute(null))
+                vm.SetDefaultsCommand.Execute(null);
+        }
+
+        private void ActionToolbar_SaveDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(false);
+
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.SaveDefaultsCommand.CanExecute(null))
+                vm.SaveDefaultsCommand.Execute(null);
+        }
+
+        private void ActionToolbar_CloseDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(false);
+
+            var vm = (StoolFecalysisViewModel)DataContext;
+
+            if (vm.NewCommand.CanExecute(null))
+                vm.NewCommand.Execute(null);
+        }
+        #endregion
+
     }
 }

@@ -134,7 +134,12 @@ namespace DiagnosticLabs
                 defaultsJson = string.Empty;
 
             if (File.Exists(defaultsFile))
-                defaultsJson = File.ReadAllText(defaultsFile);
+            {
+                string[] lines = File.ReadAllLines(defaultsFile);
+
+                if (lines.Length > 0)
+                    defaultsJson = lines.Last();
+            }
 
             return defaultsJson;
         }

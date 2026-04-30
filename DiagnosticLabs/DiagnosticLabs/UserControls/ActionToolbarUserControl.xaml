@@ -76,11 +76,27 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3">
-                <Button Name="ShowSetDefaultButton" Click="ShowSetDefaultButton_Click">
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="SetDefaultsButtonBox" >
+                <Button Name="SetDefaultsButton" Click="SetDefaultsButton_Click">
                     <StackPanel>
                         <Image Source="../Images/48x48/default.png"></Image>
-                        <TextBlock>Set Dflt</TextBlock>
+                        <TextBlock>Set Dfts</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="SaveDefaultsButtonBox">
+                <Button Name="SaveDefaultsButton" Click="SaveDefaultsButton_Click">
+                    <StackPanel>
+                        <Image Source="../Images/48x48/save.png"></Image>
+                        <TextBlock>Save</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="#99b299" BorderThickness="0,0,1,0" Margin="0,3,0,3" x:Name="CloseDefaultsButtonBox" >
+                <Button Name="CloseDefaultsButton" Click="CloseDefaultsButton_Click">
+                    <StackPanel>
+                        <Image Source="../Images/48x48/cancel.png"></Image>
+                        <TextBlock>Cancel</TextBlock>
                     </StackPanel>
                 </Button>
             </Border>

@@ -428,7 +428,6 @@
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="WindowsBaseClass.cs" />
     <Page Include="DefaultSetterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

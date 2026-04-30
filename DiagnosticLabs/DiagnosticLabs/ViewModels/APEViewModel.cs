@@ -3,6 +3,7 @@ using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,17 +18,21 @@ namespace DiagnosticLabs.ViewModels
         private const string _entityName = "APE";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
-        LabResultsBLL _labResults = new LabResultsBLL();
+        LabResultsBLL _labResultsBLL = new LabResultsBLL();
         PatientsBLL _patientsBLL = new PatientsBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
 
         #region Public Properties
         public APE APE { get; set; }
 
+        public bool IsSetDefaultMode { get; set; } = false;
+
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand RefreshLabResultsSingleLineEntryListCommand { get; set; }
+        public ICommand SetDefaultsCommand { get; set; }
+        public ICommand SaveDefaultsCommand { get; set; }
 
         public ObservableCollection<string> TextFields { get; set; }
         public ObservableCollection<string> ENTs { get; set; }
@@ -75,7 +80,7 @@ namespace DiagnosticLabs.ViewModels
         public string CardiacRate2ndField { get { return SingleLineEntries.APECardiacRate2nd; } }
         public string HeightField { get { return SingleLineEntries.APEHeight; } }
         public string WeightField { get { return SingleLineEntries.APEWeight; } }
-        public string BMIField { get { return MultiLineEntries.APEBMI; } }
+        public string BMICategoryField { get { return MultiLineEntries.APEBMI; } }
         public string VARightEyeWGlassesField { get { return SingleLineEntries.APEVARightEyeWGlasses; } }
         public string VARightEyeWOGlassesField { get { return SingleLineEntries.APEVARightEyeWOGlasses; } }
         public string VALeftEyeWGlassesField { get { return SingleLineEntries.APEVALeftEyeWGlasses; } }
@@ -94,20 +99,19 @@ namespace DiagnosticLabs.ViewModels
             else
                 LoadAPE(id);
 
-            LoadAllSingleLineEntryLists();
-            AddSetDefaultOptions();
-
             this.NewCommand = new RelayCommand(param => NewAPE());
             this.SaveCommand = new RelayCommand(param => SaveAPE());
             this.DeleteCommand = new RelayCommand(param => DeleteAPE());
             this.GetPatientRegistrationCommand = new RelayCommand(param => GetPatientRegistration((long)param));
             this.RefreshLabResultsSingleLineEntryListCommand = new RelayCommand(param => RefreshLabResultsSingleLineEntryList((string)param));
+            this.SetDefaultsCommand = new RelayCommand(param => SetDefaults());
+            this.SaveDefaultsCommand = new RelayCommand(param => SaveStoolFecalysisDefaults());
         }
 
         #region Data Actions
         private void LoadAPE(long apeId)
         {
-            this.APE = _labResults.Get<APE>(apeId);
+            this.APE = _labResultsBLL.Get<APE>(apeId);
             SetBooleans(this.APE);
 
             if (this.APE.PatientRegistrationId != 0)
@@ -121,13 +125,22 @@ namespace DiagnosticLabs.ViewModels
                 PatientCode = string.Empty,
                 PatientName = this.APE.PatientName,
                 Age = this.APE.Age,
-                Gender = this.APE.Gender
+                Gender = this.APE.Gender,
+                CivilStatus = this.APE.CivilStatus,
+                DateOfBirth = this.APE.BirthDate,
+                ContactNumbers = this.APE.ContactNo
             };
         }
 
         private void NewAPE()
         {
-            this.APE = _labResults.NewRecord<APE>(this.ModuleId);
+            LoadAllSingleLineEntryLists(); 
+            
+            IsSetDefaultMode = false;
+
+            string defaults = _commonFunctions.GetDefaults(_entityName);
+
+            this.APE = _labResultsBLL.NewRecord<APE>(this.ModuleId, defaults);
             this.PatientRegistration = _patientRegistrationsBLL.NewPatientRegistration(false);
             this.Patient = _patientsBLL.NewPatient();
             this.SelectedCompany = null;
@@ -186,13 +199,47 @@ namespace DiagnosticLabs.ViewModels
             this.APE.NumberOfSticksPerDay = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfSticksPerDay);
             this.APE.NumberOfBottles = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfBottles);
 
-            if (_labResults.SaveLabResultWithPatientRegistrationAndPatient(this.APE, this.PatientRegistration, this.Patient, ref id))
+            if (_labResultsBLL.SaveLabResultWithPatientRegistrationAndPatient(this.APE, this.PatientRegistration, this.Patient, ref id))
             {
                 this.APE.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
             }
             else
                 this.NotificationMessage = Messages.SaveFailed;
+        }
+
+        private void SetDefaults()
+        {
+            IsSetDefaultMode = true;
+
+            string defaults = _commonFunctions.GetDefaults(_entityName);
+
+            this.APE = _labResultsBLL.NewRecord<APE>(this.ModuleId, defaults, true);
+            this.PatientRegistration = _patientRegistrationsBLL.GetPatientRegistration(1);
+            this.Patient = _patientsBLL.GetPatient(1);
+            this.SelectedCompany = null;
+            this.SelectedBatchName = string.Empty;
+
+            this.ClearNotificationMessages();
+        }
+
+        private void SaveStoolFecalysisDefaults()
+        {
+            this.APE.PatientId = this.Patient.Id;
+            this.APE.PatientRegistrationId = this.PatientRegistration.Id;
+            this.APE.DateInputted = DateTime.Now;
+            this.APE.PatientName = this.Patient.PatientName;
+            this.APE.CompanyName = string.Empty;
+            this.APE.DepartmentOrAgency = string.Empty;
+            this.APE.Age = this.Patient.Age;
+            this.APE.BirthDate = this.Patient.DateOfBirth;
+            this.APE.Gender = this.Patient.Gender;
+            this.APE.CivilStatus = this.Patient.CivilStatus;
+            this.APE.ContactNo = this.Patient.ContactNumbers;
+
+            _commonFunctions.SaveDefaults(_entityName, JsonConvert.SerializeObject(this.APE));
+            this.NotificationMessage = Messages.SavedSuccessfully;
+            this.NewAPE();
         }
 
         private void DeleteAPE()
@@ -208,7 +255,7 @@ namespace DiagnosticLabs.ViewModels
 
             long id = this.APE.Id;
             this.APE.IsActive = false;
-            if (_labResults.Save(this.APE, ref id))
+            if (_labResultsBLL.Save(this.APE, ref id))
             {
                 //this.Payment = _paymentsBLL.GetLatestPayment();
                 this.NotificationMessage = Messages.DeletedSuccessfully;
@@ -219,9 +266,11 @@ namespace DiagnosticLabs.ViewModels
 
         public override void GetPatientRegistration(long patientRegistrationId)
         {
+            if (patientRegistrationId == 0) { return; }
+
             base.GetPatientRegistration(patientRegistrationId);
 
-            APE ape = _labResults.GetByPatientRegistrationId<APE>(patientRegistrationId);
+            APE ape = _labResultsBLL.GetByPatientRegistrationId<APE>(patientRegistrationId);
 
             if (ape != null)
             {
@@ -318,11 +367,6 @@ namespace DiagnosticLabs.ViewModels
         #endregion
 
         #region Private Methods
-        private void AddSetDefaultOptions()
-        {
-            this.TextFields = new ObservableCollection<string>(new List<string>() { Texts.SetDefault });
-        }
-
         private void LoadAllSingleLineEntryLists()
         {
             base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.Gender);
@@ -340,8 +384,8 @@ namespace DiagnosticLabs.ViewModels
             RefreshLabResultsSingleLineEntryList(SingleLineEntries.APEInfectiousCommunicable);
             RefreshLabResultsSingleLineEntryList(SingleLineEntries.APENeurological);
             RefreshLabResultsSingleLineEntryList(SingleLineEntries.APESurgical);
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.VitalSignsBy);
-            base.RefreshLabResultsSingleLineEntryList(SingleLineEntries.HeightWeightBy);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.VitalSignsBy);
+            RefreshLabResultsSingleLineEntryList(SingleLineEntries.HeightWeightBy);
         }
 
         private void SetBooleans(APE ape)

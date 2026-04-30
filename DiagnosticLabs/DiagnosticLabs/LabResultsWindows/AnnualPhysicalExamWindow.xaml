@@ -16,7 +16,8 @@
     <StackPanel Orientation="Vertical">
         <menu:MessagesUserControl></menu:MessagesUserControl>
         <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
-                                       SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand"></menu:ActionToolbarUserControl>
+                                       SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand"
+                                       SetDefaultsCommand="ActionToolbar_SetDefaultsCommand" SaveDefaultsCommand="ActionToolbar_SaveDefaultsCommand" CloseDefaultsCommand="ActionToolbar_CloseDefaultsCommand"></menu:ActionToolbarUserControl>
         <Grid Margin="0" VerticalAlignment="Top" Background="#ffffcc">
             <Grid.Resources>
                 <Style TargetType="Label">
@@ -47,7 +48,7 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Name="IdLabel" Content="Record Number:" Grid.Row="0" Grid.Column="1"></Label>
-            <TextBox Name="IdTextBox" Grid.Row="0" Grid.Column="2" Text="{Binding StoolFecalysis.Id}" IsReadOnly="True" Margin="0,0,10,0"></TextBox>
+            <TextBox Name="IdTextBox" Grid.Row="0" Grid.Column="2" Text="{Binding APE.Id}" IsReadOnly="True" Margin="0,0,10,0"></TextBox>
             <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
         </Grid>
         <Grid Margin="10" VerticalAlignment="Top">
@@ -97,7 +98,7 @@
                 </Grid.RowDefinitions>
                 <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" />
                 <Label Name="PatientRegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
-                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0"></menu:PatientRegistrationSearchByCodeUserControl>
+                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0" x:Name="PatientRegistrationSearchByCode"></menu:PatientRegistrationSearchByCodeUserControl>
                 <Label Name="InputRegDateLabel" Content="Registration Date:" Grid.Row="1" Grid.Column="0"></Label>
                 <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}" IsEnabled="False"></DatePicker>
                 <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="0" Grid.Column="3"></Label>
@@ -204,7 +205,7 @@
             <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="1" Grid.Column="6"></Label>
             <Label Name="ContactNumberLabel" Content="ContactNumber:" Grid.Row="1" Grid.Column="8"></Label>
 
-            <menu:PatientSearchByNameUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Margin="0,5,5,0"></menu:PatientSearchByNameUserControl>
+            <menu:PatientSearchByNameUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Margin="0,5,5,0" x:Name="PatientSearchByName"></menu:PatientSearchByNameUserControl>
             <TextBox Name="CompanyTextBox" Grid.Row="0" Grid.Column="7" Text="{Binding Patient.CompanyName}"></TextBox>
             <TextBox Name="DepartmentOrAgencyTextBox" Grid.Row="0" Grid.Column="9" Text="{Binding APE.DepartmentOrAgency}"></TextBox>
             <TextBox Name="AgeTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Patient.Age}"></TextBox>
@@ -293,11 +294,11 @@
                     <Label Name="OthersLabel" Content="OTHERS:" Grid.Row="6" Grid.Column="0"></Label>
 
                     <ComboBox Name="EarsNoseThroatComboBox" Grid.Row="0" Grid.Column="2" Tag="{Binding ENTField}" ItemsSource="{Binding ENTs}" Text="{Binding APE.ENT}"></ComboBox>
-                    <ComboBox Name="RespiratoryComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" Text="{Binding APE.Gastroenterology}"></ComboBox>
-                    <ComboBox Name="CardiologyComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiologyField}" ItemsSource="{Binding Cardiologys}" Text="{Binding APE.Cardiology}"></ComboBox>
+                    <ComboBox Name="RespiratoryComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding RespiratoryField}" ItemsSource="{Binding Respiratories}" Text="{Binding APE.Respiratory}"></ComboBox>
+                    <ComboBox Name="CardiologyComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiologyField}" ItemsSource="{Binding Cardiologies}" Text="{Binding APE.Cardiology}"></ComboBox>
                     <ComboBox Name="EndocrinologyComboBox" Grid.Row="3" Grid.Column="2" Tag="{Binding EndocrinologyField}" ItemsSource="{Binding Endocrinologies}" Text="{Binding APE.Endocrinology}"></ComboBox>
                     <ComboBox Name="MuscoloSkeletalComboBox" Grid.Row="4" Grid.Column="2" Tag="{Binding MuscoloSkeletalField}" ItemsSource="{Binding MuscoloSkeletals}" Text="{Binding APE.MuscoloSkeletal}"></ComboBox>
-                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologyField}" ItemsSource="{Binding Neurologies}" Text="{Binding APE.Neurology}"></ComboBox>
+                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologicalField}" ItemsSource="{Binding Neurologies}" Text="{Binding APE.Neurology}"></ComboBox>
                     <ComboBox Name="GastroenterologyComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" Text="{Binding APE.Gastroenterology}"></ComboBox>
                     <ComboBox Name="IntegumentarySkinComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding IntegumentarySkinField}" ItemsSource="{Binding IntegumentarySkins}" Text="{Binding APE.IntegumentarySkin}"></ComboBox>
                     <ComboBox Name="PsychologyComboBox" Grid.Row="2" Grid.Column="4" Tag="{Binding PsychologyField}" ItemsSource="{Binding Psychologies}" Text="{Binding APE.Psychology}"></ComboBox>
@@ -388,14 +389,10 @@
                             <Setter Property="HorizontalAlignment" Value="Left" />
                             <Setter Property="FontSize" Value="14" />
                         </Style>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="Height" Value="22" />
+                        <Style TargetType="TextBox">
                             <Setter Property="Margin" Value="5" />
-                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Height" Value="22" />
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="IsEditable" Value="True" />
-                            <Setter Property="ItemsSource" Value="{Binding TextFields}" />
-                            <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"/>
                         </Style>
                         <Style TargetType="RadioButton">
                             <Setter Property="Margin" Value="0,10,0,0" />
@@ -454,10 +451,10 @@
                     <RadioButton GroupName="Drinking" Name="DrinkingYesRadioButton" Grid.Row="1" Grid.Column="2" IsChecked="{Binding APE.IsDrinking, Converter={StaticResource radioButtonBooleanConverter}, ConverterParameter=true, Mode=TwoWay}">
                         <TextBlock>Yes</TextBlock>
                     </RadioButton>
-                    <ComboBox Name="SmokingSinceWhenComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding SmokingSinceWhenField}" Text="{Binding APE.SmokingSinceWhen}"></ComboBox>
-                    <ComboBox Name="DrinkingSinceWhenComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding DrinkingSinceWhenField}" Text="{Binding APE.DrinkingSinceWhen}"></ComboBox>
-                    <ComboBox Name="NumberOfSticksComboBox" Grid.Row="0" Grid.Column="6" Tag="{Binding NumberOfSticksPerDayField}" Text="{Binding APE.APENumberOfSticksPerDay}"></ComboBox>
-                    <ComboBox Name="NumberOfBottlesComboBox" Grid.Row="1" Grid.Column="6" Tag="{Binding NumberOfBottlesField}" Text="{Binding APE.APENumberOfBottles}"></ComboBox>
+                    <TextBox Name="SmokingSinceWhenTextBox" Grid.Row="0" Grid.Column="4" Tag="{Binding SmokingSinceWhenField}" Text="{Binding APE.SmokingSinceWhen}"></TextBox>
+                    <TextBox Name="DrinkingSinceWhenTextBox" Grid.Row="1" Grid.Column="4" Tag="{Binding DrinkingSinceWhenField}" Text="{Binding APE.DrinkingSinceWhen}"></TextBox>
+                    <TextBox Name="NumberOfSticksTextBox" Grid.Row="0" Grid.Column="6" Tag="{Binding NumberOfSticksPerDayField}" Text="{Binding APE.APENumberOfSticksPerDay}"></TextBox>
+                    <TextBox Name="NumberOfBottlesTextBox" Grid.Row="1" Grid.Column="6" Tag="{Binding NumberOfBottlesField}" Text="{Binding APE.APENumberOfBottles}"></TextBox>
                     <CheckBox Name="DrinkingFrequencyDailyCheckBox" Grid.Row="1" Grid.Column="7" IsChecked="{Binding APE.DrinkingDaily}">
                         <TextBlock>Daily</TextBlock>
                     </CheckBox>
@@ -476,14 +473,10 @@
                             <Setter Property="HorizontalAlignment" Value="Left" />
                             <Setter Property="FontSize" Value="14" />
                         </Style>
-                        <Style TargetType="ComboBox">
+                        <Style TargetType="TextBox">
+                            <Setter Property="Margin" Value="0,5,5,5" />
                             <Setter Property="Height" Value="22" />
-                            <Setter Property="Margin" Value="5" />
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="IsEditable" Value="True" />
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="ItemsSource" Value="{Binding TextFields}" />
-                            <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"/>
                         </Style>
                         <Style TargetType="RadioButton">
                             <Setter Property="Margin" Value="0,10,0,0" />
@@ -505,7 +498,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label Name="LMPLabel" Content="LMP (First day of last menstrual period):" Grid.Row="0" Grid.Column="0"></Label>
-                    <ComboBox Name="LMPComboBox" Grid.Row="0" Grid.Column="1" Tag="{Binding LMPField}" Text="{Binding APE.LMP}"></ComboBox>
+                    <TextBox Name="LMPTextBox" Grid.Row="0" Grid.Column="1" Tag="{Binding LMPField}" Text="{Binding APE.LMP}"></TextBox>
                     <RadioButton GroupName="LMP" Name="LMPRegularCheckbox" Grid.Row="1" Grid.Column="3" IsChecked="{Binding APE.LMPType, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Regular, Mode=TwoWay}">
                         <TextBlock>Regular</TextBlock>
                     </RadioButton>
@@ -521,6 +514,11 @@
                             <Setter Property="HorizontalAlignment" Value="Left" />
                             <Setter Property="FontSize" Value="14" />
                         </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="Height" Value="22" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
                         <Style x:Key="BaseTextBoxStyle" TargetType="TextBox">
                             <Setter Property="Margin" Value="5" />
                             <Setter Property="VerticalAlignment" Value="Top" />
@@ -529,16 +527,6 @@
                         </Style>
                         <Style x:Key="MultiLineTextBox" TargetType="TextBox" BasedOn="{StaticResource BaseTextBoxStyle}">
                             <EventSetter Event="MouseDoubleClick" Handler="MultiLineTextBox_MouseDoubleClick" />
-                        </Style>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="Height" Value="22" />
-                            <Setter Property="Margin" Value="5" />
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="VerticalAlignment" Value="Top" />
-                            <Setter Property="FontSize" Value="14" />
-                            <Setter Property="IsEditable" Value="True" />
-                            <Setter Property="ItemsSource" Value="{Binding TextFields}" />
-                            <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"/>
                         </Style>
                         <Style TargetType="RadioButton">
                             <Setter Property="Margin" Value="5,5,0,5" />
@@ -608,16 +596,16 @@
                     <Label Name="FarWithEyeglassesLabel" Content="Far w/ Eyeglasses" Grid.Row="2" Grid.Column="7"></Label>
                     <Label Name="FarWithoutEyeglassesLabel" Content="Far w/o Eyeglasses" Grid.Row="3" Grid.Column="7"></Label>
 
-                    <ComboBox Name="BPReading1stComboBox" Grid.Row="1" Grid.Column="1" Tag="{Binding BP1stField}" Text="{Binding APE.BP1st}"></ComboBox>
-                    <ComboBox Name="BPReading2ndComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding BP2ndField}" Text="{Binding APE.BP2nd}"></ComboBox>
-                    <ComboBox Name="CardiacRate1stComboBox" Grid.Row="2" Grid.Column="1" Tag="{Binding CardiacRate1stField}" Text="{Binding APE.CardiacRate1st}"></ComboBox>
-                    <ComboBox Name="CardiacRate2ndComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiacRate2ndField}" Text="{Binding APE.CardiacRate2nd}"></ComboBox>
-                    <ComboBox Name="HeightComboBox" Grid.Row="1" Grid.Column="5" Tag="{Binding HeightField}" Text="{Binding APE.Height}"></ComboBox>
-                    <ComboBox Name="WeightComboBox" Grid.Row="2" Grid.Column="5" Tag="{Binding WeightField}" Text="{Binding APE.Weight}"></ComboBox>
-                    <ComboBox Name="RightEyeWithGlassesComboBox" Grid.Row="2" Grid.Column="8" Tag="{Binding VARightEyeWGlassesField}" Text="{Binding APE.VARightEyeWGlasses}"></ComboBox>
-                    <ComboBox Name="RightEyeWithoutGlassesComboBox" Grid.Row="3" Grid.Column="8" Tag="{Binding VARightEyeWOGlassesField}" Text="{Binding APE.VARightEyeWOGlasses}"></ComboBox>
-                    <ComboBox Name="LeftEyeWithGlassesComboBox" Grid.Row="2" Grid.Column="9" Tag="{Binding VALeftEyeWGlassesField}" Text="{Binding APE.VALeftEyeWGlasses}"></ComboBox>
-                    <ComboBox Name="LeftEyeWithoutGlassesComboBox" Grid.Row="3" Grid.Column="9" Tag="{Binding VALeftEyeWOGlassesField}" Text="{Binding APE.VALeftEyeWOGlasses}"></ComboBox>
+                    <TextBox Name="BPReading1stTextBox" Grid.Row="1" Grid.Column="1" Tag="{Binding BP1stField}" Text="{Binding APE.BP1st}"></TextBox>
+                    <TextBox Name="BPReading2ndTextBox" Grid.Row="1" Grid.Column="2" Tag="{Binding BP2ndField}" Text="{Binding APE.BP2nd}"></TextBox>
+                    <TextBox Name="CardiacRate1stTextBox" Grid.Row="2" Grid.Column="1" Tag="{Binding CardiacRate1stField}" Text="{Binding APE.CardiacRate1st}"></TextBox>
+                    <TextBox Name="CardiacRate2ndTextBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiacRate2ndField}" Text="{Binding APE.CardiacRate2nd}"></TextBox>
+                    <TextBox Name="HeightTextBox" Grid.Row="1" Grid.Column="5" Tag="{Binding HeightField}" Text="{Binding APE.Height}"></TextBox>
+                    <TextBox Name="WeightTextBox" Grid.Row="2" Grid.Column="5" Tag="{Binding WeightField}" Text="{Binding APE.Weight}"></TextBox>
+                    <TextBox Name="RightEyeWithGlassesTextBox" Grid.Row="2" Grid.Column="8" Tag="{Binding VARightEyeWGlassesField}" Text="{Binding APE.VARightEyeWGlasses}"></TextBox>
+                    <TextBox Name="RightEyeWithoutGlassesTextBox" Grid.Row="3" Grid.Column="8" Tag="{Binding VARightEyeWOGlassesField}" Text="{Binding APE.VARightEyeWOGlasses}"></TextBox>
+                    <TextBox Name="LeftEyeWithGlassesTextBox" Grid.Row="2" Grid.Column="9" Tag="{Binding VALeftEyeWGlassesField}" Text="{Binding APE.VALeftEyeWGlasses}"></TextBox>
+                    <TextBox Name="LeftEyeWithoutGlassesTextBox" Grid.Row="3" Grid.Column="9" Tag="{Binding VALeftEyeWOGlassesField}" Text="{Binding APE.VALeftEyeWOGlasses}"></TextBox>
                     <RadioButton GroupName="VisualAcuity" Name="VANormalRadioButton" Content="Normal" Grid.Row="1" Grid.Column="10" Margin="5,5,0,0"
                                  IsChecked="{Binding APE.VisualAcuity, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Normal, Mode=TwoWay}"></RadioButton>
                     <RadioButton GroupName="VisualAcuity" Name="VAEORRadioButton" Content="EOR" Grid.Row="2" Grid.Column="10" Margin="5,5,0,0"
@@ -626,8 +614,8 @@
                                  IsChecked="{Binding APE.VisualAcuity, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Corrected, Mode=TwoWay}"></RadioButton>
 
                     <TextBox Name="BMICategoryComboBox" Grid.Row="1" Grid.Column="6" Grid.RowSpan="3" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap"
-                             Tag="{Binding BMIField}" Text="{Binding APE.BMI}" Style="{StaticResource MultiLineTextBox}"></TextBox>
-                    <Button Name="SelectBMIButton" Grid.Row="3" Grid.Column="6" Tag="{Binding BMIField}">
+                             Tag="{Binding BMICategoryField}" Text="{Binding APE.BMICategory}" Style="{StaticResource MultiLineTextBox}"></TextBox>
+                    <Button Name="SelectBMIButton" Grid.Row="3" Grid.Column="6" Tag="{Binding BMICategoryField}">
                         <StackPanel>
                             <Image Source="/Images/16x16/edit.png" />
                         </StackPanel>
@@ -819,6 +807,7 @@
                             <Setter Property="FontSize" Value="14" />
                             <Setter Property="IsEditable" Value="True" />
                             <Setter Property="IsTextSearchEnabled" Value="True" />
+                            <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"/>
                         </Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderBrush" Value="Black" />

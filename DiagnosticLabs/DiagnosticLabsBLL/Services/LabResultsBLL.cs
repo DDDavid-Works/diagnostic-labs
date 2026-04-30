@@ -28,7 +28,7 @@ namespace DiagnosticLabsBLL.Services
             {
                 if (typeof(T) == typeof(StoolFecalysis))
                 {
-                    if (defaultsJson == null)
+                    if (string.IsNullOrEmpty(defaultsJson))
                     {
                         StoolFecalysis stoolFecalysis = new StoolFecalysis()
                         {
@@ -42,12 +42,12 @@ namespace DiagnosticLabsBLL.Services
                             Sex = string.Empty,
                             DateRequested = isForSetDefaults ? null : DateTime.Now,
                             Photo = null,
-                            Color = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.StoolFecalysisColor),
-                            Consistency = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.StoolFecalysisConsistency),
-                            Result = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.StoolFecalysisResult),
-                            Remarks = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.StoolFecalysisRemarks),
-                            MedicalTechnologist = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.MedicalTechnologist),
-                            Pathologist = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.Pathologist),
+                            Color = string.Empty,
+                            Consistency = string.Empty,
+                            Result = string.Empty,
+                            Remarks = string.Empty,
+                            MedicalTechnologist = string.Empty,
+                            Pathologist = string.Empty,
                             IsActive = true
                         };
                         return (T)Convert.ChangeType(stoolFecalysis, typeof(T));
@@ -55,84 +55,122 @@ namespace DiagnosticLabsBLL.Services
                     else
                     {
                         StoolFecalysis stoolFecalysis = Newtonsoft.Json.JsonConvert.DeserializeObject<StoolFecalysis>(defaultsJson);
+
+                        if (isForSetDefaults)
+                        {
+                            stoolFecalysis.PatientId = 0;
+                            stoolFecalysis.PatientRegistrationId = 0;
+                            stoolFecalysis.PatientCode = string.Empty;
+                            stoolFecalysis.PatientName = string.Empty;
+                            stoolFecalysis.CompanyOrPhysician = string.Empty;
+                            stoolFecalysis.Age = string.Empty;
+                            stoolFecalysis.Sex = string.Empty;
+                            stoolFecalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
+                            stoolFecalysis.Photo = null;
+                        }
+
                         return (T)Convert.ChangeType(stoolFecalysis, typeof(T));
                     }
                 }
                 else if (typeof(T) == typeof(APE))
                 {
-                    APE ape = new APE()
+                    if (string.IsNullOrEmpty(defaultsJson))
                     {
-                        Id = 0,
-                        PatientId = 0,
-                        PatientRegistrationId = 0,
-                        DateInputted = null,
-                        PatientName = string.Empty,
-                        CompanyName = string.Empty,
-                        DepartmentOrAgency = string.Empty,
-                        Age = string.Empty,
-                        BirthDate = null,
-                        Gender = string.Empty,
-                        CivilStatus = string.Empty,
-                        ContactNo = string.Empty,
-                        ENT = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEENT),
-                        Gastroenterology = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEGastroenterology),
-                        Respiratory = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APERespiratory),
-                        IntegumentarySkin = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEIntegumentarySkin),
-                        Cardiology = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APECardiology),
-                        Psychology = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEPsychology),
-                        Endocrinology = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEEndocrinology),
-                        OBGyneUrology = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEOBGyneUrology),
-                        Muscoloskeletal = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEMuscoloskeletal),
-                        InfectiousCommunicable = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEInfectiousCommunicable),
-                        Neurological = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APENeurological),
-                        Surgical = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APESurgical),
-                        OthersPast = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.APEOthersPast),
-                        Medications = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.APEMedications),
-                        ReviewOfSystems = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.APEReviewOfSystems),
-                        Allergies = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.APEAllergies),
-                        IsSmoking = false,
-                        SmokingSinceWhen = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APESmokingSinceWhen),
-                        NumberOfSticksPerDay = null,
-                        DrinkingSinceWhen = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEDrinkingSinceWhen),
-                        NumberOfBottles = null,
-                        DrinkingFrequency = string.Empty,
-                        LMP = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APELMP),
-                        LMPType = string.Empty,
-                        BP1st = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEBP1st),
-                        BP2nd = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEBP2nd),
-                        CardiacRate1st = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APECardiacRate1st),
-                        CardiacRate2nd = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APECardiacRate2nd),
-                        Height = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEHeight),
-                        Weight = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEWeight),
-                        BMICategory = string.Empty,
-                        VARightEyeWGlasses = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEVARightEyeWGlasses),
-                        VARightEyeWOGlasses = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEVARightEyeWOGlasses),
-                        VALeftEyeWGlasses = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEVALeftEyeWGlasses),
-                        VALeftEyeWOGlasses = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APEVALeftEyeWOGlasses),
-                        VisualAcuity = string.Empty,
-                        Skin = string.Empty,
-                        HeadScalp = string.Empty,
-                        Eyes = string.Empty,
-                        Ears = string.Empty,
-                        Nose = string.Empty,
-                        TeethTonsilsThroatPharynx = string.Empty,
-                        NeckLymphNodesThyroid = string.Empty,
-                        ThoraxBreast = string.Empty,
-                        HeartLungs = string.Empty,
-                        AbdomenLiverSpleen = string.Empty,
-                        InguinalAreaGenitalsAnus = string.Empty,
-                        ExtremetiesSpine = string.Empty,
-                        Tattoo = string.Empty,
-                        MassCyst = string.Empty,
-                        OthersPE = string.Empty,
-                        Findings = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, MultiLineEntries.APEFindings),
-                        VitalSignsBy = string.Empty,
-                        HeightWeightBy = string.Empty,
-                        IsActive = true,
-                        APENumberOfSticksPerDay = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APENumberOfSticksPerDay),
-                        APENumberOfBottles = _defaultValuesBLL.GetDefaultValueFieldValue(moduleId, SingleLineEntries.APENumberOfBottles)
-                    };
-                    return (T)Convert.ChangeType(ape, typeof(T));
+                        APE ape = new APE()
+                        {
+                            Id = 0,
+                            PatientId = 0,
+                            PatientRegistrationId = 0,
+                            DateInputted = null,
+                            PatientName = string.Empty,
+                            CompanyName = string.Empty,
+                            DepartmentOrAgency = string.Empty,
+                            Age = string.Empty,
+                            BirthDate = null,
+                            Gender = string.Empty,
+                            CivilStatus = string.Empty,
+                            ContactNo = string.Empty,
+                            ENT = string.Empty,
+                            Gastroenterology = string.Empty,
+                            Respiratory = string.Empty,
+                            IntegumentarySkin = string.Empty,
+                            Cardiology = string.Empty,
+                            Psychology = string.Empty,
+                            Endocrinology = string.Empty,
+                            OBGyneUrology = string.Empty,
+                            Muscoloskeletal = string.Empty,
+                            InfectiousCommunicable = string.Empty,
+                            Neurological = string.Empty,
+                            Surgical = string.Empty,
+                            OthersPast = string.Empty,
+                            Medications = string.Empty,
+                            ReviewOfSystems = string.Empty,
+                            Allergies = string.Empty,
+                            IsSmoking = false,
+                            SmokingSinceWhen = string.Empty,
+                            NumberOfSticksPerDay = null,
+                            DrinkingSinceWhen = string.Empty,
+                            NumberOfBottles = null,
+                            DrinkingFrequency = string.Empty,
+                            LMP = string.Empty,
+                            LMPType = string.Empty,
+                            BP1st = string.Empty,
+                            BP2nd = string.Empty,
+                            CardiacRate1st = string.Empty,
+                            CardiacRate2nd = string.Empty,
+                            Height = string.Empty,
+                            Weight = string.Empty,
+                            BMICategory = string.Empty,
+                            VARightEyeWGlasses = string.Empty,
+                            VARightEyeWOGlasses = string.Empty,
+                            VALeftEyeWGlasses = string.Empty,
+                            VALeftEyeWOGlasses = string.Empty,
+                            VisualAcuity = string.Empty,
+                            Skin = string.Empty,
+                            HeadScalp = string.Empty,
+                            Eyes = string.Empty,
+                            Ears = string.Empty,
+                            Nose = string.Empty,
+                            TeethTonsilsThroatPharynx = string.Empty,
+                            NeckLymphNodesThyroid = string.Empty,
+                            ThoraxBreast = string.Empty,
+                            HeartLungs = string.Empty,
+                            AbdomenLiverSpleen = string.Empty,
+                            InguinalAreaGenitalsAnus = string.Empty,
+                            ExtremetiesSpine = string.Empty,
+                            Tattoo = string.Empty,
+                            MassCyst = string.Empty,
+                            OthersPE = string.Empty,
+                            Findings = string.Empty,
+                            VitalSignsBy = string.Empty,
+                            HeightWeightBy = string.Empty,
+                            IsActive = true,
+                            APENumberOfSticksPerDay = string.Empty,
+                            APENumberOfBottles = string.Empty
+                        };
+                        return (T)Convert.ChangeType(ape, typeof(T));
+                    }
+                    else
+                    {
+                        APE ape = Newtonsoft.Json.JsonConvert.DeserializeObject<APE>(defaultsJson);
+
+                        if (isForSetDefaults)
+                        {
+                            ape.PatientId = 0;
+                            ape.PatientRegistrationId = 0;
+                            ape.DateInputted = DateTime.Now;
+                            ape.PatientName = string.Empty;
+                            ape.CompanyName = string.Empty;
+                            ape.DepartmentOrAgency = string.Empty;
+                            ape.Age = string.Empty;
+                            ape.BirthDate = null;
+                            ape.Gender = string.Empty;
+                            ape.CivilStatus = string.Empty;
+                            ape.ContactNo = string.Empty;
+                        }
+
+                        return (T)Convert.ChangeType(ape, typeof(T));
+                    }
                 }
 
                 return (T)Convert.ChangeType(null, typeof(T));

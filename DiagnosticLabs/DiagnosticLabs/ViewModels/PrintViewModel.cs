@@ -1,4 +1,5 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.CrystalReports.ViewerObjectModel;
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
@@ -6,9 +7,9 @@ using DiagnosticLabsDAL.Models;
 using System;
 using System.Drawing.Imaging;
 using System.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Controls;
 using System.Windows.Media.Media3D;
-using CrystalDecisions.CrystalReports.ViewerObjectModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -109,15 +110,11 @@ namespace DiagnosticLabs.ViewModels
             }
             else if (typeof(T) == typeof(APE))
             {
-                string DateInputted2 = ((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy");
-
-                string DateInputted = GetDataFromRecord<string>(record, "DateInputted", "MM/dd/yyyy");
-                string PatientName = GetDataFromRecord<string>(record, "PatientName");
-
+                string DateInputted = ((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy");
+                string PatientName = (string)type.GetProperty("PatientName").GetValue(record);
                 string CompanyName = (string)type.GetProperty("CompanyName").GetValue(record);
                 string DepartmentOrAgency = (string)type.GetProperty("DepartmentOrAgency").GetValue(record);
                 string Age = (string)type.GetProperty("Age").GetValue(record);
-                string BirthDate = ((DateTime)type.GetProperty("BirthDate").GetValue(record)).ToString("MM/dd/yyyy");
                 string Gender = (string)type.GetProperty("Gender").GetValue(record);
                 string CivilStatus = (string)type.GetProperty("CivilStatus").GetValue(record);
                 string ContactNo = (string)type.GetProperty("ContactNo").GetValue(record);
@@ -176,16 +173,18 @@ namespace DiagnosticLabs.ViewModels
                 string Findings = (string)type.GetProperty("Findings").GetValue(record);
                 string VitalSignsBy = (string)type.GetProperty("VitalSignsBy").GetValue(record);
                 string HeightWeightBy = (string)type.GetProperty("HeightWeightBy").GetValue(record);
-                //string CompanySetupLogo = companySetup.Logo;
+                byte[] CompanySetupLogo = companySetup.Logo;
 
                 reportObject = new
                 {
-                    DateInputted = ((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy"),
+                    DateInputted = GetDataFromRecord<APE, string>(record, "DateInputted", "MM/dd/yyyy"),
+                    //((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy"), 
                     PatientName = (string)type.GetProperty("PatientName").GetValue(record),
                     CompanyName = (string)type.GetProperty("CompanyName").GetValue(record),
                     DepartmentOrAgency = (string)type.GetProperty("DepartmentOrAgency").GetValue(record),
                     Age = (string)type.GetProperty("Age").GetValue(record),
-                    BirthDate = ((DateTime)type.GetProperty("BirthDate").GetValue(record)).ToString("MM/dd/yyyy"),
+                    BirthDate = GetDataFromRecord<APE, string>(record, "BirthDate", "MM/dd/yyyy"),
+                    //((DateTime)type.GetProperty("BirthDate").GetValue(record)).ToString("MM/dd/yyyy"),
                     Gender = (string)type.GetProperty("Gender").GetValue(record),
                     CivilStatus = (string)type.GetProperty("CivilStatus").GetValue(record),
                     ContactNo = (string)type.GetProperty("ContactNo").GetValue(record),
@@ -251,21 +250,29 @@ namespace DiagnosticLabs.ViewModels
             return reportObject;
         }
 
-        private static T GetDataFromRecord<T>(object record, string field, string dateFormat = null)
+        private static T2 GetDataFromRecord<T, T2>(object record, string field, string dateFormat = null)
         {
             try
             {
                 Type type = typeof(T);
+                Type outType = typeof(T2);
                 var value = type.GetProperty(field).GetValue(record);
 
-                if (dateFormat == null)
-                    return (T)value;
-                else
+                Type propType = value.GetType();
+
+                if (propType == typeof(DateTime))
                 {
-                    if (value != null)
-                        return (T)Convert.ChangeType(((DateTime)value).ToString("MM/dd/yyyy"), typeof(T));
+                    if (dateFormat != null)
+                        return (T2)Convert.ChangeType(((DateTime)type.GetProperty(field).GetValue(record)).ToString(dateFormat), typeof(T2));
                     else
-                        return (T)Convert.ChangeType(string.Empty, typeof(T));
+                        return (T2)Convert.ChangeType(((DateTime)type.GetProperty(field).GetValue(record)), typeof(T2));
+                }
+                else
+                { 
+                    if (value == null)
+                        return (T2)Convert.ChangeType(string.Empty, typeof(T2));
+                    else
+                        return (T2)value;
                 }
             }
             catch (Exception ex)

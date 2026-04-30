@@ -34,7 +34,9 @@ namespace DiagnosticLabs.UserControls
         public event RoutedEventHandler SearchCommand;
         public event RoutedEventHandler PrintCommand;
         public event RoutedEventHandler ShowListCommand;
-        public event RoutedEventHandler ShowSetDefaultCommand;
+        public event RoutedEventHandler SetDefaultsCommand;
+        public event RoutedEventHandler SaveDefaultsCommand;
+        public event RoutedEventHandler CloseDefaultsCommand;
 
         public bool NewButtonVisible { get; set; }
         public bool SaveButtonVisible { get; set; }
@@ -42,7 +44,7 @@ namespace DiagnosticLabs.UserControls
         public bool PrintButtonVisible { get; set; }
         public bool SearchButtonVisible { get; set; }
         public bool ShowListButtonVisible { get; set; }
-        public bool ShowSetDefaultButtonVisible { get; set; }
+        public bool SetDefaultsButtonVisible { get; set; }
 
         public ActionToolbarUserControl()
         {
@@ -57,7 +59,9 @@ namespace DiagnosticLabs.UserControls
             ((Border)PrintButton.Parent).Visibility = PrintButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)SearchButton.Parent).Visibility = SearchButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             ((Border)ShowListButton.Parent).Visibility = ShowListButtonVisible ? Visibility.Visible : Visibility.Collapsed;
-            ((Border)ShowSetDefaultButton.Parent).Visibility = ShowSetDefaultButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            ((Border)SetDefaultsButton.Parent).Visibility = SetDefaultsButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            ((Border)SaveDefaultsButton.Parent).Visibility = Visibility.Collapsed;
+            ((Border)CloseDefaultsButton.Parent).Visibility = Visibility.Collapsed;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -84,11 +88,27 @@ namespace DiagnosticLabs.UserControls
             }
         }
 
-        private void ShowSetDefaultButton_Click(object sender, RoutedEventArgs e)
+        private void SetDefaultsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ShowSetDefaultCommand != null)
+            if (this.SetDefaultsCommand != null)
             {
-                this.ShowSetDefaultCommand(this, e);
+                this.SetDefaultsCommand(this, e);
+            }
+        }
+
+        private void CloseDefaultsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.CloseDefaultsCommand != null)
+            {
+                this.CloseDefaultsCommand(this, e);
+            }
+        }
+
+        private void SaveDefaultsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.SaveDefaultsCommand != null)
+            {
+                this.SaveDefaultsCommand(this, e);
             }
         }
     }

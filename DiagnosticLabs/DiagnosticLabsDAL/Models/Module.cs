@@ -15,7 +15,7 @@ namespace DiagnosticLabsDAL.Models
         public bool HasSearch { get; set; }
         public bool HasPrint { get; set; }
         public bool HasShowList { get; set; }
-        public bool HasShowSetDefaults { get; set; }
+        public bool HasSetDefaults { get; set; }
         public string Icon { get; set; }
         public int SortOrder { get; set; }
         public bool IsActive { get; set; }

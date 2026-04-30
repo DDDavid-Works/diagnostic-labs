@@ -30,27 +30,6 @@ namespace DiagnosticLabs.LabResultsWindows
                 vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOINPUT);
         }
 
-        private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
-        {
-            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.AnnualPhysicalExam);
-            search.ShowDialog();
-
-            if (search.SelectedLabResult == null) return;
-
-            this.DataContext = new APEViewModel(search.SelectedLabResult.Id);
-        }
-
-        private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
-        {
-            var vm = (APEViewModel)DataContext;
-
-            if (vm.APE != null)
-            {
-                PrintWindow print = new PrintWindow(Modules.AnnualPhysicalExam, vm.APE.Id);
-                print.ShowDialog();
-            }
-        }
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
@@ -64,13 +43,6 @@ namespace DiagnosticLabs.LabResultsWindows
 
                 if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
                     vm.RefreshLabResultsSingleLineEntryListCommand.Execute(fieldName);
-            }
-            else if (comboBox.SelectedItem != null && comboBox.SelectedItem.ToString() == Texts.SetDefault)
-            {
-                DefaultSetterWindow dsw = new DefaultSetterWindow(vm.ModuleId, fieldName, DefaultSetters.Mode.TextBox);
-                dsw.ShowDialog();
-
-                comboBox.Text = string.Empty;
             }
         }
 
@@ -110,19 +82,6 @@ namespace DiagnosticLabs.LabResultsWindows
             }
         }
 
-        #region Private Methods
-        private void ShowMultiLineEntryWindow(string fieldName, TextBox textBox)
-        {
-            var vm = (APEViewModel)DataContext;
-
-            MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.ModuleId, fieldName, null, false);
-            mlew.ShowDialog();
-
-            if (mlew.SelectedMultiLineEntry != null)
-                textBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
-        }
-        #endregion
-
         private void PECheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -136,5 +95,104 @@ namespace DiagnosticLabs.LabResultsWindows
                 reverseCheckBox.IsChecked = false;
             }
         }
+
+        #region Private Methods
+        private void ShowMultiLineEntryWindow(string fieldName, TextBox textBox)
+        {
+            var vm = (APEViewModel)DataContext;
+
+            MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.ModuleId, fieldName, null, false);
+            mlew.ShowDialog();
+
+            if (mlew.SelectedMultiLineEntry != null)
+                textBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
+        }
+
+        private void ToggleSetDefaultsUI(bool isSetDefaults)
+        {
+            base.Title = isSetDefaults ? "Stool/Fecalysis [SET DEFAULT MODE]" : "Stool/Fecalysis";
+
+            var bc = new BrushConverter();
+            base.Background = (Brush)bc.ConvertFrom(isSetDefaults ? "#F0E495" : "#DFECDF");
+
+            Visibility isVisible = isSetDefaults ? Visibility.Collapsed : Visibility.Visible,
+                isHidden = isSetDefaults ? Visibility.Visible : Visibility.Hidden;
+
+            ActionToolbar.NewButtonBox.Visibility = isVisible;
+            ActionToolbar.SaveButtonBox.Visibility = isVisible;
+            ActionToolbar.DeleteButtonBox.Visibility = isVisible;
+            ActionToolbar.PrintButtonBox.Visibility = isVisible;
+            ActionToolbar.SearchButtonBox.Visibility = isVisible;
+            ActionToolbar.SetDefaultsButtonBox.Visibility = isVisible;
+            ActionToolbar.SaveDefaultsButtonBox.Visibility = isHidden;
+            ActionToolbar.CloseDefaultsButtonBox.Visibility = isHidden;
+
+            PatientRegistrationSearchByCode.IsEnabled = !isSetDefaults;
+            InputDateDatePicker.IsEnabled = !isSetDefaults;
+            CompanyNameTextBox.IsEnabled = !isSetDefaults;
+            BatchNameTextBox.IsEnabled = !isSetDefaults;
+            PatientSearchByName.IsEnabled = !isSetDefaults;
+            CompanyTextBox.IsEnabled = !isSetDefaults;
+            DepartmentOrAgencyTextBox.IsEnabled = !isSetDefaults;
+            AgeTextBox.IsEnabled = !isSetDefaults;
+            BirthdayDatePicker.IsEnabled = !isSetDefaults;
+            GenderComboBox.IsEnabled = !isSetDefaults;
+            CivilStatusComboBox.IsEnabled = !isSetDefaults;
+            ContactNumberTextBox.IsEnabled = !isSetDefaults;
+        }
+        #endregion
+
+        #region Action Toolbar Actions
+        private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
+        {
+            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.AnnualPhysicalExam);
+            search.ShowDialog();
+
+            if (search.SelectedLabResult == null) return;
+
+            this.DataContext = new APEViewModel(search.SelectedLabResult.Id);
+        }
+
+        private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
+        {
+            var vm = (APEViewModel)DataContext;
+
+            if (vm.APE != null)
+            {
+                PrintWindow print = new PrintWindow(Modules.AnnualPhysicalExam, vm.APE.Id);
+                print.ShowDialog();
+            }
+        }
+
+        private void ActionToolbar_SetDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(true);
+
+            var vm = (APEViewModel)DataContext;
+
+            if (vm.SetDefaultsCommand.CanExecute(null))
+                vm.SetDefaultsCommand.Execute(null);
+        }
+
+        private void ActionToolbar_SaveDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(false);
+
+            var vm = (APEViewModel)DataContext;
+
+            if (vm.SaveDefaultsCommand.CanExecute(null))
+                vm.SaveDefaultsCommand.Execute(null);
+        }
+
+        private void ActionToolbar_CloseDefaultsCommand(object sender, RoutedEventArgs e)
+        {
+            ToggleSetDefaultsUI(false);
+
+            var vm = (APEViewModel)DataContext;
+
+            if (vm.NewCommand.CanExecute(null))
+                vm.NewCommand.Execute(null);
+        }
+        #endregion
     }
 }
