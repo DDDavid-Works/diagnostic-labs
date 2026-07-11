@@ -19,6 +19,7 @@ namespace DiagnosticLabs.ViewModels
         LabResultsBLL _labResultsBLL = new LabResultsBLL();
         PatientsBLL _patientsBLL = new PatientsBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        ModulesBLL _modulesBLL = new ModulesBLL();
 
         #region Public Properties
         public StoolFecalysis StoolFecalysis { get; set; }
@@ -40,12 +41,12 @@ namespace DiagnosticLabs.ViewModels
         {
             this.ModuleId = _commonFunctions.GetModuleId(Modules.StoolFecalysis);
 
+            LoadAllSingleLineEntryLists();
+
             if (id == 0)
                 NewStoolFecalysis();
             else
                 LoadStoolFecalysis(id);
-
-            LoadAllSingleLineEntryLists();
 
             this.NewCommand = new RelayCommand(param => NewStoolFecalysis());
             this.SaveCommand = new RelayCommand(param => SaveStoolFecalysis());
@@ -117,7 +118,7 @@ namespace DiagnosticLabs.ViewModels
             }
 
             long id = this.StoolFecalysis.Id;
-            if (_labResultsBLL.SaveLabResultWithPatientRegistrationAndPatient(this.StoolFecalysis, this.PatientRegistration, this.Patient, ref id))
+            if (_labResultsBLL.SaveLabResult(this.StoolFecalysis, this.PatientRegistration, this.Patient, ref id))
             {
                 this.StoolFecalysis.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;

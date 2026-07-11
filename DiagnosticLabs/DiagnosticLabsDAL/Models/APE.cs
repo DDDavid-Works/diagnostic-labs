@@ -516,21 +516,6 @@ namespace DiagnosticLabsDAL.Models
 
         #region Checkboxes Field
         [NotMapped]
-        public string APENumberOfSticksPerDay { get; set; }
-
-        [NotMapped]
-        public string APENumberOfBottles { get; set; }
-
-        [NotMapped]
-        public bool DrinkingDaily { get; set; }
-
-        [NotMapped]
-        public bool DrinkingWeekly { get; set; }
-
-        [NotMapped]
-        public bool DrinkingOccasional { get; set; }
-
-        [NotMapped]
         public bool LMPTypeRegular { get; set; }
 
         [NotMapped]

@@ -21,6 +21,7 @@ namespace DiagnosticLabs.ViewModels
         LabResultsBLL _labResultsBLL = new LabResultsBLL();
         PatientsBLL _patientsBLL = new PatientsBLL();
         PatientRegistrationsBLL _patientRegistrationsBLL = new PatientRegistrationsBLL();
+        ModulesBLL _modulesBLL = new ModulesBLL();
 
         #region Public Properties
         public APE APE { get; set; }
@@ -43,7 +44,7 @@ namespace DiagnosticLabs.ViewModels
         public ObservableCollection<string> Psychologies { get; set; }
         public ObservableCollection<string> Endocrinologies { get; set; }
         public ObservableCollection<string> OBGyneUrologies { get; set; }
-        public ObservableCollection<string> MuscoloSkeletals { get; set; }
+        public ObservableCollection<string> Muscoloskeletals { get; set; }
         public ObservableCollection<string> InfectiousCommunicables { get; set; }
         public ObservableCollection<string> Neurologies { get; set; }
         public ObservableCollection<string> Surgicals { get; set; }
@@ -94,6 +95,8 @@ namespace DiagnosticLabs.ViewModels
         {
             this.ModuleId = _commonFunctions.GetModuleId(Modules.AnnualPhysicalExam);
 
+            LoadAllSingleLineEntryLists();
+
             if (id == 0)
                 NewAPE();
             else
@@ -105,12 +108,14 @@ namespace DiagnosticLabs.ViewModels
             this.GetPatientRegistrationCommand = new RelayCommand(param => GetPatientRegistration((long)param));
             this.RefreshLabResultsSingleLineEntryListCommand = new RelayCommand(param => RefreshLabResultsSingleLineEntryList((string)param));
             this.SetDefaultsCommand = new RelayCommand(param => SetDefaults());
-            this.SaveDefaultsCommand = new RelayCommand(param => SaveStoolFecalysisDefaults());
+            this.SaveDefaultsCommand = new RelayCommand(param => SaveAPEDefaults());
         }
 
         #region Data Actions
         private void LoadAPE(long apeId)
         {
+            IsSetDefaultMode = false;
+
             this.APE = _labResultsBLL.Get<APE>(apeId);
             SetBooleans(this.APE);
 
@@ -134,8 +139,6 @@ namespace DiagnosticLabs.ViewModels
 
         private void NewAPE()
         {
-            LoadAllSingleLineEntryLists(); 
-            
             IsSetDefaultMode = false;
 
             string defaults = _commonFunctions.GetDefaults(_entityName);
@@ -160,13 +163,6 @@ namespace DiagnosticLabs.ViewModels
             }
 
             long id = this.APE.Id;
-
-            if (this.APE.DrinkingDaily)
-                this.APE.DrinkingFrequency = "Daily";
-            else if (this.APE.DrinkingWeekly)
-                this.APE.DrinkingFrequency = "Weekly";
-            else if (this.APE.DrinkingOccasional)
-                this.APE.DrinkingFrequency = "Occasional";
 
             if (this.APE.LMPTypeRegular)
                 this.APE.LMPType = "Regular";
@@ -196,10 +192,7 @@ namespace DiagnosticLabs.ViewModels
             this.APE.MassCyst = PEStringValue(this.APE.MassCystNValue, this.APE.MassCystFValue);
             this.APE.OthersPE = PEStringValue(this.APE.OthersPENValue, this.APE.OthersPEFValue);
 
-            this.APE.NumberOfSticksPerDay = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfSticksPerDay);
-            this.APE.NumberOfBottles = _commonFunctions.NumbericNullOrIntValue(this.APE.APENumberOfBottles);
-
-            if (_labResultsBLL.SaveLabResultWithPatientRegistrationAndPatient(this.APE, this.PatientRegistration, this.Patient, ref id))
+            if (_labResultsBLL.SaveLabResult(this.APE, this.PatientRegistration, this.Patient, ref id))
             {
                 this.APE.Id = id;
                 this.NotificationMessage = Messages.SavedSuccessfully;
@@ -223,7 +216,7 @@ namespace DiagnosticLabs.ViewModels
             this.ClearNotificationMessages();
         }
 
-        private void SaveStoolFecalysisDefaults()
+        private void SaveAPEDefaults()
         {
             this.APE.PatientId = this.Patient.Id;
             this.APE.PatientRegistrationId = this.PatientRegistration.Id;
@@ -331,9 +324,9 @@ namespace DiagnosticLabs.ViewModels
                         this.APE.OBGyneUrology = this.OBGyneUrologies.First();
                     break;
                 case SingleLineEntries.APEMuscoloskeletal:
-                    this.MuscoloSkeletals = new ObservableCollection<string>(_commonFunctions.LabResultsSingleLineEntryList(SingleLineEntries.APEMuscoloskeletal, this.ModuleId, true));
+                    this.Muscoloskeletals = new ObservableCollection<string>(_commonFunctions.LabResultsSingleLineEntryList(SingleLineEntries.APEMuscoloskeletal, this.ModuleId, true));
                     if (this.APE != null && this.APE.Muscoloskeletal != string.Empty)
-                        this.APE.Muscoloskeletal = this.MuscoloSkeletals.First();
+                        this.APE.Muscoloskeletal = this.Muscoloskeletals.First();
                     break;
                 case SingleLineEntries.APEInfectiousCommunicable:
                     this.InfectiousCommunicables = new ObservableCollection<string>(_commonFunctions.LabResultsSingleLineEntryList(SingleLineEntries.APEInfectiousCommunicable, this.ModuleId, true));
@@ -390,9 +383,6 @@ namespace DiagnosticLabs.ViewModels
 
         private void SetBooleans(APE ape)
         {
-            ape.DrinkingDaily = ape.DrinkingFrequency == "Daily";
-            ape.DrinkingWeekly = ape.DrinkingFrequency == "Weekly";
-            ape.DrinkingOccasional = ape.DrinkingFrequency == "Occasional";
             ape.LMPTypeRegular = ape.LMPType == "Regular";
             ape.LMPTypeIrregular = ape.LMPType == "Irregular";
             ape.VisualAcuityNormal = ape.VisualAcuity == "Normal";

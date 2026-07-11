@@ -23,7 +23,20 @@ namespace DiagnosticLabsBLL.Services
         {
             try
             {
-                return _dbContext.Modules.Where(m => m.Id == id).FirstOrDefault();
+                return _dbContext.Modules.Find(id);
+            }
+            catch (Exception ex)
+            {
+                _commonFunctions.LogException(_logFileName, ex);
+                return null;
+            }
+        }
+
+        public Module GetModuleByName(string moduleName)
+        {
+            try
+            {
+                return _dbContext.Modules.Where(m => m.ModuleName == moduleName).FirstOrDefault();
             }
             catch (Exception ex)
             {

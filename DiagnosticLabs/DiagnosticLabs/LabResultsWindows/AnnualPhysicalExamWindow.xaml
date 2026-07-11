@@ -206,7 +206,7 @@
             <Label Name="ContactNumberLabel" Content="ContactNumber:" Grid.Row="1" Grid.Column="8"></Label>
 
             <menu:PatientSearchByNameUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Margin="0,5,5,0" x:Name="PatientSearchByName"></menu:PatientSearchByNameUserControl>
-            <TextBox Name="CompanyTextBox" Grid.Row="0" Grid.Column="7" Text="{Binding Patient.CompanyName}"></TextBox>
+            <TextBox Name="CompanyTextBox" Grid.Row="0" Grid.Column="7" Text="{Binding APE.CompanyName}"></TextBox>
             <TextBox Name="DepartmentOrAgencyTextBox" Grid.Row="0" Grid.Column="9" Text="{Binding APE.DepartmentOrAgency}"></TextBox>
             <TextBox Name="AgeTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Patient.Age}"></TextBox>
             <DatePicker Name="BirthdayDatePicker" Grid.Row="1" Grid.Column="3" SelectedDate="{Binding Patient.DateOfBirth}"></DatePicker>
@@ -297,12 +297,12 @@
                     <ComboBox Name="RespiratoryComboBox" Grid.Row="1" Grid.Column="2" Tag="{Binding RespiratoryField}" ItemsSource="{Binding Respiratories}" Text="{Binding APE.Respiratory}"></ComboBox>
                     <ComboBox Name="CardiologyComboBox" Grid.Row="2" Grid.Column="2" Tag="{Binding CardiologyField}" ItemsSource="{Binding Cardiologies}" Text="{Binding APE.Cardiology}"></ComboBox>
                     <ComboBox Name="EndocrinologyComboBox" Grid.Row="3" Grid.Column="2" Tag="{Binding EndocrinologyField}" ItemsSource="{Binding Endocrinologies}" Text="{Binding APE.Endocrinology}"></ComboBox>
-                    <ComboBox Name="MuscoloSkeletalComboBox" Grid.Row="4" Grid.Column="2" Tag="{Binding MuscoloSkeletalField}" ItemsSource="{Binding MuscoloSkeletals}" Text="{Binding APE.MuscoloSkeletal}"></ComboBox>
-                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologicalField}" ItemsSource="{Binding Neurologies}" Text="{Binding APE.Neurology}"></ComboBox>
+                    <ComboBox Name="MuscoloSkeletalComboBox" Grid.Row="4" Grid.Column="2" Tag="{Binding MuscoloSkeletalField}" ItemsSource="{Binding Muscoloskeletals}" Text="{Binding APE.Muscoloskeletal}"></ComboBox>
+                    <ComboBox Name="NeurologyComboBox" Grid.Row="5" Grid.Column="2" Tag="{Binding NeurologicalField}" ItemsSource="{Binding Neurologies}" Text="{Binding APE.Neurological}"></ComboBox>
                     <ComboBox Name="GastroenterologyComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding GastroenterologyField}" ItemsSource="{Binding Gastroenterologies}" Text="{Binding APE.Gastroenterology}"></ComboBox>
                     <ComboBox Name="IntegumentarySkinComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding IntegumentarySkinField}" ItemsSource="{Binding IntegumentarySkins}" Text="{Binding APE.IntegumentarySkin}"></ComboBox>
                     <ComboBox Name="PsychologyComboBox" Grid.Row="2" Grid.Column="4" Tag="{Binding PsychologyField}" ItemsSource="{Binding Psychologies}" Text="{Binding APE.Psychology}"></ComboBox>
-                    <ComboBox Name="ObGyneUrologyComboBox" Grid.Row="3" Grid.Column="4" Tag="{Binding ObGyneUrologyField}" ItemsSource="{Binding OBGyneUrologies}" Text="{Binding APE.ObGyneUrology}"></ComboBox>
+                    <ComboBox Name="ObGyneUrologyComboBox" Grid.Row="3" Grid.Column="4" Tag="{Binding OBGyneUrologyField}" ItemsSource="{Binding OBGyneUrologies}" Text="{Binding APE.OBGyneUrology}"></ComboBox>
                     <ComboBox Name="InfectiousCommunicableComboBox" Grid.Row="4" Grid.Column="4" Tag="{Binding InfectiousCommunicableField}" ItemsSource="{Binding InfectiousCommunicables}" Text="{Binding APE.InfectiousCommunicable}"></ComboBox>
                     <ComboBox Name="SurgicalComboBox" Grid.Row="5" Grid.Column="4" Tag="{Binding SurgicalField}" ItemsSource="{Binding Surgicals}" Text="{Binding APE.Surgical}"></ComboBox>
                     <TextBox Name="OthersTextBox" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Height="42" AcceptsReturn="True" Tag="{Binding OthersPastField}" Text="{Binding APE.OthersPast}" MouseDoubleClick="MultiLineTextBox_MouseDoubleClick"></TextBox>
@@ -453,17 +453,17 @@
                     </RadioButton>
                     <TextBox Name="SmokingSinceWhenTextBox" Grid.Row="0" Grid.Column="4" Tag="{Binding SmokingSinceWhenField}" Text="{Binding APE.SmokingSinceWhen}"></TextBox>
                     <TextBox Name="DrinkingSinceWhenTextBox" Grid.Row="1" Grid.Column="4" Tag="{Binding DrinkingSinceWhenField}" Text="{Binding APE.DrinkingSinceWhen}"></TextBox>
-                    <TextBox Name="NumberOfSticksTextBox" Grid.Row="0" Grid.Column="6" Tag="{Binding NumberOfSticksPerDayField}" Text="{Binding APE.APENumberOfSticksPerDay}"></TextBox>
-                    <TextBox Name="NumberOfBottlesTextBox" Grid.Row="1" Grid.Column="6" Tag="{Binding NumberOfBottlesField}" Text="{Binding APE.APENumberOfBottles}"></TextBox>
-                    <CheckBox Name="DrinkingFrequencyDailyCheckBox" Grid.Row="1" Grid.Column="7" IsChecked="{Binding APE.DrinkingDaily}">
+                    <TextBox Name="NumberOfSticksTextBox" Grid.Row="0" Grid.Column="6" Tag="{Binding NumberOfSticksPerDayField}" Text="{Binding APE.NumberOfSticksPerDay}"></TextBox>
+                    <TextBox Name="NumberOfBottlesTextBox" Grid.Row="1" Grid.Column="6" Tag="{Binding NumberOfBottlesField}" Text="{Binding APE.NumberOfBottles}"></TextBox>
+                    <RadioButton GroupName="DrinkingFrequency" Name="DrinkingFrequencyDailyRadioButton" Grid.Row="1" Grid.Column="7" IsChecked="{Binding APE.DrinkingFrequency, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Daily, Mode=TwoWay}">
                         <TextBlock>Daily</TextBlock>
-                    </CheckBox>
-                    <CheckBox Name="DrinkingFrequencyWeeklyCheckBox" Grid.Row="1" Grid.Column="8" IsChecked="{Binding APE.DrinkingWeekly}">
+                    </RadioButton>
+                    <RadioButton GroupName="DrinkingFrequency" Name="DrinkingFrequencyWeeklyRadioButton" Grid.Row="1" Grid.Column="8" IsChecked="{Binding APE.DrinkingFrequency, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Weekly, Mode=TwoWay}">
                         <TextBlock>Weekly</TextBlock>
-                    </CheckBox>
-                    <CheckBox Name="DrinkingFrequencyOccasionalCheckBox" Grid.Row="1" Grid.Column="9" IsChecked="{Binding APE.DrinkingOccasional}">
+                    </RadioButton>
+                    <RadioButton GroupName="DrinkingFrequency" Name="DrinkingFrequencyOccasionalRadioButton" Grid.Row="1" Grid.Column="9" IsChecked="{Binding APE.DrinkingFrequency, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Occasional, Mode=TwoWay}">
                         <TextBlock>Occasional</TextBlock>
-                    </CheckBox>
+                    </RadioButton>
                 </Grid>
                 <Grid Margin="10,0,2,0">
                     <Grid.Resources>

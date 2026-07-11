@@ -99,15 +99,26 @@ namespace DiagnosticLabs
                 return 0;
         }
 
-        public int? NumbericNullOrIntValue(string value)
+        public int? NumbericNullOrIntValue<T>(T value)
         {
-            Int32 intValue = 0;
-            bool isInteger = Int32.TryParse(value, out intValue);
-
-            if (isInteger)
-                return intValue;
-            else
+            if (value == null)
                 return null;
+            else
+            {
+                if (typeof(T) == typeof(string))
+                {
+                    string tValueString = value.ToString();
+                    Int32 intValue = 0;
+                    bool isInteger = Int32.TryParse(tValueString, out intValue);
+
+                    if (isInteger)
+                        return intValue;
+                    else
+                        return null;
+                }
+                else
+                    return null;
+            }
         }
         #endregion
 

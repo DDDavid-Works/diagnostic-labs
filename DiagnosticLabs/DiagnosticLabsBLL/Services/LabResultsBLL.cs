@@ -2,6 +2,7 @@
 using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace DiagnosticLabsBLL.Services
         private const string _logFileName = "PackagesBLL";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
-        DefaultValuesBLL _defaultValuesBLL = new DefaultValuesBLL(); 
+        PatientsBLL _patientBLL = new PatientsBLL();
 
         private static DatabaseContext _dbContext;
 
@@ -144,9 +145,7 @@ namespace DiagnosticLabsBLL.Services
                             Findings = string.Empty,
                             VitalSignsBy = string.Empty,
                             HeightWeightBy = string.Empty,
-                            IsActive = true,
-                            APENumberOfSticksPerDay = string.Empty,
-                            APENumberOfBottles = string.Empty
+                            IsActive = true
                         };
                         return (T)Convert.ChangeType(ape, typeof(T));
                     }
@@ -190,7 +189,7 @@ namespace DiagnosticLabsBLL.Services
                 if (typeof(T) == typeof(StoolFecalysis))
                     return (T)Convert.ChangeType(_dbContext.StoolFecalyses.Find(id), typeof(T));
                 else if (typeof(T) == typeof(APE))
-                    return (T)Convert.ChangeType(_dbContext.APEs.Find(id), typeof(T));
+                    return (T)Convert.ChangeType(_dbContext.APEs.AsNoTracking().FirstOrDefault(a => a.Id == id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -274,8 +273,7 @@ namespace DiagnosticLabsBLL.Services
                     StoolFecalysis stoolFecalysis = record as StoolFecalysis;
                     if (stoolFecalysis.Id == 0)
                         _dbContext.StoolFecalyses.Add(stoolFecalysis);
-                    
-                    _dbContext.SaveChangesAsync();
+
                     id = stoolFecalysis.Id;
                 }
                 else if (typeof(T) == typeof(APE))
@@ -283,10 +281,12 @@ namespace DiagnosticLabsBLL.Services
                     APE ape = record as APE;
                     if (ape.Id == 0)
                         _dbContext.APEs.Add(ape);
+                    else
+                        _dbContext.APEs.Update(ape);
 
-                    _dbContext.SaveChangesAsync();
                     id = ape.Id;
                 }
+                _dbContext.SaveChangesAsync();
 
                 return true;
             }
@@ -297,10 +297,13 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
-        public bool SaveLabResultWithPatientRegistrationAndPatient<T>(T record, PatientRegistration patientRegistration, Patient patient, ref long id)
+        public bool SaveLabResult<T>(T record, PatientRegistration patientRegistration, Patient patient, ref long id)
         {
             try
             {
+                long patiendId = 0;
+                _patientBLL.SavePatient(patient, ref patiendId);
+
                 Type type = typeof(T);
 
                 if (typeof(T) == typeof(StoolFecalysis))
