@@ -5,54 +5,56 @@ using DiagnosticLabs.SearchWindows;
 using DiagnosticLabs.ViewModels;
 using DiagnosticLabsBLL.Globals;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DiagnosticLabs.LabResultsWindows
 {
     /// <summary>
-    /// Interaction logic for StoolFecalysisWindow.xaml
+    /// Interaction logic for UrinalysisWindow.xaml
     /// </summary>
-    public partial class StoolFecalysisWindow : Window
+    public partial class UrinalysisWindow : Window
     {
-        public StoolFecalysisWindow()
+        public UrinalysisWindow()
         {
             InitializeComponent();
-            this.DataContext = new StoolFecalysisViewModel(0);
+            this.DataContext = new UrinalysisViewModel(0);
         }
 
-        private void ColorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ColorComboBox.SelectedItem != null && ColorComboBox.SelectedItem.ToString() == Texts.NewEntry)
-            {
-                var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisColor, false);
-                singleLineEntryWindow.ShowDialog();
-
-                if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
-                    vm.RefreshLabResultsSingleLineEntryListCommand.Execute(SingleLineEntries.StoolFecalysisColor);
-            }
+            if (vm.GetPatientRegistrationCommand.CanExecute(null))
+                vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOINPUT);
         }
 
-        private void ConsistencyComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void OthersTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (ConsistencyComboBox.SelectedItem != null && ConsistencyComboBox.SelectedItem.ToString() == Texts.NewEntry)
-            {
-                var vm = (StoolFecalysisViewModel)DataContext;
+            ShowSelectMultiLineEntryWindow(MultiLineEntries.UrinalysisOthers);
+        }
 
-                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.StoolFecalysisConsistency, false);
-                singleLineEntryWindow.ShowDialog();
+        private void SelectOthersButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSelectMultiLineEntryWindow(MultiLineEntries.UrinalysisOthers);
+        }
 
-                if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
-                    vm.RefreshLabResultsSingleLineEntryListCommand.Execute(SingleLineEntries.StoolFecalysisConsistency);
-            }
+        private void RemarksTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ShowSelectMultiLineEntryWindow(MultiLineEntries.UrinalysisRemarks);
+        }
+
+        private void SelectRemarksButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSelectMultiLineEntryWindow(MultiLineEntries.UrinalysisRemarks);
         }
 
         private void MedicalTechnologistComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (MedicalTechnologistComboBox.SelectedItem != null && MedicalTechnologistComboBox.SelectedItem.ToString() == Texts.NewEntry)
             {
-                var vm = (StoolFecalysisViewModel)DataContext;
+                var vm = (UrinalysisViewModel)DataContext;
 
                 SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.MedicalTechnologist, true);
                 singleLineEntryWindow.ShowDialog();
@@ -66,7 +68,7 @@ namespace DiagnosticLabs.LabResultsWindows
         {
             if (PathologistComboBox.SelectedItem != null && PathologistComboBox.SelectedItem.ToString() == Texts.NewEntry)
             {
-                var vm = (StoolFecalysisViewModel)DataContext;
+                var vm = (UrinalysisViewModel)DataContext;
 
                 SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, SingleLineEntries.Pathologist, true);
                 singleLineEntryWindow.ShowDialog();
@@ -76,38 +78,27 @@ namespace DiagnosticLabs.LabResultsWindows
             }
         }
 
-        private void ResultTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ShowSelectMultiLineEntryWindow(MultiLineEntries.StoolFecalysisResult);
-        }
 
-        private void SelectResultButton_Click(object sender, RoutedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ShowSelectMultiLineEntryWindow(MultiLineEntries.StoolFecalysisResult);
-        }
+            ComboBox comboBox = sender as ComboBox;
+            var vm = (UrinalysisViewModel)DataContext;
+            string fieldName = comboBox.Tag.ToString();
 
-        private void RemarksTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ShowSelectMultiLineEntryWindow(MultiLineEntries.StoolFecalysisRemarks);
-        }
+            if (comboBox.SelectedItem != null && comboBox.SelectedItem.ToString() == Texts.NewEntry)
+            {
+                SingleLineEntryWindow singleLineEntryWindow = new SingleLineEntryWindow(vm.ModuleId, fieldName, false);
+                singleLineEntryWindow.ShowDialog();
 
-        private void SelectRemarksButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowSelectMultiLineEntryWindow(MultiLineEntries.StoolFecalysisRemarks);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var vm = (StoolFecalysisViewModel)DataContext;
-
-            if (vm.GetPatientRegistrationCommand.CanExecute(null))
-                vm.GetPatientRegistrationCommand.Execute(Globals.PATIENTREGISTRATIONIDTOINPUT);
+                if (vm.RefreshLabResultsSingleLineEntryListCommand.CanExecute(null))
+                    vm.RefreshLabResultsSingleLineEntryListCommand.Execute(fieldName);
+            }
         }
 
         #region Private Methods
         private void ShowSelectMultiLineEntryWindow(string fieldName)
         {
-            var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
             MultiLineEntryWindow mlew = new MultiLineEntryWindow(vm.ModuleId, fieldName, null, false);
             mlew.ShowDialog();
@@ -116,10 +107,10 @@ namespace DiagnosticLabs.LabResultsWindows
 
             switch (fieldName)
             {
-                case MultiLineEntries.StoolFecalysisResult:
-                    ResultTextBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
+                case MultiLineEntries.UrinalysisOthers:
+                    OthersTextBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
                     break;
-                case MultiLineEntries.StoolFecalysisRemarks:
+                case MultiLineEntries.UrinalysisRemarks:
                     RemarksTextBox.Text = mlew.SelectedMultiLineEntry.FieldValue;
                     break;
                 default:
@@ -129,10 +120,10 @@ namespace DiagnosticLabs.LabResultsWindows
 
         private void ToggleSetDefaultsUI(bool isSetDefaults)
         {
-            this.Title = isSetDefaults ? "Stool/Fecalysis [SET DEFAULT MODE]" : "Stool/Fecalysis";
+            base.Title = isSetDefaults ? "Urinalysis [SET DEFAULT MODE]" : "Urinalysis";
 
             var bc = new BrushConverter();
-            this.Background = (Brush)bc.ConvertFrom(isSetDefaults ? "#F0E495" : "#DFECDF");
+            base.Background = (Brush)bc.ConvertFrom(isSetDefaults ? "#F0E495" : "#DFECDF");
 
             Visibility isVisible = isSetDefaults ? Visibility.Collapsed : Visibility.Visible,
                 isHidden = isSetDefaults ? Visibility.Visible : Visibility.Hidden;
@@ -162,21 +153,21 @@ namespace DiagnosticLabs.LabResultsWindows
         #region Action Toolbar Actions
         private void ActionToolbar_SearchCommand(object sender, RoutedEventArgs e)
         {
-            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.StoolFecalysis);
+            SearchLabResultsWindow search = new SearchLabResultsWindow(Modules.Urinalysis);
             search.ShowDialog();
 
             if (search.SelectedLabResult == null) return;
 
-            this.DataContext = new StoolFecalysisViewModel(search.SelectedLabResult.Id);
+            this.DataContext = new UrinalysisViewModel(search.SelectedLabResult.Id);
         }
 
         private void ActionToolbar_PrintCommand(object sender, RoutedEventArgs e)
         {
-            var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
-            if (vm.StoolFecalysis != null)
+            if (vm.Urinalysis != null)
             {
-                PrintWindow print = new PrintWindow(Modules.StoolFecalysis, vm.StoolFecalysis.Id);
+                PrintWindow print = new PrintWindow(Modules.Urinalysis, vm.Urinalysis.Id);
                 print.ShowDialog();
             }
         }
@@ -185,7 +176,7 @@ namespace DiagnosticLabs.LabResultsWindows
         {
             ToggleSetDefaultsUI(true);
 
-            var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
             if (vm.SetDefaultsCommand.CanExecute(null))
                 vm.SetDefaultsCommand.Execute(null);
@@ -195,7 +186,7 @@ namespace DiagnosticLabs.LabResultsWindows
         {
             ToggleSetDefaultsUI(false);
 
-            var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
             if (vm.SaveDefaultsCommand.CanExecute(null))
                 vm.SaveDefaultsCommand.Execute(null);
@@ -205,12 +196,11 @@ namespace DiagnosticLabs.LabResultsWindows
         {
             ToggleSetDefaultsUI(false);
 
-            var vm = (StoolFecalysisViewModel)DataContext;
+            var vm = (UrinalysisViewModel)DataContext;
 
             if (vm.NewCommand.CanExecute(null))
                 vm.NewCommand.Execute(null);
         }
         #endregion
-
     }
 }

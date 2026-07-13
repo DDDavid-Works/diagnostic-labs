@@ -11,6 +11,21 @@
         public const string StoolFecalysisColor = "Color";
         public const string StoolFecalysisConsistency = "Consistency";
 
+        public const string UrinalysisColor = "Color";
+        public const string UrinalysisAppearance = "Appearance";
+        public const string UrinalysisReaction = "Reaction";
+        public const string UrinalysisSPGravity = "SP. Gravity";
+        public const string UrinalysisAlbumin = "Albumin";
+        public const string UrinalysisSugar = "Sugar";
+        public const string UrinalysisPusCells = "Pus Cells";
+        public const string UrinalysisRedCells = "Red Cells";
+        public const string UrinalysisMucusThreads = "Mucus Threads";
+        public const string UrinalysisEpithelialCells = "Epithelial Cells";
+        public const string UrinalysisAmorphousUratesPO4 = "Amorphous Urates / PO4";
+        public const string UrinalysisBacteria = "Bacteria";
+        public const string UrinalysisCasts = "Casts";
+        public const string UrinalysisCrystals = "Crystals";
+
         public const string APEENT = "Eyes, Ears, Nose, Throat";
         public const string APEGastroenterology = "Gastroenterology";
         public const string APERespiratory = "Respiratory";

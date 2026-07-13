@@ -19,7 +19,7 @@ namespace DiagnosticLabsBLL.Services
             _dbContext = new DatabaseContext();
         }
 
-        public Module GetModule(long id)
+        public Module GetModule(int id)
         {
             try
             {

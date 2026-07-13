@@ -32,7 +32,7 @@ namespace DiagnosticLabs.ViewModels
             if (moduleId == null || moduleId == 0)
                 this.Module = new Module() { Id = 0, ModuleName = "General Field" };
             else
-                this.Module = _modulesBLL.GetModule((long)moduleId);
+                this.Module = _modulesBLL.GetModule((int)moduleId);
 
             this.FieldName = fieldName;
             this.LoadMultiLineEntries(false);

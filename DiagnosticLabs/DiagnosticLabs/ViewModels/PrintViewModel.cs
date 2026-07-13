@@ -1,15 +1,10 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.CrystalReports.ViewerObjectModel;
 using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System;
-using System.Drawing.Imaging;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media.Media3D;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DiagnosticLabs.ViewModels
 {
@@ -43,6 +38,12 @@ namespace DiagnosticLabs.ViewModels
                     StoolFecalysis stoolFecalysis = _labResults.Get<StoolFecalysis>(recordId);
                     record = this.ReportObject<StoolFecalysis>(stoolFecalysis, companySetup);
                     break;
+                case Modules.Urinalysis:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/UrinalysisReport.rpt");
+
+                    Urinalysis urinalysis = _labResults.Get<Urinalysis>(recordId);
+                    record = this.ReportObject<Urinalysis>(urinalysis, companySetup);
+                    break;
                 case Modules.AnnualPhysicalExam:
                     this.ReportDocument.Load(appPath + "/Reports/LabResults/APEReport.rpt");
 
@@ -60,6 +61,7 @@ namespace DiagnosticLabs.ViewModels
                 switch (module)
                 {
                     case Modules.StoolFecalysis:
+                    case Modules.Urinalysis:
                     case Modules.AnnualPhysicalExam:
                         this.ReportDocument.SetParameterValue("CompanyName", companySetup.CompanyName);
                         this.ReportDocument.SetParameterValue("SubCompanyName", companySetup.SubCompanyName);
@@ -102,6 +104,37 @@ namespace DiagnosticLabs.ViewModels
                     Color = (string)type.GetProperty("Color").GetValue(record),
                     Consistency = (string)type.GetProperty("Consistency").GetValue(record),
                     Result = (string)type.GetProperty("Result").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(Urinalysis))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<Urinalysis, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Color = (string)type.GetProperty("Color").GetValue(record),
+                    Appearance = (string)type.GetProperty("Appearance").GetValue(record),
+                    Reaction = (string)type.GetProperty("Reaction").GetValue(record),
+                    SPGravity = (string)type.GetProperty("SPGravity").GetValue(record),
+                    Albumin = (string)type.GetProperty("Albumin").GetValue(record),
+                    Sugar = (string)type.GetProperty("Sugar").GetValue(record),
+                    PusCells = (string)type.GetProperty("PusCells").GetValue(record),
+                    RedCells = (string)type.GetProperty("RedCells").GetValue(record),
+                    MucusThreads = (string)type.GetProperty("MucusThreads").GetValue(record),
+                    EpithelialCells = (string)type.GetProperty("EpithelialCells").GetValue(record),
+                    AmorphousUratesPO4 = (string)type.GetProperty("AmorphousUratesPO4").GetValue(record),
+                    Bacteria = (string)type.GetProperty("Bacteria").GetValue(record),
+                    Casts = (string)type.GetProperty("Casts").GetValue(record),
+                    Crystals = (string)type.GetProperty("Crystals").GetValue(record),
+                    Others = (string)type.GetProperty("Others").GetValue(record),
                     Remarks = (string)type.GetProperty("Remarks").GetValue(record),
                     MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
                     Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),

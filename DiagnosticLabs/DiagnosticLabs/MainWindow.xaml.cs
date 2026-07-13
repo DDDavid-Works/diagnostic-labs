@@ -36,6 +36,7 @@ namespace DiagnosticLabs
         PackagesWindow _packagesWindow = null;
         DiscountsWindow _discountsWindow = null;
         StoolFecalysisWindow _stoolFecalysisWindow = null;
+        UrinalysisWindow _urinalysisWindow = null;
         AnnualPhysicalExamWindow _annualPhysicalExamWindow = null;
 
         public MainWindow(long userId)
@@ -208,6 +209,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _stoolFecalysisWindow.Activate();
+                case Modules.Urinalysis:
+                    if (_urinalysisWindow == null)
+                    {
+                        _urinalysisWindow = LoadWindow<UrinalysisWindow>();
+                        SetActionToolbarUserControl(_urinalysisWindow.ActionToolbar, menuItem);
+                        _urinalysisWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _urinalysisWindow.Show();
+                    }
+                    else
+                        return () => _annualPhysicalExamWindow.Activate();
                 case Modules.AnnualPhysicalExam:
                     if (_annualPhysicalExamWindow == null)
                     {
@@ -271,6 +282,8 @@ namespace DiagnosticLabs
                 _discountsWindow = null;
             else if (sender.GetType() == typeof(StoolFecalysisWindow))
                 _stoolFecalysisWindow = null;
+            else if (sender.GetType() == typeof(UrinalysisWindow))
+                _urinalysisWindow = null;
             else if (sender.GetType() == typeof(AnnualPhysicalExamWindow))
                 _annualPhysicalExamWindow = null;
 

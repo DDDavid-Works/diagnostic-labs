@@ -47,9 +47,9 @@ namespace DiagnosticLabs.ViewModels
             else
             {
                 multiLineEntries = _multiLineEntriesBLL.GetMultiLineEntries(moduleId, fieldName, moduleId);
-                this.Module = _modulesBLL.GetModule((long)moduleId);
+                this.Module = _modulesBLL.GetModule(moduleId);
             }
-            this.OpenModule = _modulesBLL.GetModule((long)moduleId);
+            this.OpenModule = _modulesBLL.GetModule(moduleId);
 
             this.FieldName = fieldName;
             this.MultiLineEntries = new MultiLineEntriesViewModel() { MultiLineEntries = new ObservableCollection<MultiLineEntry>(multiLineEntries) };

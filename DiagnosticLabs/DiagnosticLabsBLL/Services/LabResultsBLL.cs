@@ -1,5 +1,4 @@
-﻿using DiagnosticLabsBLL.Constants;
-using DiagnosticLabsDAL.DatabaseContext;
+﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
 using Microsoft.EntityFrameworkCore;
@@ -29,147 +28,15 @@ namespace DiagnosticLabsBLL.Services
             {
                 if (typeof(T) == typeof(StoolFecalysis))
                 {
-                    if (string.IsNullOrEmpty(defaultsJson))
-                    {
-                        StoolFecalysis stoolFecalysis = new StoolFecalysis()
-                        {
-                            Id = 0,
-                            PatientId = 0,
-                            PatientRegistrationId = 0,
-                            PatientCode = string.Empty,
-                            PatientName = string.Empty,
-                            CompanyOrPhysician = string.Empty,
-                            Age = string.Empty,
-                            Sex = string.Empty,
-                            DateRequested = isForSetDefaults ? null : DateTime.Now,
-                            Photo = null,
-                            Color = string.Empty,
-                            Consistency = string.Empty,
-                            Result = string.Empty,
-                            Remarks = string.Empty,
-                            MedicalTechnologist = string.Empty,
-                            Pathologist = string.Empty,
-                            IsActive = true
-                        };
-                        return (T)Convert.ChangeType(stoolFecalysis, typeof(T));
-                    }
-                    else
-                    {
-                        StoolFecalysis stoolFecalysis = Newtonsoft.Json.JsonConvert.DeserializeObject<StoolFecalysis>(defaultsJson);
-
-                        if (isForSetDefaults)
-                        {
-                            stoolFecalysis.PatientId = 0;
-                            stoolFecalysis.PatientRegistrationId = 0;
-                            stoolFecalysis.PatientCode = string.Empty;
-                            stoolFecalysis.PatientName = string.Empty;
-                            stoolFecalysis.CompanyOrPhysician = string.Empty;
-                            stoolFecalysis.Age = string.Empty;
-                            stoolFecalysis.Sex = string.Empty;
-                            stoolFecalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
-                            stoolFecalysis.Photo = null;
-                        }
-
-                        return (T)Convert.ChangeType(stoolFecalysis, typeof(T));
-                    }
+                    return (T)Convert.ChangeType(NewStoolFecalysis(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(Urinalysis))
+                {
+                    return (T)Convert.ChangeType(NewUrinalysis(defaultsJson, isForSetDefaults), typeof(T));
                 }
                 else if (typeof(T) == typeof(APE))
                 {
-                    if (string.IsNullOrEmpty(defaultsJson))
-                    {
-                        APE ape = new APE()
-                        {
-                            Id = 0,
-                            PatientId = 0,
-                            PatientRegistrationId = 0,
-                            DateInputted = null,
-                            PatientName = string.Empty,
-                            CompanyName = string.Empty,
-                            DepartmentOrAgency = string.Empty,
-                            Age = string.Empty,
-                            BirthDate = null,
-                            Gender = string.Empty,
-                            CivilStatus = string.Empty,
-                            ContactNo = string.Empty,
-                            ENT = string.Empty,
-                            Gastroenterology = string.Empty,
-                            Respiratory = string.Empty,
-                            IntegumentarySkin = string.Empty,
-                            Cardiology = string.Empty,
-                            Psychology = string.Empty,
-                            Endocrinology = string.Empty,
-                            OBGyneUrology = string.Empty,
-                            Muscoloskeletal = string.Empty,
-                            InfectiousCommunicable = string.Empty,
-                            Neurological = string.Empty,
-                            Surgical = string.Empty,
-                            OthersPast = string.Empty,
-                            Medications = string.Empty,
-                            ReviewOfSystems = string.Empty,
-                            Allergies = string.Empty,
-                            IsSmoking = false,
-                            SmokingSinceWhen = string.Empty,
-                            NumberOfSticksPerDay = null,
-                            DrinkingSinceWhen = string.Empty,
-                            NumberOfBottles = null,
-                            DrinkingFrequency = string.Empty,
-                            LMP = string.Empty,
-                            LMPType = string.Empty,
-                            BP1st = string.Empty,
-                            BP2nd = string.Empty,
-                            CardiacRate1st = string.Empty,
-                            CardiacRate2nd = string.Empty,
-                            Height = string.Empty,
-                            Weight = string.Empty,
-                            BMICategory = string.Empty,
-                            VARightEyeWGlasses = string.Empty,
-                            VARightEyeWOGlasses = string.Empty,
-                            VALeftEyeWGlasses = string.Empty,
-                            VALeftEyeWOGlasses = string.Empty,
-                            VisualAcuity = string.Empty,
-                            Skin = string.Empty,
-                            HeadScalp = string.Empty,
-                            Eyes = string.Empty,
-                            Ears = string.Empty,
-                            Nose = string.Empty,
-                            TeethTonsilsThroatPharynx = string.Empty,
-                            NeckLymphNodesThyroid = string.Empty,
-                            ThoraxBreast = string.Empty,
-                            HeartLungs = string.Empty,
-                            AbdomenLiverSpleen = string.Empty,
-                            InguinalAreaGenitalsAnus = string.Empty,
-                            ExtremetiesSpine = string.Empty,
-                            Tattoo = string.Empty,
-                            MassCyst = string.Empty,
-                            OthersPE = string.Empty,
-                            Findings = string.Empty,
-                            VitalSignsBy = string.Empty,
-                            HeightWeightBy = string.Empty,
-                            IsActive = true
-                        };
-                        return (T)Convert.ChangeType(ape, typeof(T));
-                    }
-                    else
-                    {
-                        APE ape = Newtonsoft.Json.JsonConvert.DeserializeObject<APE>(defaultsJson);
-
-                        if (isForSetDefaults)
-                        {
-                            ape.PatientId = 0;
-                            ape.PatientRegistrationId = 0;
-                            ape.DateInputted = DateTime.Now;
-                            ape.PatientName = string.Empty;
-                            ape.CompanyName = string.Empty;
-                            ape.DepartmentOrAgency = string.Empty;
-                            ape.Age = string.Empty;
-                            ape.BirthDate = null;
-                            ape.Gender = string.Empty;
-                            ape.CivilStatus = string.Empty;
-                            ape.ContactNo = string.Empty;
-                        }
-
-                        return (T)Convert.ChangeType(ape, typeof(T));
-                    }
+                    return (T)Convert.ChangeType(NewAPE(defaultsJson, isForSetDefaults), typeof(T));
                 }
 
                 return (T)Convert.ChangeType(null, typeof(T));
@@ -182,14 +49,220 @@ namespace DiagnosticLabsBLL.Services
             }
         }
 
+        #region Labs
+        public StoolFecalysis NewStoolFecalysis(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                StoolFecalysis stoolFecalysis = new StoolFecalysis()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Color = string.Empty,
+                    Consistency = string.Empty,
+                    Result = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+                return stoolFecalysis;
+            }
+            else
+            {
+                StoolFecalysis stoolFecalysis = Newtonsoft.Json.JsonConvert.DeserializeObject<StoolFecalysis>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    stoolFecalysis.PatientId = 0;
+                    stoolFecalysis.PatientRegistrationId = 0;
+                    stoolFecalysis.PatientCode = string.Empty;
+                    stoolFecalysis.PatientName = string.Empty;
+                    stoolFecalysis.CompanyOrPhysician = string.Empty;
+                    stoolFecalysis.Age = string.Empty;
+                    stoolFecalysis.Sex = string.Empty;
+                    stoolFecalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
+                    stoolFecalysis.Photo = null;
+                }
+                return stoolFecalysis;
+            }
+        }
+
+        public Urinalysis NewUrinalysis(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                Urinalysis urinalysis = new Urinalysis()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Color = string.Empty,
+                    Appearance = string.Empty,
+                    Reaction = string.Empty,
+                    SPGravity = string.Empty,
+                    Albumin = string.Empty,
+                    Sugar = string.Empty,
+                    PusCells = string.Empty,
+                    RedCells = string.Empty,
+                    MucusThreads = string.Empty,
+                    EpithelialCells = string.Empty,
+                    AmorphousUratesPO4 = string.Empty,
+                    Bacteria = string.Empty,
+                    Casts = string.Empty,
+                    Crystals = string.Empty,
+                    Others = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+                return urinalysis;
+            }
+            else
+            {
+                Urinalysis urinalysis = Newtonsoft.Json.JsonConvert.DeserializeObject<Urinalysis>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    urinalysis.PatientId = 0;
+                    urinalysis.PatientRegistrationId = 0;
+                    urinalysis.PatientCode = string.Empty;
+                    urinalysis.PatientName = string.Empty;
+                    urinalysis.CompanyOrPhysician = string.Empty;
+                    urinalysis.Age = string.Empty;
+                    urinalysis.Sex = string.Empty;
+                    urinalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
+                    urinalysis.Photo = null;
+                }
+                return urinalysis;
+            }
+        }
+
+        public APE NewAPE(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                APE ape = new APE()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    DateInputted = null,
+                    PatientName = string.Empty,
+                    CompanyName = string.Empty,
+                    DepartmentOrAgency = string.Empty,
+                    Age = string.Empty,
+                    BirthDate = null,
+                    Gender = string.Empty,
+                    CivilStatus = string.Empty,
+                    ContactNo = string.Empty,
+                    ENT = string.Empty,
+                    Gastroenterology = string.Empty,
+                    Respiratory = string.Empty,
+                    IntegumentarySkin = string.Empty,
+                    Cardiology = string.Empty,
+                    Psychology = string.Empty,
+                    Endocrinology = string.Empty,
+                    OBGyneUrology = string.Empty,
+                    Muscoloskeletal = string.Empty,
+                    InfectiousCommunicable = string.Empty,
+                    Neurological = string.Empty,
+                    Surgical = string.Empty,
+                    OthersPast = string.Empty,
+                    Medications = string.Empty,
+                    ReviewOfSystems = string.Empty,
+                    Allergies = string.Empty,
+                    IsSmoking = false,
+                    SmokingSinceWhen = string.Empty,
+                    NumberOfSticksPerDay = null,
+                    DrinkingSinceWhen = string.Empty,
+                    NumberOfBottles = null,
+                    DrinkingFrequency = string.Empty,
+                    LMP = string.Empty,
+                    LMPType = string.Empty,
+                    BP1st = string.Empty,
+                    BP2nd = string.Empty,
+                    CardiacRate1st = string.Empty,
+                    CardiacRate2nd = string.Empty,
+                    Height = string.Empty,
+                    Weight = string.Empty,
+                    BMICategory = string.Empty,
+                    VARightEyeWGlasses = string.Empty,
+                    VARightEyeWOGlasses = string.Empty,
+                    VALeftEyeWGlasses = string.Empty,
+                    VALeftEyeWOGlasses = string.Empty,
+                    VisualAcuity = string.Empty,
+                    Skin = string.Empty,
+                    HeadScalp = string.Empty,
+                    Eyes = string.Empty,
+                    Ears = string.Empty,
+                    Nose = string.Empty,
+                    TeethTonsilsThroatPharynx = string.Empty,
+                    NeckLymphNodesThyroid = string.Empty,
+                    ThoraxBreast = string.Empty,
+                    HeartLungs = string.Empty,
+                    AbdomenLiverSpleen = string.Empty,
+                    InguinalAreaGenitalsAnus = string.Empty,
+                    ExtremetiesSpine = string.Empty,
+                    Tattoo = string.Empty,
+                    MassCyst = string.Empty,
+                    OthersPE = string.Empty,
+                    Findings = string.Empty,
+                    VitalSignsBy = string.Empty,
+                    HeightWeightBy = string.Empty,
+                    IsActive = true
+                };
+                return ape;
+            }
+            else
+            {
+                APE ape = Newtonsoft.Json.JsonConvert.DeserializeObject<APE>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    ape.PatientId = 0;
+                    ape.PatientRegistrationId = 0;
+                    ape.DateInputted = DateTime.Now;
+                    ape.PatientName = string.Empty;
+                    ape.CompanyName = string.Empty;
+                    ape.DepartmentOrAgency = string.Empty;
+                    ape.Age = string.Empty;
+                    ape.BirthDate = null;
+                    ape.Gender = string.Empty;
+                    ape.CivilStatus = string.Empty;
+                    ape.ContactNo = string.Empty;
+                }
+                return ape;
+            }
+        }
+        #endregion
+
         public T Get<T>(long id)
         {
             try
             {
                 if (typeof(T) == typeof(StoolFecalysis))
                     return (T)Convert.ChangeType(_dbContext.StoolFecalyses.Find(id), typeof(T));
+                else if (typeof(T) == typeof(Urinalysis))
+                    return (T)Convert.ChangeType(_dbContext.Urinalyses.Find(id), typeof(T));
                 else if (typeof(T) == typeof(APE))
-                    return (T)Convert.ChangeType(_dbContext.APEs.AsNoTracking().FirstOrDefault(a => a.Id == id), typeof(T));
+                    return (T)Convert.ChangeType(_dbContext.APEs.Find(id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -206,6 +279,8 @@ namespace DiagnosticLabsBLL.Services
             {
                 if (typeof(T) == typeof(StoolFecalysis))
                     return (T)Convert.ChangeType(_dbContext.StoolFecalyses.Where(s => s.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(Urinalysis))
+                    return (T)Convert.ChangeType(_dbContext.Urinalyses.Where(s => s.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
                 else if (typeof(T) == typeof(APE))
                     return (T)Convert.ChangeType(_dbContext.APEs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
 
@@ -273,8 +348,20 @@ namespace DiagnosticLabsBLL.Services
                     StoolFecalysis stoolFecalysis = record as StoolFecalysis;
                     if (stoolFecalysis.Id == 0)
                         _dbContext.StoolFecalyses.Add(stoolFecalysis);
+                    else
+                        _dbContext.StoolFecalyses.Update(stoolFecalysis);
 
                     id = stoolFecalysis.Id;
+                }
+                else if (typeof(T) == typeof(Urinalysis))
+                {
+                    Urinalysis urinalysis = record as Urinalysis;
+                    if (urinalysis.Id == 0)
+                        _dbContext.Urinalyses.Add(urinalysis);
+                    else
+                        _dbContext.Urinalyses.Update(urinalysis);
+
+                    id = urinalysis.Id;
                 }
                 else if (typeof(T) == typeof(APE))
                 {
@@ -308,7 +395,7 @@ namespace DiagnosticLabsBLL.Services
 
                 if (typeof(T) == typeof(StoolFecalysis))
                 {
-                    long? stoolFecalysisPatientId = patient?.Id, 
+                    long? stoolFecalysisPatientId = patient?.Id,
                         stoolFecalysisPatientRegistrationId = patientRegistration?.Id;
                     string stoolFecalysisPatientCode = patient?.PatientCode,
                         stoolFecalysisPatientName = patient?.PatientName,
@@ -325,6 +412,26 @@ namespace DiagnosticLabsBLL.Services
                     type.GetProperty("CompanyOrPhysician").SetValue(record, stoolFecalysisCompanyOrPhysician);
 
                     return Save<StoolFecalysis>(record as StoolFecalysis, ref id);
+                }
+                else if (typeof(T) == typeof(Urinalysis))
+                {
+                    long? urinalysisPatientId = patient?.Id,
+                        urinalysisPatientRegistrationId = patientRegistration?.Id;
+                    string urinalysisPatientCode = patient?.PatientCode,
+                        urinalysisPatientName = patient?.PatientName,
+                        urinalysisAge = patient?.Age,
+                        urinalysisSex = patient?.Gender,
+                        urinalysisCompanyOrPhysician = patient?.CompanyName;
+
+                    type.GetProperty("PatientId").SetValue(record, urinalysisPatientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, urinalysisPatientRegistrationId);
+                    type.GetProperty("PatientCode").SetValue(record, urinalysisPatientCode);
+                    type.GetProperty("PatientName").SetValue(record, urinalysisPatientName);
+                    type.GetProperty("Age").SetValue(record, urinalysisAge);
+                    type.GetProperty("Sex").SetValue(record, urinalysisSex);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, urinalysisCompanyOrPhysician);
+
+                    return Save<Urinalysis>(record as Urinalysis, ref id);
                 }
                 else if (typeof(T) == typeof(APE))
                 {

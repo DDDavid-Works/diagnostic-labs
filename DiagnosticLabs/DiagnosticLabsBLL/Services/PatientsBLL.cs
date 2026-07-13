@@ -1,12 +1,9 @@
 ﻿using DiagnosticLabsDAL.DatabaseContext;
 using DiagnosticLabsDAL.Models;
 using DiagnosticLabsDAL.Models.Views;
-using Microsoft.Data.SqlClient.DataClassification;
-using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace DiagnosticLabsBLL.Services
 {

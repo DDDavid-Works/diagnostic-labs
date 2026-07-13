@@ -1,6 +1,5 @@
 ﻿using DiagnosticLabsDAL.Models.Base;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace DiagnosticLabsDAL.Models
