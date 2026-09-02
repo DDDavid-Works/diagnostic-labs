@@ -50,6 +50,12 @@ namespace DiagnosticLabs.ViewModels
                     APE ape = _labResults.Get<APE>(recordId);
                     record = this.ReportObject<APE>(ape, companySetup);
                     break;
+                case Modules.MedicalExamination:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/MedicalExaminationReport.rpt");
+
+                    MER mer = _labResults.Get<MER>(recordId);
+                    record = this.ReportObject<MER>(mer, companySetup);
+                    break;
                 default:
                     break;
             }
@@ -63,6 +69,7 @@ namespace DiagnosticLabs.ViewModels
                     case Modules.StoolFecalysis:
                     case Modules.Urinalysis:
                     case Modules.AnnualPhysicalExam:
+                    case Modules.MedicalExamination:
                         this.ReportDocument.SetParameterValue("CompanyName", companySetup.CompanyName);
                         this.ReportDocument.SetParameterValue("SubCompanyName", companySetup.SubCompanyName);
                         this.ReportDocument.SetParameterValue("CompanyAddress", companySetup.Address);
@@ -211,6 +218,41 @@ namespace DiagnosticLabs.ViewModels
                     Findings = (string)type.GetProperty("Findings").GetValue(record),
                     VitalSignsBy = (string)type.GetProperty("VitalSignsBy").GetValue(record),
                     HeightWeightBy = (string)type.GetProperty("HeightWeightBy").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(MER))
+            {
+                reportObject = new
+                {
+                    DateInputted = GetDataFromRecord<MER, string>(record, "DateInputted", "MM/dd/yyyy"),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    ContactNo = (string)type.GetProperty("ContactNo").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Gender = (string)type.GetProperty("Gender").GetValue(record),
+                    CivilStatus = (string)type.GetProperty("CivilStatus").GetValue(record),
+                    CompanyName = (string)type.GetProperty("CompanyName").GetValue(record),
+                    ChestXray = (string)type.GetProperty("ChestXray").GetValue(record),
+                    ChestXrayRemarks = (string)type.GetProperty("ChestXrayRemarks").GetValue(record),
+                    CBC = (string)type.GetProperty("CBC").GetValue(record),
+                    CBCRemarks = (string)type.GetProperty("CBCRemarks").GetValue(record),
+                    Urinalysis = (string)type.GetProperty("Urinalysis").GetValue(record),
+                    UrinalysisRemarks = (string)type.GetProperty("UrinalysisRemarks").GetValue(record),
+                    Fecalysis = (string)type.GetProperty("Fecalysis").GetValue(record),
+                    FecalysisRemarks = (string)type.GetProperty("FecalysisRemarks").GetValue(record),
+                    HBsAg = (string)type.GetProperty("HBsAg").GetValue(record),
+                    HBsAgRemarks = (string)type.GetProperty("HBsAgRemarks").GetValue(record),
+                    DrugTest2Panel = (string)type.GetProperty("DrugTest2Panel").GetValue(record),
+                    DrugTest2PanelRemarks = (string)type.GetProperty("DrugTest2PanelRemarks").GetValue(record),
+                    DrugTest4Panel = (string)type.GetProperty("DrugTest4Panel").GetValue(record),
+                    DrugTest4PanelRemarks = (string)type.GetProperty("DrugTest4PanelRemarks").GetValue(record),
+                    Classification = (string)type.GetProperty("Classification").GetValue(record),
+                    MedicalSurgicalHistory = (string)type.GetProperty("MedicalSurgicalHistory").GetValue(record),
+                    Assessment = (string)type.GetProperty("Assessment").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    AssessmentDoneBy = (string)type.GetProperty("AssessmentDoneBy").GetValue(record),
+                    PhysicianName = (string)type.GetProperty("PhysicianName").GetValue(record),
+                    PhysicianLicense = (string)type.GetProperty("PhysicianLicense").GetValue(record),
                     CompanySetupLogo = companySetup.Logo
                 };
             }

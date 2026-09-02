@@ -1,0 +1,43 @@
+﻿CREATE TABLE [dbo].[MERs]
+(
+	[Id] BIGINT NOT NULL IDENTITY,
+	[PatientId] BIGINT NULL,
+	[PatientRegistrationId] BIGINT NULL,
+    [DateInputted] DATETIME NULL,
+    [PatientName] NVARCHAR(200) NOT NULL,
+    [ContactNo] NVARCHAR(100) NULL,
+	[Age] NVARCHAR(50) NULL, 
+    [Gender] NVARCHAR(10) NULL, 
+    [CivilStatus] NVARCHAR(50) NULL, 
+    [CompanyName] NVARCHAR(200) NOT NULL,
+    [ChestXray] NVARCHAR(10) NULL, 
+    [ChestXrayRemarks] NVARCHAR(100) NULL, 
+    [CBC] NVARCHAR(10) NULL, 
+    [CBCRemarks] NVARCHAR(100) NULL, 
+    [Urinalysis] NVARCHAR(10) NULL, 
+    [UrinalysisRemarks] NVARCHAR(100) NULL, 
+    [Fecalysis] NVARCHAR(10) NULL, 
+    [FecalysisRemarks] NVARCHAR(100) NULL, 
+    [HBsAg] NVARCHAR(10) NULL, 
+    [HBsAgRemarks] NVARCHAR(100) NULL, 
+    [DrugTest2Panel] NVARCHAR(10) NULL, 
+    [DrugTest2PanelRemarks] NVARCHAR(100) NULL, 
+    [DrugTest4Panel] NVARCHAR(10) NULL, 
+    [DrugTest4PanelRemarks] NVARCHAR(100) NULL, 
+    [Classification] NVARCHAR(10) NULL, 
+    [MedicalSurgicalHistory] NVARCHAR(500) NULL, 
+    [Assessment] NVARCHAR(500) NULL, 
+    [Remarks] NVARCHAR(500) NULL, 
+    [AssessmentDoneBy] NVARCHAR(250) NULL, 
+    [PhysicianName] NVARCHAR(250) NULL, 
+    [PhysicianLicense] NVARCHAR(250) NULL, 
+    [IsActive] BIT NOT NULL DEFAULT 1, 
+    [CreatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [UpdatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [UpdatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [MER_Id] PRIMARY KEY CLUSTERED 
+    (
+	    [Id] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)

@@ -58,5 +58,9 @@
 
         public const string VitalSignsBy = "Vital Signs Done By";
         public const string HeightWeightBy = "Height and Weight Done By";
+
+        public const string AssessmentDoneBy = "Assessment Done By";
+        public const string PhysicianName = "Physician Name";
+        public const string PhysicianLicense = "Physician Licenses";
     }
 }

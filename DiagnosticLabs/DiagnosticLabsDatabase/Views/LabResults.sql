@@ -10,4 +10,10 @@ UNION
 SELECT 'Annual Physical Exam' AS Service, l.Id, l.PatientRegistrationId, l.PatientId, p.PatientCode, l.PatientName, pr.CompanyId AS 'CompanyId', c.CompanyName AS Company, l.DateInputted AS 'DateRequested', l.IsActive FROM APEs l
 LEFT OUTER JOIN PatientRegistrations pr ON pr.Id = l.PatientRegistrationId
 LEFT OUTER JOIN Patients p ON p.Id = l.PatientId
-LEFT OUTER JOIN Companies c ON c.Id = pr.CompanyId) AS Data
+LEFT OUTER JOIN Companies c ON c.Id = pr.CompanyId
+UNION
+SELECT 'Medical Examination' AS Service, l.Id, l.PatientRegistrationId, l.PatientId, p.PatientCode, l.PatientName, pr.CompanyId AS 'CompanyId', c.CompanyName AS Company, l.DateInputted AS 'DateRequested', l.IsActive FROM MERs l
+LEFT OUTER JOIN PatientRegistrations pr ON pr.Id = l.PatientRegistrationId
+LEFT OUTER JOIN Patients p ON p.Id = l.PatientId
+LEFT OUTER JOIN Companies c ON c.Id = pr.CompanyId
+) AS Data

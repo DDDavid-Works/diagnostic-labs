@@ -41,6 +41,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<StoolFecalysis> StoolFecalyses { get; set; }
         public DbSet<Urinalysis> Urinalyses { get; set; }
         public DbSet<APE> APEs { get; set; }
+        public DbSet<MER> MERs { get; set; }
 
         //VIEWS
         public DbSet<PatientCompany> PatientCompanies { get; set; }

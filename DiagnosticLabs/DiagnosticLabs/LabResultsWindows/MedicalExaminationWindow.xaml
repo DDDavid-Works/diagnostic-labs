@@ -1,0 +1,421 @@
+﻿<Window x:Class="DiagnosticLabs.LabResultsWindows.MedicalExaminationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiagnosticLabs.LabResultsWindows"
+        xmlns:conv="clr-namespace:DiagnosticLabs.Converters"
+        xmlns:menu="clr-namespace:DiagnosticLabs.UserControls"
+        mc:Ignorable="d"
+        Title="Medical Examination" Width="970" ShowInTaskbar="False"
+        SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#dfecdf" Loaded="Window_Loaded">
+    <Window.Resources>
+        <conv:RadioButtonBooleanConverter x:Key="radioButtonBooleanConverter" />
+        <conv:RadioButtonStringConverter x:Key="radioButtonStringConverter" />
+    </Window.Resources>
+    <StackPanel Orientation="Vertical">
+        <menu:MessagesUserControl></menu:MessagesUserControl>
+        <menu:ActionToolbarUserControl x:Name="ActionToolbar" NewCommand="{Binding NewCommand}" SaveCommand="{Binding SaveCommand}" DeleteCommand="{Binding DeleteCommand}" 
+                                       SearchCommand="ActionToolbar_SearchCommand" PrintCommand="ActionToolbar_PrintCommand"
+                                       SetDefaultsCommand="ActionToolbar_SetDefaultsCommand" SaveDefaultsCommand="ActionToolbar_SaveDefaultsCommand" CloseDefaultsCommand="ActionToolbar_CloseDefaultsCommand"></menu:ActionToolbarUserControl>
+        <Grid Margin="0" VerticalAlignment="Top" Background="#ffffcc">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Width" Value="90" />
+                    <Setter Property="FontSize" Value="14"  />
+                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="IdLabel" Content="Record Number:" Grid.Row="0" Grid.Column="1"></Label>
+            <TextBox Name="IdTextBox" Grid.Row="0" Grid.Column="2" Text="{Binding Urinalysis.Id}" IsReadOnly="True" Margin="0,0,10,0"></TextBox>
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+        </Grid>
+        <Grid Margin="10" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Grid.Resources>
+            <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Background="#efffef">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" />
+                <Label Name="PatientRegistrationCodeLabel" Content="Registration Code:" Grid.Row="0" Grid.Column="0"></Label>
+                <menu:PatientRegistrationSearchByCodeUserControl Grid.Row="0" Grid.Column="1" Margin="0,5,5,0" x:Name="PatientRegistrationSearchByCode"></menu:PatientRegistrationSearchByCodeUserControl>
+                <Label Name="InputRegDateLabel" Content="Registration Date:" Grid.Row="1" Grid.Column="0"></Label>
+                <DatePicker Name="InputDateDatePicker" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding PatientRegistration.InputDate}" IsEnabled="False"></DatePicker>
+                <Label Name="CompanyNameLabel" Content="Company:" Grid.Row="0" Grid.Column="3"></Label>
+                <TextBox Name="CompanyNameTextBox" Grid.Row="0" Grid.Column="4" Text="{Binding SelectedCompany.CompanyName}" IsReadOnly="True"></TextBox>
+                <Label Name="BatchNameLabel" Content="Batch:" Grid.Row="1" Grid.Column="3"></Label>
+                <TextBox Name="BatchNameTextBox" Grid.Row="1" Grid.Column="4" Text="{Binding SelectedBatchName}" IsReadOnly="True"></TextBox>
+            </Grid>
+            <Label Name="MedicalExaminationLabel" Content="MEDICAL EXAMINATION" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" Margin="0,22,0,0"
+                   FontWeight="SemiBold" Padding="0,5,5,5" BorderThickness="0,0,0,2" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Stretch"></Label>
+        </Grid>
+        <Grid Margin="10,0,10,0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="Margin" Value="5,5,0,5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="DateLabel" Content="Date:" Grid.Row="0" Grid.Column="1"></Label>
+            <DatePicker Name="DateInputtedDatePicker" Grid.Row="0" Grid.Column="2" SelectedDate="{Binding MER.DateInputted}"></DatePicker>
+        </Grid>
+        <Grid Margin="10,0,10,0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="IsEditable" Value="True" />
+                    <Setter Property="IsTextSearchEnabled" Value="True" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="8" />
+            <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="8" />
+            <Border BorderThickness="1,0,1,0" Grid.Row="1" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2" />
+            <Border BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+
+            <Label Name="NameLabel" Content="Name:" Grid.Row="0" Grid.Column="0"></Label>
+            <Label Name="ContactNumberLabel" Content="ContactNumber:" Grid.Row="0" Grid.Column="6"></Label>
+            <Label Name="AgeLabel" Content="Age:" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Name="GenderLabel" Content="Gender:" Grid.Row="1" Grid.Column="2"></Label>
+            <Label Name="CivilStatusLabel" Content="Civil Status:" Grid.Row="1" Grid.Column="4"></Label>
+            <Label Name="CompanyNameLabel2" Content="Company Name:" Grid.Row="1" Grid.Column="6"></Label>
+
+            <menu:PatientSearchByNameUserControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Margin="5,5,5,0" x:Name="PatientSearchByName"></menu:PatientSearchByNameUserControl>
+            <TextBox Name="ContactNumberTextBox" Grid.Row="0" Grid.Column="9" Text="{Binding Patient.ContactNumbers}"></TextBox>
+            <TextBox Name="AgeTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Patient.Age}"></TextBox>
+            <ComboBox Name="GenderComboBox" Grid.Row="1" Grid.Column="3" ItemsSource="{Binding Genders}" SelectedValue="{Binding Patient.Gender}"></ComboBox>
+            <ComboBox Name="CivilStatusComboBox" Grid.Row="1" Grid.Column="5" ItemsSource="{Binding CivilStatuses}" SelectedValue="{Binding Patient.CivilStatus}"></ComboBox>
+            <TextBox Name="CompanyTextBox" Grid.Row="1" Grid.Column="7" Text="{Binding Patient.CompanyName}"></TextBox>
+        </Grid>
+        <Grid Margin="10,10,10,0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="5,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,-2,0,0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="FontSize" Value="14" />
+                    <EventSetter Event="Checked" Handler="MERCheckBox_Checked"/>
+                </Style>
+                <Style TargetType="RadioButton">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="17*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="4" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="3" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="5" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4" />
+            <Border BorderThickness="0,1,0,0" Grid.Row="7" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4" />
+            <Border BorderThickness="1,0,1,0" Grid.Row="1" Grid.Column="1" Grid.RowSpan="8" Grid.ColumnSpan="1" />
+            <Border BorderThickness="1,0,0,0" Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" Grid.ColumnSpan="1" />
+
+            <Label Name="LabXrayResultsLabel" Content="V. LABORATORY/XRAY RESULTS:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+            <Label Name="ClassificationLabel" Content="VI. CLASSIFICATION:" Grid.Row="0" Grid.Column="5"></Label>
+            <Label Name="ChestXrayLabel" Content="Chest X-Ray:" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Name="CBCLabel" Content="CBC:" Grid.Row="2" Grid.Column="0"></Label>
+            <Label Name="UrinalysisLabel" Content="Urinalysis:" Grid.Row="3" Grid.Column="0"></Label>
+            <Label Name="FecalysisLabel" Content="Fecalysis:" Grid.Row="4" Grid.Column="0"></Label>
+            <Label Name="HBsAgLabel" Content="HBsAg:" Grid.Row="5" Grid.Column="0"></Label>
+            <Label Name="DrugTest2PanelLabel" Content="Drug Test: METH/THIC&#10;(2 Panel)" Grid.Row="6" Grid.Column="0"></Label>
+            <Label Name="DrugTest4PanelLabel" Content="Drug Test: COC, PCP&#10;(4 Panel) OPI, AMP" Grid.Row="7" Grid.Column="0"></Label>
+
+            <CheckBox Name="ChestXrayNCheckBox" Tag="ChestXray" Grid.Row="1" Grid.Column="1" IsChecked="{Binding MER.ChestXRayNValue}">
+                <TextBlock>Normal</TextBlock>
+            </CheckBox>
+            <CheckBox Name="ChestXrayFCheckBox" Tag="ChestXray" Grid.Row="1" Grid.Column="2" IsChecked="{Binding MER.ChestXRayFValue}">
+                <TextBlock>With Findings</TextBlock>
+            </CheckBox>
+            <TextBox Name="ChestXrayTextBox" Grid.Row="1" Grid.Column="3" Text="{Binding MER.ChestXrayRemarks}"></TextBox>
+            <CheckBox Name="CBCNCheckBox" Tag="CBC" Grid.Row="2" Grid.Column="1" IsChecked="{Binding MER.CBCNValue}">
+                <TextBlock>Normal</TextBlock>
+            </CheckBox>
+            <CheckBox Name="CBCFCheckBox" Tag="CBC" Grid.Row="2" Grid.Column="2" IsChecked="{Binding MER.CBCFValue}">
+                <TextBlock>With Findings</TextBlock>
+            </CheckBox>
+            <TextBox Name="CBCTextBox" Grid.Row="2" Grid.Column="3" Text="{Binding MER.CBCRemarks}"></TextBox>
+            <CheckBox Name="UrinalysisNCheckBox" Tag="Urinalysis" Grid.Row="3" Grid.Column="1" IsChecked="{Binding MER.UrinalysisNValue}">
+                <TextBlock>Normal</TextBlock>
+            </CheckBox>
+            <CheckBox Name="UrinalysisFCheckBox" Tag="Urinalysis" Grid.Row="3" Grid.Column="2" IsChecked="{Binding MER.UrinalysisFValue}">
+                <TextBlock>With Findings</TextBlock>
+            </CheckBox>
+            <TextBox Name="UrinalysisTextBox" Grid.Row="3" Grid.Column="3" Text="{Binding MER.UrinalysisRemarks}"></TextBox>
+            <CheckBox Name="FecalysisNCheckBox" Tag="Fecalysis" Grid.Row="4" Grid.Column="1" IsChecked="{Binding MER.FecalysisNValue}">
+                <TextBlock>Normal</TextBlock>
+            </CheckBox>
+            <CheckBox Name="FecalysisFCheckBox" Tag="Fecalysis" Grid.Row="4" Grid.Column="2" IsChecked="{Binding MER.FecalysisFValue}">
+                <TextBlock>With Findings</TextBlock>
+            </CheckBox>
+            <TextBox Name="FecalysisTextBox" Grid.Row="4" Grid.Column="3" Text="{Binding MER.FecalysisRemarks}"></TextBox>
+            <CheckBox Name="HBsAgNCheckBox" Tag="HBsAg" Grid.Row="5" Grid.Column="1" IsChecked="{Binding MER.HBsAgNValue}">
+                <TextBlock>Non-Reactive</TextBlock>
+            </CheckBox>
+            <CheckBox Name="HBsAgFCheckBox" Tag="HBsAg" Grid.Row="5" Grid.Column="2" IsChecked="{Binding MER.HBsAgFValue}">
+                <TextBlock>Reactive</TextBlock>
+            </CheckBox>
+            <TextBox Name="HBsAgTextBox" Grid.Row="5" Grid.Column="3" Text="{Binding MER.HBsAgRemarks}"></TextBox>
+            <CheckBox Name="DrugTest2PanelNCheckBox" Tag="DrugTest2Panel" Grid.Row="6" Grid.Column="1" IsChecked="{Binding MER.DrugTest2PanelNValue}">
+                <TextBlock>Negative</TextBlock>
+            </CheckBox>
+            <CheckBox Name="DrugTest2PanelFCheckBox" Tag="DrugTest2Panel" Grid.Row="6" Grid.Column="2" IsChecked="{Binding MER.DrugTest2PanelFValue}">
+                <TextBlock>Positive</TextBlock>
+            </CheckBox>
+            <TextBox Name="DrugTestMETHTextBox" Grid.Row="6" Grid.Column="3" VerticalAlignment="Top" Text="{Binding MER.DrugTest2PanelRemarks}"></TextBox>
+            <CheckBox Name="DrugTest4PanelNCheckBox" Tag="DrugTest4Panel" Grid.Row="7" Grid.Column="1" IsChecked="{Binding MER.DrugTest4PanelNValue}">
+                <TextBlock>Negative</TextBlock>
+            </CheckBox>
+            <CheckBox Name="DrugTest4PanelFCheckBox" Tag="DrugTest4Panel" Grid.Row="7" Grid.Column="2" IsChecked="{Binding MER.DrugTest4PanelFValue}">
+                <TextBlock>Positive</TextBlock>
+            </CheckBox>
+            <TextBox Name="DrugTestCOCTextBox" Grid.Row="7" Grid.Column="3" VerticalAlignment="Top" Text="{Binding MER.DrugTest4PanelRemarks}"></TextBox>
+
+            <Border BorderThickness="1" Grid.Row="0" Grid.Column="5" Grid.RowSpan="6" Grid.ColumnSpan="1" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="1" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="1" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="3" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="1" />
+            <Border BorderThickness="0,1,0,1" Grid.Row="5" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="1" />
+
+            <RadioButton GroupName="Classification" Name="ClassificationARadioButton" Grid.Row="1" Grid.Column="5"
+                         IsChecked="{Binding MER.Classification, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Fit, Mode=TwoWay}">
+                <TextBlock>A - Fit for employment.</TextBlock>
+            </RadioButton>
+            <RadioButton GroupName="Classification" Name="ClassificationBRadioButton" Grid.Row="2" Grid.Column="5"
+                         IsChecked="{Binding MER.Classification, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Fit2, Mode=TwoWay}">
+                <TextBlock>B - Fit for employment; with minor ailment/defect.</TextBlock>
+            </RadioButton>
+            <RadioButton GroupName="Classification" Name="ClassificationCRadioButton" Grid.Row="3" Grid.Column="5"
+                         IsChecked="{Binding MER.Classification, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Acceptable, Mode=TwoWay}">
+                <TextBlock>C - Acceptable employment; defect may not be easily corrected.</TextBlock>
+            </RadioButton>
+            <RadioButton GroupName="Classification" Name="ClassificationDRadioButton" Grid.Row="4" Grid.Column="5"
+                         IsChecked="{Binding MER.Classification, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Unfit, Mode=TwoWay}">
+                <TextBlock>D - Unfit for employment.</TextBlock>
+            </RadioButton>
+            <RadioButton GroupName="Classification" Name="ClassificationPendingRadioButton" Grid.Row="5" Grid.Column="5"
+                         IsChecked="{Binding MER.Classification, Converter={StaticResource radioButtonStringConverter}, ConverterParameter=Pending, Mode=TwoWay}">
+                <TextBlock>PENDING - Incomplete medical laboratory exam.</TextBlock>
+            </RadioButton>
+        </Grid>
+        <Grid Margin="10,0,10,0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="80" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="MedicalSurgicalHistoryLabel" Content="Medical/Surgical History:" Grid.Row="0" Grid.Column="0"></Label>
+            <Label Name="AssessmentLabel" Content="Assessment:" Grid.Row="2" Grid.Column="0"></Label>
+            <Label Name="RemarksLabel" Content="Remarks:" Grid.Row="4" Grid.Column="0"></Label>
+            <TextBox Name="MedicalSurgicalHistoryTextBox" Grid.Row="1" Grid.Column="0" Text="{Binding MER.MedicalSurgicalHistory}"
+                     TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+            <TextBox Name="AssessmentTextBox" Grid.Row="3" Grid.Column="0" Text="{Binding MER.Assessment}"
+                     TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+            <TextBox Name="RemarksTextBox" Grid.Row="5" Grid.Column="0" Text="{Binding MER.Remarks}"
+                     TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+        </Grid>
+        <Grid Margin="10,0,10,10">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="Padding" Value="0,2,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="IsEditable" Value="True" />
+                    <Setter Property="IsTextSearchEnabled" Value="True" />
+                    <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="13*"></ColumnDefinition>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="13*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="AssessmentDoneByLabel" Content="Assessment Done By:" Grid.Row="0" Grid.Column="0"></Label>
+            <ComboBox Name="AssessmentDoneByComboBox" Grid.Row="0" Grid.Column="1" Tag="{Binding AssessmentDoneByField}" ItemsSource="{Binding AssessmentDoneBys}" Text="{Binding MER.AssessmentDoneBy}"></ComboBox>
+            <Label Name="PhysicianNameLabel" Content="Physician Name:" Grid.Row="0" Grid.Column="3"></Label>
+            <ComboBox Name="PhysicianNameComboBox" Grid.Row="0" Grid.Column="4" Tag="{Binding PhysicianNameField}" ItemsSource="{Binding PhysicianNames}" Text="{Binding MER.PhysicianName}"></ComboBox>
+            <ComboBox Name="PhysicianLicenseComboBox" Grid.Row="1" Grid.Column="4" Tag="{Binding PhysicianLicenseField}" ItemsSource="{Binding PhysicianLicenses}" Text="{Binding MER.PhysicianLicense}"></ComboBox>
+        </Grid>
+    </StackPanel>
+</Window>

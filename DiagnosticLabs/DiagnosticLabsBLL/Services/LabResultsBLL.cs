@@ -10,7 +10,7 @@ namespace DiagnosticLabsBLL.Services
 {
     public class LabResultsBLL
     {
-        private const string _logFileName = "PackagesBLL";
+        private const string _logFileName = "LabResultsBLL";
 
         CommonFunctions _commonFunctions = new CommonFunctions();
         PatientsBLL _patientBLL = new PatientsBLL();
@@ -37,6 +37,10 @@ namespace DiagnosticLabsBLL.Services
                 else if (typeof(T) == typeof(APE))
                 {
                     return (T)Convert.ChangeType(NewAPE(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(MER))
+                {
+                    return (T)Convert.ChangeType(NewMER(defaultsJson, isForSetDefaults), typeof(T));
                 }
 
                 return (T)Convert.ChangeType(null, typeof(T));
@@ -251,6 +255,67 @@ namespace DiagnosticLabsBLL.Services
                 return ape;
             }
         }
+
+        public MER NewMER(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                MER mer = new MER()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    DateInputted = null,
+                    PatientName = string.Empty,
+                    ContactNo = string.Empty,
+                    Age = string.Empty,
+                    Gender = string.Empty,
+                    CivilStatus = string.Empty,
+                    CompanyName = string.Empty,
+                    ChestXray = string.Empty,
+                    ChestXrayRemarks = string.Empty,
+                    CBC = string.Empty,
+                    CBCRemarks = string.Empty,
+                    Urinalysis = string.Empty,
+                    UrinalysisRemarks = string.Empty,
+                    Fecalysis = string.Empty,
+                    FecalysisRemarks = string.Empty,
+                    HBsAg = string.Empty,
+                    HBsAgRemarks = string.Empty,
+                    DrugTest2Panel = string.Empty,
+                    DrugTest2PanelRemarks = string.Empty,
+                    DrugTest4Panel = string.Empty,
+                    DrugTest4PanelRemarks = string.Empty,
+                    Classification = string.Empty,
+                    MedicalSurgicalHistory = string.Empty,
+                    Assessment = string.Empty,
+                    Remarks = string.Empty,
+                    AssessmentDoneBy = string.Empty,
+                    PhysicianName = string.Empty,
+                    PhysicianLicense = string.Empty,
+                    IsActive = true
+                };
+                return mer;
+            }
+            else
+            {
+                MER mer = Newtonsoft.Json.JsonConvert.DeserializeObject<MER>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    mer.PatientId = 0;
+                    mer.PatientRegistrationId = 0;
+                    mer.DateInputted = DateTime.Now;
+                    mer.PatientName = string.Empty;
+                    mer.ContactNo = string.Empty;
+                    mer.Age = string.Empty;
+                    mer.Gender = string.Empty;
+                    mer.CivilStatus = string.Empty;
+                    mer.CompanyName = string.Empty;
+                }
+                return mer;
+            }
+        }
         #endregion
 
         public T Get<T>(long id)
@@ -258,11 +323,13 @@ namespace DiagnosticLabsBLL.Services
             try
             {
                 if (typeof(T) == typeof(StoolFecalysis))
-                    return (T)Convert.ChangeType(_dbContext.StoolFecalyses.Find(id), typeof(T));
+                    return (T)Convert.ChangeType(_dbContext.StoolFecalyses.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
                 else if (typeof(T) == typeof(Urinalysis))
-                    return (T)Convert.ChangeType(_dbContext.Urinalyses.Find(id), typeof(T));
+                    return (T)Convert.ChangeType(_dbContext.Urinalyses.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
                 else if (typeof(T) == typeof(APE))
-                    return (T)Convert.ChangeType(_dbContext.APEs.Find(id), typeof(T));
+                    return (T)Convert.ChangeType(_dbContext.APEs.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(MER))
+                    return (T)Convert.ChangeType(_dbContext.MERs.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -283,6 +350,8 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.Urinalyses.Where(s => s.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
                 else if (typeof(T) == typeof(APE))
                     return (T)Convert.ChangeType(_dbContext.APEs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(MER))
+                    return (T)Convert.ChangeType(_dbContext.MERs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -373,6 +442,17 @@ namespace DiagnosticLabsBLL.Services
 
                     id = ape.Id;
                 }
+                else if (typeof(T) == typeof(MER))
+                {
+                    MER mer = record as MER;
+                    if (mer.Id == 0)
+                        _dbContext.MERs.Add(mer);
+                    else
+                        _dbContext.MERs.Update(mer);
+
+                    id = mer.Id;
+                }
+
                 _dbContext.SaveChangesAsync();
 
                 return true;
@@ -454,6 +534,28 @@ namespace DiagnosticLabsBLL.Services
                     type.GetProperty("CompanyName").SetValue(record, apeCompanyName);
 
                     return Save<APE>(record as APE, ref id);
+                }
+                else if (typeof(T) == typeof(MER))
+                {
+                    long? merPatientId = patient?.Id,
+                        merPatientRegistrationId = patientRegistration?.Id;
+                    string merPatientName = patient?.PatientName,
+                        merContactNo = patient?.ContactNumbers,
+                        merAge = patient?.Age,
+                        merGender = patient?.Gender,
+                        merCivilStatus = patient?.CivilStatus,
+                        merCompanyName = patient?.CompanyName;
+
+                    type.GetProperty("PatientId").SetValue(record, merPatientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, merPatientRegistrationId);
+                    type.GetProperty("PatientName").SetValue(record, merPatientName);
+                    type.GetProperty("ContactNo").SetValue(record, merContactNo);
+                    type.GetProperty("Age").SetValue(record, merAge);
+                    type.GetProperty("Gender").SetValue(record, merGender);
+                    type.GetProperty("CivilStatus").SetValue(record, merCivilStatus);
+                    type.GetProperty("CompanyName").SetValue(record, merCompanyName);
+
+                    return Save<MER>(record as MER, ref id);
                 }
 
                 return false;

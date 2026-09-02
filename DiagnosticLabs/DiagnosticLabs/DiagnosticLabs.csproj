@@ -248,6 +248,9 @@
     <Compile Include="LabResultsWindows\AnnualPhysicalExamWindow.xaml.cs">
       <DependentUpon>AnnualPhysicalExamWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LabResultsWindows\MedicalExaminationWindow.xaml.cs">
+      <DependentUpon>MedicalExaminationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LabResultsWindows\StoolFecalysisWindow.xaml.cs">
       <DependentUpon>StoolFecalysisWindow.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,7 @@
     </Compile>
     <Compile Include="Models\NotificationMessage.cs" />
     <Compile Include="Models\Reports\APEReport.cs" />
+    <Compile Include="Models\Reports\MedicalExaminationReport.cs" />
     <Compile Include="Models\Reports\UrinalysisReport.cs" />
     <Compile Include="Models\Reports\StoolFecalysisReport.cs" />
     <Compile Include="PrintWindows\PrintWindow.xaml.cs">
@@ -299,6 +303,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CompanySetup.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\LabResults\MedicalExaminationReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalExaminationReport.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -445,6 +456,7 @@
     <Compile Include="ViewModels\SingleLineEntriesViewModel.cs" />
     <Compile Include="ViewModels\SingleLineEntryViewModel.cs" />
     <Compile Include="ViewModels\APEViewModel.cs" />
+    <Compile Include="ViewModels\MERViewModel.cs" />
     <Compile Include="ViewModels\UrinalysisViewModel.cs" />
     <Compile Include="ViewModels\StoolFecalysisViewModel.cs" />
     <Compile Include="ViewModels\UserPermissionModuleTypeViewModel.cs" />
@@ -463,6 +475,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LabResultsWindows\AnnualPhysicalExamWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LabResultsWindows\MedicalExaminationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -676,6 +692,11 @@
     <EmbeddedResource Include="Reports\LabResults\CompanySetup.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CompanySetup.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\MedicalExaminationReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MedicalExaminationReport.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LabResults\UrinalysisReport.rpt">
