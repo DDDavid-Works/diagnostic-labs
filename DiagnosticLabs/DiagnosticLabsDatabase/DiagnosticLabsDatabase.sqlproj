@@ -111,6 +111,7 @@
     <None Include="Scripts\Data\StoolFecalyses.sql" />
     <Build Include="Tables\Urinalyses.sql" />
     <Build Include="Tables\MERs.sql" />
+    <Build Include="Tables\ClinicalChemistries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />

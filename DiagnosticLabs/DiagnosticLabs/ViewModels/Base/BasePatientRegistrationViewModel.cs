@@ -159,8 +159,8 @@ namespace DiagnosticLabs.ViewModels.Base
             this.Patient.IsAgeEdited = true;
             this.PatientRegistrationPayment = _patientRegistrationsBLL.GetPatientRegistrationPayment(id);
 
-            this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId == null ? 0 : this.PatientRegistration.CompanyId)).FirstOrDefault();
-            this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId == null ? 0 : this.PatientRegistration.PackageId)).FirstOrDefault();
+            this.SelectedCompany = this.Companies.Where(c => c.Id == (this.PatientRegistration.CompanyId ?? 0)).FirstOrDefault();
+            this.SelectedPackage = this.Packages.Where(p => p.Id == (this.PatientRegistration.PackageId ?? 0)).FirstOrDefault();
             this.SelectedBatchName = this.PatientRegistration.BatchName;
             this.Patient.CompanyName = this.SelectedCompany.CompanyName;
 

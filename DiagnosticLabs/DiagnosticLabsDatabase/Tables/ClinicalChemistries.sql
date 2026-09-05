@@ -1,0 +1,42 @@
+﻿CREATE TABLE [dbo].[ClinicalChemistries]
+(
+	[Id] BIGINT NOT NULL IDENTITY,
+    [PatientId] BIGINT NULL,
+	[PatientRegistrationId] BIGINT NULL,
+    [PatientCode] NVARCHAR(200) NOT NULL,
+    [PatientName] NVARCHAR(200) NOT NULL,
+    [CompanyOrPhysician] NVARCHAR(200) NOT NULL,
+    [Age] NVARCHAR(50) NULL,
+    [Sex] NVARCHAR(20) NULL,
+    [DateRequested] DATETIME NULL,
+    [Photo] VARBINARY(MAX) NULL,
+    [FBSNValue] NVARCHAR(100) NULL,
+    [FBSResult] NVARCHAR(100) NULL,
+    [TotalCholesterolNValue] NVARCHAR(100) NULL,
+    [TotalCholesterolResult] NVARCHAR(100) NULL,
+    [TriglyceridesNValue] NVARCHAR(100) NULL,
+    [TriglyceridesResult] NVARCHAR(100) NULL,
+    [HDLNValue] NVARCHAR(100) NULL,
+    [HDLResult] NVARCHAR(100) NULL,
+    [BUNNValue] NVARCHAR(100) NULL,
+    [BUNResult] NVARCHAR(100) NULL,
+    [CreatinineNValue] NVARCHAR(100) NULL,
+    [CreatinineResult] NVARCHAR(100) NULL,
+    [BloodUricAcidNValue] NVARCHAR(100) NULL,
+    [BloodUricAcidResult] NVARCHAR(100) NULL,
+    [LDLNValue] NVARCHAR(100) NULL,
+    [LDLResult] NVARCHAR(100) NULL,
+    [SGPTNValue] NVARCHAR(100) NULL,
+    [SGPTResult] NVARCHAR(100) NULL,
+    [MedicalTechnologist] NVARCHAR(100) NOT NULL,
+    [Pathologist] NVARCHAR(100) NOT NULL,
+	[IsActive] BIT NOT NULL DEFAULT 1, 
+    [CreatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [UpdatedByUserId] BIGINT NOT NULL DEFAULT 0,
+    [UpdatedDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [ClinicalChemistry_Id] PRIMARY KEY CLUSTERED 
+    (
+	    [Id] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)

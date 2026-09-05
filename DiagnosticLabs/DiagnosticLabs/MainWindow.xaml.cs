@@ -39,6 +39,7 @@ namespace DiagnosticLabs
         UrinalysisWindow _urinalysisWindow = null;
         AnnualPhysicalExamWindow _annualPhysicalExamWindow = null;
         MedicalExaminationWindow _medicalExaminationWindow = null;
+        ClinicalChemistryWindow _clinicalChemistryWindow = null;
 
         public MainWindow(long userId)
         {
@@ -240,6 +241,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _medicalExaminationWindow.Activate();
+                case Modules.ClinicalChemistry:
+                    if (_clinicalChemistryWindow == null)
+                    {
+                        _clinicalChemistryWindow = LoadWindow<ClinicalChemistryWindow>();
+                        SetActionToolbarUserControl(_clinicalChemistryWindow.ActionToolbar, menuItem);
+                        _clinicalChemistryWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _clinicalChemistryWindow.Show();
+                    }
+                    else
+                        return () => _clinicalChemistryWindow.Activate();
                 #endregion
                 default:
                     return null;
@@ -299,6 +310,8 @@ namespace DiagnosticLabs
                 _annualPhysicalExamWindow = null;
             else if (sender.GetType() == typeof(MedicalExaminationWindow))
                 _medicalExaminationWindow = null;
+            else if (sender.GetType() == typeof(ClinicalChemistryWindow))
+                _clinicalChemistryWindow = null;
 
             Globals.PATIENTREGISTRATIONIDTOPAY = 0;
             Globals.PATIENTREGISTRATIONIDTOINPUT = 0;

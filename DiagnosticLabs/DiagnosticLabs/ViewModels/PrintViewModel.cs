@@ -56,6 +56,12 @@ namespace DiagnosticLabs.ViewModels
                     MER mer = _labResults.Get<MER>(recordId);
                     record = this.ReportObject<MER>(mer, companySetup);
                     break;
+                case Modules.ClinicalChemistry:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/ClinicalChemistryReport.rpt");
+
+                    ClinicalChemistry clinicalChemistry = _labResults.Get<ClinicalChemistry>(recordId);
+                    record = this.ReportObject<ClinicalChemistry>(clinicalChemistry, companySetup);
+                    break;
                 default:
                     break;
             }
@@ -70,6 +76,7 @@ namespace DiagnosticLabs.ViewModels
                     case Modules.Urinalysis:
                     case Modules.AnnualPhysicalExam:
                     case Modules.MedicalExamination:
+                    case Modules.ClinicalChemistry:
                         this.ReportDocument.SetParameterValue("CompanyName", companySetup.CompanyName);
                         this.ReportDocument.SetParameterValue("SubCompanyName", companySetup.SubCompanyName);
                         this.ReportDocument.SetParameterValue("CompanyAddress", companySetup.Address);
@@ -153,13 +160,11 @@ namespace DiagnosticLabs.ViewModels
                 reportObject = new
                 {
                     DateInputted = GetDataFromRecord<APE, string>(record, "DateInputted", "MM/dd/yyyy"),
-                    //((DateTime)type.GetProperty("DateInputted").GetValue(record)).ToString("MM/dd/yyyy"), 
                     PatientName = (string)type.GetProperty("PatientName").GetValue(record),
                     CompanyName = (string)type.GetProperty("CompanyName").GetValue(record),
                     DepartmentOrAgency = (string)type.GetProperty("DepartmentOrAgency").GetValue(record),
                     Age = (string)type.GetProperty("Age").GetValue(record),
                     BirthDate = GetDataFromRecord<APE, string>(record, "BirthDate", "MM/dd/yyyy"),
-                    //((DateTime)type.GetProperty("BirthDate").GetValue(record)).ToString("MM/dd/yyyy"),
                     Gender = (string)type.GetProperty("Gender").GetValue(record),
                     CivilStatus = (string)type.GetProperty("CivilStatus").GetValue(record),
                     ContactNo = (string)type.GetProperty("ContactNo").GetValue(record),
@@ -256,7 +261,40 @@ namespace DiagnosticLabs.ViewModels
                     CompanySetupLogo = companySetup.Logo
                 };
             }
-
+            else if (typeof(T) == typeof(ClinicalChemistry))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<ClinicalChemistry, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    FBSNValue = (string)type.GetProperty("FBSNValue").GetValue(record),
+                    FBSResult = (string)type.GetProperty("FBSResult").GetValue(record),
+                    TotalCholesterolNValue = (string)type.GetProperty("TotalCholesterolNValue").GetValue(record),
+                    TotalCholesterolResult = (string)type.GetProperty("TotalCholesterolResult").GetValue(record),
+                    TriglyceridesNValue = (string)type.GetProperty("TriglyceridesNValue").GetValue(record),
+                    TriglyceridesResult = (string)type.GetProperty("TriglyceridesResult").GetValue(record),
+                    HDLNValue = (string)type.GetProperty("HDLNValue").GetValue(record),
+                    HDLResult = (string)type.GetProperty("HDLResult").GetValue(record),
+                    BUNNValue = (string)type.GetProperty("BUNNValue").GetValue(record),
+                    BUNResult = (string)type.GetProperty("BUNResult").GetValue(record),
+                    CreatinineNValue = (string)type.GetProperty("CreatinineNValue").GetValue(record),
+                    CreatinineResult = (string)type.GetProperty("CreatinineResult").GetValue(record),
+                    BloodUricAcidNValue = (string)type.GetProperty("BloodUricAcidNValue").GetValue(record),
+                    BloodUricAcidResult = (string)type.GetProperty("BloodUricAcidResult").GetValue(record),
+                    LDLNValue = (string)type.GetProperty("LDLNValue").GetValue(record),
+                    LDLResult = (string)type.GetProperty("LDLResult").GetValue(record),
+                    SGPTNValue = (string)type.GetProperty("SGPTNValue").GetValue(record),
+                    SGPTResult = (string)type.GetProperty("SGPTResult").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
             return reportObject;
         }
 

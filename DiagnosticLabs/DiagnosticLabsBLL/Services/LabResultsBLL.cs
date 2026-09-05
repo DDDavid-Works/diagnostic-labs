@@ -42,6 +42,10 @@ namespace DiagnosticLabsBLL.Services
                 {
                     return (T)Convert.ChangeType(NewMER(defaultsJson, isForSetDefaults), typeof(T));
                 }
+                else if (typeof(T) == typeof(ClinicalChemistry))
+                {
+                    return (T)Convert.ChangeType(NewClinicalChemistry(defaultsJson, isForSetDefaults), typeof(T));
+                }
 
                 return (T)Convert.ChangeType(null, typeof(T));
 
@@ -93,9 +97,9 @@ namespace DiagnosticLabsBLL.Services
                     stoolFecalysis.CompanyOrPhysician = string.Empty;
                     stoolFecalysis.Age = string.Empty;
                     stoolFecalysis.Sex = string.Empty;
-                    stoolFecalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
                     stoolFecalysis.Photo = null;
                 }
+                stoolFecalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
                 return stoolFecalysis;
             }
         }
@@ -151,9 +155,9 @@ namespace DiagnosticLabsBLL.Services
                     urinalysis.CompanyOrPhysician = string.Empty;
                     urinalysis.Age = string.Empty;
                     urinalysis.Sex = string.Empty;
-                    urinalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
                     urinalysis.Photo = null;
                 }
+                urinalysis.DateRequested = isForSetDefaults ? null : DateTime.Now;
                 return urinalysis;
             }
         }
@@ -167,7 +171,7 @@ namespace DiagnosticLabsBLL.Services
                     Id = 0,
                     PatientId = 0,
                     PatientRegistrationId = 0,
-                    DateInputted = null,
+                    DateInputted = isForSetDefaults ? null : DateTime.Now,
                     PatientName = string.Empty,
                     CompanyName = string.Empty,
                     DepartmentOrAgency = string.Empty,
@@ -242,7 +246,6 @@ namespace DiagnosticLabsBLL.Services
                 {
                     ape.PatientId = 0;
                     ape.PatientRegistrationId = 0;
-                    ape.DateInputted = DateTime.Now;
                     ape.PatientName = string.Empty;
                     ape.CompanyName = string.Empty;
                     ape.DepartmentOrAgency = string.Empty;
@@ -252,6 +255,7 @@ namespace DiagnosticLabsBLL.Services
                     ape.CivilStatus = string.Empty;
                     ape.ContactNo = string.Empty;
                 }
+                ape.DateInputted = isForSetDefaults ? null : DateTime.Now;
                 return ape;
             }
         }
@@ -265,7 +269,7 @@ namespace DiagnosticLabsBLL.Services
                     Id = 0,
                     PatientId = 0,
                     PatientRegistrationId = 0,
-                    DateInputted = null,
+                    DateInputted = isForSetDefaults ? null : DateTime.Now,
                     PatientName = string.Empty,
                     ContactNo = string.Empty,
                     Age = string.Empty,
@@ -305,7 +309,6 @@ namespace DiagnosticLabsBLL.Services
                 {
                     mer.PatientId = 0;
                     mer.PatientRegistrationId = 0;
-                    mer.DateInputted = DateTime.Now;
                     mer.PatientName = string.Empty;
                     mer.ContactNo = string.Empty;
                     mer.Age = string.Empty;
@@ -313,7 +316,68 @@ namespace DiagnosticLabsBLL.Services
                     mer.CivilStatus = string.Empty;
                     mer.CompanyName = string.Empty;
                 }
+                mer.DateInputted = isForSetDefaults ? null : DateTime.Now;
                 return mer;
+            }
+        }
+
+        public ClinicalChemistry NewClinicalChemistry(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                ClinicalChemistry clinicalChemistry = new ClinicalChemistry()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    FBSNValue = string.Empty,
+                    FBSResult = string.Empty,
+                    TotalCholesterolNValue = string.Empty,
+                    TotalCholesterolResult = string.Empty,
+                    TriglyceridesNValue = string.Empty,
+                    TriglyceridesResult = string.Empty,
+                    HDLNValue = string.Empty,
+                    HDLResult = string.Empty,
+                    BUNNValue = string.Empty,
+                    BUNResult = string.Empty,
+                    CreatinineNValue = string.Empty,
+                    CreatinineResult = string.Empty,
+                    BloodUricAcidNValue = string.Empty,
+                    BloodUricAcidResult = string.Empty,
+                    LDLNValue = string.Empty,
+                    LDLResult = string.Empty,
+                    SGPTNValue = string.Empty,
+                    SGPTResult = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return clinicalChemistry;
+            }
+            else
+            {
+                ClinicalChemistry clinicalChemistry = Newtonsoft.Json.JsonConvert.DeserializeObject<ClinicalChemistry>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    clinicalChemistry.PatientId = 0;
+                    clinicalChemistry.PatientRegistrationId = 0;
+                    clinicalChemistry.PatientCode = string.Empty;
+                    clinicalChemistry.PatientName = string.Empty;
+                    clinicalChemistry.CompanyOrPhysician = string.Empty;
+                    clinicalChemistry.Age = string.Empty;
+                    clinicalChemistry.Sex = string.Empty;
+                }
+                clinicalChemistry.DateRequested = isForSetDefaults ? null : DateTime.Now;
+                return clinicalChemistry;
             }
         }
         #endregion
@@ -330,6 +394,8 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.APEs.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
                 else if (typeof(T) == typeof(MER))
                     return (T)Convert.ChangeType(_dbContext.MERs.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -352,6 +418,8 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.APEs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
                 else if (typeof(T) == typeof(MER))
                     return (T)Convert.ChangeType(_dbContext.MERs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -419,8 +487,6 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.StoolFecalyses.Add(stoolFecalysis);
                     else
                         _dbContext.StoolFecalyses.Update(stoolFecalysis);
-
-                    id = stoolFecalysis.Id;
                 }
                 else if (typeof(T) == typeof(Urinalysis))
                 {
@@ -429,8 +495,6 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.Urinalyses.Add(urinalysis);
                     else
                         _dbContext.Urinalyses.Update(urinalysis);
-
-                    id = urinalysis.Id;
                 }
                 else if (typeof(T) == typeof(APE))
                 {
@@ -439,8 +503,6 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.APEs.Add(ape);
                     else
                         _dbContext.APEs.Update(ape);
-
-                    id = ape.Id;
                 }
                 else if (typeof(T) == typeof(MER))
                 {
@@ -449,11 +511,19 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.MERs.Add(mer);
                     else
                         _dbContext.MERs.Update(mer);
-
-                    id = mer.Id;
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry))
+                {
+                    ClinicalChemistry cc = record as ClinicalChemistry;
+                    if (cc.Id == 0)
+                        _dbContext.ClinicalChemistries.Add(cc);
+                    else
+                        _dbContext.ClinicalChemistries.Update(cc);
                 }
 
-                _dbContext.SaveChangesAsync();
+                _dbContext.SaveChanges();
+
+                id = (long)type.GetProperty("Id").GetValue(record, null);
 
                 return true;
             }
@@ -556,6 +626,26 @@ namespace DiagnosticLabsBLL.Services
                     type.GetProperty("CompanyName").SetValue(record, merCompanyName);
 
                     return Save<MER>(record as MER, ref id);
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry))
+                {
+                    long? clinicalChemistryPatientId = patient?.Id,
+                        clinicalChemistryPatientRegistrationId = patientRegistration?.Id;
+                    string clinicalChemistryPatientCode = patient?.PatientCode,
+                        clinicalChemistryPatientName = patient?.PatientName,
+                        clinicalChemistryCompanyOrPhysician = patient?.CompanyName,
+                        clinicalChemistryAge = patient?.Age,
+                        clinicalChemistrySex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, clinicalChemistryPatientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, clinicalChemistryPatientRegistrationId);
+                    type.GetProperty("PatientCode").SetValue(record, clinicalChemistryPatientCode);
+                    type.GetProperty("PatientName").SetValue(record, clinicalChemistryPatientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, clinicalChemistryCompanyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, clinicalChemistryAge);
+                    type.GetProperty("Sex").SetValue(record, clinicalChemistrySex);
+
+                    return Save<ClinicalChemistry>(record as ClinicalChemistry, ref id);
                 }
 
                 return false;

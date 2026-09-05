@@ -161,7 +161,7 @@
             <Label Name="PatientNameLabel" Content="Patient Name:" Grid.Row="1" Grid.Column="0"></Label>
             <menu:PatientSearchByNameUserControl Grid.Row="1" Grid.Column="1" x:Name="PatientSearchByName"></menu:PatientSearchByNameUserControl>
             <Label Name="CompanyOrPhysicianLabel" Content="Company/Physician:" Grid.Row="2" Grid.Column="0"></Label>
-            <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" Text="" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" SelectedValue="{Binding Patient.CompanyName}"></ComboBox>
+            <ComboBox Name="CompanyOrPhysicianTextBox" Grid.Row="2" Grid.Column="1" IsEditable="True" IsTextSearchEnabled="True" ItemsSource="{Binding CompanyOrPhysicians}" Text="{Binding Urinalysis.CompanyOrPhysician}"></ComboBox>
             <Label Name="AgeLabel" Content="Age:" Grid.Row="0" Grid.Column="3"></Label>
             <TextBox Name="AgeTextBox" Grid.Row="0" Grid.Column="4" Text="{Binding Patient.Age}"></TextBox>
             <Label Name="SexLabel" Content="Sex:" Grid.Row="0" Grid.Column="6"></Label>

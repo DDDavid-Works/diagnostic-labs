@@ -16,4 +16,9 @@ SELECT 'Medical Examination' AS Service, l.Id, l.PatientRegistrationId, l.Patien
 LEFT OUTER JOIN PatientRegistrations pr ON pr.Id = l.PatientRegistrationId
 LEFT OUTER JOIN Patients p ON p.Id = l.PatientId
 LEFT OUTER JOIN Companies c ON c.Id = pr.CompanyId
+UNION
+SELECT 'Clinical Chemistry' AS Service, l.Id, l.PatientRegistrationId, l.PatientId, p.PatientCode, l.PatientName, pr.CompanyId AS 'CompanyId', c.CompanyName AS Company, l.DateRequested, l.IsActive FROM ClinicalChemistries l
+LEFT OUTER JOIN PatientRegistrations pr ON pr.Id = l.PatientRegistrationId
+LEFT OUTER JOIN Patients p ON p.Id = l.PatientId
+LEFT OUTER JOIN Companies c ON c.Id = pr.CompanyId
 ) AS Data
