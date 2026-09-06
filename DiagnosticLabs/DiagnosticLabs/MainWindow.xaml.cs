@@ -40,6 +40,7 @@ namespace DiagnosticLabs
         AnnualPhysicalExamWindow _annualPhysicalExamWindow = null;
         MedicalExaminationWindow _medicalExaminationWindow = null;
         ClinicalChemistryWindow _clinicalChemistryWindow = null;
+        HematologyWindow _hematologyWindow = null;
 
         public MainWindow(long userId)
         {
@@ -251,6 +252,16 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _clinicalChemistryWindow.Activate();
+                case Modules.Hematology:
+                    if (_hematologyWindow == null)
+                    {
+                        _hematologyWindow = LoadWindow<HematologyWindow>();
+                        SetActionToolbarUserControl(_hematologyWindow.ActionToolbar, menuItem);
+                        _hematologyWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _hematologyWindow.Show();
+                    }
+                    else
+                        return () => _hematologyWindow.Activate();
                 #endregion
                 default:
                     return null;
@@ -312,6 +323,8 @@ namespace DiagnosticLabs
                 _medicalExaminationWindow = null;
             else if (sender.GetType() == typeof(ClinicalChemistryWindow))
                 _clinicalChemistryWindow = null;
+            else if (sender.GetType() == typeof(HematologyWindow))
+                _hematologyWindow = null;
 
             Globals.PATIENTREGISTRATIONIDTOPAY = 0;
             Globals.PATIENTREGISTRATIONIDTOINPUT = 0;

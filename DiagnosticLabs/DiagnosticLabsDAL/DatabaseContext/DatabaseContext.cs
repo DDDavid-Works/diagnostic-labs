@@ -43,6 +43,7 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<APE> APEs { get; set; }
         public DbSet<MER> MERs { get; set; }
         public DbSet<ClinicalChemistry> ClinicalChemistries { get; set; }
+        public DbSet<Hematology> Hematologies { get; set; }
 
         //VIEWS
         public DbSet<PatientCompany> PatientCompanies { get; set; }

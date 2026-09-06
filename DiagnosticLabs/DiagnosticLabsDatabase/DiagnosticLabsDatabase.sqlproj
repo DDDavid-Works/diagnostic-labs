@@ -112,6 +112,7 @@
     <Build Include="Tables\Urinalyses.sql" />
     <Build Include="Tables\MERs.sql" />
     <Build Include="Tables\ClinicalChemistries.sql" />
+    <Build Include="Tables\Hematologies.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />

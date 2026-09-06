@@ -62,6 +62,12 @@ namespace DiagnosticLabs.ViewModels
                     ClinicalChemistry clinicalChemistry = _labResults.Get<ClinicalChemistry>(recordId);
                     record = this.ReportObject<ClinicalChemistry>(clinicalChemistry, companySetup);
                     break;
+                case Modules.Hematology:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/HematologyReport.rpt");
+
+                    Hematology hematology = _labResults.Get<Hematology>(recordId);
+                    record = this.ReportObject<Hematology>(hematology, companySetup);
+                    break;
                 default:
                     break;
             }
@@ -77,6 +83,7 @@ namespace DiagnosticLabs.ViewModels
                     case Modules.AnnualPhysicalExam:
                     case Modules.MedicalExamination:
                     case Modules.ClinicalChemistry:
+                    case Modules.Hematology:
                         this.ReportDocument.SetParameterValue("CompanyName", companySetup.CompanyName);
                         this.ReportDocument.SetParameterValue("SubCompanyName", companySetup.SubCompanyName);
                         this.ReportDocument.SetParameterValue("CompanyAddress", companySetup.Address);
@@ -290,6 +297,43 @@ namespace DiagnosticLabs.ViewModels
                     LDLResult = (string)type.GetProperty("LDLResult").GetValue(record),
                     SGPTNValue = (string)type.GetProperty("SGPTNValue").GetValue(record),
                     SGPTResult = (string)type.GetProperty("SGPTResult").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(Hematology))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<Hematology, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    HematocritNValue = (string)type.GetProperty("HematocritNValue").GetValue(record),
+                    HematocritResult = (string)type.GetProperty("HematocritResult").GetValue(record),
+                    HemoglobinNValue = (string)type.GetProperty("HemoglobinNValue").GetValue(record),
+                    HemoglobinResult = (string)type.GetProperty("HemoglobinResult").GetValue(record),
+                    WBCCountNValue = (string)type.GetProperty("WBCCountNValue").GetValue(record),
+                    WBCCountResult = (string)type.GetProperty("WBCCountResult").GetValue(record),
+                    SegmentersNValue = (string)type.GetProperty("SegmentersNValue").GetValue(record),
+                    SegmentersResult = (string)type.GetProperty("SegmentersResult").GetValue(record),
+                    LymphocytesNValue = (string)type.GetProperty("LymphocytesNValue").GetValue(record),
+                    LymphocytesResult = (string)type.GetProperty("LymphocytesResult").GetValue(record),
+                    EosinophilsNValue = (string)type.GetProperty("EosinophilsNValue").GetValue(record),
+                    EosinophilsResult = (string)type.GetProperty("EosinophilsResult").GetValue(record),
+                    MonocytesNValue = (string)type.GetProperty("MonocytesNValue").GetValue(record),
+                    MonocytesResult = (string)type.GetProperty("MonocytesResult").GetValue(record),
+                    BasophilsNValue = (string)type.GetProperty("BasophilsNValue").GetValue(record),
+                    BasophilsResult = (string)type.GetProperty("BasophilsResult").GetValue(record),
+                    StabNValue = (string)type.GetProperty("StabNValue").GetValue(record),
+                    StabResult = (string)type.GetProperty("StabResult").GetValue(record),
+                    PlateletCountNValue = (string)type.GetProperty("PlateletCountNValue").GetValue(record),
+                    PlateletCountResult = (string)type.GetProperty("PlateletCountResult").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
                     MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
                     Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
                     CompanySetupLogo = companySetup.Logo

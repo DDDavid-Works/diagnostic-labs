@@ -2,6 +2,8 @@
 {
     public class MultiLineEntries
     {
+        public const string HematologyResult = "Result";
+
         public const string StoolFecalysisResult = "Result";
         public const string StoolFecalysisRemarks = "Remarks";
 

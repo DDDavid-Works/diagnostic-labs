@@ -251,6 +251,9 @@
     <Compile Include="LabResultsWindows\ClinicalChemistryWindow.xaml.cs">
       <DependentUpon>ClinicalChemistryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LabResultsWindows\HematologyWindow.xaml.cs">
+      <DependentUpon>HematologyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LabResultsWindows\MedicalExaminationWindow.xaml.cs">
       <DependentUpon>MedicalExaminationWindow.xaml</DependentUpon>
     </Compile>
@@ -282,6 +285,7 @@
     <Compile Include="Models\Reports\APEReport.cs" />
     <Compile Include="Models\Reports\ClinicalChemistryReport.cs" />
     <Compile Include="Models\Reports\MedicalExaminationReport.cs" />
+    <Compile Include="Models\Reports\HematologyReport.cs" />
     <Compile Include="Models\Reports\UrinalysisReport.cs" />
     <Compile Include="Models\Reports\StoolFecalysisReport.cs" />
     <Compile Include="PrintWindows\PrintWindow.xaml.cs">
@@ -302,6 +306,13 @@
       <DependentUpon>APEReport.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\LabResults\HematologyReport.cs">
+      <DependentUpon>HematologyReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\LabResults\CompanySetup.cs">
       <AutoGen>True</AutoGen>
@@ -436,6 +447,7 @@
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\DefaultSetterViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
+    <Compile Include="ViewModels\HematologyViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ItemLocationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -491,6 +503,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LabResultsWindows\ClinicalChemistryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LabResultsWindows\HematologyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -703,6 +719,11 @@
     <EmbeddedResource Include="Reports\LabResults\APEReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>APEReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\HematologyReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>HematologyReport.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LabResults\CompanySetup.rpt">

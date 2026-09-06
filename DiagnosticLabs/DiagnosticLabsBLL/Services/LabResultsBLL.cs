@@ -46,6 +46,10 @@ namespace DiagnosticLabsBLL.Services
                 {
                     return (T)Convert.ChangeType(NewClinicalChemistry(defaultsJson, isForSetDefaults), typeof(T));
                 }
+                else if (typeof(T) == typeof(Hematology))
+                {
+                    return (T)Convert.ChangeType(NewHematology(defaultsJson, isForSetDefaults), typeof(T));
+                }
 
                 return (T)Convert.ChangeType(null, typeof(T));
 
@@ -380,6 +384,70 @@ namespace DiagnosticLabsBLL.Services
                 return clinicalChemistry;
             }
         }
+
+        public Hematology NewHematology(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                Hematology hematology = new Hematology()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    HematocritNValue = string.Empty,
+                    HematocritResult = string.Empty,
+                    HemoglobinNValue = string.Empty,
+                    HemoglobinResult = string.Empty,
+                    WBCCountNValue = string.Empty,
+                    WBCCountResult = string.Empty,
+                    SegmentersNValue = string.Empty,
+                    SegmentersResult = string.Empty,
+                    LymphocytesNValue = string.Empty,
+                    LymphocytesResult = string.Empty,
+                    EosinophilsNValue = string.Empty,
+                    EosinophilsResult = string.Empty,
+                    MonocytesNValue = string.Empty,
+                    MonocytesResult = string.Empty,
+                    BasophilsNValue = string.Empty,
+                    BasophilsResult = string.Empty,
+                    StabNValue = string.Empty,
+                    StabResult = string.Empty,
+                    PlateletCountNValue = string.Empty,
+                    PlateletCountResult = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return hematology;
+            }
+            else
+            {
+                Hematology hematology = Newtonsoft.Json.JsonConvert.DeserializeObject<Hematology>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    hematology.PatientId = 0;
+                    hematology.PatientRegistrationId = 0;
+                    hematology.PatientCode = string.Empty;
+                    hematology.PatientName = string.Empty;
+                    hematology.CompanyOrPhysician = string.Empty;
+                    hematology.Age = string.Empty;
+                    hematology.Sex = string.Empty;
+                }
+                hematology.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return hematology;
+            }
+        }
         #endregion
 
         public T Get<T>(long id)
@@ -396,6 +464,8 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.MERs.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
                 else if (typeof(T) == typeof(ClinicalChemistry))
                     return (T)Convert.ChangeType(_dbContext.ClinicalChemistries.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(Hematology))
+                    return (T)Convert.ChangeType(_dbContext.Hematologies.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -519,6 +589,14 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.ClinicalChemistries.Add(cc);
                     else
                         _dbContext.ClinicalChemistries.Update(cc);
+                }
+                else if (typeof(T) == typeof(Hematology))
+                {
+                    Hematology hematology = record as Hematology;
+                    if (hematology.Id == 0)
+                        _dbContext.Hematologies.Add(hematology);
+                    else
+                        _dbContext.Hematologies.Update(hematology);
                 }
 
                 _dbContext.SaveChanges();
@@ -646,6 +724,26 @@ namespace DiagnosticLabsBLL.Services
                     type.GetProperty("Sex").SetValue(record, clinicalChemistrySex);
 
                     return Save<ClinicalChemistry>(record as ClinicalChemistry, ref id);
+                }
+                else if (typeof(T) == typeof(Hematology))
+                {
+                    long? hematologyPatientId = patient?.Id,
+                        hematologyPatientRegistrationId = patientRegistration?.Id;
+                    string hematologyPatientCode = patient?.PatientCode,
+                        hematologyPatientName = patient?.PatientName,
+                        hematologyCompanyOrPhysician = patient?.CompanyName,
+                        hematologyAge = patient?.Age,
+                        hematologySex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, hematologyPatientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, hematologyPatientRegistrationId);
+                    type.GetProperty("PatientCode").SetValue(record, hematologyPatientCode);
+                    type.GetProperty("PatientName").SetValue(record, hematologyPatientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, hematologyCompanyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, hematologyAge);
+                    type.GetProperty("Sex").SetValue(record, hematologySex);
+
+                    return Save<Hematology>(record as Hematology, ref id);
                 }
 
                 return false;
