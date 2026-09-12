@@ -5,7 +5,7 @@
 	[PatientRegistrationId] BIGINT NULL,
     [PatientCode] NVARCHAR(200) NOT NULL,
     [PatientName] NVARCHAR(200) NOT NULL,
-    [CompanyOrPhysician] NVARCHAR(200) NOT NULL,
+    [CompanyOrPhysician] NVARCHAR(200) NULL,
     [Age] NVARCHAR(50) NULL,
     [Sex] NVARCHAR(20) NULL,
     [DateRequested] DATETIME NULL,

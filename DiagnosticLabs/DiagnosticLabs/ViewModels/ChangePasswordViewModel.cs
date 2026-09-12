@@ -1,5 +1,6 @@
 ﻿using DiagnosticLabs.Constants;
 using DiagnosticLabs.ViewModels.Base;
+using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
 using System.Windows.Input;
@@ -32,7 +33,13 @@ namespace DiagnosticLabs.ViewModels
                 this.User.OldPassword = string.Empty;
             }
             else
-                this.User = new User() { Id = 0, Username = string.Empty, Password = string.Empty };
+            {
+                this.User = _usersBLL.GetUser(Globals.LOGGEDINUSERID);
+                this.User.OriginalPassword = this.User.Password.Clone().ToString();
+                this.User.OldPassword = string.Empty;
+
+                //this.User = new User() { Id = 0, Username = string.Empty, Password = string.Empty };
+            }
 
             this.SaveCommand = new RelayCommand(param => SavePassword());
             this.UpdateOldPasswordCommand = new RelayCommand(param => UpdateOldPassword((string)param));

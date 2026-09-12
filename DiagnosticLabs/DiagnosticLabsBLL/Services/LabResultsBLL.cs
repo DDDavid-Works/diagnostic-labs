@@ -50,6 +50,26 @@ namespace DiagnosticLabsBLL.Services
                 {
                     return (T)Convert.ChangeType(NewHematology(defaultsJson, isForSetDefaults), typeof(T));
                 }
+                else if (typeof(T) == typeof(ClinicalChemistry1))
+                {
+                    return (T)Convert.ChangeType(NewClinicalChemistry1(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry2))
+                {
+                    return (T)Convert.ChangeType(NewClinicalChemistry2(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(Immunology))
+                {
+                    return (T)Convert.ChangeType(NewImmunology(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(PregnancyTest))
+                {
+                    return (T)Convert.ChangeType(NewPregnancyTest(defaultsJson, isForSetDefaults), typeof(T));
+                }
+                else if (typeof(T) == typeof(Serology))
+                {
+                    return (T)Convert.ChangeType(NewSerology(defaultsJson, isForSetDefaults), typeof(T));
+                }
 
                 return (T)Convert.ChangeType(null, typeof(T));
 
@@ -448,6 +468,249 @@ namespace DiagnosticLabsBLL.Services
                 return hematology;
             }
         }
+
+        public ClinicalChemistry1 NewClinicalChemistry1(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                ClinicalChemistry1 clinicalChemistry1 = new ClinicalChemistry1()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Test = string.Empty,
+                    Result = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return clinicalChemistry1;
+            }
+            else
+            {
+                ClinicalChemistry1 clinicalChemistry1 = Newtonsoft.Json.JsonConvert.DeserializeObject<ClinicalChemistry1>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    clinicalChemistry1.PatientId = 0;
+                    clinicalChemistry1.PatientRegistrationId = 0;
+                    clinicalChemistry1.PatientCode = string.Empty;
+                    clinicalChemistry1.PatientName = string.Empty;
+                    clinicalChemistry1.CompanyOrPhysician = string.Empty;
+                    clinicalChemistry1.Age = string.Empty;
+                    clinicalChemistry1.Sex = string.Empty;
+                    clinicalChemistry1.Photo = null;
+                }
+                clinicalChemistry1.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return clinicalChemistry1;
+            }
+        }
+
+        public ClinicalChemistry2 NewClinicalChemistry2(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                ClinicalChemistry2 clinicalChemistry2 = new ClinicalChemistry2()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    AlkalinePhosphataseCNValue = string.Empty,
+                    AlkalinePhosphataseCUnit = string.Empty,
+                    AlkalinePhosphataseCResults = string.Empty,
+                    AlkalinePhosphataseSNValue = string.Empty,
+                    AlkalinePhosphataseSUnit = string.Empty,
+                    AlkalinePhosphataseSResults = string.Empty,
+                    SGOTCNValue = string.Empty,
+                    SGOTCUnit = string.Empty,
+                    SGOTCResults = string.Empty,
+                    SGOTSNValue = string.Empty,
+                    SGOTSUnit = string.Empty,
+                    SGOTSResults = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return clinicalChemistry2;
+            }
+            else
+            {
+                ClinicalChemistry2 clinicalChemistry2 = Newtonsoft.Json.JsonConvert.DeserializeObject<ClinicalChemistry2>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    clinicalChemistry2.PatientId = 0;
+                    clinicalChemistry2.PatientRegistrationId = 0;
+                    clinicalChemistry2.PatientCode = string.Empty;
+                    clinicalChemistry2.PatientName = string.Empty;
+                    clinicalChemistry2.CompanyOrPhysician = string.Empty;
+                    clinicalChemistry2.Age = string.Empty;
+                    clinicalChemistry2.Sex = string.Empty;
+                    clinicalChemistry2.Photo = null;
+                }
+                clinicalChemistry2.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return clinicalChemistry2;
+            }
+        }
+
+        public Immunology NewImmunology(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                Immunology immunology = new Immunology()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Test = string.Empty,
+                    Result = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return immunology;
+            }
+            else
+            {
+                Immunology immunology = Newtonsoft.Json.JsonConvert.DeserializeObject<Immunology>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    immunology.PatientId = 0;
+                    immunology.PatientRegistrationId = 0;
+                    immunology.PatientCode = string.Empty;
+                    immunology.PatientName = string.Empty;
+                    immunology.CompanyOrPhysician = string.Empty;
+                    immunology.Age = string.Empty;
+                    immunology.Sex = string.Empty;
+                    immunology.Photo = null;
+                }
+                immunology.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return immunology;
+            }
+        }
+
+        public PregnancyTest NewPregnancyTest(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                PregnancyTest pregnancyTest = new PregnancyTest()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Result = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return pregnancyTest;
+            }
+            else
+            {
+                PregnancyTest pregnancyTest = Newtonsoft.Json.JsonConvert.DeserializeObject<PregnancyTest>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    pregnancyTest.PatientId = 0;
+                    pregnancyTest.PatientRegistrationId = 0;
+                    pregnancyTest.PatientCode = string.Empty;
+                    pregnancyTest.PatientName = string.Empty;
+                    pregnancyTest.CompanyOrPhysician = string.Empty;
+                    pregnancyTest.Age = string.Empty;
+                    pregnancyTest.Sex = string.Empty;
+                    pregnancyTest.Photo = null;
+                }
+                pregnancyTest.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return pregnancyTest;
+            }
+        }
+
+        public Serology NewSerology(string defaultsJson, bool isForSetDefaults)
+        {
+            if (string.IsNullOrEmpty(defaultsJson))
+            {
+                Serology serology = new Serology()
+                {
+                    Id = 0,
+                    PatientId = 0,
+                    PatientRegistrationId = 0,
+                    PatientCode = string.Empty,
+                    PatientName = string.Empty,
+                    CompanyOrPhysician = string.Empty,
+                    Age = string.Empty,
+                    Sex = string.Empty,
+                    DateRequested = isForSetDefaults ? null : DateTime.Now,
+                    Photo = null,
+                    Test = string.Empty,
+                    Result = string.Empty,
+                    Remarks = string.Empty,
+                    MedicalTechnologist = string.Empty,
+                    Pathologist = string.Empty,
+                    IsActive = true
+                };
+
+                return serology;
+            }
+            else
+            {
+                Serology serology = Newtonsoft.Json.JsonConvert.DeserializeObject<Serology>(defaultsJson);
+
+                if (isForSetDefaults)
+                {
+                    serology.PatientId = 0;
+                    serology.PatientRegistrationId = 0;
+                    serology.PatientCode = string.Empty;
+                    serology.PatientName = string.Empty;
+                    serology.CompanyOrPhysician = string.Empty;
+                    serology.Age = string.Empty;
+                    serology.Sex = string.Empty;
+                    serology.Photo = null;
+                }
+                serology.DateRequested = isForSetDefaults ? null : DateTime.Now;
+
+                return serology;
+            }
+        }
         #endregion
 
         public T Get<T>(long id)
@@ -466,6 +729,16 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.ClinicalChemistries.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
                 else if (typeof(T) == typeof(Hematology))
                     return (T)Convert.ChangeType(_dbContext.Hematologies.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry1))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries1.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry2))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries2.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(Immunology))
+                    return (T)Convert.ChangeType(_dbContext.Immunologies.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(PregnancyTest))
+                    return (T)Convert.ChangeType(_dbContext.PregnancyTests.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
+                else if (typeof(T) == typeof(Serology))
+                    return (T)Convert.ChangeType(_dbContext.Serologies.AsNoTracking().FirstOrDefault(r => r.Id == id), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -490,6 +763,16 @@ namespace DiagnosticLabsBLL.Services
                     return (T)Convert.ChangeType(_dbContext.MERs.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
                 else if (typeof(T) == typeof(ClinicalChemistry))
                     return (T)Convert.ChangeType(_dbContext.ClinicalChemistries.Where(a => a.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry1))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries1.Where(r => r.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(ClinicalChemistry2))
+                    return (T)Convert.ChangeType(_dbContext.ClinicalChemistries2.Where(r => r.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(Immunology))
+                    return (T)Convert.ChangeType(_dbContext.Immunologies.Where(r => r.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(PregnancyTest))
+                    return (T)Convert.ChangeType(_dbContext.PregnancyTests.Where(r => r.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
+                else if (typeof(T) == typeof(Serology))
+                    return (T)Convert.ChangeType(_dbContext.Serologies.Where(r => r.PatientRegistrationId == patientRegistrationId).FirstOrDefault(), typeof(T));
 
                 return (T)Convert.ChangeType(null, typeof(T));
             }
@@ -597,6 +880,46 @@ namespace DiagnosticLabsBLL.Services
                         _dbContext.Hematologies.Add(hematology);
                     else
                         _dbContext.Hematologies.Update(hematology);
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry1))
+                {
+                    ClinicalChemistry1 clinicalChemistry1 = record as ClinicalChemistry1;
+                    if (clinicalChemistry1.Id == 0)
+                        _dbContext.ClinicalChemistries1.Add(clinicalChemistry1);
+                    else
+                        _dbContext.ClinicalChemistries1.Update(clinicalChemistry1);
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry2))
+                {
+                    ClinicalChemistry2 clinicalChemistry2 = record as ClinicalChemistry2;
+                    if (clinicalChemistry2.Id == 0)
+                        _dbContext.ClinicalChemistries2.Add(clinicalChemistry2);
+                    else
+                        _dbContext.ClinicalChemistries2.Update(clinicalChemistry2);
+                }
+                else if (typeof(T) == typeof(Immunology))
+                {
+                    Immunology immunology = record as Immunology;
+                    if (immunology.Id == 0)
+                        _dbContext.Immunologies.Add(immunology);
+                    else
+                        _dbContext.Immunologies.Update(immunology);
+                }
+                else if (typeof(T) == typeof(PregnancyTest))
+                {
+                    PregnancyTest pregnancyTest = record as PregnancyTest;
+                    if (pregnancyTest.Id == 0)
+                        _dbContext.PregnancyTests.Add(pregnancyTest);
+                    else
+                        _dbContext.PregnancyTests.Update(pregnancyTest);
+                }
+                else if (typeof(T) == typeof(Serology))
+                {
+                    Serology serology = record as Serology;
+                    if (serology.Id == 0)
+                        _dbContext.Serologies.Add(serology);
+                    else
+                        _dbContext.Serologies.Update(serology);
                 }
 
                 _dbContext.SaveChanges();
@@ -744,6 +1067,106 @@ namespace DiagnosticLabsBLL.Services
                     type.GetProperty("Sex").SetValue(record, hematologySex);
 
                     return Save<Hematology>(record as Hematology, ref id);
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry1))
+                {
+                    long? patientId = patient?.Id,
+                        patientRegistrationIdValue = patientRegistration?.Id;
+                    string patientCode = patient?.PatientCode,
+                        patientName = patient?.PatientName,
+                        companyOrPhysician = patient?.CompanyName,
+                        age = patient?.Age,
+                        sex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, patientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, patientRegistrationIdValue);
+                    type.GetProperty("PatientCode").SetValue(record, patientCode);
+                    type.GetProperty("PatientName").SetValue(record, patientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, companyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, age);
+                    type.GetProperty("Sex").SetValue(record, sex);
+
+                    return Save<ClinicalChemistry1>(record as ClinicalChemistry1, ref id);
+                }
+                else if (typeof(T) == typeof(ClinicalChemistry2))
+                {
+                    long? patientId = patient?.Id,
+                        patientRegistrationIdValue = patientRegistration?.Id;
+                    string patientCode = patient?.PatientCode,
+                        patientName = patient?.PatientName,
+                        companyOrPhysician = patient?.CompanyName,
+                        age = patient?.Age,
+                        sex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, patientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, patientRegistrationIdValue);
+                    type.GetProperty("PatientCode").SetValue(record, patientCode);
+                    type.GetProperty("PatientName").SetValue(record, patientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, companyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, age);
+                    type.GetProperty("Sex").SetValue(record, sex);
+
+                    return Save<ClinicalChemistry2>(record as ClinicalChemistry2, ref id);
+                }
+                else if (typeof(T) == typeof(Immunology))
+                {
+                    long? patientId = patient?.Id,
+                        patientRegistrationIdValue = patientRegistration?.Id;
+                    string patientCode = patient?.PatientCode,
+                        patientName = patient?.PatientName,
+                        companyOrPhysician = patient?.CompanyName,
+                        age = patient?.Age,
+                        sex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, patientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, patientRegistrationIdValue);
+                    type.GetProperty("PatientCode").SetValue(record, patientCode);
+                    type.GetProperty("PatientName").SetValue(record, patientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, companyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, age);
+                    type.GetProperty("Sex").SetValue(record, sex);
+
+                    return Save<Immunology>(record as Immunology, ref id);
+                }
+                else if (typeof(T) == typeof(PregnancyTest))
+                {
+                    long? patientId = patient?.Id,
+                        patientRegistrationIdValue = patientRegistration?.Id;
+                    string patientCode = patient?.PatientCode,
+                        patientName = patient?.PatientName,
+                        companyOrPhysician = patient?.CompanyName,
+                        age = patient?.Age,
+                        sex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, patientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, patientRegistrationIdValue);
+                    type.GetProperty("PatientCode").SetValue(record, patientCode);
+                    type.GetProperty("PatientName").SetValue(record, patientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, companyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, age);
+                    type.GetProperty("Sex").SetValue(record, sex);
+
+                    return Save<PregnancyTest>(record as PregnancyTest, ref id);
+                }
+                else if (typeof(T) == typeof(Serology))
+                {
+                    long? patientId = patient?.Id,
+                        patientRegistrationIdValue = patientRegistration?.Id;
+                    string patientCode = patient?.PatientCode,
+                        patientName = patient?.PatientName,
+                        companyOrPhysician = patient?.CompanyName,
+                        age = patient?.Age,
+                        sex = patient?.Gender;
+
+                    type.GetProperty("PatientId").SetValue(record, patientId);
+                    type.GetProperty("PatientRegistrationId").SetValue(record, patientRegistrationIdValue);
+                    type.GetProperty("PatientCode").SetValue(record, patientCode);
+                    type.GetProperty("PatientName").SetValue(record, patientName);
+                    type.GetProperty("CompanyOrPhysician").SetValue(record, companyOrPhysician);
+                    type.GetProperty("Age").SetValue(record, age);
+                    type.GetProperty("Sex").SetValue(record, sex);
+
+                    return Save<Serology>(record as Serology, ref id);
                 }
 
                 return false;

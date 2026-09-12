@@ -41,6 +41,11 @@ namespace DiagnosticLabs
         MedicalExaminationWindow _medicalExaminationWindow = null;
         ClinicalChemistryWindow _clinicalChemistryWindow = null;
         HematologyWindow _hematologyWindow = null;
+        ClinicalChemistry1Window _clinicalChemistry1Window = null;
+        ClinicalChemistry2Window _clinicalChemistry2Window = null;
+        ImmunologyWindow _immunologyWindow = null;
+        PregnancyTestWindow _pregnancyTestWindow = null;
+        SerologyWindow _serologyWindow = null;
 
         public MainWindow(long userId)
         {
@@ -221,7 +226,7 @@ namespace DiagnosticLabs
                         return () => _urinalysisWindow.Show();
                     }
                     else
-                        return () => _annualPhysicalExamWindow.Activate();
+                        return () => _urinalysisWindow.Activate();
                 case Modules.AnnualPhysicalExam:
                     if (_annualPhysicalExamWindow == null)
                     {
@@ -262,6 +267,56 @@ namespace DiagnosticLabs
                     }
                     else
                         return () => _hematologyWindow.Activate();
+                case Modules.ClinicalChemistry1:
+                    if (_clinicalChemistry1Window == null)
+                    {
+                        _clinicalChemistry1Window = LoadWindow<ClinicalChemistry1Window>();
+                        SetActionToolbarUserControl(_clinicalChemistry1Window.ActionToolbar, menuItem);
+                        _clinicalChemistry1Window.Closed += new EventHandler(ClearWindow);
+                        return () => _clinicalChemistry1Window.Show();
+                    }
+                    else
+                        return () => _clinicalChemistry1Window.Activate();
+                case Modules.ClinicalChemistry2:
+                    if (_clinicalChemistry2Window == null)
+                    {
+                        _clinicalChemistry2Window = LoadWindow<ClinicalChemistry2Window>();
+                        SetActionToolbarUserControl(_clinicalChemistry2Window.ActionToolbar, menuItem);
+                        _clinicalChemistry2Window.Closed += new EventHandler(ClearWindow);
+                        return () => _clinicalChemistry2Window.Show();
+                    }
+                    else
+                        return () => _clinicalChemistry2Window.Activate();
+                case Modules.Immunology:
+                    if (_immunologyWindow == null)
+                    {
+                        _immunologyWindow = LoadWindow<ImmunologyWindow>();
+                        SetActionToolbarUserControl(_immunologyWindow.ActionToolbar, menuItem);
+                        _immunologyWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _immunologyWindow.Show();
+                    }
+                    else
+                        return () => _immunologyWindow.Activate();
+                case Modules.PregnancyTest:
+                    if (_pregnancyTestWindow == null)
+                    {
+                        _pregnancyTestWindow = LoadWindow<PregnancyTestWindow>();
+                        SetActionToolbarUserControl(_pregnancyTestWindow.ActionToolbar, menuItem);
+                        _pregnancyTestWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _pregnancyTestWindow.Show();
+                    }
+                    else
+                        return () => _pregnancyTestWindow.Activate();
+                case Modules.Serology:
+                    if (_serologyWindow == null)
+                    {
+                        _serologyWindow = LoadWindow<SerologyWindow>();
+                        SetActionToolbarUserControl(_serologyWindow.ActionToolbar, menuItem);
+                        _serologyWindow.Closed += new EventHandler(ClearWindow);
+                        return () => _serologyWindow.Show();
+                    }
+                    else
+                        return () => _serologyWindow.Activate();
                 #endregion
                 default:
                     return null;
@@ -325,6 +380,16 @@ namespace DiagnosticLabs
                 _clinicalChemistryWindow = null;
             else if (sender.GetType() == typeof(HematologyWindow))
                 _hematologyWindow = null;
+            else if (sender.GetType() == typeof(ClinicalChemistry1Window))
+                _clinicalChemistry1Window = null;
+            else if (sender.GetType() == typeof(ClinicalChemistry2Window))
+                _clinicalChemistry2Window = null;
+            else if (sender.GetType() == typeof(ImmunologyWindow))
+                _immunologyWindow = null;
+            else if (sender.GetType() == typeof(PregnancyTestWindow))
+                _pregnancyTestWindow = null;
+            else if (sender.GetType() == typeof(SerologyWindow))
+                _serologyWindow = null;
 
             Globals.PATIENTREGISTRATIONIDTOPAY = 0;
             Globals.PATIENTREGISTRATIONIDTOINPUT = 0;
@@ -379,7 +444,7 @@ namespace DiagnosticLabs
         {
             PatientRegistrationService prs = (PatientRegistrationService)((Button)sender).CommandParameter;
             string serviceName = prs.PatientRegistrationServiceName;
-            
+
             MenuItem menuItem = Globals.MENUITEMS.Where(m => m.Module.ModuleName == serviceName).FirstOrDefault();
             Globals.PATIENTREGISTRATIONIDTOINPUT = prs.PatientRegistrationId;
             LaunchModuleWindow(menuItem);

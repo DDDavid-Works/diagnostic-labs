@@ -33,7 +33,6 @@ namespace DiagnosticLabs.SettingsWindows
                 vm.UpdateOldPasswordCommand.Execute(OldPasswordPasswordBox.Password);
         }
 
-
         private void NewPasswordPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             var vm = (ChangePasswordViewModel)DataContext;

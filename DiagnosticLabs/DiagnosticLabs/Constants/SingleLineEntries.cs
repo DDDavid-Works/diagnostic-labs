@@ -8,6 +8,10 @@
         public const string MedicalTechnologist = "Medical Technologist";
         public const string Pathologist = "Pathologist";
 
+        public const string ClinicalChemistry1Test = "Test";
+        public const string SerologyTest = "Test";
+        public const string ImmunologyTest = "Test";
+
         public const string StoolFecalysisColor = "Color";
         public const string StoolFecalysisConsistency = "Consistency";
 

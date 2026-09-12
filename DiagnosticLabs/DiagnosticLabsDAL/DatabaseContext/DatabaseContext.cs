@@ -44,6 +44,11 @@ namespace DiagnosticLabsDAL.DatabaseContext
         public DbSet<MER> MERs { get; set; }
         public DbSet<ClinicalChemistry> ClinicalChemistries { get; set; }
         public DbSet<Hematology> Hematologies { get; set; }
+        public DbSet<ClinicalChemistry1> ClinicalChemistries1 { get; set; }
+        public DbSet<ClinicalChemistry2> ClinicalChemistries2 { get; set; }
+        public DbSet<Immunology> Immunologies { get; set; }
+        public DbSet<Serology> Serologies { get; set; }
+        public DbSet<PregnancyTest> PregnancyTests { get; set; }
 
         //VIEWS
         public DbSet<PatientCompany> PatientCompanies { get; set; }

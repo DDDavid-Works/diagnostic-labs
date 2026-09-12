@@ -113,6 +113,11 @@
     <Build Include="Tables\MERs.sql" />
     <Build Include="Tables\ClinicalChemistries.sql" />
     <Build Include="Tables\Hematologies.sql" />
+    <Build Include="Tables\ClinicalChemistries2.sql" />
+    <Build Include="Tables\ClinicalChemistries1.sql" />
+    <Build Include="Tables\PregnancyTest.sql" />
+    <Build Include="Tables\Serology.sql" />
+    <Build Include="Tables\Immunologies.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\SingleLineEntries.sql" />

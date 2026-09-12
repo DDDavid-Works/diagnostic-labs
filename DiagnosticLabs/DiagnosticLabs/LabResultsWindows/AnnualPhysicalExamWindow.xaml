@@ -216,7 +216,7 @@
         </Grid>
         <Border Margin="10" Padding="0" BorderBrush="Black" BorderThickness="1"></Border>
         <!--Height="377"-->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Height="970" Margin="0,0,10,10">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Height="377" Margin="0,0,10,10">
             <StackPanel Orientation="Vertical">
                 <Label Name="PastMedicalHistoryLabel" Content="PAST MEDICAL HISTORY" FontSize="14" Margin="10,-10,10,10" VerticalAlignment="Top"></Label>
                 <Grid Margin="10,-10,2,10">

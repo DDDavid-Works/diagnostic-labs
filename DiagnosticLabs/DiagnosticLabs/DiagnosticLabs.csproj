@@ -248,14 +248,29 @@
     <Compile Include="LabResultsWindows\AnnualPhysicalExamWindow.xaml.cs">
       <DependentUpon>AnnualPhysicalExamWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LabResultsWindows\ClinicalChemistry1Window.xaml.cs">
+      <DependentUpon>ClinicalChemistry1Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LabResultsWindows\ClinicalChemistry2Window.xaml.cs">
+      <DependentUpon>ClinicalChemistry2Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LabResultsWindows\ClinicalChemistryWindow.xaml.cs">
       <DependentUpon>ClinicalChemistryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LabResultsWindows\HematologyWindow.xaml.cs">
       <DependentUpon>HematologyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LabResultsWindows\ImmunologyWindow.xaml.cs">
+      <DependentUpon>ImmunologyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LabResultsWindows\MedicalExaminationWindow.xaml.cs">
       <DependentUpon>MedicalExaminationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LabResultsWindows\PregnancyTestWindow.xaml.cs">
+      <DependentUpon>PregnancyTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LabResultsWindows\SerologyWindow.xaml.cs">
+      <DependentUpon>SerologyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LabResultsWindows\StoolFecalysisWindow.xaml.cs">
       <DependentUpon>StoolFecalysisWindow.xaml</DependentUpon>
@@ -283,9 +298,14 @@
     </Compile>
     <Compile Include="Models\NotificationMessage.cs" />
     <Compile Include="Models\Reports\APEReport.cs" />
+    <Compile Include="Models\Reports\ClinicalChemistry1Report.cs" />
+    <Compile Include="Models\Reports\ClinicalChemistry2Report.cs" />
     <Compile Include="Models\Reports\ClinicalChemistryReport.cs" />
+    <Compile Include="Models\Reports\ImmunologyReport.cs" />
     <Compile Include="Models\Reports\MedicalExaminationReport.cs" />
     <Compile Include="Models\Reports\HematologyReport.cs" />
+    <Compile Include="Models\Reports\PregnancyTestReport.cs" />
+    <Compile Include="Models\Reports\SerologyReport.cs" />
     <Compile Include="Models\Reports\UrinalysisReport.cs" />
     <Compile Include="Models\Reports\StoolFecalysisReport.cs" />
     <Compile Include="PrintWindows\PrintWindow.xaml.cs">
@@ -306,6 +326,27 @@
       <DependentUpon>APEReport.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\LabResults\ImmunologyReport.cs">
+      <DependentUpon>ImmunologyReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\LabResults\SerologyReport.cs">
+      <DependentUpon>SerologyReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\LabResults\ClinicalChemistry2Report.cs">
+      <DependentUpon>ClinicalChemistry2Report.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\LabResults\HematologyReport.cs">
       <DependentUpon>HematologyReport.rpt</DependentUpon>
@@ -330,6 +371,13 @@
     </Compile>
     <Compile Include="Reports\LabResults\ClinicalChemistryReport.cs">
       <DependentUpon>ClinicalChemistryReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\LabResults\ClinicalChemistry1Report .cs">
+      <DependentUpon>ClinicalChemistry1Report .rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -442,12 +490,15 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\ClinicalChemistry1ViewModel.cs" />
+    <Compile Include="ViewModels\ClinicalChemistry2ViewModel.cs" />
     <Compile Include="ViewModels\ClinicalChemistryViewModel.cs" />
     <Compile Include="ViewModels\CompanySetupViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\DefaultSetterViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\HematologyViewModel.cs" />
+    <Compile Include="ViewModels\ImmunologyViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ItemLocationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -460,6 +511,7 @@
     <Compile Include="ViewModels\PatientRegistrationViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
+    <Compile Include="ViewModels\PregnancyTestViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
     <Compile Include="ViewModels\SearchCompanyViewModel.cs" />
     <Compile Include="ViewModels\SearchDepartmentViewModel.cs" />
@@ -473,6 +525,7 @@
     <Compile Include="ViewModels\SearchUserViewModel.cs" />
     <Compile Include="ViewModels\SelectMultiLineEntryViewModel.cs" />
     <Compile Include="ViewModels\SelectServicesViewModel.cs" />
+    <Compile Include="ViewModels\SerologyViewModel.cs" />
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\MultiLineEntryViewModel.cs" />
@@ -502,6 +555,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LabResultsWindows\ClinicalChemistry1Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LabResultsWindows\ClinicalChemistry2Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="LabResultsWindows\ClinicalChemistryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -510,9 +571,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LabResultsWindows\ImmunologyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="LabResultsWindows\MedicalExaminationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LabResultsWindows\PregnancyTestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LabResultsWindows\SerologyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LabResultsWindows\StoolFecalysisWindow.xaml">
       <SubType>Designer</SubType>
@@ -721,6 +794,21 @@
       <LastGenOutput>APEReport.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\ImmunologyReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ImmunologyReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\SerologyReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SerologyReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\ClinicalChemistry2Report.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ClinicalChemistry2Report.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\LabResults\HematologyReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>HematologyReport.cs</LastGenOutput>
@@ -739,6 +827,11 @@
     <EmbeddedResource Include="Reports\LabResults\ClinicalChemistryReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ClinicalChemistryReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LabResults\ClinicalChemistry1Report .rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ClinicalChemistry1Report .cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LabResults\UrinalysisReport.rpt">

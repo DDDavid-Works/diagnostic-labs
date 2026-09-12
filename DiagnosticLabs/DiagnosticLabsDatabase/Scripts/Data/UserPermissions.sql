@@ -159,3 +159,9 @@ BEGIN
     INSERT INTO UserPermissions(UserId, ModuleId, ViewOnly, AllowCreate, AllowEdit, AllowDelete, AllowPrint, CreatedByUserId, CreatedDate, UpdatedByUserId, UpdatedDate)
     VALUES (1, 27, 0, 1, 1, 1, 1, 1, GETDATE(), 1, GETDATE())
 END
+
+IF NOT EXISTS (SELECT * FROM UserPermissions WHERE UserId = 1 AND ModuleId = 28)
+BEGIN
+    INSERT INTO UserPermissions(UserId, ModuleId, ViewOnly, AllowCreate, AllowEdit, AllowDelete, AllowPrint, CreatedByUserId, CreatedDate, UpdatedByUserId, UpdatedDate)
+    VALUES (1, 28, 0, 1, 1, 1, 1, 1, GETDATE(), 1, GETDATE())
+END

@@ -78,7 +78,6 @@ namespace DiagnosticLabs.LabResultsWindows
             }
         }
 
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;

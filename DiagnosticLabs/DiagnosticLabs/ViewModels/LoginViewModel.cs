@@ -48,13 +48,13 @@ namespace DiagnosticLabs.ViewModels
         #region Data Actions
         private void Login()
         {
-            //long userId = 0;
-            //this.IsLoginSuccess = _usersBLL.IsLoginSuccess(this.Username, _commonFunctions.HashPassword(this.Password), ref userId);
-            //this.LoggedUserId = userId;
+            long userId = 0;
+            this.IsLoginSuccess = _usersBLL.IsLoginSuccess(this.Username, _commonFunctions.HashPassword(this.Password), ref userId);
+            this.LoggedUserId = userId;
 
             //AUTO LOGIN
-            this.IsLoginSuccess = true;
-            this.LoggedUserId = 1;
+            //this.IsLoginSuccess = true;
+            //this.LoggedUserId = 1;
 
             if (!this.IsLoginSuccess)
                 this.LoginErrorMessage = "Login failed. Please try again.";

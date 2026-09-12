@@ -4,6 +4,18 @@
     {
         public const string HematologyResult = "Result";
 
+        public const string ClinicalChemistry1Result = "Result";
+        public const string ClinicalChemistry1Remarks = "Remarks";
+
+        public const string PregnancyTestResult = "Result";
+        public const string PregnancyTestRemarks = "Remarks";
+
+        public const string SerologyResult = "Result";
+        public const string SerologyRemarks = "Remarks";
+
+        public const string ImmunologyResult = "Result";
+        public const string ImmunologyRemarks = "Remarks";
+
         public const string StoolFecalysisResult = "Result";
         public const string StoolFecalysisRemarks = "Remarks";
 

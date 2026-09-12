@@ -3,6 +3,7 @@ using DiagnosticLabs.ViewModels.Base;
 using DiagnosticLabsBLL.Globals;
 using DiagnosticLabsBLL.Services;
 using DiagnosticLabsDAL.Models;
+using DiagnosticLabs.Models.Reports;
 using System;
 using System.Linq;
 
@@ -68,6 +69,36 @@ namespace DiagnosticLabs.ViewModels
                     Hematology hematology = _labResults.Get<Hematology>(recordId);
                     record = this.ReportObject<Hematology>(hematology, companySetup);
                     break;
+                case Modules.ClinicalChemistry1:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/ClinicalChemistry1Report.rpt");
+
+                    ClinicalChemistry1 clinicalChemistry1 = _labResults.Get<ClinicalChemistry1>(recordId);
+                    record = this.ReportObject<ClinicalChemistry1>(clinicalChemistry1, companySetup);
+                    break;
+                case Modules.ClinicalChemistry2:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/ClinicalChemistry2Report.rpt");
+
+                    ClinicalChemistry2 clinicalChemistry2 = _labResults.Get<ClinicalChemistry2>(recordId);
+                    record = this.ReportObject<ClinicalChemistry2>(clinicalChemistry2, companySetup);
+                    break;
+                case Modules.Immunology:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/ImmunologyReport.rpt");
+
+                    Immunology immunology = _labResults.Get<Immunology>(recordId);
+                    record = this.ReportObject<Immunology>(immunology, companySetup);
+                    break;
+                case Modules.PregnancyTest:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/PregnancyTestReport.rpt");
+
+                    PregnancyTest pregnancyTest = _labResults.Get<PregnancyTest>(recordId);
+                    record = this.ReportObject<PregnancyTest>(pregnancyTest, companySetup);
+                    break;
+                case Modules.Serology:
+                    this.ReportDocument.Load(appPath + "/Reports/LabResults/SerologyReport.rpt");
+
+                    Serology serology = _labResults.Get<Serology>(recordId);
+                    record = this.ReportObject<Serology>(serology, companySetup);
+                    break;
                 default:
                     break;
             }
@@ -84,6 +115,11 @@ namespace DiagnosticLabs.ViewModels
                     case Modules.MedicalExamination:
                     case Modules.ClinicalChemistry:
                     case Modules.Hematology:
+                    case Modules.ClinicalChemistry1:
+                    case Modules.ClinicalChemistry2:
+                    case Modules.Immunology:
+                    case Modules.PregnancyTest:
+                    case Modules.Serology:
                         this.ReportDocument.SetParameterValue("CompanyName", companySetup.CompanyName);
                         this.ReportDocument.SetParameterValue("SubCompanyName", companySetup.SubCompanyName);
                         this.ReportDocument.SetParameterValue("CompanyAddress", companySetup.Address);
@@ -339,6 +375,109 @@ namespace DiagnosticLabs.ViewModels
                     CompanySetupLogo = companySetup.Logo
                 };
             }
+            else if (typeof(T) == typeof(ClinicalChemistry1))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<ClinicalChemistry1, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    Test = (string)type.GetProperty("Test").GetValue(record),
+                    Result = (string)type.GetProperty("Result").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(ClinicalChemistry2))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<ClinicalChemistry2, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    AlkalinePhosphataseCNValue = (string)type.GetProperty("AlkalinePhosphataseCNValue").GetValue(record),
+                    AlkalinePhosphataseCUnit = (string)type.GetProperty("AlkalinePhosphataseCUnit").GetValue(record),
+                    AlkalinePhosphataseCResults = (string)type.GetProperty("AlkalinePhosphataseCResults").GetValue(record),
+                    AlkalinePhosphataseSNValue = (string)type.GetProperty("AlkalinePhosphataseSNValue").GetValue(record),
+                    AlkalinePhosphataseSUnit = (string)type.GetProperty("AlkalinePhosphataseSUnit").GetValue(record),
+                    AlkalinePhosphataseSResults = (string)type.GetProperty("AlkalinePhosphataseSResults").GetValue(record),
+                    SGOTCNValue = (string)type.GetProperty("SGOTCNValue").GetValue(record),
+                    SGOTCUnit = (string)type.GetProperty("SGOTCUnit").GetValue(record),
+                    SGOTCResults = (string)type.GetProperty("SGOTCResults").GetValue(record),
+                    SGOTSNValue = (string)type.GetProperty("SGOTSNValue").GetValue(record),
+                    SGOTSUnit = (string)type.GetProperty("SGOTSUnit").GetValue(record),
+                    SGOTSResults = (string)type.GetProperty("SGOTSResults").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(Immunology))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<Immunology, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    Test = (string)type.GetProperty("Test").GetValue(record),
+                    Result = (string)type.GetProperty("Result").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(PregnancyTest))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<PregnancyTest, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    Result = (string)type.GetProperty("Result").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
+            else if (typeof(T) == typeof(Serology))
+            {
+                reportObject = new
+                {
+                    PatientCode = (string)type.GetProperty("PatientCode").GetValue(record),
+                    PatientName = (string)type.GetProperty("PatientName").GetValue(record),
+                    CompanyOrPhysician = (string)type.GetProperty("CompanyOrPhysician").GetValue(record),
+                    Age = (string)type.GetProperty("Age").GetValue(record),
+                    Sex = (string)type.GetProperty("Sex").GetValue(record),
+                    DateRequested = GetDataFromRecord<Serology, string>(record, "DateRequested", "MM/dd/yyyy"),
+                    Photo = (byte[])type.GetProperty("Photo").GetValue(record),
+                    Test = (string)type.GetProperty("Test").GetValue(record),
+                    Result = (string)type.GetProperty("Result").GetValue(record),
+                    Remarks = (string)type.GetProperty("Remarks").GetValue(record),
+                    MedicalTechnologist = (string)type.GetProperty("MedicalTechnologist").GetValue(record),
+                    Pathologist = (string)type.GetProperty("Pathologist").GetValue(record),
+                    CompanySetupLogo = companySetup.Logo
+                };
+            }
             return reportObject;
         }
 
@@ -366,7 +505,7 @@ namespace DiagnosticLabs.ViewModels
                             return (T2)Convert.ChangeType(((DateTime)type.GetProperty(field).GetValue(record)), typeof(T2));
                     }
                     else
-                    { 
+                    {
                         if (value == null)
                             return (T2)Convert.ChangeType(string.Empty, typeof(T2));
                         else

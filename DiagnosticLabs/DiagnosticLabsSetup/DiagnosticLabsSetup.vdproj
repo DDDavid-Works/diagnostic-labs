@@ -501,6 +501,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_43AE4EC4C13D421F995060CF9385E423"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_43DA12E62783BE3D15AADDFE2F3DF869"
         "OwnerKey" = "8:_CEFFE8BCE6CBECD4327EDB87EDE973D3"
         "MsmSig" = "8:_UNDEFINED"
@@ -765,6 +771,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7906AFB162A44DD1B0DAD4632BEBAD15"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_89EB1219480DFB6CCEFB85C0E8902D49"
         "OwnerKey" = "8:_11042800314767A3D773C8C95ACE28CD"
         "MsmSig" = "8:_UNDEFINED"
@@ -963,6 +975,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A7B0E8AD87A040599597F985DB1809F9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B026CE657FB64168B2538B03C3D821F1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1018,6 +1036,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C46C97BE37624A6C8A20B5CFD784B6F5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C6F8C0BA81F3465A8139410466C8D63A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1228,7 +1252,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4383AC4613780C677A7DC8C564137567"
+        "OwnerKey" = "8:_FDB8514580C4271EB2C9F98AB5F1A169"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1414,12 +1438,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FDB8514580C4271EB2C9F98AB5F1A169"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A6A329E192E6EF68EE371B43B9DADE19"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1477,6 +1495,12 @@
         "OwnerKey" = "8:_2A1BBB21D920AA05F6D5C05534A1BECB"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4383AC4613780C677A7DC8C564137567"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1495,6 +1519,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -1511,6 +1551,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -2063,7 +2119,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2196,7 +2252,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2278,7 +2334,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2311,6 +2367,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_43AE4EC4C13D421F995060CF9385E423"
+            {
+            "SourcePath" = "8:..\\DiagnosticLabs\\bin\\Debug\\x86\\SNI.pdb"
+            "TargetName" = "8:SNI.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_B0C44AA1933E478983CBFE81C4B72269"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_43DA12E62783BE3D15AADDFE2F3DF869"
@@ -2756,6 +2832,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7906AFB162A44DD1B0DAD4632BEBAD15"
+            {
+            "SourcePath" = "8:..\\DiagnosticLabs\\bin\\Debug\\x64\\SNI.dll"
+            "TargetName" = "8:SNI.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_94CF6D58DB3A448A8F2B6E4E018EFDA6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89EB1219480DFB6CCEFB85C0E8902D49"
             {
             "AssemblyRegister" = "3:1"
@@ -2783,7 +2879,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3004,6 +3100,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A7B0E8AD87A040599597F985DB1809F9"
+            {
+            "SourcePath" = "8:..\\DiagnosticLabs\\bin\\Debug\\x86\\SNI.dll"
+            "TargetName" = "8:SNI.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B0C44AA1933E478983CBFE81C4B72269"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B026CE657FB64168B2538B03C3D821F1"
             {
             "SourcePath" = "8:..\\DiagnosticLabs\\Reports\\LabResults\\ClinicalChemistryReport.cs"
@@ -3188,6 +3304,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C6F8C0BA81F3465A8139410466C8D63A"
+            {
+            "SourcePath" = "8:..\\DiagnosticLabs\\bin\\Debug\\x64\\SNI.pdb"
+            "TargetName" = "8:SNI.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_94CF6D58DB3A448A8F2B6E4E018EFDA6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C9013FB2CCBEAFC5B852B150C1F9DE8C"
             {
             "AssemblyRegister" = "3:1"
@@ -3215,7 +3351,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3585,6 +3721,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_94CF6D58DB3A448A8F2B6E4E018EFDA6"
+                    {
+                    "Name" = "8:x64"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_EF3F3E4C0BA841A48CAF37F10E86C055"
+                        "Folders"
+                        {
+                        }
+                    }
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_9D3C2D6FABD2448DBEA41A676A9C16D4"
                     {
                     "Name" = "8:Reports"
@@ -3607,6 +3754,17 @@
                             }
                         }
                     }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B0C44AA1933E478983CBFE81C4B72269"
+                    {
+                    "Name" = "8:x86"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_6BB0E5ED948B4E8F92C2B49BA0076708"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -3624,9 +3782,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:DiagnosticLabsSetup"
+        "ProductName" = "8:Diagnostic Labs"
         "ProductCode" = "8:{70FD61BF-4D7E-4273-B7B3-DBA9B15E26BF}"
-        "PackageCode" = "8:{A3D614FE-5577-461F-AEE0-7021D68178FD}"
+        "PackageCode" = "8:{47D243E5-1964-45CB-BE87-744AC3144EBB}"
         "UpgradeCode" = "8:{B8BA7865-2926-4C7E-866D-BD50F1808EC7}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
